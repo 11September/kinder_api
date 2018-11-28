@@ -33,7 +33,7 @@ class ResetPassword extends Mailable
     public function build()
     {
         return $this
-            ->from(['address' => 'url', 'name' => 'Kinder'])
+            ->from(['address' => 'reply@admin.com', 'name' => 'Kinder'])
             ->subject('Сброс пароля')
             ->view('mail.password-reset');
     }

@@ -17,7 +17,7 @@ class UsersController extends Controller
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'login' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
             'password' => 'required|string|min:6|max:255',
         ]);
 
@@ -25,41 +25,49 @@ class UsersController extends Controller
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
-        if (Auth::user()) {
-            $user = Auth::user();
-            $result = array();
-            $result = array_add($result, 'token', $user->token);
-            return response($result);
-        }
+        try {
+            if (Auth::user()) {
+                $user = Auth::user();
 
-        $user = User::where('email', $request->email)->first();
-        if ($user) {
-            if (Hash::check($request->password, $user->password)) {
-                if (Auth::attempt(['email' => $request->email, 'password' => $user->password])) {
-                    $result = array();
-                    $result = array_add($result, 'token', $user->token);
-                    return response($result);
-                } else {
-                    return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+                $result = array();
+                $result = array_add($result, 'token', $user->token);
+
+                return response($result);
+            }
+
+            $user = User::where('email', $request->email)->first();
+            if ($user) {
+                if (Hash::check($request->password, $user->password)) {
+                    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                        $result = array();
+                        $result = array_add($result, 'token', $user->token);
+                        return response($result);
+                    } else {
+                        return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+                    }
                 }
             }
+
+            return response()->json(['message' => 'Користувача немає або логін / пароль не підходять'], 401);
+
+        } catch (\Exception $exception) {
+            Log::warning('UsersController@login Exception: ' . $exception->getMessage());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
-
-        return response()->json(['message' => 'Користувача немає або логін / пароль не підходять'], 401);
     }
-
 
 
     public function logout()
     {
         try {
             Auth::logout();
+
+            return response()->json(['success' => true], 200);
+
         } catch (\Exception $exception) {
             Log::warning('UsersController@logout Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
-
-        return response()->json(['success' => true], 200);
     }
 
 
@@ -88,6 +96,7 @@ class UsersController extends Controller
         if ($validator->fails()) {
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
+
         if ($validator_exist->fails()) {
             return response()->json(['message' => 'Користувача не існує!'], 404);
         }
@@ -97,14 +106,43 @@ class UsersController extends Controller
             $new_password = $this->generatePassword();
             $user->password = bcrypt($new_password);
 
-
             \Mail::to($request->email)->send(new ResetPassword($user, $new_password));
+
             $user->save();
 
             return response()->json(['message' => 'Перевірте пошту з новим паролем!'], 200);
         } catch (\Exception $exception) {
             Log::warning('UsersController@resetPassword Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
+
+    public function ChangePassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+           'password_old' => 'required|string|min:6|max:255',
+           'password' => 'required|string|min:6|max:255',
+           'password_confirmation' => 'required|string|min:6|max:255',
+        ]);
+
+        if ($validator->fails()){
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        if ($request->password !== $request->password_confirmation){
+            return response()->json(['message' => 'Паролі не співпадають'], 200);
+        }
+
+        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+        if (Hash::check($request->password_old, $user->password)){
+            $user->password = Hash::make($request->password);
+            $user->save();
+
+            return response()->json(['message' => 'Пароль змінений'], 200);
+        }else{
+            return response()->json(['message' => 'Старий пароль невірний'], 200);
         }
     }
 
