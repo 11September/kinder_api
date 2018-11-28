@@ -19,9 +19,10 @@ class ResetPassword extends Mailable
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($user, $new_password)
     {
-        //
+        $this->user = $user;
+        $this->new_password = $new_password;
     }
 
     /**
@@ -31,6 +32,9 @@ class ResetPassword extends Mailable
      */
     public function build()
     {
-        return $this->view('view.name');
+        return $this
+            ->from(['address' => 'url', 'name' => 'Kinder'])
+            ->subject('Сброс пароля')
+            ->view('mail.password-reset');
     }
 }

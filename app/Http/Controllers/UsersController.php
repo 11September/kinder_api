@@ -63,6 +63,18 @@ class UsersController extends Controller
     }
 
 
+    public function generatePassword($length = 8)
+    {
+        $chars = 'abdefhiknrstyzABDEFGHKNQRSTYZ23456789';
+        $numChars = strlen($chars);
+        $string = '';
+        for ($i = 0; $i < $length; $i++) {
+            $string .= substr($chars, rand(1, $numChars) - 1, 1);
+        }
+        return $string;
+    }
+
+
     public function ResetPassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -84,6 +96,8 @@ class UsersController extends Controller
             $user = User::where('email', $request->email)->first();
             $new_password = $this->generatePassword();
             $user->password = bcrypt($new_password);
+
+
             \Mail::to($request->email)->send(new ResetPassword($user, $new_password));
             $user->save();
 
