@@ -17,8 +17,9 @@ class CreateStudentsTable extends Migration
             $table->increments('id');
             $table->string('FIO');
             $table->integer('group_id');
+            $table->integer('user_id');
             $table->string('birthday');
-            $table->enum('status', ['active', 'inactive']);
+            $table->enum('status', ['ACTIVE', 'INACTIVE']);
             $table->timestamps();
         });
     }

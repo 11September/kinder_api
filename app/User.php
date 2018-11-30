@@ -16,7 +16,7 @@ class User extends \TCG\Voyager\Models\User
      * @var array
      */
     protected $fillable = [
-        'name', 'email',
+        'name', 'email', 'push'
     ];
 
     /**
@@ -31,6 +31,11 @@ class User extends \TCG\Voyager\Models\User
     public function getUserToken()
     {
         return $this->token;
+    }
+
+    public function students()
+    {
+        return $this->belongsToMany(Student::class);
     }
 
 

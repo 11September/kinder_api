@@ -121,28 +121,48 @@ class UsersController extends Controller
     public function ChangePassword(Request $request)
     {
         $validator = Validator::make($request->all(), [
-           'password_old' => 'required|string|min:6|max:255',
-           'password' => 'required|string|min:6|max:255',
-           'password_confirmation' => 'required|string|min:6|max:255',
+            'password_old' => 'required|string|min:6|max:255',
+            'password' => 'required|string|min:6|max:255',
+            'password_confirmation' => 'required|string|min:6|max:255',
         ]);
 
-        if ($validator->fails()){
+        if ($validator->fails()) {
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
-        if ($request->password !== $request->password_confirmation){
+        if ($request->password !== $request->password_confirmation) {
             return response()->json(['message' => 'Паролі не співпадають'], 200);
         }
 
         $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
-        if (Hash::check($request->password_old, $user->password)){
+        if (Hash::check($request->password_old, $user->password)) {
             $user->password = Hash::make($request->password);
             $user->save();
 
             return response()->json(['message' => 'Пароль змінений'], 200);
-        }else{
+        } else {
             return response()->json(['message' => 'Старий пароль невірний'], 200);
+        }
+    }
+
+    public function profile(Request $request)
+    {
+        try {
+
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+            $result = array();
+            $result = array_add($result, 'name', $user->name);
+            $result = array_add($result, 'email', $user->email);
+            $result = array_add($result, 'avatar', $user->avatar);
+            $result = array_add($result, 'push', $user->push);
+            $result = array_add($result, 'token', $user->token);
+
+            return response($result);
+        } catch (\Exception $exception) {
+            Log::warning('UsersController@resetPassword Exception: ' . $exception->getMessage());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
 

@@ -20,10 +20,12 @@ class PostsController extends Controller
                     $item['image'] = $source . $item['image'];
                 }
             });
+
+            return ['data' => $posts];
+
         } catch (\Exception $exception) {
             Log::warning('PostsController@index Exception: '. $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
-        return ['data' => $posts];
     }
 }

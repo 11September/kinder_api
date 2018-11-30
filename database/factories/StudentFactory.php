@@ -7,7 +7,8 @@ $factory->define(Student::class, function (Faker $faker) {
     return [
         'FIO' => $faker->title,
         'group_id' => 1,
-        'birthday' => $faker->title,
+        'user_id' => 1,
+        'birthday' => $faker->date(),
         'status' => $faker->randomElement(['active' ,'inactive']),
     ];
 });
