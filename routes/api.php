@@ -25,3 +25,4 @@ Route::middleware('token')->post('logout', 'UsersController@logout')->name('Logo
 // Users Auth
 
 Route::middleware('token')->get('schools', 'SchoolController@index')->name('All Schools');
+Route::middleware('token')->get('posts', 'PostsController@index')->name('All Posts');
