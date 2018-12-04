@@ -8,6 +8,7 @@ $factory->define(App\Post::class, function (Faker $faker) {
         'title' => $faker->title,
         'excerpt' => $faker->text,
         'body' => $faker->text,
+        'image' => $faker->imageUrl(),
         'status' => $faker->randomElement(['PUBLISHED' ,'DRAFT', 'PENDING']),
     ];
 });

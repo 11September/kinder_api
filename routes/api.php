@@ -13,9 +13,9 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::middleware('auth:api')->get('/user', function (Request $request) {
+//    return $request->user();
+//});
 
 // Users Auth
 Route::post('login', 'UsersController@login')->name('Login');
@@ -27,6 +27,7 @@ Route::middleware('token')->get('profile', 'UsersController@profile')->name('Get
 
 Route::middleware('token')->get('schools', 'SchoolController@index')->name('All Schools');
 Route::middleware('token')->get('posts', 'PostsController@index')->name('All Posts');
+Route::middleware('token')->get('post', 'PostsController@show')->name('One Post');
 Route::middleware('token')->get('groups', 'GroupController@index')->name('All Groups');
 Route::middleware('token')->get('students', 'StudentsController@index')->name('All Students');
 Route::middleware('token')->get('electives', 'ElectivesContoller@index')->name('All Electives');

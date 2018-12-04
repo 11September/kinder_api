@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Electivy;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class ElectivesContoller extends Controller
 {
@@ -23,13 +24,21 @@ class ElectivesContoller extends Controller
         }
     }
 
-    public function show(Request $request, $id = null)
+    public function show(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
         try {
-            $elective = Electivy::select('id', 'name', 'title', 'description', 'time')
-                ->where('id', $id)
+            $elective = Electivy::select('id', 'name', 'title', 'description', 'time-start', 'time-end')
+                ->where('id', $request->id)
                 ->with('photos')
-                ->get();
+                ->first();
 
             return ['data' => $elective];
 

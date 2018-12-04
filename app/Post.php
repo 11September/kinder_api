@@ -8,8 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Post extends Model
 {
     protected $table = "posts";
-    protected $fillable = [];
+
+    protected $fillable = ['image'];
     protected $dates = ['created_at'];
+
+
     public function getCreatedAtAttribute($date)
     {
         return $this->attributes['created_at'] = Carbon::parse($date)->toDateString();
