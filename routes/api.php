@@ -29,3 +29,5 @@ Route::middleware('token')->get('schools', 'SchoolController@index')->name('All 
 Route::middleware('token')->get('posts', 'PostsController@index')->name('All Posts');
 Route::middleware('token')->get('groups', 'GroupController@index')->name('All Groups');
 Route::middleware('token')->get('students', 'StudentsController@index')->name('All Students');
+Route::middleware('token')->get('electives', 'ElectivesContoller@index')->name('All Electives');
+

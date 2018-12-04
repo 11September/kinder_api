@@ -19,6 +19,8 @@ class DatabaseSeeder extends Seeder
             GroupSeeder::class,
             StudentSeeder::class,
             PostSeeder::class,
+            ElectivesSeeder::class,
+            ElectivyPhotoSeeder::class,
         ]);
     }
 }
