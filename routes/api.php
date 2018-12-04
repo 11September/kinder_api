@@ -30,4 +30,4 @@ Route::middleware('token')->get('posts', 'PostsController@index')->name('All Pos
 Route::middleware('token')->get('groups', 'GroupController@index')->name('All Groups');
 Route::middleware('token')->get('students', 'StudentsController@index')->name('All Students');
 Route::middleware('token')->get('electives', 'ElectivesContoller@index')->name('All Electives');
-
+Route::middleware('token')->get('elective', 'ElectivesContoller@show')->name('One Elective');

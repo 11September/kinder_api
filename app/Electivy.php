@@ -12,4 +12,9 @@ class Electivy extends Model
     {
         return $this->hasMany(ElectivyPhoto::class);
     }
+
+    public function scopePublished($query)
+    {
+        return $query->where('status', '=', 'ACTIVE');
+    }
 }

@@ -18,7 +18,8 @@ class CreateElectivesTable extends Migration
             $table->string('name');
             $table->string('title');
             $table->string('description');
-            $table->time('time');
+            $table->time('time-start');
+            $table->time('time-end');
             $table->timestamps();
         });
     }
