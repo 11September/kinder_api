@@ -6,7 +6,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends \TCG\Voyager\Models\User
+class User extends Authenticatable
 {
     use Notifiable;
 
@@ -15,6 +15,10 @@ class User extends \TCG\Voyager\Models\User
      *
      * @var array
      */
+
+    const ADMIN_TYPE = 'admin';
+    const DEFAULT_TYPE = 'default';
+
     protected $fillable = [
         'name', 'email', 'push',  'password', 'remember_token', 'role_id', 'token'
     ];
@@ -25,8 +29,12 @@ class User extends \TCG\Voyager\Models\User
      * @var array
      */
     protected $hidden = [
-//        'password', 'remember_token', 'role_id',
+        'password', 'remember_token', 'role_id',
     ];
+
+    public function isAdmin()    {
+        return $this->type === self::ADMIN_TYPE;
+    }
 
     public function getUserToken()
     {

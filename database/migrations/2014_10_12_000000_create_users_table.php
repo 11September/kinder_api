@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('token')->unique();
             $table->enum('push', ['ENABLE', 'DISABLE']);
+            $table->string('type')->default('default');
             $table->rememberToken();
             $table->timestamps();
         });

@@ -16,6 +16,18 @@ Route::get('/', function () {
 });
 
 
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
+
+//Route::group(['prefix' => 'admin'], function () {
+//    Voyager::routes();
+//});
+
+Route::get('/admin', 'AdminController@admin')->middleware('is_admin')->name('admin');
+Route::get('/admin/users', 'AdminController@users')->middleware('is_admin')->name('admin');
+
+Route::get('/admin/kindergartens', 'AdminController@kindergartens')->middleware('is_admin')->name('admin');
+Route::post('/admin/kindergartens', 'AdminController@kindergartens')->middleware('is_admin')->name('admin');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
