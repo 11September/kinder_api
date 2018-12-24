@@ -22,6 +22,11 @@ Route::get('/', function () {
 //});
 
 Route::get('/admin', 'AdminController@admin')->middleware('is_admin')->name('admin');
+
+Route::get('/admin/admins', 'AdminController@admins')->middleware('is_admin')->name('admin');
+Route::post('/admin/admins/store', 'AdminController@store')->middleware('is_admin')->name('admin');
+Route::get('/admin/admins/delete/{user}', 'AdminController@delete')->middleware('is_admin')->name('admin');
+
 Route::get('/admin/users', 'AdminController@users')->middleware('is_admin')->name('admin');
 
 Route::get('/admin/kindergartens', 'AdminController@kindergartens')->middleware('is_admin')->name('admin');
@@ -30,4 +35,3 @@ Route::post('/admin/kindergartens', 'AdminController@kindergartens')->middleware
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-

@@ -7,6 +7,13 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ url('admin/admins') }}">
+            <i class="fas fa-hotel"></i>
+            <span>Администрация</span>
+        </a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ url('admin/kindergartens') }}">
             <i class="fas fa-hotel"></i>
             <span>Садики</span>
