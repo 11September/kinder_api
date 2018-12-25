@@ -47,4 +47,40 @@ class ElectivesContoller extends Controller
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
+
+
+    public function admin()
+    {
+        $electives = Electivy::select('id', 'name', 'school_id', 'time_start', 'time_end')->get();
+
+        return view('admin.electives', compact('electives'));
+    }
+
+    public function adminCreate()
+    {
+        return view('admin.electives.create');
+    }
+
+    public function adminStore()
+    {
+
+    }
+
+    public function adminShow()
+    {
+        
+    }
+
+    public function adminEdit(Electivy $electivy)
+    {
+        return view('admin.electives', compact('electivy'));
+    }
+
+    public function adminDelete($id)
+    {
+        $electivy = Electivy::find($id);
+        $electivy->delete();
+
+        return redirect()->back()->with('success', 'Successfully deleted!');
+    }
 }

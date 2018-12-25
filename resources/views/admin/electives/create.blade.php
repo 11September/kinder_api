@@ -15,48 +15,6 @@
             <li class="breadcrumb-item active">Tables</li>
         </ol>
 
-        <div class="card mb-3">
-            <div class="card-header">
-                <i class="fas fa-table"></i>
-                Data Table Example
-            </div>
-            <div class="card-body">
-                <div class="table-responsive">
-                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                        <tr>
-                            <th>Имя</th>
-                            <th>Email</th>
-                            <th>Тип</th>
-                            <th>Действия</th>
-                        </tr>
-                        </thead>
-                        <tfoot>
-                        <tr>
-                            <th>Имя</th>
-                            <th>Email</th>
-                            <th>Тип</th>
-                            <th>Действия</th>
-                        </tr>
-                        </tfoot>
-                        <tbody>
-
-                        @foreach($users as $user)
-                            <tr>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ $user->type }}</td>
-                                <td>
-                                    <a href="{{ url('admin/admins/delete', $user->id) }}">Delete</a>
-                                </td>
-                            </tr>
-                        @endforeach
-
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
 
         <div class="row">
             <div class="col-md-6">

@@ -17,9 +17,9 @@ class CreateElectivesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('title');
-            $table->string('description');
-            $table->time('time-start');
-            $table->time('time-end');
+            $table->integer('school_id');
+            $table->time('time_start');
+            $table->time('time_end');
             $table->timestamps();
         });
     }

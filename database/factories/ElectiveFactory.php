@@ -6,8 +6,8 @@ $factory->define(App\Electivy::class, function (Faker $faker) {
     return [
         'name' => $faker->name,
         'title' => $faker->title(),
-        'description' => $faker->text(160),
-        'time-start' => $faker->time(),
-        'time-end' => $faker->time(),
+        'school_id' => 1,
+        'time_start' => $faker->time(),
+        'time_end' => $faker->time(),
     ];
 });

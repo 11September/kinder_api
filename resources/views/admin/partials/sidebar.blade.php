@@ -27,7 +27,7 @@
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="{{ url('admin/users') }}">
+        <a class="nav-link" href="{{ url('admin/electives') }}">
             <i class="fas fa-list-ul"></i>
             <span>Список кружков</span></a>
     </li>
