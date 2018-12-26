@@ -32,8 +32,10 @@ Route::get('/admin/admins/delete/{user}', 'AdminController@delete')->middleware(
 
 Route::get('/admin/users', 'AdminController@users')->middleware('is_admin')->name('admin');
 
-Route::get('/admin/kindergartens', 'AdminController@kindergartens')->middleware('is_admin')->name('admin');
-Route::post('/admin/kindergartens', 'AdminController@kindergartens')->middleware('is_admin')->name('admin');
+// Admin Schools
+Route::get('/admin/kindergartens', 'SchoolController@adminIndex')->middleware('is_admin')->name('admin.kindergartens');
+Route::post('/admin/kindergartens', 'SchoolController@adminStore')->middleware('is_admin')->name('admin');
+
 
 // Admin Electives
 Route::get('/admin/electives', 'ElectivesContoller@admin')->middleware('is_admin')->name('List Electives Admin Panel');
@@ -43,3 +45,12 @@ Route::get('/admin/electives/{id}', 'ElectivesContoller@adminShow')->middleware(
 Route::get('/admin/electives/{id}/edit', 'ElectivesContoller@adminEdit')->middleware('is_admin')->name('admin');
 Route::put('/admin/electives/{id}', 'ElectivesContoller@adminUpdate')->middleware('is_admin')->name('admin');
 Route::delete('/admin/electives/{id}', 'ElectivesContoller@adminDelete')->middleware('is_admin')->name('admin');
+
+
+// Admin News
+Route::get('/admin/posts', 'PostsController@adminIndex')->middleware('is_admin')->name('admin.posts');
+Route::get('/admin/posts/create', 'PostsController@adminCreate')->middleware('is_admin')->name('Posts Create Admin Panel');
+Route::post('/admin/posts', 'PostsController@adminStore')->middleware('is_admin')->name('Posts Store Admin Panel');
+Route::get('/admin/posts/{id}/edit', 'PostsController@adminEdit')->middleware('is_admin')->name('admin');
+
+Route::delete('/admin/posts/{id}', 'PostsController@adminDelete')->middleware('is_admin')->name('admin');

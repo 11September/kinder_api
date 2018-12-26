@@ -38,5 +38,11 @@
             <span>Меню питания</span></a>
     </li>
 
+    <li class="nav-item">
+        <a class="nav-link" href="{{ url('admin/posts') }}">
+            <i class="fas fa-newspaper"></i>
+            <span>Новости</span></a>
+    </li>
+
 
 </ul>

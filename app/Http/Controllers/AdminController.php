@@ -56,9 +56,4 @@ class AdminController extends Controller
     {
         return view('admin.users');
     }
-
-    public function kindergartens()
-    {
-        return view('admin.kindergartens');
-    }
 }

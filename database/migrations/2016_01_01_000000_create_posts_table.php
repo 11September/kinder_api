@@ -15,16 +15,13 @@ class CreatePostsTable extends Migration
         // Create table for storing roles
         Schema::create('posts', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('author_id');
             $table->string('title');
-            $table->text('excerpt');
             $table->text('body');
+            $table->date('until');
+            $table->integer('school_id');
+            $table->string('preview')->nullable();
             $table->string('image')->nullable();
-            $table->enum('status', ['PUBLISHED',
-                'DRAFT', 'PENDING'])->default('DRAFT');
             $table->timestamps();
-
-            //$table->foreign('author_id')->references('id')->on('users');
         });
     }
 

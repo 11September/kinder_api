@@ -17,21 +17,41 @@
         </ol>
 
         <div class="row">
+            <div class="col-md-12">
+                @if (Session::has('message'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        {{Session::get('message')}}
+                    </div>
+                @endif
+            </div>
+
             <div class="col-md-4">
+
+                <h3>Список Садиков</h3>
+
                 <ul class="list-group">
-                    <li class="list-group-item active">Cras justo odio</li>
-                    <li class="list-group-item">Dapibus ac facilisis in</li>
-                    <li class="list-group-item">Morbi leo risus</li>
-                    <li class="list-group-item">Porta ac consectetur ac</li>
-                    <li class="list-group-item">Vestibulum at eros</li>
+
+                    @foreach($schools as $school)
+                        <li class="list-group-item">{{ $school->name }}</li>
+                    @endforeach
+
                 </ul>
             </div>
             <div class="col-md-4">
-                <form>
+                <h3>Создание Садика</h3>
+
+                <form action="{{ action('SchoolController@adminStore') }}" method="post">
+                    {{ csrf_field() }}
+
                     <div class="form-group">
-                        <label for="exampleInputEmail1">Email address</label>
-                        <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+                        <label for="exampleFormControlSelect2">Название садика</label>
+                        <input type="text" name="name" class="form-control" required placeholder="Название садика">
                     </div>
+
+                    <button type="submit" class="btn btn-primary mb-2">Создать</button>
                 </form>
             </div>
             <div class="col-md-4">

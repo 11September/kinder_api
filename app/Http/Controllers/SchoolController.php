@@ -20,4 +20,25 @@ class SchoolController extends Controller
         }
         return response(['data' => $dishes]);
     }
+
+
+    public function adminIndex()
+    {
+        $schools = School::all();
+
+        return view('admin.kindergartens',compact('schools'));
+    }
+
+    public function adminStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+        ]);
+
+        $school = new School();
+        $school->name = $request->name;
+        $school->save();
+
+        return redirect()->route('admin.kindergartens')->with('message','Садик успешно добавлен!');
+    }
 }
