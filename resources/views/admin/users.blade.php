@@ -11,16 +11,25 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="#">Dashboard</a>
+                <a href="{{ url('admin') }}">Главная страница</a>
             </li>
-            <li class="breadcrumb-item active">Tables</li>
+            <li class="breadcrumb-item active">Пользователи</li>
         </ol>
 
         <div class="card mb-3">
             <div class="card-header">
-                <i class="fas fa-table"></i>
-                Data Table Example
+                <div class="row">
+                    <div class="col-md-6">
+                        <i class="fas fa-table"></i>
+                        Список Пользователей
+                    </div>
+                    <div class="col-md-6">
+                        <a href="{{ action('StudentsController@adminCreate') }}">Создать Пользователя</a>
+                    </div>
+                </div>
             </div>
+
+
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

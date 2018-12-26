@@ -52,8 +52,8 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function users()
+    public function kindergartens()
     {
-        return view('admin.users');
+        return view('admin.kindergartens');
     }
 }

@@ -25,12 +25,20 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/admin', 'AdminController@admin')->middleware('is_admin')->name('admin');
 
-
+// Admin Admins
 Route::get('/admin/admins', 'AdminController@admins')->middleware('is_admin')->name('admin');
 Route::post('/admin/admins/store', 'AdminController@store')->middleware('is_admin')->name('admin');
 Route::get('/admin/admins/delete/{user}', 'AdminController@delete')->middleware('is_admin')->name('admin');
 
-Route::get('/admin/users', 'AdminController@users')->middleware('is_admin')->name('admin');
+
+// Admin Users
+Route::get('/admin/users', 'StudentsController@adminIndex')->middleware('is_admin')->name('admin.users');
+Route::get('/admin/users/create', 'StudentsController@adminCreate')->middleware('is_admin')->name('List Electives Admin Panel');
+Route::post('/admin/users', 'StudentsController@adminStore')->middleware('is_admin')->name('List Electives Admin Panel');
+Route::get('/admin/users/{id}', 'StudentsController@adminShow')->middleware('is_admin')->name('admin');
+Route::get('/admin/users/{id}/edit', 'StudentsController@adminEdit')->middleware('is_admin')->name('admin');
+Route::put('/admin/users/{id}', 'StudentsController@adminUpdate')->middleware('is_admin')->name('admin');
+Route::delete('/admin/users/{id}', 'StudentsController@adminDelete')->middleware('is_admin')->name('admin');
 
 // Admin Schools
 Route::get('/admin/kindergartens', 'SchoolController@adminIndex')->middleware('is_admin')->name('admin.kindergartens');
