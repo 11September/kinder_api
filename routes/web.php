@@ -52,5 +52,5 @@ Route::get('/admin/posts', 'PostsController@adminIndex')->middleware('is_admin')
 Route::get('/admin/posts/create', 'PostsController@adminCreate')->middleware('is_admin')->name('Posts Create Admin Panel');
 Route::post('/admin/posts', 'PostsController@adminStore')->middleware('is_admin')->name('Posts Store Admin Panel');
 Route::get('/admin/posts/{id}/edit', 'PostsController@adminEdit')->middleware('is_admin')->name('admin');
-
+Route::put('/admin/posts/{id}', 'PostsController@adminUpdate')->middleware('is_admin')->name('admin');
 Route::delete('/admin/posts/{id}', 'PostsController@adminDelete')->middleware('is_admin')->name('admin');

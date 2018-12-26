@@ -71,7 +71,7 @@
                                 <td>{{ $post->until }}</td>
                                 <td>{{ $post->until }}</td>
                                 <td>
-                                    <a class="btn btn-info" href="{{ action('PostsController@adminEdit', $post->id) }}">Редактировать</a>
+                                    <a href="{{ action('PostsController@adminEdit', $post->id) }}">Редактировать</a>
 
                                     <form id="delete-form" method="POST" action="/admin/posts/{{$post->id}}">
                                         {{ csrf_field() }}

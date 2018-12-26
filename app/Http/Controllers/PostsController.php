@@ -90,18 +90,71 @@ class PostsController extends Controller
         $post->school_id = $request->school_id;
 
         $preview = $request->file('preview');
-        $input['preview'] = time() . "." . $preview->getClientOriginalExtension();
+        $input['preview'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
         $preview->move(public_path('/images/uploads'), $input['preview']);
         $post->preview = '/images/uploads/' . $input['preview'];
 
         $image = $request->file('image');
-        $input['image'] = time() . "." . $image->getClientOriginalExtension();
+        $input['image'] = time() . "-" . uniqid() . "." . $image->getClientOriginalExtension();
         $image->move(public_path('/images/uploads'), $input['image']);
         $post->image = '/images/uploads/' . $input['image'];
 
         $post->save();
 
         return redirect()->route('admin.posts')->with('message','Новость успешно добавлена!');
+    }
+
+    public function adminEdit($id)
+    {
+        $post = Post::where('id', $id)->first();
+
+        $schools = School::all();
+
+        return view('admin.posts.edit',compact('schools','post'));
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'title' => 'required',
+            'body' => 'required',
+            'until' => 'required',
+            'school_id' => 'required',
+        ]);
+
+        $post = Post::where('id', $id)->first();
+
+        if (isset($request->old_image) && !empty($request->old_image) && file_exists(public_path() . $request->old_image)){
+           dd("isset");
+        }else{
+            $image = public_path() . $post->image;
+            if(file_exists($image)) {
+                unlink($image);
+            }
+
+            $image = $request->file('image');
+            $input['image'] = time() . "-" . uniqid() . "." . $image->getClientOriginalExtension();
+            $image->move(public_path('/images/uploads'), $input['image']);
+            $post->image = '/images/uploads/' . $input['image'];
+        }
+
+        if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(public_path() . $request->old_preview)){
+            dd("isset");
+        }else{
+            $preview = public_path() . $post->preview;
+            if(file_exists($preview)) {
+                unlink($preview);
+            }
+
+            $preview = $request->file('preview');
+            $input['preview'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
+            $preview->move(public_path('/images/uploads'), $input['preview']);
+            $post->preview = '/images/uploads/' . $input['preview'];
+        }
+
+        $post->save($request->all());
+
+        return redirect()->route('admin.posts')->with('message','Новость успешно обновлена!');
     }
 
 
