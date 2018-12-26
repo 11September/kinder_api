@@ -19,7 +19,7 @@ class CreateUsersTable extends Migration
 
             $table->string('parent_name')->nullable();
             $table->string('parent_phone')->nullable();
-            $table->string('gender')->nullable();
+            $table->enum('parents', ['father', 'mother'])->nullable();
             $table->string('address')->nullable();
             $table->date('birthday')->nullable();
 

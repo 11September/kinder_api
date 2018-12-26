@@ -20,7 +20,7 @@ class User extends Authenticatable
     const DEFAULT_TYPE = 'default';
 
     protected $fillable = [
-        'name', 'email', 'push',  'password', 'remember_token', 'type', 'token'
+        'name', 'email', 'push',  'password', 'remember_token', 'type',
     ];
 
     /**
@@ -29,7 +29,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token', 'role_id',
+        'password', 'remember_token', 'role_id', 'token'
     ];
 
     public function isAdmin()    {

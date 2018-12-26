@@ -35,72 +35,47 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                            <th>Actions</th>
+                            <th>№</th>
+                            <th>ФИО ребенка</th>
+                            <th>Номер родителя</th>
+                            <th>Email</th>
+                            <th>Садик</th>
+                            <th>Группа</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Name</th>
-                            <th>Position</th>
-                            <th>Office</th>
-                            <th>Age</th>
-                            <th>Start date</th>
-                            <th>Salary</th>
-                            <th>Actions</th>
+                            <th>№</th>
+                            <th>ФИО ребенка</th>
+                            <th>Номер родителя</th>
+                            <th>Email</th>
+                            <th>Садик</th>
+                            <th>Группа</th>
+                            <th>Статус</th>
+                            <th>Действия</th>
                         </tr>
                         </tfoot>
                         <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                            <td>$320,800</td>
-                        </tr>
-                        <tr>
-                            <td>Garrett Winters</td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>63</td>
-                            <td>2011/07/25</td>
-                            <td>$170,750</td>
-                            <td>$170,750</td>
-                        </tr>
-                        <tr>
-                            <td>Ashton Cox</td>
-                            <td>Junior Technical Author</td>
-                            <td>San Francisco</td>
-                            <td>66</td>
-                            <td>2009/01/12</td>
-                            <td>$86,000</td>
-                            <td>$86,000</td>
-                        </tr>
-                        <tr>
-                            <td>Cedric Kelly</td>
-                            <td>Senior Javascript Developer</td>
-                            <td>Edinburgh</td>
-                            <td>22</td>
-                            <td>2012/03/29</td>
-                            <td>$433,060</td>
-                            <td>$433,060</td>
-                        </tr>
-                        <tr>
-                            <td>Airi Satou</td>
-                            <td>Accountant</td>
-                            <td>Tokyo</td>
-                            <td>33</td>
-                            <td>2008/11/28</td>
-                            <td>$162,700</td>
-                            <td>$162,700</td>
-                        </tr>
+
+                        @foreach($users as $user)
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $user->name }}</td>
+                                <td>{{ $user->parent_phone }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->school_id }}</td>
+                                <td>{{ $user->group_id }}</td>
+                                <td>{{ $user->status }}</td>
+                                <td>
+                                    <a href="">Crud</a>
+                                    <a href="">Crud</a>
+                                    <a href="">Crud</a>
+                                </td>
+                            </tr>
+                        @endforeach
+
                         </tbody>
                     </table>
                 </div>

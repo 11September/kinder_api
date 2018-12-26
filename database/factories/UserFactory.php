@@ -22,6 +22,14 @@ $factory->define(App\User::class, function (Faker $faker) {
         'token' => str_random(5),
         'remember_token' => str_random(10),
         'push' => $faker->randomElement(['enabled' ,'disabled']),
+
+        'parent_name' => $faker->name,
+        'parent_phone' => $faker->phoneNumber,
+        'parents' => $faker->randomElement(['father' ,'mother']),
+        'address' => $faker->address,
+        'birthday' => $faker->date(),
+        'school_id' => 1,
+        'group_id' => 1,
         'status' => "active",
     ];
 });

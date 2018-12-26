@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\School;
 use App\Student;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 
 class StudentsController extends Controller
@@ -32,36 +34,40 @@ class StudentsController extends Controller
 
     public function adminIndex()
     {
-        $users = User::where('type', 'admin')->get();
+        $users = User::where('type', 'default')->get();
 
         return view('admin.users', compact('users'));
     }
 
     public function adminCreate()
     {
+        $groups = Group::all();
+
         $schools = School::all();
 
-        return view('admin.users.create',compact('schools'));
+        return view('admin.users.create',compact('schools', 'groups'));
     }
 
     public function adminStore(Request $request)
     {
         $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-            'until' => 'required',
+            'name' => 'required',
+            'birthday' => 'required',
+            'parent_name' => 'required',
+            'parent_phone' => 'required',
+            'parents' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'password' => 'required|string|min:6|max:255|confirmed',
             'school_id' => 'required',
-            'preview' => 'required',
-            'image' => 'required',
+            'group_id' => 'required',
+            'status' => 'required',
         ]);
 
         $user = new User();
-        $user->title = $request->title;
-        $user->body = $request->body;
-        $user->until = $request->until;
-        $user->school_id = $request->school_id;
+        $user->token = Hash::make($request->email);
 
-        $user->save();
+        User::create($request->all());
 
         return redirect()->route('admin.posts')->with('message','Новость успешно добавлена!');
     }

@@ -72,12 +72,12 @@
                                     </div>
 
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="father"
+                                        <input required class="form-check-input" type="radio" name="parents" id="father"
                                                value="father">
                                         <label class="form-check-label" for="father">Батько</label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="gender" id="mother"
+                                        <input class="form-check-input" type="radio" name="parents" id="mother"
                                                value="mother">
                                         <label class="form-check-label" for="mother">Мати</label>
                                     </div>
@@ -86,30 +86,33 @@
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Email</label>
-                                        <input type="email" name="email" class="form-control" id="email"
+                                        <input required type="email" name="email" class="form-control" id="email"
                                                placeholder="name@example.com">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Адрес</label>
-                                        <input type="text" name="address" class="form-control" id="address"
+                                        <input required type="text" name="address" class="form-control" id="address"
                                                placeholder="Адрес">
                                     </div>
 
                                     <div class="form-group">
                                         <label for="password">Password</label>
-                                        <input id="password" type="password" class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
+                                        <input id="password" type="password"
+                                               class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                               name="password" required>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="password-confirm">Password Confirm</label>
-                                        <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                        <input id="password-confirm" type="password" class="form-control"
+                                               name="password_confirmation" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Садик</label>
-                                        <select name="school_id" class="form-control" id="exampleFormControlSelect1">
+                                        <select required name="school_id" class="form-control" id="exampleFormControlSelect1">
 
                                             @foreach($schools as $school)
                                                 <option value="{{ $school->id }}">{{ $school->name }}</option>
@@ -119,20 +122,20 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Группа</label>
-                                        <select name="group_id" class="form-control" id="exampleFormControlSelect1">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
+                                        <select required name="group_id" class="form-control" id="exampleFormControlSelect1">
+
+                                            @foreach($groups as $group)
+                                                <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                            @endforeach
+
                                         </select>
                                     </div>
 
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Статус</label>
-                                        <select name="status" class="form-control" id="exampleFormControlSelect1">
-                                            <option value="">1</option>
-                                            <option value="">2</option>
+                                        <select required name="status" class="form-control" id="exampleFormControlSelect1">
+                                            <option value="active">Активный</option>
+                                            <option value="disable">Неактивный</option>
                                         </select>
                                     </div>
                                 </div>
