@@ -27,6 +27,12 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ url('admin/groups') }}">
+            <i class="fas fa-layer-group"></i>
+            <span>Группы</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ url('admin/electives') }}">
             <i class="fas fa-list-ul"></i>
             <span>Список кружков</span></a>

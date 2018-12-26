@@ -402,3 +402,18 @@ body.sidebar-toggled footer.sticky-footer {
 #img-upload{
     width: 100%;
 }
+
+.list-group-item.active a{
+    color: white;
+}
+
+.list-group-item .form-group{
+    margin: 0;
+}
+
+.list-group-flex .list-group-item{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}

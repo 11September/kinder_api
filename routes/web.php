@@ -46,6 +46,14 @@ Route::get('/admin/electives/{id}/edit', 'ElectivesContoller@adminEdit')->middle
 Route::put('/admin/electives/{id}', 'ElectivesContoller@adminUpdate')->middleware('is_admin')->name('admin');
 Route::delete('/admin/electives/{id}', 'ElectivesContoller@adminDelete')->middleware('is_admin')->name('admin');
 
+// Admin Groups
+Route::get('/admin/groups', 'GroupController@adminIndex')->middleware('is_admin')->name('admin.groups');
+Route::get('/admin/groups/create', 'GroupController@adminCreate')->middleware('is_admin')->name('Posts Create Admin Panel');
+Route::post('/admin/groups', 'GroupController@adminStore')->middleware('is_admin')->name('Posts Store Admin Panel');
+Route::get('/admin/groups/{id}/edit', 'GroupController@adminEdit')->middleware('is_admin')->name('admin');
+Route::put('/admin/groups/{id}', 'GroupController@adminUpdate')->middleware('is_admin')->name('admin');
+Route::delete('/admin/groups/{id}', 'GroupController@adminDelete')->middleware('is_admin')->name('admin');
+
 
 // Admin News
 Route::get('/admin/posts', 'PostsController@adminIndex')->middleware('is_admin')->name('admin.posts');
