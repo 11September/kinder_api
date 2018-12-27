@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StorePost;
 use App\Post;
 use App\School;
 use Illuminate\Http\Request;
@@ -60,7 +61,9 @@ class PostsController extends Controller
 
     public function adminIndex()
     {
-        $posts = Post::all();
+        $posts = Post::with(array('school'=>function($query){
+            $query->select('id','name');
+        }))->get();
 
         return view('admin.posts',compact('posts'));
     }
@@ -72,17 +75,8 @@ class PostsController extends Controller
         return view('admin.posts.create',compact('schools'));
     }
 
-    public function adminStore(Request $request)
+    public function adminStore(StorePost $request)
     {
-        $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-            'until' => 'required',
-            'school_id' => 'required',
-            'preview' => 'required',
-            'image' => 'required',
-        ]);
-
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
@@ -125,7 +119,7 @@ class PostsController extends Controller
         $post = Post::where('id', $id)->first();
 
         if (isset($request->old_image) && !empty($request->old_image) && file_exists(public_path() . $request->old_image)){
-           dd("isset");
+            $post->image = $request->old_image;
         }else{
             $image = public_path() . $post->image;
             if(file_exists($image)) {
@@ -139,7 +133,7 @@ class PostsController extends Controller
         }
 
         if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(public_path() . $request->old_preview)){
-            dd("isset");
+            $post->preview = $request->old_preview;
         }else{
             $preview = public_path() . $post->preview;
             if(file_exists($preview)) {
@@ -152,7 +146,11 @@ class PostsController extends Controller
             $post->preview = '/images/uploads/' . $input['preview'];
         }
 
-        $post->save($request->all());
+        $post->title = $request->title;
+        $post->body = $request->body;
+        $post->until = $request->until;
+        $post->school_id = $request->school_id;
+        $post->save();
 
         return redirect()->route('admin.posts')->with('message','Новость успешно обновлена!');
     }

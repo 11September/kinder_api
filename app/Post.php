@@ -17,10 +17,18 @@ class Post extends Model
     {
         return $this->attributes['created_at'] = Carbon::parse($date)->toDateString();
     }
+
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
+
     public function category()
     {
         return $this->hasOne(Category::class, 'id', 'category_id');
     }
+
+
     public function scopePublished($query)
     {
         return $query->where('status', '=', 'PUBLISHED');

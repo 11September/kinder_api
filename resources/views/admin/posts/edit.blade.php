@@ -10,10 +10,10 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ url('admin') }}">Главная Страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Главная Страница</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ url('admin/posts') }}">Новости</a>
+                <a class="orange-text" href="{{ url('admin/posts') }}">Новости</a>
             </li>
             <li class="breadcrumb-item active">
                 {{ $post->title }}
@@ -42,7 +42,8 @@
                             </div>
                         @endif
 
-                        <form action="{{ action('PostsController@adminUpdate', $post->id) }}" enctype="multipart/form-data" method="post">
+                        <form action="{{ action('PostsController@adminUpdate', $post->id) }}"
+                              enctype="multipart/form-data" method="post">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
 
@@ -52,20 +53,40 @@
 
                                         <div class="form-group col-md-8">
                                             <label for="exampleFormControlInput1">Название</label>
-                                            <input required name="title" value="{{ $post->title }}" type="text" class="form-control"
+                                            <input required name="title" value="{{ $post->title }}" type="text"
+                                                   class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}"
                                                    placeholder="Название">
+
+                                            @if ($errors->has('title'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('title') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
 
                                         <div class="form-group col-md-4">
                                             <label for="exampleFormControlInput1">Дата До</label>
-                                            <input required name="until" value="{{ $post->until }}" type="date" class="form-control"
+                                            <input required name="until" value="{{ $post->until }}" type="date"
+                                                   class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
                                                    placeholder="Название">
+
+                                            @if ($errors->has('until'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('until') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
 
                                         <div class="form-group col-md-12">
                                             <label for="exampleFormControlInput1">Описание</label>
-                                            <textarea required name="body" type="text" class="form-control"
+                                            <textarea required name="body" type="text" class="form-control {{ $errors->has('body') ? ' is-invalid' : '' }}"
                                                       placeholder="Описание">{{ $post->body }}</textarea>
+
+                                            @if ($errors->has('body'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('body') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>
@@ -75,36 +96,43 @@
                                             <label>Садик</label>
 
                                             @foreach($schools as $school)
+
                                                 <div class="form-check">
-                                                    <input required class="form-check-input" type="radio" name="school_id"
-                                                           id="{{ $school->id }}" value="{{ $school->id }}"
-                                                        @if($school->id == $post->school_id) checked
-                                                        @endif
-                                                    >
-                                                    <label class="form-check-label" for="{{ $school->id }}">
+                                                    <label class="container-checkbox">
                                                         {{ $school->name }}
+                                                        <input required value="{{ $school->id }}" type="radio" name="school_id" @if($school->id == $post->school_id) checked @endif>
+                                                        <span class="checkmark-radio"></span>
                                                     </label>
                                                 </div>
+
                                             @endforeach
+
+                                            @if ($errors->has('school_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('school_id') }}</strong>
+                                                        </span>
+                                            @endif
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <label>Группы</label>
 
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       id="defaultCheck1">
-                                                <label class="form-check-label" for="defaultCheck1">
-                                                    Default checkbox
+                                                <label class="container">
+                                                    One
+                                                    <input name="group_id" type="checkbox" checked="checked">
+                                                    <span class="checkmark"></span>
                                                 </label>
                                             </div>
+
                                             <div class="form-check">
-                                                <input class="form-check-input" type="checkbox" value=""
-                                                       id="defaultCheck2">
-                                                <label class="form-check-label" for="defaultCheck2">
-                                                    Disabled checkbox
+                                                <label class="container">
+                                                    Two
+                                                    <input name="group_id" type="checkbox">
+                                                    <span class="checkmark"></span>
                                                 </label>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -117,15 +145,39 @@
                                         <div class="form-group col-md-6">
                                             <h5>Upload Preview</h5>
                                             <input name="old_image" type="hidden" value="{{ $post->image }}">
-                                            <input value="{{ $post->image }}" name="image" type='file' onchange="readURL(this);" />
-                                            <img id="blah" src="{{ asset($post->image) }}" alt="your Preview" />
+                                            <input value="{{ $post->image }}" name="image" type='file'
+                                                   onchange="readURL(this);"/>
+
+                                            @if ($errors->has('image'))
+                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('image') }}</strong>
+                                                        </span>
+                                            @endif
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <img class="post-image-preview" id="blah" src="{{ asset($post->image) }}" alt="your Preview"/>
+                                                </div>
+                                            </div>
                                         </div>
 
                                         <div class="form-group col-md-6">
                                             <h5>Upload Image</h5>
                                             <input name="old_preview" type="hidden" value="{{ $post->preview }}">
-                                            <input value="{{ $post->preview }}" name="preview" type='file' onchange="readURL2(this);" />
-                                            <img id="blah2" src="{{ asset($post->preview) }}" alt="your image" />
+                                            <input value="{{ $post->preview }}" name="preview" type='file'
+                                                   onchange="readURL2(this);"/>
+
+                                            @if ($errors->has('preview'))
+                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('preview') }}</strong>
+                                                        </span>
+                                            @endif
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <img class="post-image-preview" id="blah2" src="{{ asset($post->preview) }}" alt="your image"/>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 

@@ -12,6 +12,11 @@ class School extends Model
     protected $guarded = [];
     protected $dates = ['created_at'];
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
     public function getCreatedAtAttribute($date)
     {
         return $this->attributes['created_at'] = Carbon::parse($date)->toDateString();

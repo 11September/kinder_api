@@ -10,7 +10,7 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="#">Главная страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
             </li>
             <li class="breadcrumb-item active">Новости</li>
         </ol>
@@ -36,7 +36,9 @@
                     </div>
 
                     <div class="col-md-6">
-                        <a href="{{ action('PostsController@adminCreate') }}">Создать Новость</a>
+                        <div class="flex-end">
+                            <a class="orange-link" href="{{ action('PostsController@adminCreate') }}">Создать Новость</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -69,9 +71,9 @@
                                 <td>{{ $post->title }}</td>
                                 <td><img class="post-image" src="{{ asset($post->preview) }}" alt=""></td>
                                 <td>{{ $post->until }}</td>
-                                <td>{{ $post->until }}</td>
-                                <td>
-                                    <a class="btn btn-info" href="{{ action('PostsController@adminEdit', $post->id) }}">Редактировать</a>
+                                <td>{{ $post->school->name }}</td>
+                                <td class="action-td">
+                                    <a class="btn btn-warning" href="{{ action('PostsController@adminEdit', $post->id) }}">Редактировать</a>
 
                                     <form id="delete-form" method="POST" action="/admin/posts/{{$post->id}}">
                                         {{ csrf_field() }}
