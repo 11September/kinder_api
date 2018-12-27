@@ -502,6 +502,19 @@ body.sidebar-toggled footer.sticky-footer {
     color: white;
 }
 
+.card-header i{
+    color: darkorange;
+}
+
+.page-item.active .page-link{
+    background-color: darkorange;
+    border-color: darkorange;
+}
+
+.form-check{
+    padding-left: 0;
+}
+
 
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */

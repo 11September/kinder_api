@@ -11,7 +11,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ url('admin') }}">Главная страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
             </li>
             <li class="breadcrumb-item active">Пользователи</li>
         </ol>
@@ -37,7 +37,9 @@
                         Список Пользователей
                     </div>
                     <div class="col-md-6">
-                        <a href="{{ action('StudentsController@adminCreate') }}">Создать Пользователя</a>
+                        <div class="flex-end">
+                            <a class="orange-link" href="{{ action('StudentsController@adminCreate') }}">Создать Пользователя</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -78,11 +80,11 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->parent_phone }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->school_id }}</td>
-                                <td>{{ $user->group_id }}</td>
+                                <td>{{ $user->school->name }}</td>
+                                <td>{{ $user->group->name }}</td>
                                 <td>{{ $user->status }}</td>
-                                <td>
-                                    <a class="btn btn-info" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редактировать</a>
+                                <td class="action-td">
+                                    <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редактировать</a>
 
                                     <form id="delete-form" method="POST" action="/admin/users/{{$user->id}}">
                                         {{ csrf_field() }}

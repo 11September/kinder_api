@@ -41,10 +41,13 @@ class User extends Authenticatable
         return $this->token;
     }
 
-    public function students()
+    public function school()
     {
-        return $this->belongsToMany(Student::class);
+        return $this->belongsTo(School::class);
     }
 
-
+    public function group()
+    {
+        return $this->belongsTo(Group::class);
+    }
 }

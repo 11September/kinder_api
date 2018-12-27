@@ -17,6 +17,11 @@ class School extends Model
         return $this->hasMany(Post::class);
     }
 
+    public function students()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function getCreatedAtAttribute($date)
     {
         return $this->attributes['created_at'] = Carbon::parse($date)->toDateString();

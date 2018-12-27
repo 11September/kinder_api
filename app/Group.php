@@ -16,7 +16,7 @@ class Group extends Model
 
     public function students()
     {
-        return $this->hasMany(Student::class);
+        return $this->hasMany(User::class);
     }
 
     public function scopeFilter($query, $params)

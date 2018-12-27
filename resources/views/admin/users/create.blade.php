@@ -10,10 +10,10 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ url('admin') }}">Главная Страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
             </li>
             <li class="breadcrumb-item active">
-                <a href="{{ url('admin/users') }}">Пользователи</a>
+                <a class="orange-text" href="{{ url('admin/users') }}">Пользователи</a>
             </li>
             <li class="breadcrumb-item ">
                 Создание пользователя
@@ -72,15 +72,22 @@
                                     </div>
 
                                     <div class="form-check">
-                                        <input required class="form-check-input" type="radio" name="parents" id="father"
-                                               value="father">
-                                        <label class="form-check-label" for="father">Батько</label>
+                                        <label class="container-checkbox">
+                                            Батько
+                                            <input required value="father" type="radio"
+                                                   checked="checked" name="parents">
+                                            <span class="checkmark-radio"></span>
+                                        </label>
                                     </div>
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="parents" id="mother"
-                                               value="mother">
-                                        <label class="form-check-label" for="mother">Мати</label>
+                                        <label class="container-checkbox">
+                                            Мати
+                                            <input required value="mother" type="radio"
+                                                   checked="checked" name="parents">
+                                            <span class="checkmark-radio"></span>
+                                        </label>
                                     </div>
+
                                 </div>
                                 <div class="col-md-4">
 

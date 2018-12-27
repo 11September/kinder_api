@@ -34,7 +34,14 @@ class StudentsController extends Controller
 
     public function adminIndex()
     {
-        $users = User::where('type', 'default')->get();
+        $users = User::where('type', 'default')
+            ->with(array('school'=>function($query){
+                $query->select('id','name');
+            }))
+            ->with(array('group'=>function($query){
+                $query->select('id','name');
+            }))
+            ->get();
 
         return view('admin.users', compact('users'));
     }
