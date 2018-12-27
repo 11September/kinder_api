@@ -10,10 +10,10 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ url('admin') }}">Главная страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
             </li>
             <li class="breadcrumb-item">
-                <a href="{{ url('admin/groups') }}">Группы</a>
+                <a class="orange-text" href="{{ url('admin/groups') }}">Группы</a>
             </li>
             <li class="breadcrumb-item active">
                 {{ $group->name }}
@@ -78,20 +78,25 @@
                                         <label>Садик</label>
 
                                         @foreach($schools as $school)
+
                                             <div class="form-check">
-                                                <input required class="form-check-input" type="radio" name="school_id"
-                                                       id="{{ $school->id }}" value="{{ $school->id }}" @if($school->id == $group->school_id) checked @endif>
-                                                <label class="form-check-label" for="{{ $school->id }}">
+                                                <label class="container-checkbox">
                                                     {{ $school->name }}
+                                                    <input required value="{{ $school->id }}" type="radio"
+                                                           @if($school->id == $group->school_id) checked
+                                                           @endif  name="school_id">
+                                                    <span class="checkmark-radio"></span>
                                                 </label>
                                             </div>
+
                                         @endforeach
                                     </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Название Группы</label>
-                                        <input required type="text" value="{{ $group->name }}" name="name" class="form-control" id="name"
+                                        <input required type="text" value="{{ $group->name }}" name="name"
+                                               class="form-control" id="name"
                                                placeholder="Название Группы">
                                     </div>
 
@@ -100,7 +105,8 @@
                                         <select required name="user_id" class="form-control" id="user_id">
 
                                             @foreach($users as $administrator)
-                                                <option @if($administrator->id == $group->user_id) selected @endif value="{{ $administrator->id }}">{{ $administrator->name }}</option>
+                                                <option @if($administrator->id == $group->user_id) selected
+                                                        @endif value="{{ $administrator->id }}">{{ $administrator->name }}</option>
                                             @endforeach
 
                                         </select>

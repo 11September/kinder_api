@@ -10,7 +10,7 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a href="{{ url('admin') }}">Главная страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
             </li>
             <li class="breadcrumb-item active">Группы</li>
         </ol>
@@ -41,7 +41,7 @@
 
                             @foreach($groups as $group)
                                 <li class="list-group-item">
-                                    <a href="{{ action('GroupController@adminEdit', $group->id) }}">
+                                    <a class="orange-text" href="{{ action('GroupController@adminEdit', $group->id) }}">
                                         {{ $group->name }}
                                     </a>
                                     <form id="delete-form" method="POST" action="/admin/groups/{{$group->id}}">
@@ -71,14 +71,17 @@
                                         <label>Садик</label>
 
                                         @foreach($schools as $school)
+
                                             <div class="form-check">
-                                                <input required class="form-check-input" type="radio" name="school_id"
-                                                       id="{{ $school->id }}" value="{{ $school->id }}">
-                                                <label class="form-check-label" for="{{ $school->id }}">
+                                                <label class="container-checkbox">
                                                     {{ $school->name }}
+                                                    <input required value="{{ $school->id }}" type="radio" name="school_id">
+                                                    <span class="checkmark-radio"></span>
                                                 </label>
                                             </div>
+
                                         @endforeach
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">

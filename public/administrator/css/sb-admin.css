@@ -403,6 +403,10 @@ body.sidebar-toggled footer.sticky-footer {
     width: 100%;
 }
 
+.list-group-item a{
+    color: darkorange;
+}
+
 .list-group-item.active a{
     color: white;
 }
@@ -490,6 +494,12 @@ body.sidebar-toggled footer.sticky-footer {
 
 .invalid-feedback{
     display: block;
+}
+
+.list-group-item.active{
+    background-color: darkorange;
+    border-color: darkorange;
+    color: white;
 }
 
 
