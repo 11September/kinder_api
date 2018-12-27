@@ -157,8 +157,6 @@ class PostsController extends Controller
         return redirect()->route('admin.posts')->with('message','Новость успешно обновлена!');
     }
 
-
-
     public function adminDelete($id)
     {
         $post = Post::find($id);

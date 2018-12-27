@@ -65,11 +65,88 @@ class StudentsController extends Controller
         ]);
 
         $user = new User();
+        $user->name = $request->name;
+        $user->birthday = $request->birthday;
+        $user->parent_name = $request->parent_name;
+        $user->parents = $request->parents;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->address = $request->address;
+        $user->school_id = $request->school_id;
+        $user->group_id = $request->group_id;
+        $user->status = $request->status;
+
+        $user->password = Hash::make($request->password);
         $user->token = Hash::make($request->email);
 
-        User::create($request->all());
+        $user->save();
 
-        return redirect()->route('admin.posts')->with('message','Новость успешно добавлена!');
+        return redirect()->route('admin.users')->with('message','Пользователь успешно добавлен!');
+    }
+
+    public function adminEdit($id)
+    {
+        $user = User::where('id', $id)->first();
+
+        $groups = Group::all();
+
+        $schools = School::all();
+
+        return view('admin.users.edit',compact('user','groups', 'schools'));
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'birthday' => 'required',
+            'parent_name' => 'required',
+            'parent_phone' => 'required',
+            'parents' => 'required',
+            'email' => 'required',
+            'address' => 'required',
+            'school_id' => 'required',
+            'group_id' => 'required',
+            'status' => 'required',
+        ]);
+
+        $user = User::where('id', $id)->first();
+
+        if ($request->password && !empty($request->password) && ($request->password == $request->password_confirmation)){
+            $user->password = Hash::make($request->password);
+        }
+
+        if ($request->password && $request->password_confirmation && ($request->password !== $request->password_confirmation) && (iconv_strlen($request->password < 7)) && (iconv_strlen($request->password_confirmation < 7))){
+            return redirect()->back()->with('message','Пароли не совпадают или не соответствуют формату!');
+        }
+
+        if($request->password && $request->password_confirmation &&  $request->password !== $request->password_confirmation){
+            return redirect()->back()->with('message','Пароли не совпадают или не соответствуют формату!');
+        }
+
+        $user->name = $request->name;
+        $user->birthday = $request->birthday;
+        $user->parent_name = $request->parent_name;
+        $user->parents = $request->parents;
+        $user->email = $request->email;
+        $user->address = $request->address;
+        $user->address = $request->address;
+        $user->school_id = $request->school_id;
+        $user->group_id = $request->group_id;
+        $user->status = $request->status;
+
+        $user->save();
+
+        return redirect()->route('admin.users')->with('message','Пользователь успешно обновлён!');
+    }
+
+    public function adminDelete($id)
+    {
+        $user = User::find($id);
+
+        $user->delete();
+
+        return redirect()->route('admin.users')->with('message','Пользователь успешно удалён!');
     }
 
 }

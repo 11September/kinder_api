@@ -20,7 +20,7 @@ class User extends Authenticatable
     const DEFAULT_TYPE = 'default';
 
     protected $fillable = [
-        'name', 'email', 'push',  'password', 'remember_token', 'type',
+        'name', 'email', 'push', 'type', 'parent_name', 'parent_phone', 'parents', 'address', 'birthday', 'school_id', 'group_id', 'status',
     ];
 
     /**

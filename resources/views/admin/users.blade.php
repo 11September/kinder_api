@@ -19,6 +19,19 @@
         <div class="card mb-3">
             <div class="card-header">
                 <div class="row">
+
+                    <div class="col-md-12">
+                        @if (Session::has('message'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                {{Session::get('message')}}
+                            </div>
+                        @endif
+                    </div>
+
+
                     <div class="col-md-6">
                         <i class="fas fa-table"></i>
                         Список Пользователей
@@ -69,9 +82,16 @@
                                 <td>{{ $user->group_id }}</td>
                                 <td>{{ $user->status }}</td>
                                 <td>
-                                    <a href="">Crud</a>
-                                    <a href="">Crud</a>
-                                    <a href="">Crud</a>
+                                    <a class="btn btn-info" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редактировать</a>
+
+                                    <form id="delete-form" method="POST" action="/admin/users/{{$user->id}}">
+                                        {{ csrf_field() }}
+                                        {{ method_field('DELETE') }}
+
+                                        <div class="form-group">
+                                            <input type="submit" class="btn btn-danger" value="Удалить">
+                                        </div>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
