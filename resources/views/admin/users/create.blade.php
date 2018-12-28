@@ -71,22 +71,6 @@
                                                type="text" class="form-control" placeholder="Номер Телефона Родителя">
                                     </div>
 
-                                    <div class="form-check">
-                                        <label class="container-checkbox">
-                                            Батько
-                                            <input required value="father" type="radio"
-                                                   checked="checked" name="parents">
-                                            <span class="checkmark-radio"></span>
-                                        </label>
-                                    </div>
-                                    <div class="form-check">
-                                        <label class="container-checkbox">
-                                            Мати
-                                            <input required value="mother" type="radio"
-                                                   checked="checked" name="parents">
-                                            <span class="checkmark-radio"></span>
-                                        </label>
-                                    </div>
 
                                 </div>
                                 <div class="col-md-4">
@@ -119,7 +103,8 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Садик</label>
-                                        <select required name="school_id" class="form-control" id="exampleFormControlSelect1">
+                                        <select required name="school_id" class="form-control"
+                                                id="exampleFormControlSelect1">
 
                                             @foreach($schools as $school)
                                                 <option value="{{ $school->id }}">{{ $school->name }}</option>
@@ -129,7 +114,8 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Группа</label>
-                                        <select required name="group_id" class="form-control" id="exampleFormControlSelect1">
+                                        <select required name="group_id" class="form-control"
+                                                id="exampleFormControlSelect1">
 
                                             @foreach($groups as $group)
                                                 <option value="{{ $group->id }}">{{ $group->name }}</option>
@@ -138,13 +124,64 @@
                                         </select>
                                     </div>
 
+
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Статус</label>
-                                        <select required name="status" class="form-control" id="exampleFormControlSelect1">
-                                            <option value="active">Активный</option>
-                                            <option value="disable">Неактивный</option>
-                                        </select>
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-6">
+                                                <label>Статус</label>
+
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Активный
+                                                        <input required value="active" type="radio"
+                                                               checked="checked" name="status">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Неактивный
+                                                        <input required value="disable" type="radio"
+                                                               checked="checked" name="status">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label>Пол</label>
+
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Батько
+                                                        <input required value="father" type="radio"
+                                                               checked="checked" name="parents">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Мати
+                                                        <input required value="mother" type="radio"
+                                                               checked="checked" name="parents">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            {{--<div class="form-group col-md-6">--}}
+                                            {{--<label for="exampleFormControlSelect1">Статус</label>--}}
+                                            {{--<select required name="status" class="form-control" id="exampleFormControlSelect1">--}}
+                                            {{--<option value="active">Активный</option>--}}
+                                            {{--<option value="disable">Неактивный</option>--}}
+                                            {{--</select>--}}
+                                            {{--</div>--}}
+
+                                        </div>
                                     </div>
+
+
                                 </div>
                             </div>
 

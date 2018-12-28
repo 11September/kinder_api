@@ -41,6 +41,7 @@ class StudentsController extends Controller
             ->with(array('group'=>function($query){
                 $query->select('id','name');
             }))
+            ->latest()
             ->get();
 
         return view('admin.users', compact('users'));

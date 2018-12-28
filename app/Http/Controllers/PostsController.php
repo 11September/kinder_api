@@ -63,7 +63,7 @@ class PostsController extends Controller
     {
         $posts = Post::with(array('school'=>function($query){
             $query->select('id','name');
-        }))->get();
+        }))->latest()->get();
 
         return view('admin.posts',compact('posts'));
     }

@@ -86,25 +86,6 @@
                                                type="text" class="form-control" placeholder="Номер Телефона Родителя">
                                     </div>
 
-
-                                    <div class="form-check">
-                                        <label class="container-checkbox">
-                                            Батько
-                                            <input required value="father" type="radio"
-                                                   @if($user->parents == "father") checked @endif name="parents">
-                                            <span class="checkmark-radio"></span>
-                                        </label>
-                                    </div>
-
-                                    <div class="form-check">
-                                        <label class="container-checkbox">
-                                            Мати
-                                            <input required value="mother" type="radio"
-                                                   @if($user->parents == "mother") checked @endif name="parents">
-                                            <span class="checkmark-radio"></span>
-                                        </label>
-                                    </div>
-
                                 </div>
                                 <div class="col-md-4">
 
@@ -156,16 +137,56 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Статус</label>
-                                        <select required name="status" class="form-control" id="exampleFormControlSelect1">
-                                            <option @if($user->status == "active") selected @endif value="active">Активный</option>
-                                            <option @if($user->status == "disable") selected @endif value="disable">Неактивный</option>
-                                        </select>
+                                        <div class="form-row">
+
+                                            <div class="form-group col-md-6">
+                                                <label>Статус</label>
+
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Активный
+                                                        <input required value="active" type="radio"
+                                                               @if($user->status == "active") checked @endif  name="status">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Неактивный
+                                                        <input required value="disable" type="radio"
+                                                               @if($user->status == "disable") checked @endif name="status">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group col-md-6">
+                                                <label>Пол</label>
+
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Батько
+                                                        <input required value="father" type="radio"
+                                                               @if($user->parents == "father") checked @endif name="parents">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        Мати
+                                                        <input required value="mother" type="radio"
+                                                               @if($user->parents == "mother") checked @endif name="parents">
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+                                            </div>
+
+                                        </div>
                                     </div>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                            <button type="submit" class="btn btn-primary mb-2">Обновить</button>
                         </form>
                     </div>
                 </div>
