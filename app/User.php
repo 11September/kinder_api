@@ -32,7 +32,7 @@ class User extends Authenticatable
         'password', 'remember_token', 'role_id', 'token'
     ];
 
-    public function isAdmin()    {
+    public static function isAdmin()    {
         return $this->type === self::ADMIN_TYPE;
     }
 
