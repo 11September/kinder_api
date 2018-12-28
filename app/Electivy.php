@@ -8,6 +8,11 @@ class Electivy extends Model
 {
     protected $table = "electives";
 
+    public function school()
+    {
+        return $this->belongsTo(School::class);
+    }
+
     public function photos()
     {
         return $this->hasMany(ElectivyPhoto::class);

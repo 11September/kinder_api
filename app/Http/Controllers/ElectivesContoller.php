@@ -49,9 +49,11 @@ class ElectivesContoller extends Controller
     }
 
 
-    public function admin()
+    public function adminIndex()
     {
-        $electives = Electivy::select('id', 'name', 'school_id', 'time_start', 'time_end')->get();
+        $electives = Electivy::with(array('school'=>function($query){
+            $query->select('id','name');
+        }))->latest()->get();
 
         return view('admin.electives', compact('electives'));
     }
@@ -68,7 +70,7 @@ class ElectivesContoller extends Controller
 
     public function adminShow()
     {
-        
+
     }
 
     public function adminEdit(Electivy $electivy)
