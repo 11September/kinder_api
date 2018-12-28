@@ -515,6 +515,11 @@ body.sidebar-toggled footer.sticky-footer {
     padding-left: 0;
 }
 
+.group-count{
+    margin: 0;
+    font-size: 16px;
+}
+
 
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */

@@ -41,9 +41,16 @@
 
                             @foreach($groups as $group)
                                 <li class="list-group-item">
-                                    <a class="orange-text" href="{{ action('GroupController@adminEdit', $group->id) }}">
-                                        {{ $group->name }}
-                                    </a>
+                                    <div>
+                                        <a class="orange-text"
+                                           href="{{ action('GroupController@adminEdit', $group->id) }}">
+                                            {{ $group->name }}
+                                        </a>
+
+                                        <p class="group-count">{{ $group->students_count }} Человек</p>
+                                    </div>
+
+
                                     <form id="delete-form" method="POST" action="/admin/groups/{{$group->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
@@ -75,7 +82,8 @@
                                             <div class="form-check">
                                                 <label class="container-checkbox">
                                                     {{ $school->name }}
-                                                    <input required value="{{ $school->id }}" type="radio" name="school_id">
+                                                    <input required value="{{ $school->id }}" type="radio"
+                                                           name="school_id">
                                                     <span class="checkmark-radio"></span>
                                                 </label>
                                             </div>
@@ -96,7 +104,8 @@
                                         <select required name="user_id" class="form-control" id="user_id">
 
                                             @foreach($users as $administrator)
-                                                <option value="{{ $administrator->id }}">{{ $administrator->name }}</option>
+                                                <option
+                                                    value="{{ $administrator->id }}">{{ $administrator->name }}</option>
                                             @endforeach
 
                                         </select>

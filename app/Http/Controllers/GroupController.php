@@ -32,7 +32,9 @@ class GroupController extends Controller
 
         $schools = School::all();
 
-        $groups = Group::all();
+        $groups = Group::withCount(['students'])->get();
+
+//        dd($groups);
 
         return view('admin.groups',compact('users', 'schools', 'groups'));
     }
@@ -63,7 +65,7 @@ class GroupController extends Controller
 
         $groups = Group::all();
 
-        $group = Group::where('id', $id)->first();
+        $group = Group::where('id', $id)->withCount(['students'])->first();
 
         return view('admin.groups.edit',compact('users', 'schools', 'group', 'groups'));
     }

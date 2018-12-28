@@ -46,9 +46,14 @@
 
                             @foreach($groups as $list_groups)
                                 <li class="list-group-item @if($list_groups->id == $group->id) active @endif">
-                                    <a href="{{ action('GroupController@adminEdit', $list_groups->id) }}">
-                                        {{ $list_groups->name }}
-                                    </a>
+
+                                    <div>
+                                        <a href="{{ action('GroupController@adminEdit', $list_groups->id) }}">
+                                            {{ $list_groups->name }}
+                                        </a>
+
+                                        <p class="group-count">{{ $group->students_count }} Человек</p>
+                                    </div>
 
                                     <form id="delete-form" method="POST" action="/admin/groups/{{$group->id}}">
                                         {{ csrf_field() }}
