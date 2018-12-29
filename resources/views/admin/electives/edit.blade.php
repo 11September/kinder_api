@@ -15,7 +15,7 @@
             <li class="breadcrumb-item active">
                 <a class="orange-text" href="{{ url('admin/electives') }}">Кружки</a>
             </li>
-            <li class="breadcrumb-item active">Создание кружка</li>
+            <li class="breadcrumb-item active">{{ $electivy->name }}</li>
         </ol>
 
         <div class="row">
@@ -40,9 +40,10 @@
                         @endif
 
 
-                        <form action="{{ action('ElectivesContoller@adminStore') }}" method="post"
+                        <form action="{{ action('ElectivesContoller@adminUpdate', $electivy->id) }}" method="post"
                               enctype="multipart/form-data">
                             {{ csrf_field() }}
+                            {{ method_field('PUT') }}
 
                             <div class="row">
                                 <div class="col-md-6">
@@ -51,7 +52,7 @@
 
                                         <div class="form-group col-md-12">
                                             <label for="exampleFormControlInput1">Название кружка</label>
-                                            <input required name="name" value="{{ old('name') }}" type="text"
+                                            <input required name="name" value="{{ $electivy->name }}" type="text"
                                                    class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                    placeholder="Название">
 
@@ -64,7 +65,7 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="exampleFormControlInput1">Время С</label>
-                                            <input required name="time_start" value="{{ old('time_start') }}" type="time"
+                                            <input required name="time_start" value="{{ $electivy->time_start }}" type="time"
                                                    class="form-control {{ $errors->has('time_start') ? ' is-invalid' : '' }}"
                                                    placeholder="Название">
 
@@ -77,7 +78,7 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="exampleFormControlInput1">Время До</label>
-                                            <input required name="time_end" value="{{ old('time_end') }}" type="time"
+                                            <input required name="time_end" value="{{ $electivy->time_end }}" type="time"
                                                    class="form-control {{ $errors->has('time_end') ? ' is-invalid' : '' }}"
                                                    placeholder="Название">
 
@@ -101,7 +102,7 @@
                                                     <label class="container-checkbox">
                                                         {{ $school->name }}
                                                         <input required value="{{ $school->id }}" type="radio"
-                                                               checked="checked" name="school_id">
+                                                               @if($school->id == $electivy->school_id) checked @endif name="school_id">
                                                         <span class="checkmark-radio"></span>
                                                     </label>
                                                 </div>
@@ -139,7 +140,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                            <button type="submit" class="btn btn-primary mb-2">Обновить</button>
 
                         </form>
                     </div>

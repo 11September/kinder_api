@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Electivy;
+use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
@@ -60,22 +61,57 @@ class ElectivesContoller extends Controller
 
     public function adminCreate()
     {
-        return view('admin.electives.create');
+        $schools = School::all();
+
+        return view('admin.electives.create', compact('schools'));
     }
 
-    public function adminStore()
-    {
 
+    public function adminStore(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'school_id' => 'required',
+            'time_start' => 'required',
+            'time_end' => 'required',
+        ]);
+
+        $elective = new Electivy();
+        $elective->name = $request->name;
+        $elective->school_id = $request->school_id;
+        $elective->time_start = $request->time_start;
+        $elective->time_end = $request->time_end;
+        $elective->save();
+
+        return redirect()->route('admin.electives')->with('message','Кружек успешно добавлен!');
     }
 
-    public function adminShow()
+    public function adminEdit($id)
     {
+        $electivy = Electivy::where('id', $id)->first();
 
+        $schools = School::all();
+
+        return view('admin.electives.edit', compact('electivy', 'schools'));
     }
 
-    public function adminEdit(Electivy $electivy)
+    public function adminUpdate(Request $request, $id)
     {
-        return view('admin.electives', compact('electivy'));
+        $request->validate([
+            'name' => 'required',
+            'school_id' => 'required',
+            'time_start' => 'required',
+            'time_end' => 'required',
+        ]);
+
+        $elective = Electivy::where('id', $id)->first();
+        $elective->name = $request->name;
+        $elective->school_id = $request->school_id;
+        $elective->time_start = $request->time_start;
+        $elective->time_end = $request->time_end;
+        $elective->save();
+
+        return redirect()->route('admin.electives')->with('message','Кружек успешно обновлен!');
     }
 
     public function adminDelete($id)
@@ -83,6 +119,6 @@ class ElectivesContoller extends Controller
         $electivy = Electivy::find($id);
         $electivy->delete();
 
-        return redirect()->back()->with('success', 'Successfully deleted!');
+        return redirect()->back()->with('success', 'Кружек успешно удалён!');
     }
 }

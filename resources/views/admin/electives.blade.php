@@ -46,19 +46,19 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Имя</th>
+                            <th>Название</th>
                             <th>Садик</th>
-                            <th>С</th>
-                            <th>До</th>
+                            <th>Время С</th>
+                            <th>Время До</th>
                             <th>Действия</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Имя</th>
+                            <th>Название</th>
                             <th>Садик</th>
-                            <th>С</th>
-                            <th>До</th>
+                            <th>Время С</th>
+                            <th>Время До</th>
                             <th>Действия</th>
                         </tr>
                         </tfoot>

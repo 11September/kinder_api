@@ -16,7 +16,6 @@ class CreateElectivesTable extends Migration
         Schema::create('electives', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('title');
             $table->integer('school_id');
             $table->time('time_start');
             $table->time('time_end');

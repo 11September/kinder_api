@@ -20,7 +20,7 @@ class User extends Authenticatable
     const DEFAULT_TYPE = 'default';
 
     protected $fillable = [
-        'name', 'email', 'push', 'type', 'parent_name', 'parent_phone', 'parents', 'address', 'birthday', 'school_id', 'group_id', 'status',
+        'name', 'email', 'push', 'type', 'parent_name', 'parent_phone', 'parents', 'address', 'birthday', 'school_id', 'group_id', 'status', 'password', 'token'
     ];
 
     /**
@@ -28,13 +28,10 @@ class User extends Authenticatable
      *
      * @var array
      */
+
     protected $hidden = [
         'password', 'remember_token', 'role_id', 'token'
     ];
-
-    public static function isAdmin()    {
-        return $this->type === self::ADMIN_TYPE;
-    }
 
     public function getUserToken()
     {

@@ -46,7 +46,7 @@ Route::post('/admin/kindergartens', 'SchoolController@adminStore')->middleware('
 
 
 // Admin Electives
-Route::get('/admin/electives', 'ElectivesContoller@adminIndex')->middleware('is_admin')->name('List Electives Admin Panel');
+Route::get('/admin/electives', 'ElectivesContoller@adminIndex')->middleware('is_admin')->name('admin.electives');
 Route::get('/admin/electives/create', 'ElectivesContoller@adminCreate')->middleware('is_admin')->name('List Electives Admin Panel');
 Route::post('/admin/electives', 'ElectivesContoller@adminStore')->middleware('is_admin')->name('List Electives Admin Panel');
 Route::get('/admin/electives/{id}', 'ElectivesContoller@adminShow')->middleware('is_admin')->name('admin');
