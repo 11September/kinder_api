@@ -70,3 +70,12 @@ Route::post('/admin/posts', 'PostsController@adminStore')->middleware('is_admin'
 Route::get('/admin/posts/{id}/edit', 'PostsController@adminEdit')->middleware('is_admin')->name('admin');
 Route::put('/admin/posts/{id}', 'PostsController@adminUpdate')->middleware('is_admin')->name('admin');
 Route::delete('/admin/posts/{id}', 'PostsController@adminDelete')->middleware('is_admin')->name('admin');
+
+
+// Admin Notifications
+Route::get('/admin/notifications', 'NotificationsController@adminIndex')->middleware('is_admin')->name('admin.notifications');
+Route::get('/admin/notifications/create', 'NotificationsController@adminCreate')->middleware('is_admin')->name('Posts Create Admin Panel');
+Route::post('/admin/notifications', 'NotificationsController@adminStore')->middleware('is_admin')->name('Posts Store Admin Panel');
+Route::get('/admin/notifications/{id}/edit', 'NotificationsController@adminEdit')->middleware('is_admin')->name('admin');
+Route::put('/admin/notifications/{id}', 'NotificationsController@adminUpdate')->middleware('is_admin')->name('admin');
+Route::delete('/admin/notifications/{id}', 'NotificationsController@adminDelete')->middleware('is_admin')->name('admin');
