@@ -139,7 +139,7 @@ class UsersController extends Controller
         }
 
         if ($request->password !== $request->password_confirmation) {
-            return response()->json(['message' => 'Паролі не співпадають'], 200);
+            return response()->json(['message' => 'Паролі не співпадають'], 422);
         }
 
         $user = User::where('token', '=', $request->header('x-auth-token'))->first();
@@ -150,7 +150,7 @@ class UsersController extends Controller
 
             return response()->json(['message' => 'Пароль змінений'], 200);
         } else {
-            return response()->json(['message' => 'Старий пароль невірний'], 200);
+            return response()->json(['message' => 'Старий пароль невірний'], 422);
         }
     }
 
