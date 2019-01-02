@@ -42,7 +42,7 @@
                                     {{ $school->name }}
                                 </a>
 
-                                <p class="group-count">Человек</p>
+                                <p class="group-count">Кол-во групп : {{ $school->groups_count }}</p>
                             </div>
 
 

@@ -35,19 +35,19 @@
                 <h3>Список Садиков</h3>
                 <ul class="list-group list-group-flex">
 
-                    @foreach($schools as $school)
+                    @foreach($schools as $schooll)
                         <li class="list-group-item">
                             <div>
                                 <a class="orange-text"
-                                   href="{{ action('SchoolController@adminEdit', $school->id) }}">
-                                    {{ $school->name }}
+                                   href="{{ action('SchoolController@adminEdit', $schooll->id) }}">
+                                    {{ $schooll->name }}
                                 </a>
 
-                                <p class="group-count">Человек</p>
+                                <p class="group-count">Кол-во групп : {{ $schooll->groups_count }}</p>
                             </div>
 
 
-                            <form id="delete-form" method="POST" action="/admin/kindergartens/{{$school->id}}">
+                            <form id="delete-form" method="POST" action="/admin/kindergartens/{{$schooll->id}}">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 

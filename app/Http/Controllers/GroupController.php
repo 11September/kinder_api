@@ -34,8 +34,6 @@ class GroupController extends Controller
 
         $groups = Group::withCount(['students'])->get();
 
-//        dd($groups);
-
         return view('admin.groups',compact('users', 'schools', 'groups'));
     }
 

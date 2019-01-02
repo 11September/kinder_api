@@ -25,7 +25,7 @@ class SchoolController extends Controller
 
     public function adminIndex()
     {
-        $schools = School::all();
+        $schools = School::withCount(['groups'])->get();
 
         $groups = Group::all();
 
@@ -59,9 +59,9 @@ class SchoolController extends Controller
 
         $groups = Group::all();
 
-        $schools = School::all();
+        $schools = School::withCount('groups')->get();
 
-        return view('admin.kindergartens.edit',compact('school', 'schools', 'groups'));
+        return view('admin.kindergartens.edit',compact('schools', 'groups', 'school'));
     }
 
     public function adminUpdate(Request $request, $id)
