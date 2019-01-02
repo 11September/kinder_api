@@ -22,6 +22,11 @@ class School extends Model
         return $this->hasMany(User::class);
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'schools_groups')->withTimestamps();
+    }
+
     public function getCreatedAtAttribute($date)
     {
         return $this->attributes['created_at'] = Carbon::parse($date)->toDateString();

@@ -24,6 +24,11 @@ class Group extends Model
         return $this->belongsTo(Post::class);
     }
 
+    public function groups()
+    {
+        return $this->belongsTo(Group::class);
+    }
+
     public function scopeFilter($query, $params)
     {
         if ($id = array_get($params, 'id')) {

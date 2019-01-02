@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -26,19 +27,68 @@ class SchoolController extends Controller
     {
         $schools = School::all();
 
-        return view('admin.kindergartens',compact('schools'));
+        $groups = Group::all();
+
+        return view('admin.kindergartens',compact('schools', 'groups'));
+    }
+
+    public function adminCreate()
+    {
+
     }
 
     public function adminStore(Request $request)
     {
         $request->validate([
             'name' => 'required',
+            'group_id' => 'required',
         ]);
 
         $school = new School();
         $school->name = $request->name;
         $school->save();
 
+        $school->groups()->sync($request->group_id, false);
+
         return redirect()->route('admin.kindergartens')->with('message','Садик успешно добавлен!');
+    }
+
+    public function adminEdit($id)
+    {
+        $school = School::where('id', $id)->with('groups')->first();
+
+        $groups = Group::all();
+
+        $schools = School::all();
+
+        return view('admin.kindergartens.edit',compact('school', 'schools', 'groups'));
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'group_id' => 'required',
+        ]);
+
+        $school = School::where('id', $id)->first();
+
+        $school->name = $request->name;
+        $school->save();
+
+        $school->groups()->sync($request->group_id, true);
+
+        return redirect()->route('admin.kindergartens')->with('message','Садик успешно обновлён!');
+    }
+
+    public function adminDelete($id)
+    {
+        $school = School::find($id);
+
+        $school->groups()->detach();
+
+        $school->delete();
+
+        return redirect()->route('admin.kindergartens')->with('message','Новость успешно удалена!');
     }
 }

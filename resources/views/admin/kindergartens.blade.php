@@ -32,44 +32,78 @@
 
                 <h3>Список Садиков</h3>
 
-                <ul class="list-group">
+                <ul class="list-group list-group-flex">
 
                     @foreach($schools as $school)
-                        <li class="list-group-item">{{ $school->name }}</li>
+                        <li class="list-group-item">
+                            <div>
+                                <a class="orange-text"
+                                   href="{{ action('SchoolController@adminEdit', $school->id) }}">
+                                    {{ $school->name }}
+                                </a>
+
+                                <p class="group-count">Человек</p>
+                            </div>
+
+
+                            <form id="delete-form" method="POST" action="/admin/kindergartens/{{$school->id}}">
+                                {{ csrf_field() }}
+                                {{ method_field('DELETE') }}
+
+                                <div class="form-group">
+                                    <input type="submit" class="btn btn-danger" value="&#10008">
+                                </div>
+                            </form>
+                        </li>
                     @endforeach
 
                 </ul>
             </div>
-            <div class="col-md-4">
-                <h3>Создание Садика</h3>
+
+
+            <div class="col-md-8">
 
                 <form action="{{ action('SchoolController@adminStore') }}" method="post">
                     {{ csrf_field() }}
 
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect2">Название садика</label>
-                        <input type="text" name="name" class="form-control" required placeholder="Название садика">
-                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h3>Создание Садика</h3>
 
-                    <button type="submit" class="btn btn-primary mb-2">Создать</button>
-                </form>
-            </div>
-            <div class="col-md-4">
-                <form>
-                    <div class="form-group">
-                        <label for="exampleFormControlSelect2">Example multiple select</label>
-                        <select multiple class="form-control" id="exampleFormControlSelect2">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
-                        </select>
+
+                            <div class="form-group">
+                                <label for="exampleFormControlSelect2">Название садика</label>
+                                <input type="text" name="name" class="form-control" required
+                                       placeholder="Название садика">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary mb-2">Создать</button>
+
+                        </div>
+
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label>Группы</label>
+
+                                @foreach($groups as $group)
+
+                                    <div class="form-check">
+                                        <label class="container">
+                                            {{ $group->name }}
+                                            <input value="{{ $group->id }}" name="group_id[]" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+
+                                @endforeach
+
+                            </div>
+                        </div>
                     </div>
                 </form>
+
             </div>
         </div>
-
     </div>
 
 @endsection

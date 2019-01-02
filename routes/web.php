@@ -42,7 +42,10 @@ Route::delete('/admin/users/{id}', 'StudentsController@adminDelete')->middleware
 
 // Admin Schools
 Route::get('/admin/kindergartens', 'SchoolController@adminIndex')->middleware('is_admin')->name('admin.kindergartens');
+Route::get('/admin/kindergartens/create', 'SchoolController@adminCreate')->middleware('is_admin')->name('List Electives Admin Panel');
 Route::post('/admin/kindergartens', 'SchoolController@adminStore')->middleware('is_admin')->name('admin');
+Route::get('/admin/kindergartens/{id}/edit', 'SchoolController@adminEdit')->middleware('is_admin')->name('admin');
+Route::put('/admin/kindergartens/{id}', 'SchoolController@adminUpdate')->middleware('is_admin')->name('admin');
 
 
 // Admin Electives
