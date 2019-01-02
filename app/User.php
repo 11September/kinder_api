@@ -19,6 +19,8 @@ class User extends Authenticatable
     const ADMIN_TYPE = 'admin';
     const DEFAULT_TYPE = 'default';
 
+    protected $table = "users";
+
     protected $fillable = [
         'name', 'email', 'push', 'type', 'parent_name', 'parent_phone', 'parents', 'address', 'birthday', 'school_id', 'group_id', 'status', 'password', 'token'
     ];
