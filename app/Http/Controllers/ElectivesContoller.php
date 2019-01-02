@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Electivy;
+use App\Group;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -20,7 +21,7 @@ class ElectivesContoller extends Controller
             return ['data' => $electives];
 
         } catch (\Exception $exception) {
-            Log::warning('ElectivesContoller@index Exception: '. $exception->getMessage());
+            Log::warning('ElectivesContoller@index Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
@@ -44,7 +45,7 @@ class ElectivesContoller extends Controller
             return ['data' => $elective];
 
         } catch (\Exception $exception) {
-            Log::warning('ElectivesContoller@show Exception: '. $exception->getMessage());
+            Log::warning('ElectivesContoller@show Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
@@ -52,8 +53,8 @@ class ElectivesContoller extends Controller
 
     public function adminIndex()
     {
-        $electives = Electivy::with(array('school'=>function($query){
-            $query->select('id','name');
+        $electives = Electivy::with(array('school' => function ($query) {
+            $query->select('id', 'name');
         }))->latest()->get();
 
         return view('admin.electives', compact('electives'));
@@ -63,7 +64,9 @@ class ElectivesContoller extends Controller
     {
         $schools = School::all();
 
-        return view('admin.electives.create', compact('schools'));
+        $groups = Group::all();
+
+        return view('admin.electives.create', compact('schools', 'groups'));
     }
 
 
@@ -72,6 +75,7 @@ class ElectivesContoller extends Controller
         $request->validate([
             'name' => 'required',
             'school_id' => 'required',
+            'group_id' => 'required',
             'time_start' => 'required',
             'time_end' => 'required',
         ]);
@@ -81,18 +85,23 @@ class ElectivesContoller extends Controller
         $elective->school_id = $request->school_id;
         $elective->time_start = $request->time_start;
         $elective->time_end = $request->time_end;
+
         $elective->save();
 
-        return redirect()->route('admin.electives')->with('message','Кружек успешно добавлен!');
+        $elective->groups()->sync($request->group_id, false);
+
+        return redirect()->route('admin.electives')->with('message', 'Кружек успешно добавлен!');
     }
 
     public function adminEdit($id)
     {
-        $electivy = Electivy::where('id', $id)->first();
+        $electivy = Electivy::where('id', $id)->with('groups')->first();
 
         $schools = School::all();
 
-        return view('admin.electives.edit', compact('electivy', 'schools'));
+        $groups = Group::all();
+
+        return view('admin.electives.edit', compact('electivy', 'schools', 'groups'));
     }
 
     public function adminUpdate(Request $request, $id)
@@ -100,6 +109,7 @@ class ElectivesContoller extends Controller
         $request->validate([
             'name' => 'required',
             'school_id' => 'required',
+            'group_id' => 'required',
             'time_start' => 'required',
             'time_end' => 'required',
         ]);
@@ -111,12 +121,15 @@ class ElectivesContoller extends Controller
         $elective->time_end = $request->time_end;
         $elective->save();
 
-        return redirect()->route('admin.electives')->with('message','Кружек успешно обновлен!');
+        $elective->groups()->sync($request->group_id, true);
+
+        return redirect()->route('admin.electives')->with('message', 'Кружек успешно обновлен!');
     }
 
     public function adminDelete($id)
     {
         $electivy = Electivy::find($id);
+        $electivy->groups()->detach();
         $electivy->delete();
 
         return redirect()->back()->with('success', 'Кружек успешно удалён!');

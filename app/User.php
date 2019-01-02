@@ -49,4 +49,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Group::class);
     }
+
+    public function electives()
+    {
+        return $this->belongsToMany(Electivy::class, 'elective_groups')->withTimestamps();
+    }
 }

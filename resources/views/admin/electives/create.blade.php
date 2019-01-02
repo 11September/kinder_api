@@ -118,21 +118,17 @@
                                         <div class="form-group col-md-6">
                                             <label>Группы</label>
 
-                                            <div class="form-check">
-                                                <label class="container">
-                                                    One
-                                                    <input name="group_id" type="checkbox" checked="checked">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
+                                            @foreach($groups as $group)
 
-                                            <div class="form-check">
-                                                <label class="container">
-                                                    Two
-                                                    <input name="group_id" type="checkbox">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
+                                                <div class="form-check">
+                                                    <label class="container">
+                                                        {{ $group->name }}
+                                                        <input value="{{ $group->id }}" name="group_id[]" type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+
+                                            @endforeach
 
                                         </div>
                                     </div>

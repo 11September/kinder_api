@@ -65,7 +65,8 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="exampleFormControlInput1">Время С</label>
-                                            <input required name="time_start" value="{{ $electivy->time_start }}" type="time"
+                                            <input required name="time_start" value="{{ $electivy->time_start }}"
+                                                   type="time"
                                                    class="form-control {{ $errors->has('time_start') ? ' is-invalid' : '' }}"
                                                    placeholder="Название">
 
@@ -78,7 +79,8 @@
 
                                         <div class="form-group col-md-6">
                                             <label for="exampleFormControlInput1">Время До</label>
-                                            <input required name="time_end" value="{{ $electivy->time_end }}" type="time"
+                                            <input required name="time_end" value="{{ $electivy->time_end }}"
+                                                   type="time"
                                                    class="form-control {{ $errors->has('time_end') ? ' is-invalid' : '' }}"
                                                    placeholder="Название">
 
@@ -102,7 +104,8 @@
                                                     <label class="container-checkbox">
                                                         {{ $school->name }}
                                                         <input required value="{{ $school->id }}" type="radio"
-                                                               @if($school->id == $electivy->school_id) checked @endif name="school_id">
+                                                               @if($school->id == $electivy->school_id) checked
+                                                               @endif name="school_id">
                                                         <span class="checkmark-radio"></span>
                                                     </label>
                                                 </div>
@@ -119,21 +122,24 @@
                                         <div class="form-group col-md-6">
                                             <label>Группы</label>
 
-                                            <div class="form-check">
-                                                <label class="container">
-                                                    One
-                                                    <input name="group_id" type="checkbox" checked="checked">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
+                                            @foreach($groups as $group)
 
-                                            <div class="form-check">
-                                                <label class="container">
-                                                    Two
-                                                    <input name="group_id" type="checkbox">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
+                                                <div class="form-check">
+                                                    <label class="container">
+                                                        {{ $group->name }}
+                                                        <input
+
+                                                            @foreach($electivy->groups as $electivy_group)
+                                                                @if($group->id == $electivy_group->id) checked @endif
+                                                            @endforeach
+
+                                                            value="{{ $group->id }}" name="group_id[]"
+                                                            type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+
+                                            @endforeach
 
                                         </div>
                                     </div>

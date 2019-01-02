@@ -18,6 +18,11 @@ class Electivy extends Model
         return $this->hasMany(ElectivyPhoto::class);
     }
 
+    public function groups()
+    {
+        return $this->belongsToMany(Group::class, 'elective_groups')->withTimestamps();
+    }
+
     public function scopePublished($query)
     {
         return $query->where('status', '=', 'ACTIVE');
