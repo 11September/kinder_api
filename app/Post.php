@@ -23,11 +23,10 @@ class Post extends Model
         return $this->belongsTo(School::class);
     }
 
-    public function category()
+    public function groups()
     {
-        return $this->hasOne(Category::class, 'id', 'category_id');
+        return $this->belongsToMany(Group::class, 'post_groups')->withTimestamps();
     }
-
 
     public function scopePublished($query)
     {

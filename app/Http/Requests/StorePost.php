@@ -28,6 +28,7 @@ class StorePost extends FormRequest
             'body' => 'required',
             'until' => 'required|date',
             'school_id' => 'required',
+            'group_id' => 'required',
             'preview' => 'required|image',
             'image' => 'required|image',
         ];
@@ -42,6 +43,7 @@ class StorePost extends FormRequest
             'until.required' => 'Название новости обязательное!',
             'until.date' => 'Укажите дату!',
             'school_id.required' => 'Название новости обязательное!',
+            'group_id.required' => 'Выберите группы!',
             'preview.required'  => 'Картинка анонса обязательна',
             'image.required'  => 'Картинка к посту обязательное',
 

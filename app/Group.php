@@ -19,6 +19,11 @@ class Group extends Model
         return $this->hasMany(User::class);
     }
 
+    public function posts()
+    {
+        return $this->belongsTo(Post::class);
+    }
+
     public function scopeFilter($query, $params)
     {
         if ($id = array_get($params, 'id')) {

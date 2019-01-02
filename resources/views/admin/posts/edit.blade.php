@@ -89,57 +89,6 @@
                                             @endif
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-row">
-                                        <div class="form-group col-md-6">
-                                            <label>Садик</label>
-
-                                            @foreach($schools as $school)
-
-                                                <div class="form-check">
-                                                    <label class="container-checkbox">
-                                                        {{ $school->name }}
-                                                        <input required value="{{ $school->id }}" type="radio" name="school_id" @if($school->id == $post->school_id) checked @endif>
-                                                        <span class="checkmark-radio"></span>
-                                                    </label>
-                                                </div>
-
-                                            @endforeach
-
-                                            @if ($errors->has('school_id'))
-                                                <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $errors->first('school_id') }}</strong>
-                                                        </span>
-                                            @endif
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <label>Группы</label>
-
-                                            <div class="form-check">
-                                                <label class="container">
-                                                    One
-                                                    <input name="group_id" type="checkbox" checked="checked">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-
-                                            <div class="form-check">
-                                                <label class="container">
-                                                    Two
-                                                    <input name="group_id" type="checkbox">
-                                                    <span class="checkmark"></span>
-                                                </label>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-9">
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
@@ -180,14 +129,60 @@
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
+                                <div class="col-md-6">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6">
+                                            <label>Садик</label>
 
-                                <div class="col-md-3"></div>
+                                            @foreach($schools as $school)
+
+                                                <div class="form-check">
+                                                    <label class="container-checkbox">
+                                                        {{ $school->name }}
+                                                        <input required value="{{ $school->id }}" type="radio" name="school_id" @if($school->id == $post->school_id) checked @endif>
+                                                        <span class="checkmark-radio"></span>
+                                                    </label>
+                                                </div>
+
+                                            @endforeach
+
+                                            @if ($errors->has('school_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                            <strong>{{ $errors->first('school_id') }}</strong>
+                                                        </span>
+                                            @endif
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label>Группы</label>
+
+                                            @foreach($groups as $group)
+
+                                                <div class="form-check">
+                                                    <label class="container">
+                                                        {{ $group->name }}
+                                                        <input
+
+                                                            @foreach($post->groups as $post_group)
+                                                            @if($group->id == $post_group->id) checked @endif
+                                                            @endforeach
+
+                                                            value="{{ $group->id }}" name="group_id[]"
+                                                            type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+
+                                            @endforeach
+
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
-
                             <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+
                         </form>
                     </div>
                 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\Http\Requests\StorePost;
 use App\Post;
 use App\School;
@@ -72,7 +73,9 @@ class PostsController extends Controller
     {
         $schools = School::all();
 
-        return view('admin.posts.create',compact('schools'));
+        $groups = Group::all();
+
+        return view('admin.posts.create',compact('schools', 'groups'));
     }
 
     public function adminStore(StorePost $request)
@@ -95,16 +98,20 @@ class PostsController extends Controller
 
         $post->save();
 
+        $post->groups()->sync($request->group_id, false);
+
         return redirect()->route('admin.posts')->with('message','Новость успешно добавлена!');
     }
 
     public function adminEdit($id)
     {
-        $post = Post::where('id', $id)->first();
+        $post = Post::where('id', $id)->with('groups')->first();
 
         $schools = School::all();
 
-        return view('admin.posts.edit',compact('schools','post'));
+        $groups = Group::all();
+
+        return view('admin.posts.edit',compact('schools','post', 'groups'));
     }
 
     public function adminUpdate(Request $request, $id)
@@ -114,6 +121,7 @@ class PostsController extends Controller
             'body' => 'required',
             'until' => 'required',
             'school_id' => 'required',
+            'group_id' => 'required',
         ]);
 
         $post = Post::where('id', $id)->first();
@@ -152,6 +160,8 @@ class PostsController extends Controller
         $post->school_id = $request->school_id;
         $post->save();
 
+        $post->groups()->sync($request->group_id, true);
+
         return redirect()->route('admin.posts')->with('message','Новость успешно обновлена!');
     }
 
@@ -168,6 +178,8 @@ class PostsController extends Controller
         if(file_exists($preview)) {
             unlink($preview);
         }
+
+        $post->groups()->detach();
 
         $post->delete();
 
