@@ -27,11 +27,13 @@ class UsersController extends Controller
         try {
             if (Auth::user()) {
                 $user = Auth::user();
+                $group = $user->group()->first();
 
                 $result = array();
                 $result = array_add($result, 'token', $user->token);
                 $result = array_add($result, 'parent_name', $user->parent_name);
                 $result = array_add($result, 'email', $user->email);
+                $result = array_add($result, 'group', $group->name);
 
                 return response($result);
             }
@@ -40,8 +42,13 @@ class UsersController extends Controller
             if ($user) {
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                        $group = $user->group()->first();
+
                         $result = array();
                         $result = array_add($result, 'token', $user->token);
+                        $result = array_add($result, 'parent_name', $user->parent_name);
+                        $result = array_add($result, 'email', $user->email);
+                        $result = array_add($result, 'group', $group->name);
                         return response($result);
                     } else {
                         return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
