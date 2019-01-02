@@ -31,6 +31,8 @@ class UsersController extends Controller
 
                 $result = array();
                 $result = array_add($result, 'token', $user->token);
+                $result = array_add($result, 'parent_name', $user->parent_name);
+                $result = array_add($result, 'email', $user->email);
 
                 return response($result);
             }
