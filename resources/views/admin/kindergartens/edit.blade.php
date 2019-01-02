@@ -36,7 +36,7 @@
                 <ul class="list-group list-group-flex">
 
                     @foreach($schools as $schooll)
-                        <li class="list-group-item">
+                        <li class="list-group-item @if($schooll->id == $school->id) active @endif">
                             <div>
                                 <a class="orange-text"
                                    href="{{ action('SchoolController@adminEdit', $schooll->id) }}">
