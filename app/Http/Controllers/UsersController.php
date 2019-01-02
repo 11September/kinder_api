@@ -6,7 +6,6 @@ use App\User;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
-use TCG\Voyager\Models\Setting;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
