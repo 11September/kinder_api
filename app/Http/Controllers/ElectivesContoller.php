@@ -123,7 +123,7 @@ class ElectivesContoller extends Controller
 
         $elective->groups()->sync($request->group_id, true);
 
-        return redirect()->route('admin.electives')->with('message', 'Кружек успешно обновлен!');
+        return redirect()->route('admin.electives')->with('message', 'Кружек успешно добавлен!');
     }
 
     public function adminDelete($id)

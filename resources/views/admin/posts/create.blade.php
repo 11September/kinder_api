@@ -12,8 +12,9 @@
                 <a class="orange-text" href="{{ url('admin') }}">Главная Страница</a>
             </li>
             <li class="breadcrumb-item active">
-                <a href="{{ url('admin/posts') }}">Новости</a>
+                <a class="orange-text" href="{{ url('admin/posts') }}">Новости</a>
             </li>
+            <li class="breadcrumb-item">Создание новости</li>
         </ol>
 
 

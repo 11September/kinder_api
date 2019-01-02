@@ -40,7 +40,7 @@
                         @endif
 
 
-                        <form action="{{ action('SchoolController@adminUpdate', $electivy->id) }}" method="post"
+                        <form action="{{ action('ElectivesContoller@adminUpdate', $electivy->id) }}" method="post"
                               enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}

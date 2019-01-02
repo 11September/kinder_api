@@ -108,7 +108,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                            <button type="submit" class="btn btn-primary mb-2">Обновить</button>
                         </div>
 
                     </div>

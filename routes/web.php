@@ -46,6 +46,7 @@ Route::get('/admin/kindergartens/create', 'SchoolController@adminCreate')->middl
 Route::post('/admin/kindergartens', 'SchoolController@adminStore')->middleware('is_admin')->name('admin');
 Route::get('/admin/kindergartens/{id}/edit', 'SchoolController@adminEdit')->middleware('is_admin')->name('admin');
 Route::put('/admin/kindergartens/{id}', 'SchoolController@adminUpdate')->middleware('is_admin')->name('admin');
+Route::delete('/admin/kindergartens/{id}', 'SchoolController@adminDelete')->middleware('is_admin')->name('admin');
 
 
 // Admin Electives
