@@ -85,9 +85,9 @@ Route::delete('/admin/notifications/{id}', 'NotificationsController@adminDelete'
 
 
 // Admin Schedules
-Route::get('/admin/notifications', 'NotificationsController@adminIndex')->middleware('is_admin')->name('admin.notifications');
-Route::get('/admin/notifications/create', 'NotificationsController@adminCreate')->middleware('is_admin')->name('admin.notifications.create');
-Route::post('/admin/notifications', 'NotificationsController@adminStore')->middleware('is_admin')->name('admin.notifications.store');
-Route::get('/admin/notifications/{id}/edit', 'NotificationsController@adminEdit')->middleware('is_admin')->name('admin.notifications.edit');
-Route::put('/admin/notifications/{id}', 'NotificationsController@adminUpdate')->middleware('is_admin')->name('admin.notifications.update');
-Route::delete('/admin/notifications/{id}', 'NotificationsController@adminDelete')->middleware('is_admin')->name('admin.notifications.delete');
+Route::get('/admin/schedules', 'SchedulesController@adminIndex')->middleware('is_admin')->name('admin.schedules');
+Route::get('/admin/schedules/create', 'SchedulesController@adminCreate')->middleware('is_admin')->name('admin.schedules.create');
+Route::post('/admin/schedules', 'SchedulesController@adminStore')->middleware('is_admin')->name('admin.schedules.store');
+Route::get('/admin/schedules/{id}/edit', 'SchedulesController@adminEdit')->middleware('is_admin')->name('admin.schedules.edit');
+Route::put('/admin/schedules/{id}', 'SchedulesController@adminUpdate')->middleware('is_admin')->name('admin.schedules.update');
+Route::delete('/admin/schedules/{id}', 'SchedulesController@adminDelete')->middleware('is_admin')->name('admin.schedules.delete');

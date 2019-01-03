@@ -11,6 +11,14 @@ class ScheduleSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Schedule::class, 3)->create();
+        DB::table('schedules')->insert([
+            ['school_id' => 1, 'day' => "Monday"],
+            ['school_id' => 1, 'day' => "Tuesday"],
+            ['school_id' => 1, 'day' => "Wednesday"],
+            ['school_id' => 1, 'day' => "Thursday"],
+            ['school_id' => 1, 'day' => "Friday"],
+            ['school_id' => 1, 'day' => "Saturday"],
+            ['school_id' => 1, 'day' => "Sunday"]
+        ]);
     }
 }

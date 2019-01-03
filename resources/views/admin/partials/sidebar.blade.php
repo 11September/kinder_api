@@ -40,7 +40,7 @@
 
     <li class="nav-item">
         <a class="nav-link" href="{{ url('admin/schedules') }}">
-            <i class="fas fa-utensils"></i>
+            <i class="far fa-calendar-alt"></i>
             <span>Рассписание</span></a>
     </li>
 
