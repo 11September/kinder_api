@@ -82,3 +82,12 @@ Route::post('/admin/notifications', 'NotificationsController@adminStore')->middl
 Route::get('/admin/notifications/{id}/edit', 'NotificationsController@adminEdit')->middleware('is_admin')->name('admin.notifications.edit');
 Route::put('/admin/notifications/{id}', 'NotificationsController@adminUpdate')->middleware('is_admin')->name('admin.notifications.update');
 Route::delete('/admin/notifications/{id}', 'NotificationsController@adminDelete')->middleware('is_admin')->name('admin.notifications.delete');
+
+
+// Admin Schedules
+Route::get('/admin/notifications', 'NotificationsController@adminIndex')->middleware('is_admin')->name('admin.notifications');
+Route::get('/admin/notifications/create', 'NotificationsController@adminCreate')->middleware('is_admin')->name('admin.notifications.create');
+Route::post('/admin/notifications', 'NotificationsController@adminStore')->middleware('is_admin')->name('admin.notifications.store');
+Route::get('/admin/notifications/{id}/edit', 'NotificationsController@adminEdit')->middleware('is_admin')->name('admin.notifications.edit');
+Route::put('/admin/notifications/{id}', 'NotificationsController@adminUpdate')->middleware('is_admin')->name('admin.notifications.update');
+Route::delete('/admin/notifications/{id}', 'NotificationsController@adminDelete')->middleware('is_admin')->name('admin.notifications.delete');

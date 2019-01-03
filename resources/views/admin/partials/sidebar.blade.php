@@ -39,6 +39,12 @@
     </li>
 
     <li class="nav-item">
+        <a class="nav-link" href="{{ url('admin/schedules') }}">
+            <i class="fas fa-utensils"></i>
+            <span>Рассписание</span></a>
+    </li>
+
+    <li class="nav-item">
         <a class="nav-link" href="{{ url('admin/users') }}">
             <i class="fas fa-utensils"></i>
             <span>Меню питания</span></a>

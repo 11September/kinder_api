@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
             PostSeeder::class,
             ElectivesSeeder::class,
             ElectivyPhotoSeeder::class,
+            ClassesSeeder::class,
+            ScheduleSeeder::class,
         ]);
     }
 }
