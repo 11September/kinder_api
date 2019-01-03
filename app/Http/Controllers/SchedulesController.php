@@ -2,14 +2,52 @@
 
 namespace App\Http\Controllers;
 
+use App\School;
+use App\Schedule;
 use Illuminate\Http\Request;
 
 class SchedulesController extends Controller
 {
     public function adminIndex()
     {
-        $schools = School::all();
+        $list_schools = School::all();
 
-        return view('admin.groups',compact('users', 'schools', 'groups'));
+        return view('admin.schedules',compact('list_schools'));
     }
+
+    public function adminShow($id)
+    {
+        $list_schools = School::all();
+
+        $schedules = Schedule::where('school_id', $id)->with('lessons')->get();
+
+        $current_school = School::where('id', $id)->first();
+
+        return view('admin.schedules.show',compact('list_schools', 'schedules', 'current_school'));
+    }
+
+    public function adminGetLessonsByDay(Request $request)
+    {
+        $request->validate([
+            'school_id' => 'required',
+            'day' => 'required',
+        ]);
+
+        if ($request->day == "all"){
+            dd("all");
+        }
+
+        $schedules = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->with('lessons')->first();
+
+        return response()->json(['data'=> $schedules, 'success'=>true]);
+    }
+
+//    public function adminEdit($id)
+//    {
+//        $schools = School::all();
+//
+//        $school = School::where('id', $id)->first();
+//
+//        return view('admin.schedules.edit',compact('schools', 'school'));
+//    }
 }

@@ -86,8 +86,10 @@ Route::delete('/admin/notifications/{id}', 'NotificationsController@adminDelete'
 
 // Admin Schedules
 Route::get('/admin/schedules', 'SchedulesController@adminIndex')->middleware('is_admin')->name('admin.schedules');
+Route::get('/admin/adminGetLessonsByDay', 'SchedulesController@adminGetLessonsByDay')->middleware('is_admin')->name('admin.schedules.adminGetLessonsByDay');
 Route::get('/admin/schedules/create', 'SchedulesController@adminCreate')->middleware('is_admin')->name('admin.schedules.create');
 Route::post('/admin/schedules', 'SchedulesController@adminStore')->middleware('is_admin')->name('admin.schedules.store');
+Route::get('/admin/schedules/{id}', 'SchedulesController@adminShow')->middleware('is_admin')->name('admin.electives.show');
 Route::get('/admin/schedules/{id}/edit', 'SchedulesController@adminEdit')->middleware('is_admin')->name('admin.schedules.edit');
 Route::put('/admin/schedules/{id}', 'SchedulesController@adminUpdate')->middleware('is_admin')->name('admin.schedules.update');
 Route::delete('/admin/schedules/{id}', 'SchedulesController@adminDelete')->middleware('is_admin')->name('admin.schedules.delete');

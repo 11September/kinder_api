@@ -34,87 +34,98 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-4">
-                        <h3>Список Груп</h3>
+                    <div class="col-md-3">
+                        <h3>Список Садиков</h3>
 
                         <ul class="list-group list-group-flex">
 
-                            @foreach($groups as $group)
+                            @foreach($list_schools as $school)
                                 <li class="list-group-item">
                                     <div>
                                         <a class="orange-text"
-                                           href="{{ action('GroupController@adminEdit', $group->id) }}">
-                                            {{ $group->name }}
+                                           href="{{ action('SchedulesController@adminShow', $school->id) }}">
+                                            {{ $school->name }}
                                         </a>
-
-                                        <p class="group-count">{{ $group->students_count }} Человек</p>
                                     </div>
-
-
-                                    <form id="delete-form" method="POST" action="/admin/groups/{{$group->id}}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-
-                                        <div class="form-group">
-                                            <input type="submit" class="btn btn-danger" value="&#10008">
-                                        </div>
-                                    </form>
                                 </li>
                             @endforeach
 
                         </ul>
                     </div>
 
-                    <div class="col-md-8">
-                        <h3 style="text-align: center">Создать группу</h3>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <h4>Выбрать день недели</h4>
 
-                        <form action="{{ action('GroupController@adminStore') }}" method="post">
-                            {{ csrf_field() }}
-
-                            <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Садик</label>
-
-                                        @foreach($schools as $school)
-
-                                            <div class="form-check">
-                                                <label class="container-checkbox">
-                                                    {{ $school->name }}
-                                                    <input required value="{{ $school->id }}" type="radio"
-                                                           name="school_id">
-                                                    <span class="checkmark-radio"></span>
-                                                </label>
-                                            </div>
-
-                                        @endforeach
-
-                                    </div>
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Понедельник
+                                        <input value="Monday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
                                 </div>
-                                <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="name">Название Группы</label>
-                                        <input required type="text" name="name" class="form-control" id="name"
-                                               placeholder="Название Группы">
-                                    </div>
 
-                                    <div class="form-group">
-                                        <label for="user_id">Выбрать администратора</label>
-                                        <select required name="user_id" class="form-control" id="user_id">
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Вторник
+                                        <input value="Tuesday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
+                                </div>
 
-                                            @foreach($users as $administrator)
-                                                <option
-                                                    value="{{ $administrator->id }}">{{ $administrator->name }}</option>
-                                            @endforeach
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Среда
+                                        <input value="Wednesday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
+                                </div>
 
-                                        </select>
-                                    </div>
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Четверг
+                                        <input value="Thursday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
+                                </div>
 
-                                    <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Пятница
+                                        <input value="Friday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Суббота
+                                        <input value="Saturday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Воскресенье
+                                        <input value="Sunday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <label class="container-checkbox">
+                                        Все дни
+                                        <input checked value="Sunday" type="radio" name="day">
+                                        <span class="checkmark-radio"></span>
+                                    </label>
                                 </div>
                             </div>
-                        </form>
+                            <div class="col-md-8">
+
+                            </div>
+                        </div>
                     </div>
                 </div>
 
