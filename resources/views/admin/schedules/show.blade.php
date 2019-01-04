@@ -232,8 +232,6 @@
 
                 // if all
                 if (day == "all") {
-                    alert(day);
-
                     $.ajax({
                         type: 'GET',
                         url: '/admin/adminGetLessonsAll',

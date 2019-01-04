@@ -44,11 +44,11 @@
             <span>Рассписание</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('admin/users') }}">
-            <i class="fas fa-utensils"></i>
-            <span>Меню питания</span></a>
-    </li>
+    {{--<li class="nav-item">--}}
+        {{--<a class="nav-link" href="{{ url('admin/users') }}">--}}
+            {{--<i class="fas fa-utensils"></i>--}}
+            {{--<span>Меню питания</span></a>--}}
+    {{--</li>--}}
 
     <li class="nav-item">
         <a class="nav-link" href="{{ url('admin/posts') }}">
@@ -56,11 +56,11 @@
             <span>Новости</span></a>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="{{ url('admin/notifications') }}">
-            <i class="fas fa-bell"></i>
-            <span>Уведомления</span></a>
-    </li>
+    {{--<li class="nav-item">--}}
+        {{--<a class="nav-link" href="{{ url('admin/notifications') }}">--}}
+            {{--<i class="fas fa-bell"></i>--}}
+            {{--<span>Уведомления</span></a>--}}
+    {{--</li>--}}
 
 
 </ul>
