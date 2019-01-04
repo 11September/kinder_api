@@ -692,6 +692,7 @@ body.sidebar-toggled footer.sticky-footer {
 .delete-lesson:hover{
     color: white;
     text-decoration: none;
+    background-color: #ffb510;
 }
 
 .save-lesson{
@@ -711,9 +712,24 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .newLessonForm .newLessonFormButton{
-    background: transparent;
+    /*background: transparent;*/
     outline: none;
     border: none;
+    text-decoration: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    border-radius: 40px;
+    color: white;
+    width: 40px;
+    height: 40px;
+}
+
+.newLessonForm .newLessonFormButton:hover{
+    cursor: pointer;
+    background-color: #00bc00;
 }
 
 /* Кастомизация Радио Кнопки */

@@ -75,37 +75,45 @@ class SchedulesController extends Controller
             'lesson_id' => '',
         ]);
 
-        if ($request->schedule_id){
-            $schedule = Schedule::where('id', $request->schedule_id)->first();
-
-            $lesson = Clas::where('schedule_id', $schedule->id)->first();
+        if ($request->lesson_id){
+            $lesson = Clas::where('id', $request->lesson_id)->first();
             $lesson->name = $request->name;
             $lesson->from = $request->from;
             $lesson->to = $request->to;
             $lesson->save();
-
         }else{
-            $schedule = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->first();
+            if ($request->schedule_id){
+                $schedule = Schedule::where('id', $request->schedule_id)->first();
 
-            if ($schedule){
-                $lesson = new Clas();
-                $lesson->schedule_id = $schedule->id;
+                $lesson = Clas::where('schedule_id', $schedule->id)->first();
                 $lesson->name = $request->name;
                 $lesson->from = $request->from;
                 $lesson->to = $request->to;
                 $lesson->save();
+
             }else{
-                $schedule = new Schedule();
-                $schedule->school_id = $request->school_id;
-                $schedule->day = $request->day;
-                $schedule->save();
+                $schedule = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->first();
 
-                $lesson = new Clas();
-                $lesson->schedule_id = $schedule->id;
-                $lesson->name = $request->name;
-                $lesson->from = $request->from;
-                $lesson->to = $request->to;
-                $lesson->save();
+                if ($schedule){
+                    $lesson = new Clas();
+                    $lesson->schedule_id = $schedule->id;
+                    $lesson->name = $request->name;
+                    $lesson->from = $request->from;
+                    $lesson->to = $request->to;
+                    $lesson->save();
+                }else{
+                    $schedule = new Schedule();
+                    $schedule->school_id = $request->school_id;
+                    $schedule->day = $request->day;
+                    $schedule->save();
+
+                    $lesson = new Clas();
+                    $lesson->schedule_id = $schedule->id;
+                    $lesson->name = $request->name;
+                    $lesson->from = $request->from;
+                    $lesson->to = $request->to;
+                    $lesson->save();
+                }
             }
         }
 

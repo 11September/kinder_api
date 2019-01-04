@@ -365,12 +365,13 @@
                                             '    <div class="col-md-9 padb-20">\n' +
                                             '         <input required type="text" name="name" class="form-control" placeholder="" value="' + item.name + '">\n' +
                                             '         <input type="text" hidden name="schedule_id" class="form-control" placeholder="" value="' + item.schedule_id + '">\n' +
+                                            '         <input type="text" hidden name="lesson_id" class="form-control" placeholder="" value="' + item.id + '">\n' +
                                             '    </div>\n' +
                                             '    <div class="col-md-3 padb-20 control-lessons-buttons">' +
                                             '         <input type="text" hidden name="day" value="' + global_day + '">' +
                                             '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
                                             '         <button class="newLessonFormButton" type="submit">' +
-                                            '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
+                                            '              <i class="far fa-save"></i>' +
                                             '         </button>' +
                                             '         <a class="delete-lesson" data-id="' + item.id + '" href="#"><i class="fas fa-trash-alt"></i></a>' +
                                             '    </div>' +
@@ -385,6 +386,8 @@
                                             '</div>' +
                                             '</form>'
                                         );
+
+                                        // '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
 
                                         console.log("sub each");
                                         console.log(item);
@@ -461,6 +464,7 @@
                 e.preventDefault();
 
                 var clicked = $(e.target);
+                clicked.prop('disabled', true);
                 var delete_lesson_id = $(this).attr("data-id");
 
                 if (delete_lesson_id) {
@@ -488,6 +492,8 @@
                         $(this).remove();
                     });
                 }
+
+                clicked.prop('disabled', false);
             });
 
             $(".wrapper-schedule").on("click", '.more-lesson', function (e) {
@@ -495,6 +501,7 @@
                 e.preventDefault();
 
                 var clicked = $(e.target);
+                clicked.prop('disabled', true);
                 console.log("click more-lesson");
 
                 clicked.closest('div.append-day-item').addClass('lol').before('' +
@@ -508,7 +515,7 @@
                     '         <input type="text" hidden name="day" value="' + global_day + '">' +
                     '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
                     '         <button class="newLessonFormButton" type="submit">' +
-                    '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
+                    '             <i class="far fa-save"></i>' +
                     '         </button>' +
                     '         <a class="delete-lesson" data-id="" href="#"><i class="fas fa-trash-alt"></i></a>' +
                     '    </div>' +
@@ -524,6 +531,8 @@
                     '</form>'
                 ).hide().fadeIn();
 
+                clicked.prop('disabled', false);
+
             });
 
             $(".wrapper-schedule").on("submit", '.newLessonForm', function (e) {
@@ -532,6 +541,8 @@
                 console.log("click save-lesson");
 
                 var clicked = $(e.target);
+                clicked.prop('disabled', true);
+
                 var serializeData = clicked.closest('form.newLessonForm').serialize();
                 var _token = $('meta[name=csrf-token]').attr('content');
 
@@ -555,6 +566,8 @@
                         console.log(data);
                     }
                 });
+
+                clicked.prop('disabled', false);
             });
 
         });
