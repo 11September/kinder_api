@@ -34,6 +34,9 @@
                             </div>
                         @endif
                     </div>
+
+                    @include('admin.partials.errors')
+
                 </div>
             </div>
 

@@ -30,6 +30,8 @@
                         @endif
                     </div>
 
+                    @include('admin.partials.errors')
+
                     <div class="col-md-6">
                         <i class="fas fa-table"></i>
                         Список кружков

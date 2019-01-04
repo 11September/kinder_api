@@ -31,6 +31,8 @@
                 @endif
             </div>
 
+            @include('admin.partials.errors')
+
             <div class="col-md-4">
                 <h3>Список Садиков</h3>
                 <ul class="list-group list-group-flex">
