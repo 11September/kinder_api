@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-    <link href="{{ asset('administrator/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+    <link href="{{ asset('administrator/css/toastr.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -149,56 +149,56 @@
 
                                 <div class="wrapper-schedule row">
 
-                                        @foreach($schedules as $schedule)
-                                            <div class="col-md-6">
-                                                <div class="schedule-item">
-                                                    <div class="schedule-item-day">
-                                                        @if($schedule->day == "Monday")
-                                                            Пн
-                                                        @endif
+                                    @foreach($schedules as $schedule)
+                                        <div class="col-md-6">
+                                            <div class="schedule-item">
+                                                <div class="schedule-item-day">
+                                                    @if($schedule->day == "Monday")
+                                                        Пн
+                                                    @endif
 
-                                                        @if($schedule->day == "Tuesday")
-                                                            Вт
-                                                        @endif
+                                                    @if($schedule->day == "Tuesday")
+                                                        Вт
+                                                    @endif
 
-                                                        @if($schedule->day == "Wednesday")
-                                                            Ср
-                                                        @endif
+                                                    @if($schedule->day == "Wednesday")
+                                                        Ср
+                                                    @endif
 
-                                                        @if($schedule->day == "Thursday")
-                                                            Чт
-                                                        @endif
+                                                    @if($schedule->day == "Thursday")
+                                                        Чт
+                                                    @endif
 
-                                                        @if($schedule->day == "Friday")
-                                                            Пт
-                                                        @endif
+                                                    @if($schedule->day == "Friday")
+                                                        Пт
+                                                    @endif
 
-                                                        @if($schedule->day == "Saturday")
-                                                            Сб
-                                                        @endif
+                                                    @if($schedule->day == "Saturday")
+                                                        Сб
+                                                    @endif
 
-                                                        @if($schedule->day == "Sunday")
-                                                            Вс
-                                                        @endif
-                                                    </div>
+                                                    @if($schedule->day == "Sunday")
+                                                        Вс
+                                                    @endif
+                                                </div>
 
-                                                    <div class="row">
-                                                        <div class="col-md-3"></div>
-                                                        <div class="col-md-9">
+                                                <div class="row">
+                                                    <div class="col-md-3"></div>
+                                                    <div class="col-md-9">
 
-                                                            @foreach($schedule->lessons as $lesson)
-                                                                <div class="schedule-list-day">
-                                                                    <p class="schedule-list-day-time">{{ $lesson->from }}
-                                                                        - {{ $lesson->to }}</p>
-                                                                    <p class="schedule-list-day-name">{{ $lesson->name }}</p>
-                                                                </div>
-                                                            @endforeach
+                                                        @foreach($schedule->lessons as $lesson)
+                                                            <div class="schedule-list-day">
+                                                                <p class="schedule-list-day-time">{{ $lesson->from }}
+                                                                    - {{ $lesson->to }}</p>
+                                                                <p class="schedule-list-day-name">{{ $lesson->name }}</p>
+                                                            </div>
+                                                        @endforeach
 
-                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                        </div>
+                                    @endforeach
 
                                 </div>
                             </div>
@@ -213,15 +213,22 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('administrator/js/toastr.min.js') }}"></script>
+
     <script>
         $(document).ready(function () {
+            var global_school_id;
+            var global_day;
 
             $('.all-days-checkboxes input').on('change', function () {
                 var day = $('input[name=day]:checked', '.all-days-checkboxes').val();
                 var school_id = $(this).siblings(".hidden-school").val();
 
+                global_day = day;
+                global_school_id = school_id;
+
                 // if all
-                if(day == "all"){
+                if (day == "all") {
                     alert(day);
 
                     $.ajax({
@@ -303,7 +310,7 @@
                             console.log(data);
                         }
                     });
-                }else{
+                } else {
                     $.ajax({
                         type: 'GET',
                         url: '/admin/adminGetLessonsByDay',
@@ -311,10 +318,12 @@
                         data: {school_id: school_id, day: day},
                         success: function (data) {
 
-                            if (data.success) {
+                            if (data.success && data.data) {
                                 var content = $('.wrapper-schedule').css('padding', '0 20%').empty();
 
                                 var day_name;
+                                var schedule_id = data.data.id;
+
                                 if (data.data.day == "Monday") {
                                     day_name = "Понедельник"
                                 }
@@ -351,27 +360,80 @@
 
                                     $.each(item.lessons, function (i, item) {
                                         content.append('' +
+                                            '<form method="post" class="newLessonForm">' +
                                             '<div class="row append-day-item append-day-item-border">\n' +
-                                            '    <div class="col-md-10 padb-20">\n' +
-                                            '         <input type="text" name="name[]" class="form-control" placeholder="" value="' + item.name + '">\n' +
-                                            '         <input type="text" hidden name="schedule_id[]" class="form-control" placeholder="" value="' + item.schedule_id + '">\n' +
+                                            '    <div class="col-md-9 padb-20">\n' +
+                                            '         <input required type="text" name="name" class="form-control" placeholder="" value="' + item.name + '">\n' +
+                                            '         <input type="text" hidden name="schedule_id" class="form-control" placeholder="" value="' + item.schedule_id + '">\n' +
                                             '    </div>\n' +
-                                            '    <div class="col-md-2 padb-20"><a class="delete-lesson" data-id="' + item.id + '" href="#"><i class="fas fa-trash-alt"></i></a></div>' +
+                                            '    <div class="col-md-3 padb-20 control-lessons-buttons">' +
+                                            '         <input type="text" hidden name="day" value="' + global_day + '">' +
+                                            '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
+                                            '         <button class="newLessonFormButton" type="submit">' +
+                                            '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
+                                            '         </button>' +
+                                            '         <a class="delete-lesson" data-id="' + item.id + '" href="#"><i class="fas fa-trash-alt"></i></a>' +
+                                            '    </div>' +
                                             '    <div class="col-md-6">\n' +
                                             '    <span>Время с</span>' +
-                                            '        <input type="time" name="from[]" class="form-control" placeholder="" value="' + item.from + '">\n' +
+                                            '        <input type="time" name="from" class="form-control" placeholder="" value="' + item.from + '">\n' +
                                             '    </div>\n' +
                                             '    <div class="col-md-6">\n' +
                                             '    <span>Время до</span>' +
-                                            '        <input type="time" name="to[]" class="form-control" placeholder="" value="' + item.to + '">\n' +
+                                            '        <input type="time" name="to" class="form-control" placeholder="" value="' + item.to + '">\n' +
                                             '    </div>\n' +
-                                            '</div>');
-
+                                            '</div>' +
+                                            '</form>'
+                                        );
 
                                         console.log("sub each");
                                         console.log(item);
                                     });
                                 });
+
+                                content.append(
+                                    '<div class="row append-day-item">' +
+                                    '<div class="col-md-12">' +
+                                    '<div class="add-more-lesson">' +
+                                    '<p>Добавить событие</p>' +
+                                    '<p><a class="more-lesson" href="#"><i class="fas fa-plus"></i></a></p>' +
+                                    '</div>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
+                            }
+                            if (data.success && !data.data) {
+                                var content = $('.wrapper-schedule').css('padding', '0 20%').empty();
+
+                                if (global_day == "Monday") {
+                                    day_name = "Понедельник"
+                                }
+                                if (global_day == "Tuesday") {
+                                    day_name = "Вторник"
+                                }
+                                if (global_day == "Wednesday") {
+                                    day_name = "Среда"
+                                }
+                                if (global_day == "Thursday") {
+                                    day_name = "Четверг"
+                                }
+                                if (global_day == "Friday") {
+                                    day_name = "Пятница"
+                                }
+                                if (global_day == "Saturday") {
+                                    day_name = "Суббота"
+                                }
+                                if (global_day == "Sunday") {
+                                    day_name = "Воскресенье"
+                                }
+
+                                content.append(
+                                    '<div class="row nomr">' +
+                                    '<div class="col-md-12">' +
+                                    '<p class="append-day-name">' + day_name + '</p>' +
+                                    '</div>' +
+                                    '</div>'
+                                );
 
                                 content.append(
                                     '<div class="row append-day-item">' +
@@ -401,7 +463,7 @@
                 var clicked = $(e.target);
                 var delete_lesson_id = $(this).attr("data-id");
 
-                if(delete_lesson_id){
+                if (delete_lesson_id) {
                     $.ajax({
                         type: 'GET',
                         url: '/admin/adminDeleteLessonsByDay',
@@ -410,7 +472,10 @@
                         success: function (data) {
 
                             if (data.success) {
-                                clicked.closest('div.append-day-item').fadeOut(300, function(){ $(this).remove();});
+                                clicked.closest('div.append-day-item').fadeOut(300, function () {
+                                    $(this).remove();
+                                });
+                                toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                             }
 
                             console.log(data);
@@ -418,11 +483,11 @@
                             console.log(data);
                         }
                     });
-                }else{
-                    clicked.closest('div.append-day-item').fadeOut(300, function(){ $(this).remove();});
+                } else {
+                    clicked.closest('div.append-day-item').fadeOut(300, function () {
+                        $(this).remove();
+                    });
                 }
-
-
             });
 
             $(".wrapper-schedule").on("click", '.more-lesson', function (e) {
@@ -433,23 +498,63 @@
                 console.log("click more-lesson");
 
                 clicked.closest('div.append-day-item').addClass('lol').before('' +
+                    '<form method="post" class="newLessonForm">' +
                     '<div class="row append-day-item append-day-item-border">\n' +
-                    '    <div class="col-md-10 padb-20">\n' +
-                    '         <input type="text" name="name[]" class="form-control" placeholder="" value="">\n' +
-                    '         <input type="text" hidden name="schedule_id[]" class="form-control" placeholder="" value="">\n' +
+                    '    <div class="col-md-9 padb-20">\n' +
+                    '         <input required type="text" name="name" class="form-control" placeholder="" value="">\n' +
+                    '         <input type="text" hidden name="schedule_id" class="form-control" placeholder="" value="">\n' +
                     '    </div>\n' +
-                    '    <div class="col-md-2 padb-20"><a class="delete-lesson" data-id="" href="#"><i class="fas fa-trash-alt"></i></a></div>' +
+                    '    <div class="col-md-3 padb-20 control-lessons-buttons">' +
+                    '         <input type="text" hidden name="day" value="' + global_day + '">' +
+                    '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
+                    '         <button class="newLessonFormButton" type="submit">' +
+                    '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
+                    '         </button>' +
+                    '         <a class="delete-lesson" data-id="" href="#"><i class="fas fa-trash-alt"></i></a>' +
+                    '    </div>' +
                     '    <div class="col-md-6">\n' +
                     '    <span>Время с</span>' +
-                    '        <input type="time" name="from[]" class="form-control" placeholder="" value="">\n' +
+                    '        <input required type="time" name="from" class="form-control" placeholder="" value="">\n' +
                     '    </div>\n' +
                     '    <div class="col-md-6">\n' +
                     '    <span>Время до</span>' +
-                    '        <input type="time" name="to[]" class="form-control" placeholder="" value="">\n' +
+                    '        <input required type="time" name="to" class="form-control" placeholder="" value="">\n' +
                     '    </div>\n' +
-                    '</div>'
+                    '</div>' +
+                    '</form>'
                 ).hide().fadeIn();
 
+            });
+
+            $(".wrapper-schedule").on("submit", '.newLessonForm', function (e) {
+                e.preventDefault();
+
+                console.log("click save-lesson");
+
+                var clicked = $(e.target);
+                var serializeData = clicked.closest('form.newLessonForm').serialize();
+                var _token = $('meta[name=csrf-token]').attr('content');
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+
+                    type: 'POST',
+                    url: '/admin/adminSaveLessonsByDay',
+                    dataType: 'json',
+                    data: serializeData,
+                    success: function (data) {
+
+                        if (data.success) {
+                            toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
+                        }
+
+                        console.log(data);
+                    }, error: function () {
+                        console.log(data);
+                    }
+                });
             });
 
         });

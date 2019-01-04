@@ -61,4 +61,54 @@ class SchedulesController extends Controller
 
         return response()->json(['success'=>true]);
     }
+
+    public function adminSaveLessonsByDay(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'from' => 'required',
+            'to' => 'required',
+
+            'school_id' => 'required',
+            'day' => 'required',
+            'schedule_id' => '',
+            'lesson_id' => '',
+        ]);
+
+        if ($request->schedule_id){
+            $schedule = Schedule::where('id', $request->schedule_id)->first();
+
+            $lesson = Clas::where('schedule_id', $schedule->id)->first();
+            $lesson->name = $request->name;
+            $lesson->from = $request->from;
+            $lesson->to = $request->to;
+            $lesson->save();
+
+        }else{
+            $schedule = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->first();
+
+            if ($schedule){
+                $lesson = new Clas();
+                $lesson->schedule_id = $schedule->id;
+                $lesson->name = $request->name;
+                $lesson->from = $request->from;
+                $lesson->to = $request->to;
+                $lesson->save();
+            }else{
+                $schedule = new Schedule();
+                $schedule->school_id = $request->school_id;
+                $schedule->day = $request->day;
+                $schedule->save();
+
+                $lesson = new Clas();
+                $lesson->schedule_id = $schedule->id;
+                $lesson->name = $request->name;
+                $lesson->from = $request->from;
+                $lesson->to = $request->to;
+                $lesson->save();
+            }
+        }
+
+        return response()->json(['success'=>true]);
+    }
 }

@@ -57,6 +57,46 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
   line-height: 46px;
 }
 
+textarea:focus, input:focus{
+    outline: none;
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+*:focus {
+    outline: none;
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+.form-control:focus {
+    border-color: inherit;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+    border-color: darkorange;
+    outline: 0 none;
+}
+
 .scroll-to-top:focus, .scroll-to-top:hover {
   color: white;
 }
@@ -610,6 +650,12 @@ body.sidebar-toggled footer.sticky-footer {
     padding-bottom: 10px;
 }
 
+.control-lessons-buttons{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
 .append-day-name{
     text-align: left;
     font-size: 24px;
@@ -648,9 +694,27 @@ body.sidebar-toggled footer.sticky-footer {
     text-decoration: none;
 }
 
+.save-lesson{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+    border-radius: 40px;
+    color: white;
+    width: 40px;
+    height: 40px;
+}
 
+.save-lesson:hover{
+    color: white;
+    text-decoration: none;
+}
 
-
+.newLessonForm .newLessonFormButton{
+    background: transparent;
+    outline: none;
+    border: none;
+}
 
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */
