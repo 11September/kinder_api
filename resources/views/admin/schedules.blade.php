@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-    <link href="{{ asset('administrator/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -12,7 +12,7 @@
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
-            <li class="breadcrumb-item active">Рассписание</li>
+            <li class="breadcrumb-item active">Розклад</li>
         </ol>
 
         <div class="card mb-3">
@@ -38,7 +38,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <h3>Список Садиков</h3>
+                        <h3>Cписок cадкiв</h3>
 
                         <ul class="list-group list-group-flex">
 
@@ -59,11 +59,11 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-md-4">
-                                <h4>Выбрать день недели</h4>
+                                <h4>Вибрати день тижня</h4>
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Понедельник
+                                        Понеділок
                                         <input value="Monday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -71,7 +71,7 @@
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Вторник
+                                        Вівторок
                                         <input value="Tuesday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -79,7 +79,7 @@
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Среда
+                                        Середа
                                         <input value="Wednesday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -87,7 +87,7 @@
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Четверг
+                                        Четвер
                                         <input value="Thursday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -95,7 +95,7 @@
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Пятница
+                                        П'ятниця
                                         <input value="Friday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -103,7 +103,7 @@
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Суббота
+                                        Субота
                                         <input value="Saturday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -111,7 +111,7 @@
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Воскресенье
+                                        Неділя
                                         <input value="Sunday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -119,7 +119,7 @@
 
                                 <div class="form-check">
                                     <label class="container-checkbox">
-                                        Все дни
+                                        Усі дні
                                         <input checked value="Sunday" type="radio" name="day">
                                         <span class="checkmark-radio"></span>
                                     </label>
@@ -140,12 +140,4 @@
 
 @section('scripts')
 
-    <script src="{{ asset('administrator/js/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('administrator/js/dataTables.bootstrap4.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable();
-        });
-    </script>
 @endsection

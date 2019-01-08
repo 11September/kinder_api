@@ -14,7 +14,7 @@
             </li>
 
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin/schedules') }}">Рассписание</a>
+                <a class="orange-text" href="{{ url('admin/schedules') }}">Розклад</a>
             </li>
 
             <li class="breadcrumb-item active">{{ $current_school->name }}</li>
@@ -43,7 +43,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
-                        <h3>Список Садиков</h3>
+                        <h3>Cписок cадкiв</h3>
 
                         <ul class="list-group list-group-flex">
 
@@ -64,12 +64,12 @@
                     <div class="col-md-9">
                         <div class="row">
                             <div class="col-md-4">
-                                <h4>Выбрать день недели</h4>
+                                <h4>Вибрати день тижня</h4>
 
                                 <div class="all-days-checkboxes">
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Понедельник
+                                            Понеділок
                                             <input value="Monday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -79,7 +79,7 @@
 
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Вторник
+                                            Вівторок
                                             <input value="Tuesday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -89,7 +89,7 @@
 
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Среда
+                                            Середа
                                             <input value="Wednesday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -99,7 +99,7 @@
 
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Четверг
+                                            Четвер
                                             <input value="Thursday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -109,7 +109,7 @@
 
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Пятница
+                                            П'ятниця
                                             <input value="Friday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -119,7 +119,7 @@
 
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Суббота
+                                            Субота
                                             <input value="Saturday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -129,7 +129,7 @@
 
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Воскресенье
+                                            Неділя
                                             <input value="Sunday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -139,7 +139,7 @@
 
                                     <div class="form-check">
                                         <label class="container-checkbox">
-                                            Все дни
+                                            Усі дні
                                             <input checked value="all" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
@@ -326,25 +326,25 @@
                                 var schedule_id = data.data.id;
 
                                 if (data.data.day == "Monday") {
-                                    day_name = "Понедельник"
+                                    day_name = "Понеділок"
                                 }
                                 if (data.data.day == "Tuesday") {
-                                    day_name = "Вторник"
+                                    day_name = "Вівторок"
                                 }
                                 if (data.data.day == "Wednesday") {
-                                    day_name = "Среда"
+                                    day_name = "Середа"
                                 }
                                 if (data.data.day == "Thursday") {
-                                    day_name = "Четверг"
+                                    day_name = "Четвер"
                                 }
                                 if (data.data.day == "Friday") {
-                                    day_name = "Пятница"
+                                    day_name = "П'ятниця"
                                 }
                                 if (data.data.day == "Saturday") {
-                                    day_name = "Суббота"
+                                    day_name = "Субота"
                                 }
                                 if (data.data.day == "Sunday") {
-                                    day_name = "Воскресенье"
+                                    day_name = "Неділя"
                                 }
 
                                 content.append(
@@ -410,25 +410,25 @@
                                 var content = $('.wrapper-schedule').css('padding', '0 20%').empty();
 
                                 if (global_day == "Monday") {
-                                    day_name = "Понедельник"
+                                    day_name = "Понеділок"
                                 }
                                 if (global_day == "Tuesday") {
-                                    day_name = "Вторник"
+                                    day_name = "Вівторок"
                                 }
                                 if (global_day == "Wednesday") {
-                                    day_name = "Среда"
+                                    day_name = "Середа"
                                 }
                                 if (global_day == "Thursday") {
-                                    day_name = "Четверг"
+                                    day_name = "Четвер"
                                 }
                                 if (global_day == "Friday") {
-                                    day_name = "Пятница"
+                                    day_name = "П'ятниця"
                                 }
                                 if (global_day == "Saturday") {
-                                    day_name = "Суббота"
+                                    day_name = "Субота"
                                 }
                                 if (global_day == "Sunday") {
-                                    day_name = "Воскресенье"
+                                    day_name = "Неділя"
                                 }
 
                                 content.append(
@@ -443,7 +443,7 @@
                                     '<div class="row append-day-item">' +
                                     '<div class="col-md-12">' +
                                     '<div class="add-more-lesson">' +
-                                    '<p>Добавить событие</p>' +
+                                    '<p>Додати подію</p>' +
                                     '<p><a class="more-lesson" href="#"><i class="fas fa-plus"></i></a></p>' +
                                     '</div>' +
                                     '</div>' +
