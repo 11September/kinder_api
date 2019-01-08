@@ -198,6 +198,7 @@ class UsersController extends Controller
 //        }
 
         Log::warning('Test', $request->all());
+        return response()->json(['message' => 'Аватар змінено!'], 200);
         exit();
 
         try {
