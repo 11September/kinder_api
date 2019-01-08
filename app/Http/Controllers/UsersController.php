@@ -199,8 +199,7 @@ class UsersController extends Controller
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-            $image = base64_decode($request->avatar);
-            $user->avatar = $image;
+            $user->avatar = $request->avatar;
             $user->save();
 
             return response()->json(['message' => 'Аватар змінено!'], 200);
