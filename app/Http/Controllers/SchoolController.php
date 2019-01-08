@@ -3,6 +3,7 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Http\Requests\StoreSchool;
+use App\Http\Requests\UpdateSchool;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -60,7 +61,7 @@ class SchoolController extends Controller
         return view('admin.kindergartens.edit',compact('schools', 'groups', 'school'));
     }
 
-    public function adminUpdate(StoreSchool $request, $id)
+    public function adminUpdate(UpdateSchool $request, $id)
     {
         $school = School::where('id', $id)->first();
 
