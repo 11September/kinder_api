@@ -69,7 +69,7 @@
                         @foreach($electives as $elective)
                             <tr>
                                 <td>{{ $elective->name }}</td>
-                                <td>{{ $elective->school->name }}</td>
+                                <td>{{ @$elective->school->name }}</td>
                                 <td>{{ $elective->time_start }}</td>
                                 <td>{{ $elective->time_end }}</td>
                                 <td class="action-td">

@@ -73,7 +73,7 @@
                                 <td>{{ $post->title }}</td>
                                 <td><img class="post-image" src="{{ asset($post->preview) }}" alt=""></td>
                                 <td>{{ $post->until }}</td>
-                                <td>{{ $post->school->name }}</td>
+                                <td>{{ @$post->school->name }}</td>
                                 <td class="action-td">
                                     <a class="btn btn-warning" href="{{ action('PostsController@adminEdit', $post->id) }}">Редагувати</a>
 

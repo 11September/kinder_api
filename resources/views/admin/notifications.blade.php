@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-    <link href="{{ asset('administrator/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -129,12 +129,4 @@
 
 @section('scripts')
 
-    <script src="{{ asset('administrator/js/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('administrator/js/dataTables.bootstrap4.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable();
-        });
-    </script>
 @endsection
