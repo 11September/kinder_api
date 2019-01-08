@@ -184,12 +184,8 @@ class UsersController extends Controller
 
     public function SetAvatar(Request $request)
     {
-
-        return response()->json(['message' => 'Юра привет!'], 422);
-        exit();
-
         $validator = Validator::make($request->all(), [
-            'avatar' => 'required|string',
+            'avatar' => 'required',
         ]);
 
         if ($validator->fails()) {
