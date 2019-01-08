@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-    <link href="{{ asset('administrator/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin/posts') }}">Новости</a>
+                <a class="orange-text" href="{{ url('admin/posts') }}">Новини</a>
             </li>
             <li class="breadcrumb-item active">
                 {{ $post->title }}
@@ -26,7 +26,7 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
-                        <h2>Редактировать новость</h2>
+                        <h2>Редагувати новини</h2>
                     </div>
 
                     <div class="card-body">
@@ -43,10 +43,10 @@
                                     <div class="form-row">
 
                                         <div class="form-group col-md-8">
-                                            <label for="exampleFormControlInput1">Название</label>
+                                            <label for="exampleFormControlInput1">Назва</label>
                                             <input required name="title" value="{{ $post->title }}" type="text"
                                                    class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}"
-                                                   placeholder="Название">
+                                                   placeholder="Назва">
 
                                             @if ($errors->has('title'))
                                                 <span class="invalid-feedback" role="alert">
@@ -59,7 +59,7 @@
                                             <label for="exampleFormControlInput1">Дата До</label>
                                             <input required name="until" value="{{ $post->until }}" type="date"
                                                    class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
-                                                   placeholder="Название">
+                                                   placeholder="Дата До">
 
                                             @if ($errors->has('until'))
                                                 <span class="invalid-feedback" role="alert">
@@ -69,9 +69,9 @@
                                         </div>
 
                                         <div class="form-group col-md-12">
-                                            <label for="exampleFormControlInput1">Описание</label>
+                                            <label for="exampleFormControlInput1">Опис</label>
                                             <textarea required name="body" type="text" class="form-control {{ $errors->has('body') ? ' is-invalid' : '' }}"
-                                                      placeholder="Описание">{{ $post->body }}</textarea>
+                                                      placeholder="Опис">{{ $post->body }}</textarea>
 
                                             @if ($errors->has('body'))
                                                 <span class="invalid-feedback" role="alert">
@@ -83,15 +83,15 @@
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <h5>Upload Preview</h5>
+                                            <h5>Завантажити попередній перегляд</h5>
                                             <input name="old_image" type="hidden" value="{{ $post->image }}">
                                             <input value="{{ $post->image }}" name="image" type='file'
                                                    onchange="readURL(this);"/>
 
                                             @if ($errors->has('image'))
                                                 <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $errors->first('image') }}</strong>
-                                                        </span>
+                                                    <strong>{{ $errors->first('image') }}</strong>
+                                                </span>
                                             @endif
 
                                             <div class="row">
@@ -102,15 +102,15 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <h5>Upload Image</h5>
+                                            <h5>Завантажити зображення</h5>
                                             <input name="old_preview" type="hidden" value="{{ $post->preview }}">
                                             <input value="{{ $post->preview }}" name="preview" type='file'
                                                    onchange="readURL2(this);"/>
 
                                             @if ($errors->has('preview'))
                                                 <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $errors->first('preview') }}</strong>
-                                                        </span>
+                                                    <strong>{{ $errors->first('preview') }}</strong>
+                                                </span>
                                             @endif
 
                                             <div class="row">
@@ -124,7 +124,7 @@
                                 <div class="col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Садик</label>
+                                            <label>Садок</label>
 
                                             @foreach($schools as $school)
 
@@ -140,13 +140,13 @@
 
                                             @if ($errors->has('school_id'))
                                                 <span class="invalid-feedback" role="alert">
-                                                            <strong>{{ $errors->first('school_id') }}</strong>
-                                                        </span>
+                                                    <strong>{{ $errors->first('school_id') }}</strong>
+                                                </span>
                                             @endif
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>Группы</label>
+                                            <label>Групи</label>
 
                                             @foreach($groups as $group)
 
@@ -172,7 +172,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+                            <button type="submit" class="btn btn-primary mb-2">Оновити</button>
 
                         </form>
                     </div>
@@ -186,10 +186,6 @@
 @endsection
 
 @section('scripts')
-
-    <script src="{{ asset('administrator/js/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('administrator/js/dataTables.bootstrap4.js') }}"></script>
-
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -218,11 +214,5 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
-
-        $(document).ready(function () {
-            $('#dataTable').DataTable();
-
-        });
     </script>
 @endsection

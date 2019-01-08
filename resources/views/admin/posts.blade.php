@@ -12,7 +12,7 @@
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
-            <li class="breadcrumb-item active">Новости</li>
+            <li class="breadcrumb-item active">Новини</li>
         </ol>
 
         <div class="card mb-3">
@@ -39,7 +39,7 @@
 
                     <div class="col-md-6">
                         <div class="flex-end">
-                            <a class="orange-link" href="{{ action('PostsController@adminCreate') }}">Создать Новость</a>
+                            <a class="orange-link" href="{{ action('PostsController@adminCreate') }}">Створення новини</a>
                         </div>
                     </div>
                 </div>
@@ -50,20 +50,20 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0" data-order='[[ 0, "desc" ]]'>
                         <thead>
                         <tr>
-                            <th>Название</th>
+                            <th>Назва</th>
                             <th>Картинка</th>
-                            <th>Вдемя до</th>
-                            <th>Садик</th>
-                            <th>Действия</th>
+                            <th>Час до</th>
+                            <th>Садок</th>
+                            <th>Дії</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Название</th>
+                            <th>Назва</th>
                             <th>Картинка</th>
-                            <th>Вдемя до</th>
-                            <th>Садик</th>
-                            <th>Действия</th>
+                            <th>Час до</th>
+                            <th>Садок</th>
+                            <th>Дії</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -75,14 +75,14 @@
                                 <td>{{ $post->until }}</td>
                                 <td>{{ $post->school->name }}</td>
                                 <td class="action-td">
-                                    <a class="btn btn-warning" href="{{ action('PostsController@adminEdit', $post->id) }}">Редактировать</a>
+                                    <a class="btn btn-warning" href="{{ action('PostsController@adminEdit', $post->id) }}">Редагувати</a>
 
                                     <form id="delete-form" method="POST" action="/admin/posts/{{$post->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-danger" value="Удалить Пост">
+                                            <input type="submit" class="btn btn-danger" value="Видалити пост">
                                         </div>
                                     </form>
                                 </td>

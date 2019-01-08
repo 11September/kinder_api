@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-    <link href="{{ asset('administrator/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -12,9 +12,9 @@
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
             <li class="breadcrumb-item active">
-                <a class="orange-text" href="{{ url('admin/posts') }}">Новости</a>
+                <a class="orange-text" href="{{ url('admin/posts') }}">Новини</a>
             </li>
-            <li class="breadcrumb-item">Создание новости</li>
+            <li class="breadcrumb-item">Створення новини</li>
         </ol>
 
 
@@ -23,7 +23,7 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
-                        <h2>Создать Новость</h2>
+                        <h2>Створення новини</h2>
                     </div>
 
                     <div class="card-body">
@@ -39,10 +39,10 @@
                                     <div class="form-row">
 
                                         <div class="form-group col-md-8">
-                                            <label for="exampleFormControlInput1">Название</label>
+                                            <label for="exampleFormControlInput1">Назва</label>
                                             <input required name="title" value="{{ old('title') }}" type="text"
                                                    class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}"
-                                                   placeholder="Название">
+                                                   placeholder="Назва">
 
                                             @if ($errors->has('title'))
                                                 <span class="invalid-feedback" role="alert">
@@ -55,7 +55,7 @@
                                             <label for="exampleFormControlInput1">Дата До</label>
                                             <input required name="until" value="{{ old('until') }}" type="date"
                                                    class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
-                                                   placeholder="Название">
+                                                   placeholder="Дата До">
 
                                             @if ($errors->has('until'))
                                                 <span class="invalid-feedback" role="alert">
@@ -65,10 +65,10 @@
                                         </div>
 
                                         <div class="form-group col-md-12">
-                                            <label for="exampleFormControlInput1">Описание</label>
+                                            <label for="exampleFormControlInput1">Опис</label>
                                             <textarea required name="body" type="text"
                                                       class="form-control {{ $errors->has('body') ? ' is-invalid' : '' }}"
-                                                      placeholder="Описание">{{ old('body') }}</textarea>
+                                                      placeholder="Опис">{{ old('body') }}</textarea>
 
                                             @if ($errors->has('body'))
                                                 <span class="invalid-feedback" role="alert">
@@ -80,7 +80,7 @@
 
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <h5>Upload Preview</h5>
+                                            <h5>Завантажити попередній перегляд</h5>
                                             <input required name="image" type='file' onchange="readURL(this);"/>
 
                                             @if ($errors->has('image'))
@@ -98,7 +98,7 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <h5>Upload Image</h5>
+                                            <h5>Завантажити зображення</h5>
                                             <input required name="preview" type='file' onchange="readURL2(this);"/>
 
                                             @if ($errors->has('preview'))
@@ -120,7 +120,7 @@
                                 <div class="col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Садик</label>
+                                            <label>Садок</label>
 
                                             @foreach($schools as $school)
 
@@ -143,7 +143,7 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>Группы</label>
+                                            <label>Групи</label>
 
                                             @foreach($groups as $group)
 
@@ -162,7 +162,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                            <button type="submit" class="btn btn-primary mb-2">Створити</button>
 
                         </form>
                     </div>
@@ -176,10 +176,6 @@
 @endsection
 
 @section('scripts')
-
-    <script src="{{ asset('administrator/js/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('administrator/js/dataTables.bootstrap4.js') }}"></script>
-
     <script>
         function readURL(input) {
             if (input.files && input.files[0]) {
@@ -206,11 +202,5 @@
                 reader.readAsDataURL(input.files[0]);
             }
         }
-
-
-        $(document).ready(function () {
-            $('#dataTable').DataTable();
-
-        });
     </script>
 @endsection
