@@ -82,8 +82,8 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->parent_phone }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->school->name }}</td>
-                                <td>{{ $user->group->name }}</td>
+                                <td>{{ @$user->school->name }}</td>
+                                <td>{{ @$user->group->name }}</td>
                                 <td>{{ $user->status }}</td>
                                 <td class="action-td">
                                     <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редагувати</a>
