@@ -13,7 +13,7 @@
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
-            <li class="breadcrumb-item active">Пользователи</li>
+            <li class="breadcrumb-item active">Користувачі</li>
         </ol>
 
         <div class="card mb-3">
@@ -36,11 +36,11 @@
 
                     <div class="col-md-6">
                         <i class="fas fa-table"></i>
-                        Список Пользователей
+                        Список користувачів
                     </div>
                     <div class="col-md-6">
                         <div class="flex-end">
-                            <a class="orange-link" href="{{ action('StudentsController@adminCreate') }}">Создать Пользователя</a>
+                            <a class="orange-link" href="{{ action('StudentsController@adminCreate') }}">Створити користувача</a>
                         </div>
                     </div>
                 </div>
@@ -53,25 +53,25 @@
                         <thead>
                         <tr>
                             <th>№</th>
-                            <th>ФИО ребенка</th>
-                            <th>Номер родителя</th>
+                            <th>ПІБ дитини</th>
+                            <th>Номер батькiв</th>
                             <th>Email</th>
-                            <th>Садик</th>
-                            <th>Группа</th>
+                            <th>Садок</th>
+                            <th>Група</th>
                             <th>Статус</th>
-                            <th>Действия</th>
+                            <th>Дії</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
                             <th>№</th>
-                            <th>ФИО ребенка</th>
-                            <th>Номер родителя</th>
+                            <th>ПІБ дитини</th>
+                            <th>Номер батькiв</th>
                             <th>Email</th>
-                            <th>Садик</th>
-                            <th>Группа</th>
+                            <th>Садок</th>
+                            <th>Група</th>
                             <th>Статус</th>
-                            <th>Действия</th>
+                            <th>Дії</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -86,14 +86,14 @@
                                 <td>{{ $user->group->name }}</td>
                                 <td>{{ $user->status }}</td>
                                 <td class="action-td">
-                                    <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редактировать</a>
+                                    <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редагувати</a>
 
                                     <form id="delete-form" method="POST" action="/admin/users/{{$user->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-danger" value="Удалить">
+                                            <input type="submit" class="btn btn-danger" value="Вилучити">
                                         </div>
                                     </form>
                                 </td>
