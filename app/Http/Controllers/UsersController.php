@@ -197,19 +197,20 @@ class UsersController extends Controller
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
-        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-        $user->avatar = $request->avatar;
-        $user->save();
+
 
         try {
-
-
-            $preview = $request->file('avatar');
-            $input['avatar'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
-            $preview->move(public_path('/images/uploads/avatars'), $input['avatar']);
-            $user->avatar = '/images/uploads/avatars/' . $input['preview'];
-
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $user->avatar = $request->avatar;
             $user->save();
+
+            return response()->json(['message' => 'Аватар змінено!'], 500);
+
+//            $preview = $request->file('avatar');
+//            $input['avatar'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
+//            $preview->move(public_path('/images/uploads/avatars'), $input['avatar']);
+//            $user->avatar = '/images/uploads/avatars/' . $input['preview'];
+//            $user->save();
 
             return response()->json(['message' => 'Аватар змінено!'], 200);
 
