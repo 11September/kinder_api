@@ -199,13 +199,8 @@ class UsersController extends Controller
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-
-            $base64_str = substr($request->avatar, strpos($request->avatar, ",")+1);
-            $preview = base64_decode($base64_str);
-
-            $input['avatar'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
-            $preview->move(public_path('/images/uploads/avatars'), $input['avatar']);
-            $user->avatar = '/images/uploads/avatars/' . $input['preview'];
+            $image = base64_decode($request->avatar);
+            $user->avatar = $image;
             $user->save();
 
             return response()->json(['message' => 'Аватар змінено!'], 200);
