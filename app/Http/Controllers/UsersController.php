@@ -44,6 +44,11 @@ class UsersController extends Controller
 
             $user = User::where('email', $request->email)->first();
             if ($user) {
+
+                if ($user->status == "disable"){
+                    return response()->json(['message' => 'Користувач неактивний!'], 403);
+                }
+
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                         $group = $user->group()->first();
