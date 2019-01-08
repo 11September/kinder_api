@@ -193,6 +193,9 @@ class UsersController extends Controller
 //        }
 
         try {
+
+            dd($request->all());
+
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
             $preview = $request->file('avatar');
