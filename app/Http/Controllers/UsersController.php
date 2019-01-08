@@ -200,11 +200,11 @@ class UsersController extends Controller
 
 
         try {
-            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-            $user->avatar = $request->avatar;
-            $user->save();
-
-            return response()->json(['message' => 'Аватар змінено!'], 500);
+//            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+//            $user->avatar = $request->avatar;
+//            $user->save();
+//
+//            return response()->json(['message' => 'Аватар змінено!'], 500);
 
 //            $preview = $request->file('avatar');
 //            $input['avatar'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
