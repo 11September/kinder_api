@@ -61,7 +61,7 @@ class GroupController extends Controller
 
         $schools = School::all();
 
-        $groups = Group::all();
+        $groups = Group::withCount(['students'])->get();
 
         $group = Group::where('id', $id)->withCount(['students'])->first();
 

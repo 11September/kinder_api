@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-    <link href="{{ asset('administrator/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin/groups') }}">Группы</a>
+                <a class="orange-text" href="{{ url('admin/groups') }}">Групи</a>
             </li>
             <li class="breadcrumb-item active">
                 {{ $group->name }}
@@ -43,7 +43,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <h3>Список Груп</h3>
+                        <h3>Список груп</h3>
 
                         <ul class="list-group list-group-flex">
 
@@ -55,7 +55,7 @@
                                             {{ $list_groups->name }}
                                         </a>
 
-                                        <p class="group-count">{{ $group->students_count }} Человек</p>
+                                        <p class="group-count">{{ $list_groups->students_count }} чоловiк</p>
                                     </div>
 
                                     <form id="delete-form" method="POST" action="/admin/groups/{{$group->id}}">
@@ -73,7 +73,7 @@
                     </div>
 
                     <div class="col-md-8">
-                        <h3 style="text-align: center">Создать группу</h3>
+                        <h3 style="text-align: center">Оновити групу</h3>
 
                         <form action="{{ action('GroupController@adminUpdate', $group->id) }}" method="post">
                             {{ csrf_field() }}
@@ -83,7 +83,7 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Садик</label>
+                                        <label>Садок</label>
 
                                         @foreach($schools as $school)
 
@@ -102,14 +102,14 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Название Группы</label>
+                                        <label for="name">Назва групи</label>
                                         <input required type="text" value="{{ $group->name }}" name="name"
                                                class="form-control" id="name"
                                                placeholder="Название Группы">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="user_id">Выбрать администратора</label>
+                                        <label for="user_id">Вибрати адміністратора</label>
                                         <select required name="user_id" class="form-control" id="user_id">
 
                                             @foreach($users as $administrator)
@@ -120,7 +120,7 @@
                                         </select>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+                                    <button type="submit" class="btn btn-primary mb-2">Оновити</button>
                                 </div>
                             </div>
                         </form>
@@ -135,12 +135,4 @@
 
 @section('scripts')
 
-    <script src="{{ asset('administrator/js/jquery.dataTables.js') }}"></script>
-    <script src="{{ asset('administrator/js/dataTables.bootstrap4.js') }}"></script>
-
-    <script>
-        $(document).ready(function () {
-            $('#dataTable').DataTable();
-        });
-    </script>
 @endsection

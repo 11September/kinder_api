@@ -12,7 +12,7 @@
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
-            <li class="breadcrumb-item active">Группы</li>
+            <li class="breadcrumb-item active">Групи</li>
         </ol>
 
         <div class="card mb-3">
@@ -39,7 +39,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-4">
-                        <h3>Список Груп</h3>
+                        <h3>Список груп</h3>
 
                         <ul class="list-group list-group-flex">
 
@@ -51,7 +51,7 @@
                                             {{ $group->name }}
                                         </a>
 
-                                        <p class="group-count">{{ $group->students_count }} Человек</p>
+                                        <p class="group-count">{{ $group->students_count }} чоловiк</p>
                                     </div>
 
 
@@ -70,7 +70,7 @@
                     </div>
 
                     <div class="col-md-8">
-                        <h3 style="text-align: center">Создать группу</h3>
+                        <h3 style="text-align: center">Створити групу</h3>
 
                         <form action="{{ action('GroupController@adminStore') }}" method="post">
                             {{ csrf_field() }}
@@ -79,7 +79,7 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Садик</label>
+                                        <label>Садок</label>
 
                                         @foreach($schools as $school)
 
@@ -98,13 +98,13 @@
                                 </div>
                                 <div class="col-md-6">
                                     <div class="form-group">
-                                        <label for="name">Название Группы</label>
+                                        <label for="name">Назва групи</label>
                                         <input required type="text" name="name" class="form-control" id="name"
-                                               placeholder="Название Группы">
+                                               placeholder="Назва групи">
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="user_id">Выбрать администратора</label>
+                                        <label for="user_id">Вибрати адміністратора</label>
                                         <select required name="user_id" class="form-control" id="user_id">
 
                                             @foreach($users as $administrator)
@@ -115,7 +115,7 @@
                                         </select>
                                     </div>
 
-                                    <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                                    <button type="submit" class="btn btn-primary mb-2">Створити</button>
                                 </div>
                             </div>
                         </form>
