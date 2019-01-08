@@ -197,6 +197,8 @@ class UsersController extends Controller
 //            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
 //        }
 
+        Log::info($request->avatar);
+
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $user->avatar = $request->avatar;
