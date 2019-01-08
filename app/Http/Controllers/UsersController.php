@@ -29,10 +29,15 @@ class UsersController extends Controller
                 $user = Auth::user();
                 $group = $user->group()->first();
 
+//              Refresh token
+                $user->token = str_random(5);
+                $user->save();
+
                 $result = array();
                 $result = array_add($result, 'token', $user->token);
                 $result = array_add($result, 'parent_name', $user->parent_name);
                 $result = array_add($result, 'email', $user->email);
+                $result = array_add($result, 'avatar', $user->avatar);
                 $result = array_add($result, 'group', $group->name);
 
                 return response($result);
@@ -44,10 +49,15 @@ class UsersController extends Controller
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                         $group = $user->group()->first();
 
+                        //              Refresh token
+                        $user->token = str_random(5);
+                        $user->save();
+
                         $result = array();
                         $result = array_add($result, 'token', $user->token);
                         $result = array_add($result, 'parent_name', $user->parent_name);
                         $result = array_add($result, 'email', $user->email);
+                        $result = array_add($result, 'avatar', $user->avatar);
                         $result = array_add($result, 'group', $group->name);
                         return response($result);
                     } else {
