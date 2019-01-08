@@ -18,10 +18,11 @@
                         <div class="card-body-icon">
                             <i class="fas fa-fw fa-comments"></i>
                         </div>
-                        <div class="mr-5">26 New Messages!</div>
+                        <p class="panel-heading">Садки</p>
+                        <div class="mr-5 panel-count">{{ $schools }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
+                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/kindergartens') }}">
+                        <span class="float-left">Докладніше</span>
                         <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -34,10 +35,11 @@
                         <div class="card-body-icon">
                             <i class="fas fa-fw fa-list"></i>
                         </div>
-                        <div class="mr-5">11 New Tasks!</div>
+                        <p class="panel-heading">Групи</p>
+                        <div class="mr-5 panel-count">{{ $groups }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
+                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/groups') }}">
+                        <span class="float-left">Докладніше</span>
                         <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -50,10 +52,11 @@
                         <div class="card-body-icon">
                             <i class="fas fa-fw fa-shopping-cart"></i>
                         </div>
-                        <div class="mr-5">123 New Orders!</div>
+                        <p class="panel-heading">Користувачi</p>
+                        <div class="mr-5 panel-count">{{ $users }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
+                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/users') }}">
+                        <span class="float-left">Докладніше</span>
                         <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>
@@ -66,10 +69,11 @@
                         <div class="card-body-icon">
                             <i class="fas fa-fw fa-life-ring"></i>
                         </div>
-                        <div class="mr-5">13 New Tickets!</div>
+                        <p class="panel-heading">Новини</p>
+                        <div class="mr-5 panel-count">{{ $news }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
-                        <span class="float-left">View Details</span>
+                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/posts') }}">
+                        <span class="float-left">Докладніше</span>
                         <span class="float-right">
                     <i class="fas fa-angle-right"></i>
                   </span>

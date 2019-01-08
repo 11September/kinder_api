@@ -48,6 +48,15 @@ dl, ol, ul {
     padding-bottom: 80px;
 }
 
+.panel-heading{
+    font-size: 30px;
+    font-weight: 600;
+}
+
+.card-body .panel-count{
+    font-size: xx-large;
+}
+
 body.fixed-nav #content-wrapper {
     margin-top: 56px;
     padding-left: 90px;

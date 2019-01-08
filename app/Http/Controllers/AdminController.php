@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\User;
+use App\Group;
+use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 
@@ -15,7 +18,12 @@ class AdminController extends Controller
 
     public function admin()
     {
-        return view('admin.admin');
+        $schools = School::count();
+        $groups = Group::count();
+        $users = User::where('type', 'default')->count();
+        $news = Post::count();
+
+        return view('admin.panel', compact('schools', 'groups', 'users', 'news'));
     }
 
     public function admins()
