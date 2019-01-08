@@ -29,8 +29,7 @@ class UsersController extends Controller
                 $user = Auth::user();
                 $group = $user->group()->first();
 
-//              Refresh token
-                $user->token = str_random(5);
+                $user->changeToken();
                 $user->save();
 
                 $result = array();
@@ -49,8 +48,7 @@ class UsersController extends Controller
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                         $group = $user->group()->first();
 
-                        //              Refresh token
-                        $user->token = str_random(5);
+                        $user->changeToken();
                         $user->save();
 
                         $result = array();

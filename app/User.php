@@ -35,6 +35,11 @@ class User extends Authenticatable
         'password', 'remember_token', 'role_id', 'token'
     ];
 
+    public function changeToken()
+    {
+        return $this->token = str_random(5);
+    }
+
     public function getUserToken()
     {
         return $this->token;
