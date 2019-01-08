@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 03 2019 г., 18:35
+-- Время создания: Янв 04 2019 г., 17:41
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.2.0
 
@@ -43,29 +43,29 @@ CREATE TABLE `classes` (
 --
 
 INSERT INTO `classes` (`id`, `schedule_id`, `name`, `from`, `to`, `created_at`, `updated_at`) VALUES
-(1, 1, 'Prof. Elisa DuBuque IV', '00:01:34', '17:52:47', NULL, NULL),
-(2, 1, 'Ubaldo Schinner', '01:18:50', '10:52:45', NULL, NULL),
-(3, 1, 'Kavon Stanton', '18:04:04', '19:35:36', NULL, NULL),
-(4, 1, 'Bonita O\'Keefe', '22:42:01', '19:07:28', NULL, NULL),
-(5, 2, 'Osborne Reichel', '01:02:47', '20:36:53', NULL, NULL),
-(6, 2, 'Ms. Hettie Turcotte', '14:58:58', '11:07:22', NULL, NULL),
-(7, 2, 'Karelle Kertzmann V', '22:45:50', '02:54:43', NULL, NULL),
-(8, 2, 'Dr. Noelia Hodkiewicz II', '17:46:50', '02:46:32', NULL, NULL),
-(9, 3, 'Dr. Flo Koss', '07:39:53', '19:00:57', NULL, NULL),
-(10, 3, 'Casper Collier', '11:19:24', '01:37:00', NULL, NULL),
-(11, 3, 'Roberta Renner', '14:15:14', '11:54:18', NULL, NULL),
-(12, 3, 'Aliya Hayes PhD', '06:13:52', '22:05:13', NULL, NULL),
-(13, 4, 'Dorothea Gutkowski', '23:49:45', '18:26:02', NULL, NULL),
-(14, 4, 'Myrtle Keeling PhD', '07:11:42', '20:25:10', NULL, NULL),
-(15, 4, 'Anjali Becker', '04:54:03', '19:42:05', NULL, NULL),
-(16, 4, 'Mr. Angus Ortiz', '08:24:48', '02:28:19', NULL, NULL),
-(17, 5, 'Micah Beer', '14:25:47', '19:13:36', NULL, NULL),
-(18, 5, 'Kyra Fadel DVM', '21:45:36', '22:13:17', NULL, NULL),
-(19, 5, 'Kailyn Hills', '19:28:36', '16:23:22', NULL, NULL),
-(20, 5, 'Lawson Rosenbaum', '14:31:37', '04:11:58', NULL, NULL),
-(21, 6, 'Ignatius Murray V', '16:25:12', '11:13:46', NULL, NULL),
-(22, 6, 'Wilhelm Upton IV', '21:58:19', '18:51:42', NULL, NULL),
-(23, 7, 'Mrs. Fabiola Brekke II', '19:14:34', '22:31:37', NULL, NULL);
+(1, 1, 'Ms. Pasquale Renner', '22:18:49', '17:15:00', NULL, NULL),
+(2, 1, 'Richmond Grimes', '18:15:55', '08:12:50', NULL, NULL),
+(3, 1, 'Dr. Deron Eichmann', '10:58:22', '04:36:02', NULL, NULL),
+(4, 1, 'Rosalee Kautzer', '20:24:34', '07:35:58', NULL, NULL),
+(5, 2, 'Hilton Runolfsson', '03:03:04', '01:35:58', NULL, NULL),
+(6, 2, 'Peter Price', '10:20:11', '07:45:44', NULL, NULL),
+(7, 2, 'Cole Jerde DDS', '12:40:19', '22:11:16', NULL, NULL),
+(8, 2, 'Mrs. Berenice Langworth I', '00:22:27', '11:01:35', NULL, NULL),
+(9, 3, 'Mr. Elian Langworth I', '23:18:02', '23:21:29', NULL, NULL),
+(10, 3, 'Rex Raynor V', '22:02:35', '18:46:48', NULL, NULL),
+(11, 3, 'Adell Smith', '05:23:25', '03:21:14', NULL, NULL),
+(12, 3, 'Prof. Katelynn Hoeger', '02:40:19', '16:31:49', NULL, NULL),
+(13, 4, 'Stewart Dare', '09:41:25', '01:55:41', NULL, NULL),
+(14, 4, 'Sidney Streich PhD', '11:07:27', '08:08:46', NULL, NULL),
+(15, 4, 'Cortez Beatty III', '21:23:37', '02:58:29', NULL, NULL),
+(16, 4, 'Rowland Stamm', '07:47:52', '01:48:48', NULL, NULL),
+(17, 5, 'Gunner Lang', '20:00:33', '15:01:22', NULL, NULL),
+(18, 5, 'Wendy Von', '16:47:24', '21:27:09', NULL, NULL),
+(19, 5, 'Ms. Maggie Okuneva', '23:23:55', '03:54:03', NULL, NULL),
+(20, 5, 'Dr. Vivien Carroll', '13:18:28', '01:57:29', NULL, NULL),
+(21, 6, 'Elfrieda Wintheiser', '07:16:24', '10:24:25', NULL, NULL),
+(22, 6, 'Elwyn Johns', '12:06:31', '21:11:04', NULL, NULL),
+(23, 7, 'Elmira Gusikowski MD', '20:00:00', '16:48:16', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -88,8 +88,8 @@ CREATE TABLE `electives` (
 --
 
 INSERT INTO `electives` (`id`, `name`, `school_id`, `time_start`, `time_end`, `created_at`, `updated_at`) VALUES
-(1, 'Giovanni Padberg', 1, '15:59:22', '01:16:42', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(2, 'Myrtis Klein', 1, '06:36:29', '09:53:50', '2019-01-03 10:03:50', '2019-01-03 10:03:50');
+(1, 'Gerhard Botsford', 1, '06:30:19', '07:57:14', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(2, 'Destinee Murazik', 1, '09:05:04', '09:06:20', '2019-01-04 12:35:27', '2019-01-04 12:35:27');
 
 -- --------------------------------------------------------
 
@@ -123,8 +123,8 @@ CREATE TABLE `electivy_photos` (
 --
 
 INSERT INTO `electivy_photos` (`id`, `electivy_id`, `image`, `created_at`, `updated_at`) VALUES
-(1, 1, 'https://lorempixel.com/640/480/?80699', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(2, 1, 'https://lorempixel.com/640/480/?83763', '2019-01-03 10:03:50', '2019-01-03 10:03:50');
+(1, 1, 'https://lorempixel.com/640/480/?71830', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(2, 1, 'https://lorempixel.com/640/480/?87559', '2019-01-04 12:35:27', '2019-01-04 12:35:27');
 
 -- --------------------------------------------------------
 
@@ -146,21 +146,8 @@ CREATE TABLE `groups` (
 --
 
 INSERT INTO `groups` (`id`, `name`, `user_id`, `school_id`, `created_at`, `updated_at`) VALUES
-(1, 'Ubaldo Terry V', 1, 1, '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(2, 'Prof. Bria Wilderman MD', 1, 1, '2019-01-03 10:03:50', '2019-01-03 10:03:50');
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `lecturers`
---
-
-CREATE TABLE `lecturers` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `FIO` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(1, 'Marcelle Kuphal', 1, 1, '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(2, 'Kailyn Cremin', 1, 1, '2019-01-04 12:35:27', '2019-01-04 12:35:27');
 
 -- --------------------------------------------------------
 
@@ -179,23 +166,22 @@ CREATE TABLE `migrations` (
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(52, '2018_11_27_141826_create_lecturers_table', 1),
-(269, '2014_10_12_000000_create_users_table', 2),
-(270, '2014_10_12_100000_create_password_resets_table', 2),
-(271, '2016_01_01_000000_create_posts_table', 2),
-(272, '2018_08_08_100000_create_telescope_entries_table', 2),
-(273, '2018_11_27_135607_create_schools_table', 2),
-(274, '2018_11_27_140055_create_groups_table', 2),
-(275, '2018_11_27_140409_create_schedules_table', 2),
-(276, '2018_11_27_144421_create_students_table', 2),
-(277, '2018_11_28_124724_create_videos_table', 2),
-(278, '2018_11_30_151109_create_electives_table', 2),
-(279, '2018_11_30_151526_create_electivy_photos_table', 2),
-(280, '2018_12_29_133217_create_notifications_table', 2),
-(281, '2019_01_02_103941_create_elective_groups_table', 2),
-(282, '2019_01_02_124851_create_post_groups_table', 2),
-(283, '2019_01_02_133703_create_schools_groups_table', 2),
-(284, '2019_01_03_092037_create_classes_table', 2);
+(1, '2014_10_12_000000_create_users_table', 1),
+(2, '2014_10_12_100000_create_password_resets_table', 1),
+(3, '2016_01_01_000000_create_posts_table', 1),
+(4, '2018_08_08_100000_create_telescope_entries_table', 1),
+(5, '2018_11_27_135607_create_schools_table', 1),
+(6, '2018_11_27_140055_create_groups_table', 1),
+(7, '2018_11_27_140409_create_schedules_table', 1),
+(8, '2018_11_27_144421_create_students_table', 1),
+(9, '2018_11_28_124724_create_videos_table', 1),
+(10, '2018_11_30_151109_create_electives_table', 1),
+(11, '2018_11_30_151526_create_electivy_photos_table', 1),
+(12, '2018_12_29_133217_create_notifications_table', 1),
+(13, '2019_01_02_103941_create_elective_groups_table', 1),
+(14, '2019_01_02_124851_create_post_groups_table', 1),
+(15, '2019_01_02_133703_create_schools_groups_table', 1),
+(16, '2019_01_03_092037_create_classes_table', 1);
 
 -- --------------------------------------------------------
 
@@ -246,16 +232,14 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `body`, `until`, `school_id`, `preview`, `image`, `created_at`, `updated_at`) VALUES
-(1, 'Mr.', 'Facilis atque dolor commodi quo fugiat ex dolore eos. Mollitia dolores qui commodi dolor voluptas. Adipisci eum fuga quos magni. Voluptatem ea qui autem.', '1991-09-27', 1, 'https://lorempixel.com/640/480/?54591', 'https://lorempixel.com/640/480/?96431', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(2, 'Dr.', 'Eaque asperiores sed nisi a qui numquam enim. Quidem nobis at mollitia ipsum neque in. Voluptas dolorem quidem eius saepe enim optio illo. Eum ut reiciendis iste quia ut quidem dignissimos.', '2017-11-02', 1, 'https://lorempixel.com/640/480/?56117', 'https://lorempixel.com/640/480/?56454', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(3, 'Dr.', 'Est non laboriosam dicta commodi. Architecto qui aspernatur odit similique aut. Aspernatur voluptas veritatis qui suscipit hic. Vitae voluptate natus sint voluptatibus sit similique.', '1999-05-03', 1, 'https://lorempixel.com/640/480/?56614', 'https://lorempixel.com/640/480/?33953', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(4, 'Prof.', 'Facere eius ut possimus natus. Assumenda autem voluptatem et ipsum iure dignissimos. Fugiat et soluta odio totam.', '1970-11-17', 1, 'https://lorempixel.com/640/480/?88002', 'https://lorempixel.com/640/480/?33772', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(5, 'Prof.', 'Vero labore vitae voluptatem et reprehenderit. Quam voluptatem atque dolores ipsam odit. Distinctio rem accusantium libero rem dicta quas qui sunt.', '1993-05-26', 1, 'https://lorempixel.com/640/480/?33576', 'https://lorempixel.com/640/480/?85663', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(6, 'Dr.', 'Eos illo sed nulla qui cupiditate et cupiditate. Fuga sit quo est animi et inventore dolores.', '1983-02-05', 1, 'https://lorempixel.com/640/480/?10006', 'https://lorempixel.com/640/480/?53718', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(7, 'Mr.', 'Ab sit sequi aspernatur vel aut. Ut optio enim non placeat cum aut. Quo error vel eveniet. Exercitationem enim magnam ut vitae aperiam aut.', '1998-04-29', 1, 'https://lorempixel.com/640/480/?73264', 'https://lorempixel.com/640/480/?77465', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(8, 'Dr.', 'Voluptatum reprehenderit dolores quaerat in assumenda. Qui quo explicabo quasi distinctio. Occaecati assumenda delectus neque voluptate. Praesentium dolore dicta pariatur neque.', '2008-08-22', 1, 'https://lorempixel.com/640/480/?17560', 'https://lorempixel.com/640/480/?24701', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(9, 'Dr.', 'Quia occaecati eveniet voluptatem. Qui inventore optio autem qui et laudantium a. In accusantium voluptas non saepe quas repellendus. Fugiat officiis vel voluptate totam error maiores.', '1971-01-08', 1, 'https://lorempixel.com/640/480/?94762', 'https://lorempixel.com/640/480/?21227', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(10, 'Dr.', 'Nihil mollitia possimus animi magnam. Quia tenetur est cum qui voluptas fugit sunt enim. Repellat minus beatae id et vitae consequuntur. Facilis sint iusto commodi non nemo.', '1993-02-24', 1, 'https://lorempixel.com/640/480/?71005', 'https://lorempixel.com/640/480/?37887', '2019-01-03 10:03:50', '2019-01-03 10:03:50');
+(1, 'Prof.', 'Qui delectus eum id dolorum non. Doloremque eos rerum cupiditate delectus asperiores id. Veniam et eos repellendus impedit cumque ullam pariatur.', '1981-08-03', 1, 'https://lorempixel.com/640/480/?84786', 'https://lorempixel.com/640/480/?76568', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(2, 'Mr.', 'Porro in similique id quam qui a esse. Quia sit magnam voluptatem vero eius vitae. Atque qui animi consequuntur ipsa vitae cupiditate.', '1997-01-06', 1, 'https://lorempixel.com/640/480/?41623', 'https://lorempixel.com/640/480/?72460', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(4, 'Ms.', 'Ipsa numquam itaque officiis repellat dolorem est dolorem. Aperiam ducimus architecto facilis.', '1993-01-19', 1, 'https://lorempixel.com/640/480/?18762', 'https://lorempixel.com/640/480/?74387', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(5, 'Prof.', 'Eum corrupti odit possimus sit. Ut amet itaque minus eos rerum modi. Impedit distinctio est quaerat ut ea eveniet assumenda.', '1986-02-13', 1, 'https://lorempixel.com/640/480/?75301', 'https://lorempixel.com/640/480/?79586', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(6, 'Prof.', 'Et velit in est nulla eius ut. Minima quo quae ut. Voluptas hic eius id sapiente qui soluta. Quae temporibus nemo soluta explicabo est nostrum quas.', '2007-03-24', 1, 'https://lorempixel.com/640/480/?22055', 'https://lorempixel.com/640/480/?95962', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(7, 'Prof.', 'Harum error repudiandae quaerat ad ratione provident ut. Quo qui ut ut quaerat minima placeat.', '1985-10-23', 1, 'https://lorempixel.com/640/480/?74674', 'https://lorempixel.com/640/480/?55176', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(8, 'Prof.', 'Delectus saepe qui ducimus et omnis. Cumque delectus quibusdam excepturi dolor quia maiores minus nobis. Quia harum dolorem sapiente vel. Cumque aut provident officiis magnam explicabo.', '1976-10-11', 1, 'https://lorempixel.com/640/480/?34753', 'https://lorempixel.com/640/480/?14292', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(11, 'sadaaa', 'adad', '0001-03-21', 1, '/images/uploads/1546612750-5c2f700e2766d.png', '/images/uploads/1546612750-5c2f700e27a6b.png', '2019-01-04 12:39:10', '2019-01-04 12:39:10');
 
 -- --------------------------------------------------------
 
@@ -269,6 +253,14 @@ CREATE TABLE `post_groups` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `post_groups`
+--
+
+INSERT INTO `post_groups` (`post_id`, `group_id`, `created_at`, `updated_at`) VALUES
+(11, 1, '2019-01-04 12:39:10', '2019-01-04 12:39:10'),
+(11, 2, '2019-01-04 12:39:10', '2019-01-04 12:39:10');
 
 -- --------------------------------------------------------
 
@@ -315,8 +307,8 @@ CREATE TABLE `schools` (
 --
 
 INSERT INTO `schools` (`id`, `name`, `created_at`, `updated_at`) VALUES
-(1, 'Dr. Benedict Feil V', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(2, 'Prof. Ahmed White MD', '2019-01-03 10:03:50', '2019-01-03 10:03:50');
+(1, 'Jolie Hoeger', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(2, 'Anjali Watsica', '2019-01-04 12:35:27', '2019-01-04 12:35:27');
 
 -- --------------------------------------------------------
 
@@ -330,6 +322,15 @@ CREATE TABLE `schools_groups` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `schools_groups`
+--
+
+INSERT INTO `schools_groups` (`school_id`, `group_id`, `created_at`, `updated_at`) VALUES
+(1, 1, '2019-01-04 12:35:49', '2019-01-04 12:35:49'),
+(1, 2, '2019-01-04 12:35:49', '2019-01-04 12:35:49'),
+(2, 1, '2019-01-04 12:35:53', '2019-01-04 12:35:53');
 
 -- --------------------------------------------------------
 
@@ -353,26 +354,26 @@ CREATE TABLE `students` (
 --
 
 INSERT INTO `students` (`id`, `FIO`, `group_id`, `user_id`, `birthday`, `status`, `created_at`, `updated_at`) VALUES
-(1, 'Mr.', 1, 1, '2010-11-20', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(2, 'Prof.', 1, 1, '1975-12-01', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(3, 'Mr.', 1, 1, '2006-02-11', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(4, 'Dr.', 1, 1, '1991-10-07', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(5, 'Prof.', 1, 1, '1978-12-11', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(6, 'Miss', 1, 1, '1979-06-09', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(7, 'Mr.', 1, 1, '2011-09-21', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(8, 'Ms.', 1, 1, '2004-12-03', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(9, 'Ms.', 1, 1, '1996-11-23', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(10, 'Dr.', 1, 1, '1983-05-21', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(11, 'Miss', 1, 1, '1979-02-04', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(12, 'Prof.', 1, 1, '1976-08-06', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(13, 'Prof.', 1, 1, '1978-04-30', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(14, 'Mr.', 1, 1, '2016-11-20', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(15, 'Dr.', 1, 1, '1973-06-09', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(16, 'Mr.', 1, 1, '2006-10-12', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(17, 'Mr.', 1, 1, '1978-10-07', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(18, 'Dr.', 1, 1, '1985-01-03', 'INACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(19, 'Prof.', 1, 1, '2006-01-05', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(20, 'Dr.', 1, 1, '2012-03-28', 'ACTIVE', '2019-01-03 10:03:50', '2019-01-03 10:03:50');
+(1, 'Prof.', 1, 1, '2012-09-07', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(2, 'Miss', 1, 1, '2018-02-09', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(3, 'Ms.', 1, 1, '2004-01-25', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(4, 'Prof.', 1, 1, '1988-03-14', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(5, 'Mr.', 1, 1, '1993-08-20', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(6, 'Mr.', 1, 1, '1999-02-28', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(7, 'Mr.', 1, 1, '1975-10-16', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(8, 'Mrs.', 1, 1, '2006-05-25', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(9, 'Dr.', 1, 1, '1982-06-02', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(10, 'Miss', 1, 1, '1984-10-08', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(11, 'Dr.', 1, 1, '1993-10-12', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(12, 'Miss', 1, 1, '1982-04-14', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(13, 'Prof.', 1, 1, '1979-09-24', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(14, 'Prof.', 1, 1, '1992-10-30', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(15, 'Mr.', 1, 1, '1977-02-26', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(16, 'Miss', 1, 1, '1996-06-14', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(17, 'Mr.', 1, 1, '1991-05-27', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(18, 'Dr.', 1, 1, '2014-08-06', 'ACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(19, 'Dr.', 1, 1, '1998-10-19', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(20, 'Dr.', 1, 1, '2009-08-09', 'INACTIVE', '2019-01-04 12:35:27', '2019-01-04 12:35:27');
 
 -- --------------------------------------------------------
 
@@ -395,8 +396,6 @@ CREATE TABLE `telescope_entries` (
 -- Дамп данных таблицы `telescope_entries`
 --
 
--- --------------------------------------------------------
-
 --
 -- Структура таблицы `telescope_entries_tags`
 --
@@ -409,8 +408,6 @@ CREATE TABLE `telescope_entries_tags` (
 --
 -- Дамп данных таблицы `telescope_entries_tags`
 --
-
--- --------------------------------------------------------
 
 --
 -- Структура таблицы `telescope_monitoring`
@@ -453,17 +450,17 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `parent_name`, `parent_phone`, `parents`, `address`, `birthday`, `school_id`, `group_id`, `status`, `email`, `email_verified_at`, `password`, `token`, `push`, `type`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Станислав', 'Florence Boehm', '(454) 600-3672 x979', 'mother', '756 Haag Park Suite 525\nKatelinland, AK 35195-7050', '2002-08-07', 1, 1, 'active', 'admin@admin.com', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'H8Rn0', 'enabled', 'admin', 'rZ1fAhSxCZ', NULL, NULL),
-(2, 'Alexandre Daniel II', 'Leonora Toy', '(608) 713-3925 x28009', 'mother', '38354 Walter Brook\nSouth Esperanza, NE 19663-1146', '1997-07-03', 1, 1, 'active', 'jayden.weimann@example.org', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'mfTnp', 'disabled', 'default', 'xqj5OGaySV', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(3, 'Melisa Roob', 'Prof. Eino Fay', '510-964-9695', 'mother', '2965 Rodriguez Port\nWest Krystelside, MD 42840-7972', '1985-09-03', 1, 1, 'active', 'jay74@example.org', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'OeHgN', 'enabled', 'default', '5I2etie3Io', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(4, 'Erwin Sporer', 'Dr. Andrew Krajcik', '760.227.6138 x88679', 'father', '4323 Raynor Trail\nBlockmouth, TN 62912-7765', '1971-04-06', 1, 1, 'active', 'lavina30@example.com', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'Pp8hd', 'enabled', 'default', 'CLVvWsc98N', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(5, 'Prof. Retta Crooks', 'Laurine Buckridge IV', '1-342-722-4399 x015', 'father', '790 Fay Brooks Apt. 099\nNorth Geo, PA 30520-3940', '1992-06-08', 1, 1, 'active', 'kira32@example.org', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'EgQQk', 'enabled', 'default', 'LNMHDNqTfH', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(6, 'Mr. Edd Christiansen', 'Cassie Lubowitz', '816-573-9905', 'father', '6022 Langosh Curve Suite 477\nSpencershire, HI 74692', '1975-08-01', 1, 1, 'active', 'rebeca.fay@example.com', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'bC6Yn', 'disabled', 'default', 'kwvLmB01Gc', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(7, 'Prof. Cathrine Gerlach DVM', 'Kelly Murazik', '(879) 271-1103 x23706', 'mother', '576 Konopelski Terrace Apt. 237\nLake Stella, AL 24465-6533', '2001-11-09', 1, 1, 'active', 'ulises84@example.com', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'BcCKk', 'disabled', 'default', 'onDzSmopuf', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(8, 'Miss Mina Schinner', 'Yesenia Sanford', '(745) 340-2275', 'father', '88409 Naomie Lane Suite 251\nRoybury, ID 32688-6430', '1998-11-12', 1, 1, 'active', 'darlene24@example.org', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'C4YF2', 'disabled', 'default', 'US2aUOWDpT', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(9, 'Lenore Murphy', 'Carolanne Shanahan', '751-924-8810 x2511', 'mother', '2201 Mertz Lake Suite 287\nLake Mortimer, AZ 88159', '2008-08-10', 1, 1, 'active', 'jakubowski.glenda@example.net', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'wxPOj', 'disabled', 'default', 'p6gJ8UkeIU', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(10, 'Camden Lemke', 'Jude Mueller', '783-869-9121', 'mother', '93767 Conroy Canyon\nWest Hudson, PA 49319', '2011-04-20', 1, 1, 'active', 'eusebio29@example.org', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', '74Gom', 'enabled', 'default', 'WRPBSkkFic', '2019-01-03 10:03:50', '2019-01-03 10:03:50'),
-(11, 'Marcelle Herman V', 'Sigurd Connelly', '+1-991-903-4275', 'father', '33267 Klocko Cliff Apt. 226\nLake Zackland, ME 82654', '1971-06-17', 1, 1, 'active', 'michale.robel@example.org', '2019-01-03 10:03:50', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'Uo1Rt', 'disabled', 'default', 'QAjwYJqabQ', '2019-01-03 10:03:50', '2019-01-03 10:03:50');
+(1, 'Станислав', 'Carole Gusikowski', '1-996-723-2561', 'mother', '32332 Tre Locks\nWest Salvador, IA 40819', '1991-01-14', 1, 1, 'active', 'admin@admin.com', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'rWvt0', 'enabled', 'admin', 'HV9Cz79vTU', NULL, NULL),
+(2, 'Cecile Kihn', 'Walker Fay', '(613) 458-3044', 'mother', '7158 Armando Mission Suite 622\nHillshire, WI 62393-5609', '1992-12-16', 1, 1, 'active', 'shaag@example.com', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'iqtp9', 'disabled', 'default', 'AJxZQnCGrg', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(3, 'Emelia Beer I', 'Ashton Wilderman', '(251) 835-3244', 'father', '3992 Cathrine Shore\nGradyberg, MN 57435-7807', '2002-04-07', 1, 1, 'active', 'dee.deckow@example.com', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'd6h6e', 'enabled', 'default', 'QZcfTiatk7', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(4, 'Dr. Amara Hudson', 'Esperanza Zemlak', '1-518-776-8884', 'mother', '31189 Carolyne Parkway\nBrakusbury, IN 91734', '1970-11-02', 1, 1, 'active', 'boyer.anderson@example.org', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'j9WXc', 'enabled', 'default', '3RJDLL4GDV', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(5, 'Timothy Kovacek PhD', 'Mr. Rolando Langworth', '603.936.2223 x05473', 'mother', '777 Irwin Shores\nMarquardtborough, WI 29374-2639', '2007-02-10', 1, 1, 'active', 'brody.friesen@example.com', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'OXMBk', 'disabled', 'default', 'KMSrTnv9GY', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(6, 'Ernesto Murazik', 'Joany Heathcote', '1-816-986-1394 x9422', 'father', '281 Rodriguez Lake\nPort Alisaton, WV 46771', '1988-02-16', 1, 1, 'active', 'iupton@example.net', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'B7AVT', 'enabled', 'default', 'YlrnzXYYIQ', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(7, 'Abdul Schmidt', 'Mr. Terence Parker PhD', '(258) 284-7551 x37335', 'mother', '662 Retta Harbor\nWest Mckenzieton, PA 69550-6156', '1987-01-21', 1, 1, 'active', 'swift.lincoln@example.net', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'if909', 'disabled', 'default', 'qTrbLEA9dK', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(8, 'Juvenal Heaney', 'Tito Yost', '(631) 390-2722', 'father', '249 Ferry Circles\nThielmouth, NC 01265-7372', '1996-05-21', 1, 1, 'active', 'kdietrich@example.com', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', '9aT0e', 'enabled', 'default', '9k9BkLZGMc', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(9, 'Meda Collins', 'Mrs. Rosamond Witting', '260.326.8449', 'mother', '19595 Javonte Lake Suite 770\nMarksborough, WY 13060-1640', '1971-03-26', 1, 1, 'active', 'lucio.sporer@example.net', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'zGbKr', 'enabled', 'default', 'mpsme9d3z0', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(10, 'Faye Lind', 'Alba Lebsack', '+1-484-333-5367', 'mother', '8956 Lubowitz Fords Apt. 293\nHarmonytown, SC 34722-9980', '2001-03-13', 1, 1, 'active', 'ruecker.coby@example.net', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'qgJMc', 'disabled', 'default', '84E34836Po', '2019-01-04 12:35:27', '2019-01-04 12:35:27'),
+(11, 'Evert Crooks', 'Dr. Melany Hayes Sr.', '1-918-438-5754', 'father', '4447 Jazmyne Turnpike Apt. 193\nPort Rebeccachester, VT 58476', '1987-12-11', 1, 1, 'active', 'georgiana.murphy@example.org', '2019-01-04 12:35:27', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'ri4Yj', 'enabled', 'default', 'FRyKOSNfi9', '2019-01-04 12:35:27', '2019-01-04 12:35:27');
 
 -- --------------------------------------------------------
 
@@ -513,12 +510,6 @@ ALTER TABLE `electivy_photos`
 -- Индексы таблицы `groups`
 --
 ALTER TABLE `groups`
-  ADD PRIMARY KEY (`id`);
-
---
--- Индексы таблицы `lecturers`
---
-ALTER TABLE `lecturers`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -637,16 +628,10 @@ ALTER TABLE `groups`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
--- AUTO_INCREMENT для таблицы `lecturers`
---
-ALTER TABLE `lecturers`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=285;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `notifications`
@@ -658,7 +643,7 @@ ALTER TABLE `notifications`
 -- AUTO_INCREMENT для таблицы `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `schedules`
@@ -682,7 +667,7 @@ ALTER TABLE `students`
 -- AUTO_INCREMENT для таблицы `telescope_entries`
 --
 ALTER TABLE `telescope_entries`
-  MODIFY `sequence` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1231;
+  MODIFY `sequence` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=310;
 
 --
 -- AUTO_INCREMENT для таблицы `users`

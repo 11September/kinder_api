@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->enum('parents', ['father', 'mother'])->nullable();
             $table->string('address')->nullable();
             $table->date('birthday')->nullable();
+            $table->string('avatar')->nullable();
 
             $table->integer('school_id')->nullable();
             $table->integer('group_id')->nullable();
@@ -33,6 +34,7 @@ class CreateUsersTable extends Migration
             $table->string('token')->unique();
             $table->enum('push', ['enabled', 'disabled']);
             $table->string('type')->default('default');
+
             $table->rememberToken();
             $table->timestamps();
         });

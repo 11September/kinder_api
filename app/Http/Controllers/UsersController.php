@@ -174,4 +174,32 @@ class UsersController extends Controller
         }
     }
 
+    public function SetAvatar(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'avatar' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+            $preview = $request->file('avatar');
+            $input['avatar'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
+            $preview->move(public_path('/images/uploads/avatars'), $input['avatar']);
+            $user->avatar = '/images/uploads/avatars/' . $input['preview'];
+
+            $user->save();
+
+            return response()->json(['message' => 'Аватар змінено!'], 200);
+
+        } catch (\Exception $exception) {
+            Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
 }
