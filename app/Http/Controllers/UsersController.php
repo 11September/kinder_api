@@ -193,8 +193,9 @@ class UsersController extends Controller
 //        }
 
         try {
+            Log::info('UsersController@SetAvatar Exception: ' . $request->all());
+            exit();
 
-            dd($request->all());
 
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
