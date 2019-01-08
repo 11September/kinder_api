@@ -197,7 +197,7 @@ class UsersController extends Controller
 //            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
 //        }
 
-        Log::warning('Test', "test");
+        Log::warning('Test', $request->all());
         exit();
 
         try {
