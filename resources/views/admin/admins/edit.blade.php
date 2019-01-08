@@ -21,6 +21,35 @@
                 Администрация
             </div>
             <div class="card-body">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="wrapper-admin-edit">
+                            <form action="{{ action('AdminController@adminUpdate', $user->id) }}" method="post">
+                                {{ csrf_field() }}
+                                {{ method_field('PUT') }}
+
+                                <div class="form-group">
+                                    <label for="exampleFormControlInput1">Полное Имя</label>
+                                    <input required name="name" type="text" class="form-control"
+                                          value="{{ $user->name }}" placeholder="name@example.com">
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleFormControlSelect1">Роль</label>
+                                    <select name="type" class="form-control">
+                                        <option @if($user->type == "admin") selected @endif value="admin">Администратор</option>
+                                        <option @if($user->type == "moderator") selected @endif value="moderator">Модератор</option>
+                                        <option @if($user->type == "default") selected @endif value="default">Обычный пользователь</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+
                 <div class="table-responsive">
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
@@ -47,7 +76,8 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->type }}</td>
                                 <td class="action-td">
-                                    <a class="btn btn-warning" href="{{ action('AdminController@adminEdit', $user->id) }}">Редактировать</a>
+                                    <a class="btn btn-warning"
+                                       href="{{ action('AdminController@adminEdit', $user->id) }}">Редактировать</a>
                                 </td>
                             </tr>
                         @endforeach
@@ -57,46 +87,6 @@
                 </div>
             </div>
         </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-3">
-
-                    <div class="card-header">
-                        <h2>Создать админа</h2>
-                    </div>
-
-                    <div class="card-body">
-
-                        <form action="{{ url('admin/admins/store') }}" method="post">
-                            {{ csrf_field() }}
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Полное Имя</label>
-                                <input required name="name" type="text" class="form-control"
-                                       placeholder="name@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Email</label>
-                                <input required name="email" type="email" class="form-control"
-                                       placeholder="name@example.com">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Роль</label>
-                                <select name="type" class="form-control">
-                                    <option value="admin">Admin</option>
-                                    <option value="moderator">Moderator</option>
-                                </select>
-                            </div>
-
-                            <button type="submit" class="btn btn-primary mb-2">Create</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
     </div>
 
 @endsection

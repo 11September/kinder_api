@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Requests\StoreStudent;
+use App\Http\Requests\UpdateStudent;
 use App\School;
 use App\Student;
 use App\User;
@@ -56,29 +58,15 @@ class StudentsController extends Controller
         return view('admin.users.create',compact('schools', 'groups'));
     }
 
-    public function adminStore(Request $request)
+    public function adminStore(StoreStudent $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'birthday' => 'required',
-            'parent_name' => 'required',
-            'parent_phone' => 'required',
-            'parents' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'password' => 'required|string|min:6|max:255|confirmed',
-            'school_id' => 'required',
-            'group_id' => 'required',
-            'status' => 'required',
-        ]);
-
         $user = new User();
         $user->name = $request->name;
         $user->birthday = $request->birthday;
         $user->parent_name = $request->parent_name;
+        $user->parent_phone = $request->parent_phone;
         $user->parents = $request->parents;
         $user->email = $request->email;
-        $user->address = $request->address;
         $user->address = $request->address;
         $user->school_id = $request->school_id;
         $user->group_id = $request->group_id;
@@ -103,21 +91,8 @@ class StudentsController extends Controller
         return view('admin.users.edit',compact('user','groups', 'schools'));
     }
 
-    public function adminUpdate(Request $request, $id)
+    public function adminUpdate(UpdateStudent $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'birthday' => 'required',
-            'parent_name' => 'required',
-            'parent_phone' => 'required',
-            'parents' => 'required',
-            'email' => 'required',
-            'address' => 'required',
-            'school_id' => 'required',
-            'group_id' => 'required',
-            'status' => 'required',
-        ]);
-
         $user = User::where('id', $id)->first();
 
         if ($request->password && !empty($request->password) && ($request->password == $request->password_confirmation)){
@@ -135,9 +110,9 @@ class StudentsController extends Controller
         $user->name = $request->name;
         $user->birthday = $request->birthday;
         $user->parent_name = $request->parent_name;
+        $user->parent_phone = $request->parent_phone;
         $user->parents = $request->parents;
         $user->email = $request->email;
-        $user->address = $request->address;
         $user->address = $request->address;
         $user->school_id = $request->school_id;
         $user->group_id = $request->group_id;

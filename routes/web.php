@@ -26,8 +26,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/admin', 'AdminController@admin')->middleware('is_admin')->name('admin');
 
 // Admin Admins
-Route::get('/admin/admins', 'AdminController@admins')->middleware('is_admin')->name('admin');
+Route::get('/admin/admins', 'AdminController@admins')->middleware('is_admin')->name('admin.admins');
 Route::post('/admin/admins/store', 'AdminController@store')->middleware('is_admin')->name('admin');
+Route::get('/admin/admins/{id}/edit', 'AdminController@adminEdit')->middleware('is_admin')->name('admin.admins.edit');
+Route::put('/admin/admins/{id}', 'AdminController@adminUpdate')->middleware('is_admin')->name('admin.admins.update');
 Route::get('/admin/admins/delete/{user}', 'AdminController@delete')->middleware('is_admin')->name('admin');
 
 

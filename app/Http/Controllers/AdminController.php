@@ -20,7 +20,7 @@ class AdminController extends Controller
 
     public function admins()
     {
-        $users = User::select('id', 'name', 'email', 'type')->get();
+        $users = User::select('id', 'name', 'email', 'type')->where('type', '!=', 'default')->get();
 
         return view('admin.admins', compact('users'));
     }
@@ -43,6 +43,30 @@ class AdminController extends Controller
         $user->save();
 
         return view('admin.admins');
+    }
+
+    public function adminEdit(Request $request, $id)
+    {
+        $user = User::select('id', 'name', 'type')->where('id', $id)->first();
+
+        $users = User::select('id', 'name', 'email', 'type')->where('type', '!=', 'default')->get();
+
+        return view('admin.admins.edit', compact('user', 'users'));
+    }
+
+    public function adminUpdate(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required',
+            'type' => 'required',
+        ]);
+
+        $user = User::select('id', 'name', 'type')->where('id', $id)->first();
+        $user->name = $request->name;
+        $user->type = $request->type;
+        $user->save();
+
+        return redirect()->route('admin.admins')->with('message','Пользователь успешно обновлён!');
     }
 
     public function delete(User $user)
