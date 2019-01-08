@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Group;
+use App\Http\Requests\StoreSchool;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -37,13 +38,8 @@ class SchoolController extends Controller
 
     }
 
-    public function adminStore(Request $request)
+    public function adminStore(StoreSchool $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'group_id' => 'required',
-        ]);
-
         $school = new School();
         $school->name = $request->name;
         $school->save();
@@ -64,13 +60,8 @@ class SchoolController extends Controller
         return view('admin.kindergartens.edit',compact('schools', 'groups', 'school'));
     }
 
-    public function adminUpdate(Request $request, $id)
+    public function adminUpdate(StoreSchool $request, $id)
     {
-        $request->validate([
-            'name' => 'required',
-            'group_id' => 'required',
-        ]);
-
         $school = School::where('id', $id)->first();
 
         $school->name = $request->name;

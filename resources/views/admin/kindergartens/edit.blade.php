@@ -79,7 +79,7 @@
                             <div class="form-group">
                                 <label for="exampleFormControlSelect2">Название садика</label>
                                 <input type="text" name="name" class="form-control" required
-                                     value="{{ $school->name }}"  placeholder="Название садика">
+                                     value="@if (old('name')) {{old('name')}} @else {{ $school->name }} @endif"  placeholder="Название садика">
                             </div>
                         </div>
 
@@ -99,12 +99,20 @@
                                                 @endforeach
 
                                                 value="{{ $group->id }}" name="group_id[]"
+                                                class="{{ $errors->has('group_id') ? ' is-invalid' : '' }}"
                                                 type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
+
                                     </div>
 
                                 @endforeach
+
+                                @if ($errors->has('group_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('group_id') }}</strong>
+                                    </span>
+                                @endif
 
                             </div>
                         </div>

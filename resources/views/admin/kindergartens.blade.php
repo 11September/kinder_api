@@ -76,7 +76,7 @@
                             <div class="form-group">
                                 <label for="exampleFormControlSelect2">Название садика</label>
                                 <input type="text" name="name" class="form-control" required
-                                       placeholder="Название садика">
+                                      value="{{ old('name') }}" placeholder="Название садика">
                             </div>
 
                             <button type="submit" class="btn btn-primary mb-2">Создать</button>
@@ -92,12 +92,19 @@
                                     <div class="form-check">
                                         <label class="container">
                                             {{ $group->name }}
-                                            <input value="{{ $group->id }}" name="group_id[]" type="checkbox">
+                                            <input value="{{ $group->id }}" name="group_id[]" type="checkbox"
+                                                   class="{{ $errors->has('group_id') ? ' is-invalid' : '' }}">
                                             <span class="checkmark"></span>
                                         </label>
                                     </div>
 
                                 @endforeach
+
+                                @if ($errors->has('group_id'))
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $errors->first('group_id') }}</strong>
+                                    </span>
+                                @endif
 
                             </div>
                         </div>

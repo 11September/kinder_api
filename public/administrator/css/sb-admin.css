@@ -13,6 +13,11 @@ body {
   height: 100%;
 }
 
+dl, ol, ul {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 #wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
