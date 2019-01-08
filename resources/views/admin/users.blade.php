@@ -11,7 +11,7 @@
         <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
             <li class="breadcrumb-item active">Пользователи</li>
         </ol>

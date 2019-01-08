@@ -10,15 +10,15 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
-            <li class="breadcrumb-item active">Администрация</li>
+            <li class="breadcrumb-item active">Адміністрація</li>
         </ol>
 
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
-                Администрация
+                Адміністрація
             </div>
             <div class="card-body">
 
@@ -30,20 +30,20 @@
                                 {{ method_field('PUT') }}
 
                                 <div class="form-group">
-                                    <label for="exampleFormControlInput1">Полное Имя</label>
+                                    <label for="exampleFormControlInput1">Повне ім'я</label>
                                     <input required name="name" type="text" class="form-control"
                                           value="{{ $user->name }}" placeholder="name@example.com">
                                 </div>
                                 <div class="form-group">
                                     <label for="exampleFormControlSelect1">Роль</label>
                                     <select name="type" class="form-control">
-                                        <option @if($user->type == "admin") selected @endif value="admin">Администратор</option>
+                                        <option @if($user->type == "admin") selected @endif value="admin">Адміністратор</option>
                                         <option @if($user->type == "moderator") selected @endif value="moderator">Модератор</option>
-                                        <option @if($user->type == "default") selected @endif value="default">Обычный пользователь</option>
+                                        <option @if($user->type == "default") selected @endif value="default">Звичайний користувач</option>
                                     </select>
                                 </div>
 
-                                <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+                                <button type="submit" class="btn btn-primary mb-2">Оновити</button>
                             </form>
                         </div>
                     </div>
@@ -54,18 +54,18 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Имя</th>
+                            <th>Iм'я</th>
                             <th>Email</th>
                             <th>Тип</th>
-                            <th>Действия</th>
+                            <th>Дії</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Имя</th>
+                            <th>Iм'я</th>
                             <th>Email</th>
                             <th>Тип</th>
-                            <th>Действия</th>
+                            <th>Дії</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -77,7 +77,7 @@
                                 <td>{{ $user->type }}</td>
                                 <td class="action-td">
                                     <a class="btn btn-warning"
-                                       href="{{ action('AdminController@adminEdit', $user->id) }}">Редактировать</a>
+                                       href="{{ action('AdminController@adminEdit', $user->id) }}">Редагувати</a>
                                 </td>
                             </tr>
                         @endforeach

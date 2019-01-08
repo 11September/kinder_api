@@ -10,10 +10,10 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin') }}">Главная Страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
             <li class="breadcrumb-item active">
-                <a class="orange-text" href="{{ url('admin/electives') }}">Кружки</a>
+                <a class="orange-text" href="{{ url('admin/electives') }}">Гуртки</a>
             </li>
             <li class="breadcrumb-item active">{{ $electivy->name }}</li>
         </ol>
@@ -23,7 +23,7 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
-                        <h2>Создание Кружка</h2>
+                        <h2>Редагування гуртка</h2>
                     </div>
 
                     <div class="card-body">
@@ -41,10 +41,10 @@
 
 
                                         <div class="form-group col-md-12">
-                                            <label for="exampleFormControlInput1">Название кружка</label>
+                                            <label for="exampleFormControlInput1">Назва гуртка</label>
                                             <input required name="name" value="{{ $electivy->name }}" type="text"
                                                    class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                                   placeholder="Название">
+                                                   placeholder="Назва гуртка">
 
                                             @if ($errors->has('name'))
                                                 <span class="invalid-feedback" role="alert">
@@ -54,11 +54,11 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="exampleFormControlInput1">Время С</label>
+                                            <label for="exampleFormControlInput1">Час З</label>
                                             <input required name="time_start" value="{{ $electivy->time_start }}"
                                                    type="time"
                                                    class="form-control {{ $errors->has('time_start') ? ' is-invalid' : '' }}"
-                                                   placeholder="Название">
+                                                   placeholder="Час З">
 
                                             @if ($errors->has('until'))
                                                 <span class="invalid-feedback" role="alert">
@@ -68,11 +68,11 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="exampleFormControlInput1">Время До</label>
+                                            <label for="exampleFormControlInput1">Час До</label>
                                             <input required name="time_end" value="{{ $electivy->time_end }}"
                                                    type="time"
                                                    class="form-control {{ $errors->has('time_end') ? ' is-invalid' : '' }}"
-                                                   placeholder="Название">
+                                                   placeholder="Час До">
 
                                             @if ($errors->has('time_end'))
                                                 <span class="invalid-feedback" role="alert">
@@ -86,7 +86,7 @@
                                 <div class="col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Садик</label>
+                                            <label>Садок</label>
 
                                             @foreach($schools as $school)
 
@@ -110,7 +110,7 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>Группы</label>
+                                            <label>Групи</label>
 
                                             @foreach($groups as $group)
 
@@ -136,7 +136,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+                            <button type="submit" class="btn btn-primary mb-2">Оновити</button>
 
                         </form>
                     </div>
