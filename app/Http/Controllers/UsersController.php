@@ -198,7 +198,7 @@ class UsersController extends Controller
 //        }
 
         Log::warning('Test', "test");
-        Log::warning('app.requests', ['request' => $request->all(), 'response' => $request]);
+        exit();
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
