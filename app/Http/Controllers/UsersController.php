@@ -156,9 +156,9 @@ class UsersController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
-            return response()->json(['message' => 'Пароль змінений'], 200);
+            return response()->json(['message' => 'Пароль змінений!'], 200);
         } else {
-            return response()->json(['message' => 'Старий пароль невірний'], 422);
+            return response()->json(['message' => 'Старий пароль невірний!'], 422);
         }
     }
 

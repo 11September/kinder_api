@@ -52,7 +52,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        return redirect()->route('admin.groups')->with('message','Группа успешно добавлена!');
+        return redirect()->route('admin.groups')->with('message','Група успішно додана!');
     }
 
     public function adminEdit($id)
@@ -86,7 +86,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        return redirect()->route('admin.groups')->with('message','Группа успешно обновлена!');
+        return redirect()->route('admin.groups')->with('message','Група успішно оновлена!');
     }
 
     public function adminDelete($id)
@@ -95,6 +95,6 @@ class GroupController extends Controller
 
         $group->delete();
 
-        return redirect()->route('admin.groups')->with('message','Группа успешно удалена!');
+        return redirect()->route('admin.groups')->with('message','Група успішно видалена!');
     }
 }

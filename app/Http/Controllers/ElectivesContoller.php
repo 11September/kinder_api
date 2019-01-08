@@ -90,7 +90,7 @@ class ElectivesContoller extends Controller
 
         $elective->groups()->sync($request->group_id, false);
 
-        return redirect()->route('admin.electives')->with('message', 'Кружек успешно добавлен!');
+        return redirect()->route('admin.electives')->with('message', 'Гурток успішно доданий!');
     }
 
     public function adminEdit($id)
@@ -123,7 +123,7 @@ class ElectivesContoller extends Controller
 
         $elective->groups()->sync($request->group_id, true);
 
-        return redirect()->route('admin.electives')->with('message', 'Кружек успешно добавлен!');
+        return redirect()->route('admin.electives')->with('message', 'Гурток успішно оновлено!');
     }
 
     public function adminDelete($id)
@@ -132,6 +132,6 @@ class ElectivesContoller extends Controller
         $electivy->groups()->detach();
         $electivy->delete();
 
-        return redirect()->back()->with('success', 'Кружек успешно удалён!');
+        return redirect()->back()->with('success', 'Гурток успішно видалений!');
     }
 }

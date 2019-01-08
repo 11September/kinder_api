@@ -14,7 +14,7 @@
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin/kindergartens') }}">Садики</a>
+                <a class="orange-text" href="{{ url('admin/kindergartens') }}">Садки</a>
             </li>
             <li class="breadcrumb-item active">{{ $school->name }}</li>
         </ol>
@@ -34,7 +34,7 @@
             @include('admin.partials.errors')
 
             <div class="col-md-4">
-                <h3>Список Садиков</h3>
+                <h3>Список садкiв</h3>
                 <ul class="list-group list-group-flex">
 
                     @foreach($schools as $schooll)
@@ -45,7 +45,7 @@
                                     {{ $schooll->name }}
                                 </a>
 
-                                <p class="group-count">Кол-во групп : {{ $schooll->groups_count }}</p>
+                                <p class="group-count">Кількість груп : {{ $schooll->groups_count }}</p>
                             </div>
 
 
@@ -73,19 +73,19 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <h3>Редактирование Садика</h3>
+                            <h3>Редагування садка</h3>
 
 
                             <div class="form-group">
-                                <label for="exampleFormControlSelect2">Название садика</label>
+                                <label for="exampleFormControlSelect2">Назва садка</label>
                                 <input type="text" name="name" class="form-control" required
-                                     value="@if (old('name')) {{old('name')}} @else {{ $school->name }} @endif"  placeholder="Название садика">
+                                     value="@if (old('name')) {{old('name')}} @else {{ $school->name }} @endif"  placeholder="Назва садка">
                             </div>
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Группы</label>
+                                <label>Групи</label>
 
                                 @foreach($groups as $group)
 
@@ -118,7 +118,7 @@
                         </div>
 
                         <div class="col-md-12">
-                            <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+                            <button type="submit" class="btn btn-primary mb-2">Оновити</button>
                         </div>
 
                     </div>

@@ -66,7 +66,7 @@ class AdminController extends Controller
         $user->type = $request->type;
         $user->save();
 
-        return redirect()->route('admin.admins')->with('message','Пользователь успешно обновлён!');
+        return redirect()->route('admin.admins')->with('message','Користувач успішно змінений!');
     }
 
     public function delete(User $user)

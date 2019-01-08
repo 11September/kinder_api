@@ -77,7 +77,7 @@ class StudentsController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users')->with('message','Пользователь успешно добавлен!');
+        return redirect()->route('admin.users')->with('message','Користувач успішно доданий!');
     }
 
     public function adminEdit($id)
@@ -100,11 +100,11 @@ class StudentsController extends Controller
         }
 
         if ($request->password && $request->password_confirmation && ($request->password !== $request->password_confirmation) && (iconv_strlen($request->password < 7)) && (iconv_strlen($request->password_confirmation < 7))){
-            return redirect()->back()->with('message','Пароли не совпадают или не соответствуют формату!');
+            return redirect()->back()->with('message','Паролі не збігаються або не відповідають формату!');
         }
 
         if($request->password && $request->password_confirmation &&  $request->password !== $request->password_confirmation){
-            return redirect()->back()->with('message','Пароли не совпадают или не соответствуют формату!');
+            return redirect()->back()->with('message','Паролі не збігаються або не відповідають формату!');
         }
 
         $user->name = $request->name;
@@ -120,7 +120,7 @@ class StudentsController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users')->with('message','Пользователь успешно обновлён!');
+        return redirect()->route('admin.users')->with('message','Користувач успішно оновлений!');
     }
 
     public function adminDelete($id)
@@ -129,7 +129,7 @@ class StudentsController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users')->with('message','Пользователь успешно удалён!');
+        return redirect()->route('admin.users')->with('message','Користувач успішно видалений!');
     }
 
 }

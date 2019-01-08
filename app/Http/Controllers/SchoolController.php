@@ -46,7 +46,7 @@ class SchoolController extends Controller
 
         $school->groups()->sync($request->group_id, false);
 
-        return redirect()->route('admin.kindergartens')->with('message','Садик успешно добавлен!');
+        return redirect()->route('admin.kindergartens')->with('message','Садок успішно доданий!');
     }
 
     public function adminEdit($id)
@@ -69,7 +69,7 @@ class SchoolController extends Controller
 
         $school->groups()->sync($request->group_id, true);
 
-        return redirect()->route('admin.kindergartens')->with('message','Садик успешно обновлён!');
+        return redirect()->route('admin.kindergartens')->with('message','Садок успішно оновлено!');
     }
 
     public function adminDelete($id)
@@ -80,6 +80,6 @@ class SchoolController extends Controller
 
         $school->delete();
 
-        return redirect()->route('admin.kindergartens')->with('message','Новость успешно удалена!');
+        return redirect()->route('admin.kindergartens')->with('message','Садок успішно видалено!');
     }
 }

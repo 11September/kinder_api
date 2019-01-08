@@ -100,7 +100,7 @@ class PostsController extends Controller
 
         $post->groups()->sync($request->group_id, false);
 
-        return redirect()->route('admin.posts')->with('message','Новость успешно добавлена!');
+        return redirect()->route('admin.posts')->with('message','Новина успішно додана!');
     }
 
     public function adminEdit($id)
@@ -162,7 +162,7 @@ class PostsController extends Controller
 
         $post->groups()->sync($request->group_id, true);
 
-        return redirect()->route('admin.posts')->with('message','Новость успешно обновлена!');
+        return redirect()->route('admin.posts')->with('message','Новина успішно оновлена!');
     }
 
     public function adminDelete($id)
@@ -183,6 +183,6 @@ class PostsController extends Controller
 
         $post->delete();
 
-        return redirect()->route('admin.posts')->with('message','Новость успешно удалена!');
+        return redirect()->route('admin.posts')->with('message','Новина успішно видалена!');
     }
 }

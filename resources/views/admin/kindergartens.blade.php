@@ -13,7 +13,7 @@
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
-            <li class="breadcrumb-item active">Садики</li>
+            <li class="breadcrumb-item active">Садки</li>
         </ol>
 
         <div class="row">
@@ -32,7 +32,7 @@
 
             <div class="col-md-4">
 
-                <h3>Список Садиков</h3>
+                <h3>Список садкiв</h3>
 
                 <ul class="list-group list-group-flex">
 
@@ -44,7 +44,7 @@
                                     {{ $school->name }}
                                 </a>
 
-                                <p class="group-count">Кол-во групп : {{ $school->groups_count }}</p>
+                                <p class="group-count">Кількість груп : {{ $school->groups_count }}</p>
                             </div>
 
 
@@ -70,22 +70,22 @@
 
                     <div class="row">
                         <div class="col-md-6">
-                            <h3>Создание Садика</h3>
+                            <h3>Створення садка</h3>
 
 
                             <div class="form-group">
-                                <label for="exampleFormControlSelect2">Название садика</label>
+                                <label for="exampleFormControlSelect2">Назва садка</label>
                                 <input type="text" name="name" class="form-control" required
-                                      value="{{ old('name') }}" placeholder="Название садика">
+                                      value="{{ old('name') }}" placeholder="Назва садка">
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                            <button type="submit" class="btn btn-primary mb-2">Створити</button>
 
                         </div>
 
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label>Группы</label>
+                                <label>Групи</label>
 
                                 @foreach($groups as $group)
 
