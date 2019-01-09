@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Group;
@@ -7,6 +8,7 @@ use App\Http\Requests\UpdateSchool;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+
 class SchoolController extends Controller
 {
     public function index(Request $request)
@@ -18,7 +20,7 @@ class SchoolController extends Controller
                 ->get();
 
         } catch (\Exception $exception) {
-            Log::warning('DishesController@index Exception: '. $exception->getMessage());
+            Log::warning('DishesController@index Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
         return response(['data' => $dishes]);
@@ -31,7 +33,7 @@ class SchoolController extends Controller
 
         $groups = Group::all();
 
-        return view('admin.kindergartens',compact('schools', 'groups'));
+        return view('admin.kindergartens', compact('schools', 'groups'));
     }
 
     public function adminStore(StoreSchool $request)
@@ -40,9 +42,10 @@ class SchoolController extends Controller
         $school->name = $request->name;
         $school->save();
 
-        $school->groups()->sync($request->group_id, false);
+        $school->groups()->sync($request->group_id);
 
-        return redirect()->route('admin.kindergartens')->with('message','Садок успішно доданий!');
+
+        return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно доданий!');
     }
 
     public function adminEdit($id)
@@ -53,7 +56,7 @@ class SchoolController extends Controller
 
         $schools = School::withCount('groups')->get();
 
-        return view('admin.kindergartens.edit',compact('schools', 'groups', 'school'));
+        return view('admin.kindergartens.edit', compact('schools', 'groups', 'school'));
     }
 
     public function adminUpdate(UpdateSchool $request, $id)
@@ -65,17 +68,15 @@ class SchoolController extends Controller
 
         $school->groups()->sync($request->group_id, true);
 
-        return redirect()->route('admin.kindergartens')->with('message','Садок успішно оновлено!');
+        return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно оновлено!');
     }
 
     public function adminDelete($id)
     {
         $school = School::find($id);
-
         $school->groups()->detach();
-
         $school->delete();
 
-        return redirect()->route('admin.kindergartens')->with('message','Садок успішно видалено!');
+        return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно видалено!');
     }
 }
