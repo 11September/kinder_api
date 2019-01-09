@@ -163,8 +163,7 @@
                                                 <div class="form-check">
                                                     <label class="container-checkbox">
                                                         Мати
-                                                        <input required value="mother" type="radio"
-                                                               checked="checked" name="parents">
+                                                        <input required value="mother" type="radio" name="parents">
                                                         <span class="checkmark-radio"></span>
                                                     </label>
                                                 </div>
