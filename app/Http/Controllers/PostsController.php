@@ -19,7 +19,7 @@ class PostsController extends Controller
     public function index(Request $request)
     {
         try {
-            $posts = Post::select('id', 'title', 'body', 'image', 'preview', 'created_at')
+            $posts = Post::select('id', 'title', 'body', 'image', 'preview')
                 ->filter($request->all())->get();
 
             $posts = $posts->each(function ($item, $key) {
