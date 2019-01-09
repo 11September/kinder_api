@@ -63,6 +63,9 @@ class GroupController extends Controller
 
         $group->save();
 
+        $school = School::where('id', $group->school_id)->first();
+        $school->groups()->attach($group->id);
+
         return redirect()->route('admin.groups')->with('message','Група успішно додана!');
     }
 
@@ -102,7 +105,10 @@ class GroupController extends Controller
 
     public function adminDelete($id)
     {
-        $group = Group::find($id);
+        $group = Group::where('id', $id)->first();
+
+        $school = School::where('id', $group->school_id)->first();
+        $school->groups()->detach();
 
         $group->delete();
 

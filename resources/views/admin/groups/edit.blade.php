@@ -37,6 +37,16 @@
 
                     @include('admin.partials.errors')
 
+                    <div class="col-md-6">
+                        <i class="fas fa-table"></i>
+                        Список груп
+                    </div>
+                    <div class="col-md-6">
+                        <div class="flex-end">
+                            <a class="orange-link" href="{{ action('GroupController@adminIndex') }}">Створити групу</a>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
