@@ -143,8 +143,7 @@
                                                 <div class="form-check">
                                                     <label class="container-checkbox">
                                                         Неактивный
-                                                        <input required value="disable" type="radio"
-                                                               checked="checked" name="status">
+                                                        <input required value="disable" type="radio" name="status">
                                                         <span class="checkmark-radio"></span>
                                                     </label>
                                                 </div>
@@ -170,15 +169,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-
-                                            {{--<div class="form-group col-md-6">--}}
-                                            {{--<label for="exampleFormControlSelect1">Статус</label>--}}
-                                            {{--<select required name="status" class="form-control" id="exampleFormControlSelect1">--}}
-                                            {{--<option value="active">Активный</option>--}}
-                                            {{--<option value="disable">Неактивный</option>--}}
-                                            {{--</select>--}}
-                                            {{--</div>--}}
-
                                         </div>
                                     </div>
 
