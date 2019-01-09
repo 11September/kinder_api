@@ -20,7 +20,9 @@ class PostsController extends Controller
     {
         try {
             $posts = Post::select('id', 'title', 'body', 'image', 'preview')
-                ->filter($request->all())->get();
+                ->filter($request->all())
+                ->where('until', '<=', date('Y-m-d'))
+                ->get();
 
             $posts = $posts->each(function ($item, $key) {
                 if ($item['image']) {
