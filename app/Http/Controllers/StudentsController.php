@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Group;
 use App\Http\Requests\StoreStudent;
 use App\Http\Requests\UpdateStudent;
+use App\Mail\LoginMail;
 use App\School;
 use App\Student;
 use App\User;
@@ -76,6 +77,8 @@ class StudentsController extends Controller
         $user->token = Hash::make($request->email);
 
         $user->save();
+
+        \Mail::to($request->email)->send(new LoginMail($user));
 
         return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий!');
     }
