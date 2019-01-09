@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class PostsController extends Controller
 {
-    public $sourse = "http://8.dev-kit.ru/public";
+    public $sourse = "http://8.dev-kit.ru/";
 
     public function index(Request $request)
     {
