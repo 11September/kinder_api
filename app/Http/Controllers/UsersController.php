@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +14,8 @@ use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
+    public $sourse = "http://8.dev-kit.ru";
+
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -36,7 +39,7 @@ class UsersController extends Controller
                 $result = array_add($result, 'token', $user->token);
                 $result = array_add($result, 'parent_name', $user->parent_name);
                 $result = array_add($result, 'email', $user->email);
-                $result = array_add($result, 'avatar', $user->avatar);
+                $result = array_add($result, 'avatar', ($this->sourse . $user->avatar));
                 $result = array_add($result, 'group', $group->name);
 
                 return response($result);
@@ -45,7 +48,7 @@ class UsersController extends Controller
             $user = User::where('email', $request->email)->first();
             if ($user) {
 
-                if ($user->status == "disable"){
+                if ($user->status == "disable") {
                     return response()->json(['message' => 'Користувач неактивний!'], 403);
                 }
 
@@ -60,7 +63,7 @@ class UsersController extends Controller
                         $result = array_add($result, 'token', $user->token);
                         $result = array_add($result, 'parent_name', $user->parent_name);
                         $result = array_add($result, 'email', $user->email);
-                        $result = array_add($result, 'avatar', $user->avatar);
+                        $result = array_add($result, 'avatar', ($this->sourse . $user->avatar));
                         $result = array_add($result, 'group', $group->name);
                         return response($result);
                     } else {
@@ -200,8 +203,10 @@ class UsersController extends Controller
         Log::warning('avatar', $request->all());
 
         try {
+            $image = $this->storeBase64Image($request->avatar);
+
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-            $user->avatar = $request->avatar;
+            $user->avatar = $image;
             $user->save();
 
             return response()->json(['message' => 'Аватар змінено!'], 200);
@@ -210,6 +215,21 @@ class UsersController extends Controller
             Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
+    }
+
+    public function storeBase64Image($data)
+    {
+        $folderPath = "images/uploads/avatars/";
+        $folderPathSave = "/images/uploads/avatars/";
+        $image_parts = explode(";base64,", $data);
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $file = $folderPath . time() . "-" . uniqid() . '.png';
+        $image = "/" . $file;
+        file_put_contents($file, $image_base64);
+
+        return $image;
     }
 
 }

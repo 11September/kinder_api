@@ -55,7 +55,7 @@ class PostsController extends Controller
             $post = Post::where('id' ,$request->id)->select('id', 'title', 'body', 'image', 'preview')->first();
 
             if (!$post){
-                return response()->json(['message' => 'Новина не знайдена!'], 404);
+                return response()->json(['message' => 'Новина не за'], 400);
             }
 
             if (isset($post->image) || !empty($post->image)){
