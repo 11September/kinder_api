@@ -32,8 +32,6 @@ class PostsController extends Controller
                 }
             });
 
-            dd($posts);
-
             return ['data' => $posts];
 
         } catch (\Exception $exception) {
