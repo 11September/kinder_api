@@ -11,7 +11,7 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Успішна реєстрація в садку</title>
 
     <style>
         * {
@@ -143,9 +143,8 @@
                             <td class="content">
 
                                 <h1 style="text-align: center; width: 100%;">
-                                    Успішна регістрація
+                                    Успішна реєстрація в садку
                                 </h1>
-
 
                                 <h2>Ваші дані:</h2>
 

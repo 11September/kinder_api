@@ -33,7 +33,7 @@ class LoginMail extends Mailable
     {
         return $this
             ->from(['address' => 'reply@admin.com', 'name' => 'Kinder'])
-            ->subject('Сброс пароля')
+            ->subject('Успішна реєстрація в садку')
             ->view('mail.login-welcome');
     }
 }
