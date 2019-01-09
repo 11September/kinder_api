@@ -155,25 +155,25 @@
                                     <li>{{ $user->email }}</li>
                                 </ul>
 
-                                <p>Це лист, ви отримали з мобільному додатку. Відвідайте <a href="http://google.com">Gold Master</a>.</p>
+                                <p>Це лист, ви отримали з мобільному додатку СадОк Медікавер.</p>
                             </td>
                         </tr>
                     </table>
 
                 </td>
             </tr>
-            <tr>
-                <td class="container">
-                    <table>
-                        <tr>
-                            <td class="content footer" align="center">
-                                <p>Sent by <a href="http://google.com">Kinder</a></p>
-                                <p><a href="mailto:">Kinder@gmail.com</a></p>
-                            </td>
-                        </tr>
-                    </table>
-                </td>
-            </tr>
+            {{--<tr>--}}
+                {{--<td class="container">--}}
+                    {{--<table>--}}
+                        {{--<tr>--}}
+                            {{--<td class="content footer" align="center">--}}
+                                {{--<p>Sent by <a href="http://google.com">Kinder</a></p>--}}
+                                {{--<p><a href="mailto:">Kinder@gmail.com</a></p>--}}
+                            {{--</td>--}}
+                        {{--</tr>--}}
+                    {{--</table>--}}
+                {{--</td>--}}
+            {{--</tr>--}}
         </table>
     </div>
 </div>
