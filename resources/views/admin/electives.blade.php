@@ -12,7 +12,7 @@
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
-            <li class="breadcrumb-item active">Кружки</li>
+            <li class="breadcrumb-item active">Гуртки</li>
         </ol>
 
         <div class="card mb-3">
@@ -34,11 +34,11 @@
 
                     <div class="col-md-6">
                         <i class="fas fa-table"></i>
-                        Список кружков
+                        Список гуртків
                     </div>
                     <div class="col-md-6">
                         <div class="flex-end">
-                            <a class="orange-link" href="{{ action('ElectivesContoller@adminCreate') }}">Создать Кружок</a>
+                            <a class="orange-link" href="{{ action('ElectivesContoller@adminCreate') }}">Створити гурток</a>
                         </div>
                     </div>
                 </div>
@@ -48,20 +48,20 @@
                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                         <thead>
                         <tr>
-                            <th>Название</th>
-                            <th>Садик</th>
-                            <th>Время С</th>
-                            <th>Время До</th>
-                            <th>Действия</th>
+                            <th>Назва</th>
+                            <th>Садок</th>
+                            <th>Час З</th>
+                            <th>Час До</th>
+                            <th>Дії</th>
                         </tr>
                         </thead>
                         <tfoot>
                         <tr>
-                            <th>Название</th>
-                            <th>Садик</th>
-                            <th>Время С</th>
-                            <th>Время До</th>
-                            <th>Действия</th>
+                            <th>Назва</th>
+                            <th>Садок</th>
+                            <th>Час З</th>
+                            <th>Час До</th>
+                            <th>Дії</th>
                         </tr>
                         </tfoot>
                         <tbody>
@@ -73,14 +73,14 @@
                                 <td>{{ $elective->time_start }}</td>
                                 <td>{{ $elective->time_end }}</td>
                                 <td class="action-td">
-                                    <a class="btn btn-warning" href="{{ action('ElectivesContoller@adminEdit', $elective->id) }}">Редактировать</a>
+                                    <a class="btn btn-warning" href="{{ action('ElectivesContoller@adminEdit', $elective->id) }}">Редагувати</a>
 
                                     <form id="delete-form" method="POST" action="/admin/electives/{{$elective->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-danger" value="Удалить Кружок">
+                                            <input type="submit" class="btn btn-danger" value="Видалити">
                                         </div>
                                     </form>
                                 </td>
