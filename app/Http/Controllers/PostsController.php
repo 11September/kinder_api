@@ -14,18 +14,25 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class PostsController extends Controller
 {
+    public $sourse = "http://beerzha.com.ua/public";
+
     public function index(Request $request)
     {
         try {
-            $posts = Post::select('id', 'title', 'body', 'image', 'created_at')
-                ->filter($request->all())->published()->get();
+            $posts = Post::select('id', 'title', 'body', 'image', 'preview', 'created_at')
+                ->filter($request->all())->get();
 
             $posts = $posts->each(function ($item, $key) {
                 if ($item['image']) {
-                    $source = "http://url/storage/";
-                    $item['image'] = $source . $item['image'];
+                    $item['image'] = $this->sourse . $item['image'];
+                }
+
+                if ($item['preview']) {
+                    $item['preview'] = $this->sourse . $item['preview'];
                 }
             });
+
+            dd($posts);
 
             return ['data' => $posts];
 
