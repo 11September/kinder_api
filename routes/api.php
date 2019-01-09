@@ -28,7 +28,6 @@ Route::middleware('cors','token')->get('profile', 'UsersController@profile')->na
 
 Route::middleware('cors','token')->get('posts', 'PostsController@index')->name('Get Posts');
 Route::middleware('cors','token')->get('schools', 'SchoolController@index')->name('All Schools');
-Route::middleware('cors','token')->get('posts', 'PostsController@index')->name('All Posts');
 Route::middleware('cors','token')->get('groups', 'GroupController@index')->name('All Groups');
 Route::middleware('cors','token')->get('students', 'StudentsController@index')->name('All Students');
 Route::middleware('cors','token')->get('electives', 'ElectivesContoller@index')->name('All Electives');
