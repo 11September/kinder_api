@@ -16,11 +16,10 @@ class PostsController extends Controller
 {
     public $sourse = "http://8.dev-kit.ru";
 
-    public function index(Request $request)
+    public function index()
     {
         try {
             $posts = Post::select('id', 'title', 'body', 'image', 'preview')
-                ->filter($request->all())
                 ->where('until', '<=', date('Y-m-d'))
                 ->get();
 
@@ -53,13 +52,21 @@ class PostsController extends Controller
         }
 
         try {
-            $post = Post::where('id' ,$request->id)->select('id', 'title', 'body', 'image', 'created_at')->first();
+            $post = Post::where('id' ,$request->id)->select('id', 'title', 'body', 'image', 'preview')->first();
 
-            if (isset($post->image) || !empty($post->image)){
-                $post->image = "http://url/storage/" . $post->image;
+            if (!$post){
+                return response()->json(['message' => 'Новина не знайдена!'], 404);
             }
 
-            return ['data' => $post];
+            if (isset($post->image) || !empty($post->image)){
+                $post->image = $this->sourse . $post->image;
+            }
+
+            if (isset($post->preview) || !empty($post->preview)){
+                $post->preview = $this->sourse . $post->preview;
+            }
+
+            return [$post];
 
         } catch (\Exception $exception) {
             Log::warning('PostsController@show Exception: '. $exception->getMessage());

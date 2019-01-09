@@ -27,6 +27,8 @@ Route::middleware('cors','token')->get('profile', 'UsersController@profile')->na
 // Users Auth
 
 Route::middleware('cors','token')->get('posts', 'PostsController@index')->name('Get Posts');
+Route::middleware('cors','token')->get('post/{id}', 'PostsController@show')->name('Get Post');
+
 Route::middleware('cors','token')->get('schools', 'SchoolController@index')->name('All Schools');
 Route::middleware('cors','token')->get('groups', 'GroupController@index')->name('All Groups');
 Route::middleware('cors','token')->get('students', 'StudentsController@index')->name('All Students');
