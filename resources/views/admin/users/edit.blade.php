@@ -151,7 +151,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="password-confirm">Пароль підтвердження</label>
+                                        <label for="password-confirm">Підтвердження паролю</label>
                                         <input id="password-confirm" type="password" class="form-control"
                                                minlength=6 name="password_confirmation">
 

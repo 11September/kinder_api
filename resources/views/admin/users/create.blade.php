@@ -88,14 +88,14 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="password">Password</label>
+                                        <label for="password">Пароль</label>
                                         <input id="password" type="password"
                                                class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                                name="password" required>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="password-confirm">Password Confirm</label>
+                                        <label for="password-confirm">Підтвердження паролю</label>
                                         <input id="password-confirm" type="password" class="form-control"
                                                name="password_confirmation" required>
                                     </div>
