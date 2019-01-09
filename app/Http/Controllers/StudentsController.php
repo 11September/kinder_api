@@ -130,6 +130,11 @@ class StudentsController extends Controller
     {
         $user = User::find($id);
 
+        $image = public_path() . $user->avatar;
+        if(file_exists($image)) {
+            unlink($image);
+        }
+
         $user->delete();
 
         return redirect()->route('admin.users')->with('message', 'Користувач успішно видалений!');
