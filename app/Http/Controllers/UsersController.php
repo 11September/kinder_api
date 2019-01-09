@@ -189,17 +189,15 @@ class UsersController extends Controller
 
     public function SetAvatar(Request $request)
     {
-//        $validator = Validator::make($request->all(), [
-//            'avatar' => 'required',
-//        ]);
-//
-//        if ($validator->fails()) {
-//            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
-//        }
+        $validator = Validator::make($request->all(), [
+            'avatar' => 'required',
+        ]);
 
-        Log::warning('Test', $request->all());
-        return response()->json(['message' => 'Аватар змінено!'], 200);
-        exit();
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        Log::warning('avatar', $request->all());
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
