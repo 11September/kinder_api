@@ -26,6 +26,17 @@ class GroupController extends Controller
         }
     }
 
+    public function getAllGroupsById(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $groups = Group::where('school_id', $request->id)->get();
+
+        return response()->json(['data'=> $groups, 'success'=>true]);
+    }
+
     public function adminIndex()
     {
         $users = User::where('type', 'admin')->get();

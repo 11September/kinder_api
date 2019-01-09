@@ -18,8 +18,8 @@ class StudentsController extends Controller
     {
         try {
             $students = Student::select('id', 'FIO', 'birthday', 'user_id')
-                ->with(array('users'=>function($query){
-                    $query->select('id','name', 'email');
+                ->with(array('users' => function ($query) {
+                    $query->select('id', 'name', 'email');
                 }))
                 ->published()
                 ->filter($request->all())
@@ -28,7 +28,7 @@ class StudentsController extends Controller
             return ['data' => $students];
 
         } catch (\Exception $exception) {
-            Log::warning('GroupController@index Exception: '. $exception->getMessage());
+            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
@@ -37,11 +37,11 @@ class StudentsController extends Controller
     public function adminIndex()
     {
         $users = User::where('type', 'default')
-            ->with(array('school'=>function($query){
-                $query->select('id','name');
+            ->with(array('school' => function ($query) {
+                $query->select('id', 'name');
             }))
-            ->with(array('group'=>function($query){
-                $query->select('id','name');
+            ->with(array('group' => function ($query) {
+                $query->select('id', 'name');
             }))
             ->latest()
             ->get();
@@ -51,11 +51,11 @@ class StudentsController extends Controller
 
     public function adminCreate()
     {
-        $groups = Group::all();
-
         $schools = School::all();
 
-        return view('admin.users.create',compact('schools', 'groups'));
+        $groups = Group::where('school_id', $schools->first()->id)->get();
+
+        return view('admin.users.create', compact('schools', 'groups'));
     }
 
     public function adminStore(StoreStudent $request)
@@ -77,7 +77,7 @@ class StudentsController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users')->with('message','Користувач успішно доданий!');
+        return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий!');
     }
 
     public function adminEdit($id)
@@ -88,23 +88,23 @@ class StudentsController extends Controller
 
         $schools = School::all();
 
-        return view('admin.users.edit',compact('user','groups', 'schools'));
+        return view('admin.users.edit', compact('user', 'groups', 'schools'));
     }
 
     public function adminUpdate(UpdateStudent $request, $id)
     {
         $user = User::where('id', $id)->first();
 
-        if ($request->password && !empty($request->password) && ($request->password == $request->password_confirmation)){
+        if ($request->password && !empty($request->password) && ($request->password == $request->password_confirmation)) {
             $user->password = Hash::make($request->password);
         }
 
-        if ($request->password && $request->password_confirmation && ($request->password !== $request->password_confirmation) && (iconv_strlen($request->password < 7)) && (iconv_strlen($request->password_confirmation < 7))){
-            return redirect()->back()->with('message','Паролі не збігаються або не відповідають формату!');
+        if ($request->password && $request->password_confirmation && ($request->password !== $request->password_confirmation) && (iconv_strlen($request->password < 7)) && (iconv_strlen($request->password_confirmation < 7))) {
+            return redirect()->back()->with('message', 'Паролі не збігаються або не відповідають формату!');
         }
 
-        if($request->password && $request->password_confirmation &&  $request->password !== $request->password_confirmation){
-            return redirect()->back()->with('message','Паролі не збігаються або не відповідають формату!');
+        if ($request->password && $request->password_confirmation && $request->password !== $request->password_confirmation) {
+            return redirect()->back()->with('message', 'Паролі не збігаються або не відповідають формату!');
         }
 
         $user->name = $request->name;
@@ -120,7 +120,7 @@ class StudentsController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users')->with('message','Користувач успішно оновлений!');
+        return redirect()->route('admin.users')->with('message', 'Користувач успішно оновлений!');
     }
 
     public function adminDelete($id)
@@ -129,7 +129,7 @@ class StudentsController extends Controller
 
         $user->delete();
 
-        return redirect()->route('admin.users')->with('message','Користувач успішно видалений!');
+        return redirect()->route('admin.users')->with('message', 'Користувач успішно видалений!');
     }
 
 }

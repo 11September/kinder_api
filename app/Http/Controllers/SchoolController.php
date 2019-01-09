@@ -34,11 +34,6 @@ class SchoolController extends Controller
         return view('admin.kindergartens',compact('schools', 'groups'));
     }
 
-    public function adminCreate()
-    {
-
-    }
-
     public function adminStore(StoreSchool $request)
     {
         $school = new School();

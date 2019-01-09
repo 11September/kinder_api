@@ -41,6 +41,8 @@ Route::get('/admin/users/{id}', 'StudentsController@adminShow')->middleware('is_
 Route::get('/admin/users/{id}/edit', 'StudentsController@adminEdit')->middleware('is_admin')->name('admin.users.edit');
 Route::put('/admin/users/{id}', 'StudentsController@adminUpdate')->middleware('is_admin')->name('admin.users.update');
 Route::delete('/admin/users/{id}', 'StudentsController@adminDelete')->middleware('is_admin')->name('admin.users.delete');
+Route::post('/admin/users/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.users.getAllGroupsById');
+
 
 // Admin Schools
 Route::get('/admin/kindergartens', 'SchoolController@adminIndex')->middleware('is_admin')->name('admin.kindergartens');

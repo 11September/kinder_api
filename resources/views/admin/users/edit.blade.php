@@ -165,12 +165,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Садок</label>
-                                        <select required name="school_id" class="form-control"
+                                        <select required name="school_id" class="form-control choose_school"
                                                 id="exampleFormControlSelect1">
 
                                             @foreach($schools as $school)
-                                                <option @if($school->id == $user->school_id) selected
-                                                        @endif value="{{ $school->id }}">{{ $school->name }}</option>
+                                                <option class="choose_school_option"
+                                                        @if($school->id == $user->school_id) selected @endif
+                                                        value="{{ $school->id }}">{{ $school->name }}
+                                                </option>
                                             @endforeach
 
                                         </select>
@@ -183,7 +185,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Група</label>
-                                        <select required name="group_id" class="form-control"
+                                        <select required name="group_id" class="form-control choose_group_option"
                                                 id="exampleFormControlSelect2">
 
                                             @foreach($groups as $group)
@@ -279,5 +281,42 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function () {
+            $('.choose_school').on('change', function () {
+                var school_id = $(this).val();
+                if (school_id) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
 
+                        type: 'POST',
+                        url: '/admin/users/getAllGroupsById',
+                        dataType: 'json',
+                        data: {id: school_id},
+                        success: function (data) {
+
+                            if (data.success) {
+                                $('.choose_group_option').empty();
+
+                                if (data.data && data.data !== '') {
+                                    $.each(data.data, function (index, item) {
+                                        console.log(item);
+                                        $('.choose_group_option').append('<option  value="' + item.id + '">' + item.name + '</option>');
+                                    });
+                                } else {
+                                    console.log("empty data");
+                                    $('.choose_group_option').empty();
+                                }
+                            }
+
+                        }, error: function () {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection
