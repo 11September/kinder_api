@@ -54,7 +54,7 @@ class StoreStudent extends FormRequest
             'parents.required' => "ВибБатько / Мати обов'язкове поле",
 
             'email.email' => "Email маэ бути згiдно формату",
-            'email.unique' => "Такий емайл існує",
+            'email.unique' => "Такий емейл існує",
             'password.confirmed' => "Паролі повинні співпадати",
         ];
     }
