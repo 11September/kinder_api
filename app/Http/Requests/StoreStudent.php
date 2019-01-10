@@ -25,9 +25,9 @@ class StoreStudent extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'birthday' => 'required|string',
+            'birthday' => 'required|date',
             'parent_name' => 'required|string',
-            'parent_phone' => 'required',
+            'parent_phone' => 'required|string|min:10|max:13',
             'parents' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'address' => '',
@@ -52,6 +52,11 @@ class StoreStudent extends FormRequest
             'group_id.required' => "Група обов'язкове поле",
             'status.required' => "Статус обов'язкове поле",
             'parents.required' => "ВибБатько / Мати обов'язкове поле",
+
+            'birthday.date' => "День народження має бути датою",
+
+            'parent_phone.min' => "Мінімальна кількість символів 10",
+            'parent_phone.max' => "Мінімальна кількість символів 13",
 
             'email.email' => "Email маэ бути згiдно формату",
             'email.unique' => "Такий емейл існує",
