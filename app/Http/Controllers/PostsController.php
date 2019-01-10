@@ -35,7 +35,7 @@ class PostsController extends Controller
                 ->get();
 
             if (!$posts || count($posts) < 1){
-                return response()->json(['message' => 'Новин не існує!'], 404);
+                return response()->json(['message' => 'Новин не знайдено!'], 404);
             }
 
             $posts = $posts->each(function ($item, $key) {
