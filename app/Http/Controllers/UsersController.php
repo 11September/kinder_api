@@ -203,8 +203,6 @@ class UsersController extends Controller
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
-        Log::warning('avatar', $request->all());
-
         try {
             $image = $this->storeBase64Image($request->avatar);
 
@@ -230,7 +228,7 @@ class UsersController extends Controller
         $folderPathSave = "/images/uploads/avatars/";
         $image_parts = explode(";base64,", $data);
 
-        if (!$image_parts){
+        if (!$image_parts || !$image_parts[1]){
             return null;
         }
 
