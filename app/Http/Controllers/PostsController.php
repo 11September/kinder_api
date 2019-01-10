@@ -17,20 +17,16 @@ class PostsController extends Controller
 {
     public $sourse =  "http://8.dev-kit.ru";
 
-    public function index(Request $request)
+    public function index($school_id)
     {
-        $validator = Validator::make($request->all(), [
-            'school_id' => 'required',
-        ]);
-
-        if ($validator->fails()) {
+        if (!$school_id) {
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
         try {
             $posts = Post::select('id', 'title', 'body', 'image', 'preview')
                 ->where('until', '>=', date('Y-m-d'))
-                ->where('school_id', $request->school_id)
+                ->where('school_id', $school_id)
                 ->latest()
                 ->get();
 
@@ -56,18 +52,14 @@ class PostsController extends Controller
         }
     }
 
-    public function show(Request $request)
+    public function show($id)
     {
-        $validator = Validator::make($request->all(), [
-            'id' => 'required',
-        ]);
-
-        if ($validator->fails()) {
+        if (!$id) {
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
         try {
-            $post = Post::where('id' ,$request->id)->select('id', 'title', 'body', 'image', 'preview')->first();
+            $post = Post::where('id', $id)->select('id', 'title', 'body', 'image', 'preview')->first();
 
             if (!$post){
                 return response()->json(['message' => 'Новина не за'], 400);
