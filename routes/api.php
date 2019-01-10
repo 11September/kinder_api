@@ -26,7 +26,7 @@ Route::middleware('cors','token')->post('logout', 'UsersController@logout')->nam
 Route::middleware('cors','token')->get('profile', 'UsersController@profile')->name('Get All User Data');
 // Users Auth
 
-Route::middleware('cors','token')->get('posts', 'PostsController@index')->name('Get Posts');
+Route::middleware('cors','token')->get('posts/{school_id}', 'PostsController@index')->name('Get Posts');
 Route::middleware('cors','token')->get('post/{id}', 'PostsController@show')->name('Get Post');
 
 Route::middleware('cors','token')->get('schools', 'SchoolController@index')->name('All Schools');

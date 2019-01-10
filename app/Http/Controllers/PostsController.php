@@ -17,12 +17,20 @@ class PostsController extends Controller
 {
     public $sourse =  "http://8.dev-kit.ru";
 
-
-    public function index()
+    public function index(Request $request)
     {
+        $validator = Validator::make($request->all(), [
+            'school_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
         try {
             $posts = Post::select('id', 'title', 'body', 'image', 'preview')
                 ->where('until', '>=', date('Y-m-d'))
+                ->where('school_id', $request->school_id)
                 ->latest()
                 ->get();
 

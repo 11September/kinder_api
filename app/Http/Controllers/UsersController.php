@@ -41,6 +41,7 @@ class UsersController extends Controller
                 $result = array_add($result, 'email', $user->email);
                 $result = array_add($result, 'avatar', ($this->sourse . $user->avatar));
                 $result = array_add($result, 'group', $group->name);
+                $result = array_add($result, 'school_id', $user->school_id);
 
                 return response($result);
             }
@@ -209,7 +210,7 @@ class UsersController extends Controller
             $user->avatar = $image;
             $user->save();
 
-            return response()->json(['message' => 'Аватар змінено!', 'data' => $this->sourse . $image], 200);
+            return response()->json(['message' => 'Аватар змінено!', 'avatar' => $this->sourse . $image], 200);
 
         } catch (\Exception $exception) {
             Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage());
