@@ -38,9 +38,8 @@ class UsersController extends Controller
 
                 $result = array();
                 $result = array_add($result, 'token', $user->token);
-                $result = array_add($result, 'parent_name', $user->parent_name);
                 $result = array_add($result, 'email', $user->email);
-                $result = array_add($result, 'avatar', ($this->sourse . $user->avatar));
+                $result = array_add($result, 'parent_name', $user->parent_name);
                 $result = array_add($result, 'group', $group->name);
                 $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
                 $result = array_add($result, 'school_id', $user->school_id);
@@ -64,10 +63,11 @@ class UsersController extends Controller
 
                         $result = array();
                         $result = array_add($result, 'token', $user->token);
-                        $result = array_add($result, 'parent_name', $user->parent_name);
                         $result = array_add($result, 'email', $user->email);
-                        $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
+                        $result = array_add($result, 'parent_name', $user->parent_name);
                         $result = array_add($result, 'group', $group->name);
+                        $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
+                        $result = array_add($result, 'school_id', $user->school_id);
                         return response($result);
                     } else {
                         return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
