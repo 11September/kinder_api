@@ -228,7 +228,7 @@ class UsersController extends Controller
         $folderPathSave = "/images/uploads/avatars/";
         $image_parts = explode(";base64,", $data);
 
-        if (!$image_parts || !$image_parts[1]){
+        if (!$image_parts || !$image_parts[1] || $image_parts[1] == null || $image_parts[1] == ""){
             return null;
         }
 
