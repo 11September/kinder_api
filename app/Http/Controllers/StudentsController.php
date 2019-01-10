@@ -78,7 +78,7 @@ class StudentsController extends Controller
 
         $user->save();
 
-//        \Mail::to($request->email)->send(new LoginMail($user));
+        Mail::to($request->email)->send(new LoginMail($user));
 
         return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий!');
     }
