@@ -217,7 +217,7 @@ class UsersController extends Controller
             return response()->json(['message' => 'Аватар змінено!', 'avatar' => $this->sourse . $image], 200);
 
         } catch (\Exception $exception) {
-            Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage());
+            Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage(), $exception->getLine());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
