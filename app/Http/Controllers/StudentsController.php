@@ -80,7 +80,7 @@ class StudentsController extends Controller
 
         \Mail::to($request->email)->send(new LoginMail($user));
 
-        return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий!');
+        return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий! Перевiрте пошту!');
     }
 
     public function adminEdit($id)
