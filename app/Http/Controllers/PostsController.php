@@ -7,6 +7,7 @@ use App\Http\Requests\StorePost;
 use App\Post;
 use App\School;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
@@ -14,7 +15,8 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class PostsController extends Controller
 {
-    public $sourse = "http://8.dev-kit.ru";
+    public $sourse =  "http://8.dev-kit.ru";
+
 
     public function index()
     {
@@ -25,11 +27,11 @@ class PostsController extends Controller
 
             $posts = $posts->each(function ($item, $key) {
                 if ($item['image']) {
-                    $item['image'] = $this->sourse . $item['image'];
+                    $item['image'] = Config::get('app.url') . $item['image'];
                 }
 
                 if ($item['preview']) {
-                    $item['preview'] = $this->sourse . $item['preview'];
+                    $item['preview'] = Config::get('app.url') . $item['preview'];
                 }
             });
 
