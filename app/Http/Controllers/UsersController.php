@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
@@ -41,6 +42,7 @@ class UsersController extends Controller
                 $result = array_add($result, 'email', $user->email);
                 $result = array_add($result, 'avatar', ($this->sourse . $user->avatar));
                 $result = array_add($result, 'group', $group->name);
+                $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
                 $result = array_add($result, 'school_id', $user->school_id);
 
                 return response($result);
@@ -64,7 +66,7 @@ class UsersController extends Controller
                         $result = array_add($result, 'token', $user->token);
                         $result = array_add($result, 'parent_name', $user->parent_name);
                         $result = array_add($result, 'email', $user->email);
-                        $result = array_add($result, 'avatar', ($this->sourse . $user->avatar));
+                        $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
                         $result = array_add($result, 'group', $group->name);
                         return response($result);
                     } else {
