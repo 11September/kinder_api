@@ -34,6 +34,10 @@ class PostsController extends Controller
                 ->latest()
                 ->get();
 
+            if (!$posts || count($posts) < 1){
+                return response()->json(['message' => 'Новин не існує!'], 404);
+            }
+
             $posts = $posts->each(function ($item, $key) {
                 if ($item['image']) {
                     $item['image'] = Config::get('app.url') . $item['image'];
