@@ -102,7 +102,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Email</label>
                                         <input required type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
-                                               placeholder="name@example.com">
+                                               {{ old('email') }} placeholder="name@example.com">
 
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
