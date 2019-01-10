@@ -144,7 +144,7 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Садик</label>
+                                        <label for="exampleFormControlSelect1">Садок</label>
                                         <select required name="school_id" class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect1">
 
@@ -162,7 +162,7 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect2">Группа</label>
+                                        <label for="exampleFormControlSelect2">Група</label>
                                         <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect2">
 
@@ -187,7 +187,7 @@
 
                                                 <div class="form-check">
                                                     <label class="container-checkbox">
-                                                        Активный
+                                                        Активний
                                                         <input required value="active" type="radio"
                                                                checked="checked" name="status">
                                                         <span class="checkmark-radio"></span>
@@ -195,7 +195,7 @@
                                                 </div>
                                                 <div class="form-check">
                                                     <label class="container-checkbox">
-                                                        Неактивный
+                                                        Неактивний
                                                         <input required value="disable" type="radio" name="status">
                                                         <span class="checkmark-radio"></span>
                                                     </label>
@@ -209,7 +209,7 @@
                                             </div>
 
                                             <div class="form-group col-md-6">
-                                                <label>Пол</label>
+                                                <label>Батько / Мати</label>
 
                                                 <div class="form-check">
                                                     <label class="container-checkbox">
