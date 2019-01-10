@@ -50,7 +50,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">ПІБ дитини</label>
                                         <input required name="name" value="{{ old('name') }}" type="text"
-                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="ФИО ребенка">
+                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="ПІБ дитини">
 
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
@@ -62,7 +62,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Дата народження дитини</label>
                                         <input required name="birthday" value="{{ old('birthday') }}" type="date"
-                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" placeholder="Дата Рождения ребенка">
+                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" placeholder="Дата народження дитини">
 
                                         @if ($errors->has('birthday'))
                                             <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">ПІБ Батька</label>
                                         <input required name="parent_name" value="{{ old('parent_name') }}" type="text"
-                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" placeholder="ФИО Родителя">
+                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" placeholder="ПІБ Батька">
 
                                         @if ($errors->has('parent_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -86,7 +86,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Номер Телефону Батьків</label>
                                         <input required name="parent_phone" value="{{ old('parent_phone') }}"
-                                               type="text" class="form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефона Родителя">
+                                               type="text" class="form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефону Батьків">
 
                                         @if ($errors->has('parent_phone'))
                                             <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Адреса</label>
                                         <input type="text" name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address"
-                                               placeholder="Адрес">
+                                               placeholder="Адреса">
 
                                         @if ($errors->has('address'))
                                             <span class="invalid-feedback" role="alert">
