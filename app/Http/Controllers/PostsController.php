@@ -61,11 +61,11 @@ class PostsController extends Controller
             }
 
             if (isset($post->image) || !empty($post->image)){
-                $post->image = $this->sourse . $post->image;
+                $post->image = Config::get('app.url') . $post->image;
             }
 
             if (isset($post->preview) || !empty($post->preview)){
-                $post->preview = $this->sourse . $post->preview;
+                $post->preview = Config::get('app.url') . $post->preview;
             }
 
             return [$post];
