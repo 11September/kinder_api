@@ -129,6 +129,7 @@ class StudentsController extends Controller
     public function adminDelete($id)
     {
         $user = User::find($id);
+        $mailTo = $user->email;
 
         if ($user->avatar && !empty($user->avatar)){
             $image = public_path() . $user->avatar;
@@ -138,6 +139,8 @@ class StudentsController extends Controller
         }
 
         $user->delete();
+
+        \Mail::to($mailTo)->send(new LoginMail($user));
 
         return redirect()->route('admin.users')->with('message', 'Користувач успішно видалений!');
     }
