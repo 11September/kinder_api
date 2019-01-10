@@ -113,7 +113,7 @@
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Адреса</label>
-                                        <input required type="text" name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address"
+                                        <input type="text" name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address"
                                                placeholder="Адрес">
 
                                         @if ($errors->has('address'))
