@@ -84,7 +84,7 @@
                                 <td>{{ $user->email }}</td>
                                 <td>{{ @$user->school->name }}</td>
                                 <td>{{ @$user->group->name }}</td>
-                                <td>{{ $user->status }}</td>
+                                <td>@if($user->status == "active") Активний @else Неактивний @endif</td>
                                 <td class="action-td">
                                     <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редагувати</a>
 
