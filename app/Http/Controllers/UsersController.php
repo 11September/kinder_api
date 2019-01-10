@@ -207,7 +207,7 @@ class UsersController extends Controller
             $image = $this->storeBase64Image($request->avatar);
 
             if (!$image){
-                return response()->json(['message' => 'Збереження не вдалося. Перевірте картинку!'], 205);
+                return response()->json(['message' => 'Збереження не вдалося. Перевірте картинку!'], 422);
             }
 
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
@@ -217,7 +217,7 @@ class UsersController extends Controller
             return response()->json(['message' => 'Аватар змінено!', 'avatar' => $this->sourse . $image], 200);
 
         } catch (\Exception $exception) {
-            Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage(), $exception->getLine());
+            Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage() . " - " . $exception->getLine());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
@@ -228,7 +228,7 @@ class UsersController extends Controller
         $folderPathSave = "/images/uploads/avatars/";
         $image_parts = explode(";base64,", $data);
 
-        if (!$image_parts || !$image_parts[1] || $image_parts[1] == null || $image_parts[1] == ""){
+        if (!$image_parts || !isset($image_parts[1]) || $image_parts[1] == null || $image_parts[1] == ""){
             return null;
         }
 
