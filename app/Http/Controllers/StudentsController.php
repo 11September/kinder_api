@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Group;
-use App\Http\Requests\StoreStudent;
-use App\Http\Requests\UpdateStudent;
-use App\Mail\LoginMail;
 use App\School;
 use App\Student;
-use App\User;
+use App\Mail\LoginMail;
+use App\Mail\DeleteProfile;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
+use App\Http\Requests\StoreStudent;
+use App\Http\Requests\UpdateStudent;
+use Illuminate\Support\Facades\Hash;
 
 class StudentsController extends Controller
 {
@@ -140,7 +141,7 @@ class StudentsController extends Controller
 
         $user->delete();
 
-        \Mail::to($mailTo)->send(new LoginMail($user));
+        \Mail::to($mailTo)->send(new DeleteProfile($user));
 
         return redirect()->route('admin.users')->with('message', 'Користувач успішно видалений!');
     }
