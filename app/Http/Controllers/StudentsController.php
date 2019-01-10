@@ -130,9 +130,11 @@ class StudentsController extends Controller
     {
         $user = User::find($id);
 
-        $image = public_path() . $user->avatar;
-        if(file_exists($image)) {
-            unlink($image);
+        if ($user->avatar && !empty($user->avatar)){
+            $image = public_path() . $user->avatar;
+            if(file_exists($image)) {
+                unlink($image);
+            }
         }
 
         $user->delete();
