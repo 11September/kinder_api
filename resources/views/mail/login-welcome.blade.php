@@ -153,6 +153,7 @@
                                     <li>{{ $user->parent_phone }}</li>
                                     <li>{{ $user->address }}</li>
                                     <li>{{ $user->email }}</li>
+                                    <li>{{ $password }}</li>
                                 </ul>
 
                                 <h5>Використовуйте email і створений Вами пароль для авторизації в додатку!</h5>

@@ -62,6 +62,8 @@ class StudentsController extends Controller
 
     public function adminStore(StoreStudent $request)
     {
+        $password = $request->password;
+
         $user = new User();
         $user->name = $request->name;
         $user->birthday = $request->birthday;
@@ -79,7 +81,7 @@ class StudentsController extends Controller
 
         $user->save();
 
-        \Mail::to($request->email)->send(new LoginMail($user));
+        \Mail::to($request->email)->send(new LoginMail($user, $password));
 
         return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий! Перевiрте пошту!');
     }
