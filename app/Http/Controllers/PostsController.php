@@ -23,6 +23,7 @@ class PostsController extends Controller
         try {
             $posts = Post::select('id', 'title', 'body', 'image', 'preview')
                 ->where('until', '>=', date('Y-m-d'))
+                ->latest()
                 ->get();
 
             $posts = $posts->each(function ($item, $key) {
