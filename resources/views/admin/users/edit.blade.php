@@ -63,7 +63,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">ПІБ дитини</label>
                                         <input required name="name" value="{{ $user->name }}" type="text"
-                                               class="form-control" placeholder="ФИО ребенка">
+                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="ФИО ребенка">
 
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
@@ -75,7 +75,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Дата народження дитини</label>
                                         <input required name="birthday" value="{{ $user->birthday }}" type="date"
-                                               class="form-control" placeholder="Дата Рождения ребенка">
+                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" placeholder="Дата Рождения ребенка">
 
                                         @if ($errors->has('birthday'))
                                             <span class="invalid-feedback" role="alert">
@@ -87,7 +87,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">ПІБ Батька</label>
                                         <input required name="parent_name" value="{{ $user->parent_name }}" type="text"
-                                               class="form-control" placeholder="ФИО Родителя">
+                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" placeholder="ФИО Родителя">
 
                                         @if ($errors->has('parent_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -99,7 +99,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Номер Телефону Батьків</label>
                                         <input required name="parent_phone" value="{{ $user->parent_phone }}"
-                                               type="text" class="form-control" placeholder="Номер Телефона Родителя">
+                                               type="text" class="form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефона Родителя">
 
                                         @if ($errors->has('parent_phone'))
                                             <span class="invalid-feedback" role="alert">
@@ -114,7 +114,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Email</label>
                                         <input required type="email" value="{{ $user->email }}" name="email"
-                                               class="form-control" id="email"
+                                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" disabled
                                                placeholder="name@example.com">
 
                                         @if ($errors->has('email'))
@@ -127,7 +127,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Адреса</label>
                                         <input required type="text" value="{{ $user->address }}" name="address"
-                                               class="form-control" id="address"
+                                               class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address"
                                                placeholder="Адрес">
 
                                         @if ($errors->has('address'))
@@ -152,7 +152,7 @@
 
                                     <div class="form-group">
                                         <label for="password-confirm">Підтвердження паролю</label>
-                                        <input id="password-confirm" type="password" class="form-control"
+                                        <input id="password-confirm" type="password" class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
                                                minlength=6 name="password_confirmation">
 
                                         @if ($errors->has('password_confirmation'))
@@ -165,7 +165,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Садок</label>
-                                        <select required name="school_id" class="form-control choose_school"
+                                        <select required name="school_id" class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect1">
 
                                             @foreach($schools as $school)
@@ -185,7 +185,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Група</label>
-                                        <select required name="group_id" class="form-control choose_group_option"
+                                        <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect2">
 
                                             @foreach($groups as $group)
@@ -268,7 +268,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Обновить</button>
+                            <button type="submit" class="btn btn-primary mb-2">Оновити</button>
                         </form>
                     </div>
                 </div>

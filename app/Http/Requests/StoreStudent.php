@@ -24,12 +24,12 @@ class StoreStudent extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
-            'birthday' => 'required',
-            'parent_name' => 'required',
+            'name' => 'required|string',
+            'birthday' => 'required|string',
+            'parent_name' => 'required|string',
             'parent_phone' => 'required',
             'parents' => 'required',
-            'email' => 'required',
+            'email' => 'required|string|email|max:255|unique:users',
             'address' => 'required',
             'password' => 'required|string|min:6|max:255|confirmed',
             'school_id' => 'required',
@@ -52,6 +52,10 @@ class StoreStudent extends FormRequest
             'group_id.required' => "Група обов'язкове поле",
             'status.required' => "Статус обов'язкове поле",
             'parents.required' => "ВибБатько / Мати обов'язкове поле",
+
+            'email.email' => "Email маэ бути згiдно формату",
+            'email.unique' => "Такий емайл існує",
+            'password.confirmed' => "Паролі повинні співпадати",
         ];
     }
 }

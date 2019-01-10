@@ -10,13 +10,13 @@
 
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                <a class="orange-text" href="{{ url('admin') }}">Главная страница</a>
+                <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
             </li>
             <li class="breadcrumb-item active">
-                <a class="orange-text" href="{{ url('admin/users') }}">Пользователи</a>
+                <a class="orange-text" href="{{ url('admin/users') }}">Користувачі</a>
             </li>
             <li class="breadcrumb-item ">
-                Создание пользователя
+                Створення користувача
             </li>
         </ol>
 
@@ -25,7 +25,7 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
-                        <h2>Создать Пользователя</h2>
+                        <h2>Створення користувача</h2>
                     </div>
 
                     <div class="card-body">
@@ -48,27 +48,51 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">ФИО ребенка</label>
+                                        <label for="exampleFormControlInput1">ПІБ дитини</label>
                                         <input required name="name" value="{{ old('name') }}" type="text"
-                                               class="form-control" placeholder="ФИО ребенка">
+                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="ФИО ребенка">
+
+                                        @if ($errors->has('name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Дата Рождения ребенка</label>
+                                        <label for="exampleFormControlInput1">Дата народження дитини</label>
                                         <input required name="birthday" value="{{ old('birthday') }}" type="date"
-                                               class="form-control" placeholder="Дата Рождения ребенка">
+                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" placeholder="Дата Рождения ребенка">
+
+                                        @if ($errors->has('birthday'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('birthday') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">ФИО Родителя</label>
+                                        <label for="exampleFormControlInput1">ПІБ Батька</label>
                                         <input required name="parent_name" value="{{ old('parent_name') }}" type="text"
-                                               class="form-control" placeholder="ФИО Родителя">
+                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" placeholder="ФИО Родителя">
+
+                                        @if ($errors->has('parent_name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('parent_name') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Номер Телефона Родителя</label>
+                                        <label for="exampleFormControlInput1">Номер Телефону Батьків</label>
                                         <input required name="parent_phone" value="{{ old('parent_phone') }}"
-                                               type="text" class="form-control" placeholder="Номер Телефона Родителя">
+                                               type="text" class="form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефона Родителя">
+
+                                        @if ($errors->has('parent_phone'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('parent_phone') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
 
@@ -77,14 +101,26 @@
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Email</label>
-                                        <input required type="email" name="email" class="form-control" id="email"
+                                        <input required type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
                                                placeholder="name@example.com">
+
+                                        @if ($errors->has('email'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Адрес</label>
-                                        <input required type="text" name="address" class="form-control" id="address"
+                                        <label for="exampleFormControlInput1">Адреса</label>
+                                        <input required type="text" name="address" class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address"
                                                placeholder="Адрес">
+
+                                        @if ($errors->has('address'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('address') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
@@ -92,18 +128,24 @@
                                         <input id="password" type="password"
                                                class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
                                                name="password" required>
+
+                                        @if ($errors->has('password'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
                                         <label for="password-confirm">Підтвердження паролю</label>
-                                        <input id="password-confirm" type="password" class="form-control"
+                                        <input id="password-confirm" type="password" class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
                                                name="password_confirmation" required>
                                     </div>
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Садик</label>
-                                        <select required name="school_id" class="form-control choose_school"
+                                        <select required name="school_id" class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect1">
 
                                             @foreach($schools as $school)
@@ -112,10 +154,16 @@
                                             @endforeach
 
                                         </select>
+
+                                        @if ($errors->has('school_id'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('school_id') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Группа</label>
-                                        <select required name="group_id" class="form-control choose_group_option"
+                                        <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect2">
 
                                             @foreach($groups as $group)
@@ -123,8 +171,13 @@
                                             @endforeach
 
                                         </select>
-                                    </div>
 
+                                        @if ($errors->has('group_id'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('group_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
 
                                     <div class="form-group">
                                         <div class="form-row">
@@ -147,6 +200,12 @@
                                                         <span class="checkmark-radio"></span>
                                                     </label>
                                                 </div>
+
+                                                @if ($errors->has('status'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('status') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
 
                                             <div class="form-group col-md-6">
@@ -167,6 +226,12 @@
                                                         <span class="checkmark-radio"></span>
                                                     </label>
                                                 </div>
+
+                                                @if ($errors->has('parents'))
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $errors->first('parents') }}</strong>
+                                                    </span>
+                                                @endif
                                             </div>
                                         </div>
                                     </div>
@@ -175,7 +240,7 @@
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary mb-2">Создать</button>
+                            <button type="submit" class="btn btn-primary mb-2">Створити</button>
                         </form>
                     </div>
                 </div>
