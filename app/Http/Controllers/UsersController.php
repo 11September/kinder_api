@@ -208,6 +208,10 @@ class UsersController extends Controller
         try {
             $image = $this->storeBase64Image($request->avatar);
 
+            if (!$image){
+                return response()->json(['message' => 'Збереження не вдалося. Перевірте картинку!'], 205);
+            }
+
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $user->avatar = $image;
             $user->save();
@@ -230,9 +234,12 @@ class UsersController extends Controller
         $image_base64 = base64_decode($image_parts[1]);
         $file = $folderPath . time() . "-" . uniqid() . '.png';
         $image = "/" . $file;
-        file_put_contents($file, $image_base64);
 
-        return $image;
+        if (file_put_contents($file, $image_base64) !== false) {
+            return $image;
+        }else{
+            return null;
+        }
     }
 
 }
