@@ -20,7 +20,7 @@ class PostsController extends Controller
     {
         try {
             $posts = Post::select('id', 'title', 'body', 'image', 'preview')
-                ->where('until', '<=', date('Y-m-d'))
+                ->where('until', '>=', date('Y-m-d'))
                 ->get();
 
             $posts = $posts->each(function ($item, $key) {

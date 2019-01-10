@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
-    public $sourse = "http://8.dev-kit.ru";
+    public $sourse =  "http://8.dev-kit.ru";
 
     public function login(Request $request)
     {
@@ -209,7 +209,7 @@ class UsersController extends Controller
             $user->avatar = $image;
             $user->save();
 
-            return response()->json(['message' => 'Аватар змінено!'], 200);
+            return response()->json(['message' => 'Аватар змінено!', 'data' => $this->sourse . $image], 200);
 
         } catch (\Exception $exception) {
             Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage());
