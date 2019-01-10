@@ -54,8 +54,8 @@ class UpdateStudent extends FormRequest
 
             'birthday.date' => "День народження має бути датою",
 
-            'parent_phone.min' => "Мінімальна кількість символів 10",
-            'parent_phone.max' => "Мінімальна кількість символів 13",
+            'parent_phone.min' => "Мінімальна кількість символів 10 для номеру телефона",
+            'parent_phone.max' => "Мінімальна кількість символів 13 для номеру телефона",
 
             'email.email' => "Email маэ бути згiдно формату",
             'email.unique' => "Такий емейл існує",
