@@ -14,6 +14,8 @@ class CreateElectiveGroupsTable extends Migration
     public function up()
     {
         Schema::create('elective_groups', function (Blueprint $table) {
+            $table->increments('id');
+
             $table->integer('electivy_id')->unsigned();
             $table->foreign('electivy_id')->references('id')->on('electives');
 

@@ -20,7 +20,6 @@ class DatabaseSeeder extends Seeder
             StudentSeeder::class,
             PostSeeder::class,
             ElectivesSeeder::class,
-            ElectivyPhotoSeeder::class,
             ClassesSeeder::class,
             ScheduleSeeder::class,
         ]);

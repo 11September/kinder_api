@@ -14,6 +14,8 @@ class CreatePostGroupsTable extends Migration
     public function up()
     {
         Schema::create('post_groups', function (Blueprint $table) {
+            $table->increments('id');
+
             $table->integer('post_id')->unsigned();
             $table->foreign('post_id')->references('id')->on('posts');
 

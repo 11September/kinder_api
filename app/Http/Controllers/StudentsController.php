@@ -59,8 +59,6 @@ class StudentsController extends Controller
             $query->where('school_id', '=', $schools->first()->id);
         })->get();
 
-//        $groups = Group::where('school_id', $schools->first()->id)->get();
-
         return view('admin.users.create', compact('schools', 'groups'));
     }
 
