@@ -78,6 +78,7 @@ Route::post('/admin/posts', 'PostsController@adminStore')->middleware('is_admin'
 Route::get('/admin/posts/{id}/edit', 'PostsController@adminEdit')->middleware('is_admin')->name('admin.posts.edit');
 Route::put('/admin/posts/{id}', 'PostsController@adminUpdate')->middleware('is_admin')->name('admin.posts.update');
 Route::delete('/admin/posts/{id}', 'PostsController@adminDelete')->middleware('is_admin')->name('admin.posts.delete');
+Route::post('/admin/posts/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.posts.getAllGroupsById');
 
 
 // Admin Schedules

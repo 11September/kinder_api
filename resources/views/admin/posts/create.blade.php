@@ -122,18 +122,21 @@
                                         <div class="form-group col-md-6">
                                             <label>Садок</label>
 
-                                            @foreach($schools as $school)
+                                            <div class="wrapper-schools-holder">
+                                                @foreach($schools as $school)
 
-                                                <div class="form-check">
-                                                    <label class="container-checkbox">
-                                                        {{ $school->name }}
-                                                        <input required value="{{ $school->id }}" type="radio"
-                                                               value="{{ old('school_id') }}" name="school_id">
-                                                        <span class="checkmark-radio"></span>
-                                                    </label>
-                                                </div>
+                                                    <div class="form-check">
+                                                        <label class="container-checkbox">
+                                                            {{ $school->name }}
+                                                            <input required value="{{ $school->id }}" type="radio"
+                                                                   @if ($loop->first) checked @endif
+                                                                   value="{{ old('school_id') }}" name="school_id">
+                                                            <span class="checkmark-radio"></span>
+                                                        </label>
+                                                    </div>
 
-                                            @endforeach
+                                                @endforeach
+                                            </div>
 
                                             @if ($errors->has('school_id'))
                                                 <span class="invalid-feedback" role="alert">
@@ -145,17 +148,18 @@
                                         <div class="form-group col-md-6">
                                             <label>Групи</label>
 
-                                            @foreach($groups as $group)
-
-                                                <div class="form-check">
-                                                    <label class="container">
-                                                        {{ $group->name }}
-                                                        <input value="{{ $group->id }}" name="group_id[]" type="checkbox">
-                                                        <span class="checkmark"></span>
-                                                    </label>
-                                                </div>
-
-                                            @endforeach
+                                            <div class="wrapper-groups-holder">
+                                                @foreach($groups as $group)
+                                                    <div class="form-check">
+                                                        <label class="container">
+                                                            {{ $group->name }}
+                                                            <input value="{{ $group->id }}" name="group_id[]"
+                                                                   type="checkbox" @if ($loop->first) checked @endif>
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+                                            </div>
 
                                         </div>
                                     </div>
@@ -177,6 +181,52 @@
 
 @section('scripts')
     <script>
+        $(document).ready(function () {
+            $('input[type=radio][name=school_id]').change(function() {
+                var school_id = $(this).val();
+                alert(school_id);
+
+                if (school_id) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/posts/getAllGroupsById',
+                        dataType: 'json',
+                        data: {id: school_id},
+                        success: function (data) {
+                            var content = $('.wrapper-groups-holder');
+
+                            if (data.success) {
+                                content.empty();
+                                if (data.data && data.data !== '') {
+                                    $.each(data.data, function (index, item) {
+                                        console.log(item);
+
+                                        content.append(
+                                            '<div class="form-check">' +
+                                                '<label class="container">' + item.name +
+                                                '<input required value="'+ item.id +'" name="group_id[]" type="checkbox">' +
+                                                '<span class="checkmark"></span>' +
+                                                '</label>' +
+                                            '</div>'
+                                        );
+                                    });
+                                } else {
+                                    content.empty();
+                                }
+                            }
+
+                        }, error: function () {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        });
+
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var reader = new FileReader();

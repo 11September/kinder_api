@@ -24,7 +24,7 @@ class PostsController extends Controller
         }
 
         try {
-            $posts = Post::select('id', 'title', 'body', 'image', 'preview')
+            $posts = Post::select('id', 'title', 'body', 'preview')
                 ->where('until', '>=', date('Y-m-d'))
                 ->where('school_id', $school_id)
                 ->latest()
@@ -35,10 +35,6 @@ class PostsController extends Controller
             }
 
             $posts = $posts->each(function ($item, $key) {
-                if ($item['image']) {
-                    $item['image'] = Config::get('app.url') . $item['image'];
-                }
-
                 if ($item['preview']) {
                     $item['preview'] = Config::get('app.url') . $item['preview'];
                 }
@@ -81,6 +77,19 @@ class PostsController extends Controller
         }
     }
 
+    public function getAllGroupsById(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $groups = Group::whereHas('schools', function ($query) use ($request) {
+            $query->where('school_id', '=', $request->id);
+        })->get();
+
+        return response()->json(['data'=> $groups, 'success'=>true]);
+    }
+
     public function adminIndex()
     {
         $posts = Post::with(array('school'=>function($query){
@@ -94,7 +103,9 @@ class PostsController extends Controller
     {
         $schools = School::all();
 
-        $groups = Group::all();
+        $groups = Group::whereHas('schools', function ($query) use ($schools) {
+            $query->where('school_id', '=', $schools->first()->id);
+        })->get();
 
         return view('admin.posts.create',compact('schools', 'groups'));
     }
