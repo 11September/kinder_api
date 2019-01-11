@@ -100,9 +100,14 @@
                                             <div class="form-check">
                                                 <label class="container-checkbox">
                                                     {{ $school->name }}
-                                                    <input required value="{{ $school->id }}" type="radio"
-                                                           @if($school->id == $group->school_id) checked
-                                                           @endif  name="school_id">
+                                                    <input required value="{{ $school->id }}" type="radio" name="school_id"
+
+                                                    @foreach($group->schools as $value)
+                                                        @if($school->id == $value->id)
+                                                            checked
+                                                        @endif
+                                                    @endforeach>
+
                                                     <span class="checkmark-radio"></span>
                                                 </label>
                                             </div>

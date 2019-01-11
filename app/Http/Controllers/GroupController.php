@@ -63,12 +63,10 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->name;
         $group->user_id = $request->user_id;
-        $group->school_id = $request->school_id;
 
         $group->save();
 
-        $school = School::where('id', $group->school_id)->first();
-        $school->groups()->attach($group->id);
+        $group->schools()->attach($request->school_id);
 
         return redirect()->route('admin.groups')->with('message','Група успішно додана!');
     }
@@ -81,7 +79,7 @@ class GroupController extends Controller
 
         $groups = Group::withCount(['students'])->get();
 
-        $group = Group::where('id', $id)->withCount(['students'])->first();
+        $group = Group::where('id', $id)->withCount(['students'])->with('schools')->first();
 
         return view('admin.groups.edit',compact('users', 'schools', 'group', 'groups'));
     }
@@ -99,8 +97,9 @@ class GroupController extends Controller
         $group->update([
             'name' => $request->name,
             'user_id' => $request->user_id,
-            'school_id' => $request->school_id,
         ]);
+
+        $group->schools()->sync($request->school_id);
 
         $group->save();
 
