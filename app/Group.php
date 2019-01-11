@@ -9,9 +9,9 @@ class Group extends Model
     protected $table = "groups";
     protected $fillable = ['name', 'user_id', 'school_id'];
 
-    public function school()
+    public function schools()
     {
-        return $this->belongsTo(School::class);
+        return $this->belongsToMany(School::class);
     }
 
     public function students()
@@ -22,11 +22,6 @@ class Group extends Model
     public function posts()
     {
         return $this->belongsTo(Post::class);
-    }
-
-    public function groups()
-    {
-        return $this->belongsTo(Group::class);
     }
 
     public function scopeFilter($query, $params)

@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Group;
 use App\Notification;
+use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -25,9 +27,9 @@ class NotificationsController extends Controller
 
     public function adminIndex()
     {
-        $notifications = Notification::all();
+        $schools = School::withCount(['groups'])->get();
 
-        return view('admin.notifications',compact('notifications'));
+        return view('admin.notifications',compact('schools'));
     }
 
     public function adminStore(Request $request)
@@ -50,15 +52,11 @@ class NotificationsController extends Controller
 
     public function adminEdit($id)
     {
-        $users = User::where('type', 'admin')->get();
-
-        $schools = School::all();
+        $schools = School::withCount(['groups'])->get();
 
         $groups = Group::all();
 
-        $group = Group::where('id', $id)->withCount(['students'])->first();
-
-        return view('admin.groups.edit',compact('users', 'schools', 'group', 'groups'));
+        return view('admin.notifications.edit',compact( 'schools', 'groups'));
     }
 
     public function adminUpdate(Request $request ,$id)

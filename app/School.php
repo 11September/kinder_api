@@ -24,7 +24,7 @@ class School extends Model
 
     public function groups()
     {
-        return $this->belongsToMany(Group::class, 'schools_groups')->withTimestamps();
+        return $this->belongsToMany(Group::class, 'group_school')->withTimestamps();
     }
 
     public function getCreatedAtAttribute($date)

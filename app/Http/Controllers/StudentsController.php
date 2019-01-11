@@ -55,7 +55,11 @@ class StudentsController extends Controller
     {
         $schools = School::all();
 
-        $groups = Group::where('school_id', $schools->first()->id)->get();
+        $groups = Group::whereHas('schools', function ($query) use ($schools) {
+            $query->where('school_id', '=', $schools->first()->id);
+        })->get();
+
+//        $groups = Group::where('school_id', $schools->first()->id)->get();
 
         return view('admin.users.create', compact('schools', 'groups'));
     }
@@ -88,9 +92,7 @@ class StudentsController extends Controller
 
     public function adminEdit($id)
     {
-        $user = User::where('id', $id)->first();
-
-        $groups = Group::all();
+        $user = User::where('id', $id)->with('group')->first();
 
         $schools = School::all();
 

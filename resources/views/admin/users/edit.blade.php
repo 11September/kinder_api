@@ -187,12 +187,7 @@
                                         <label for="exampleFormControlSelect2">Група</label>
                                         <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect2">
-
-                                            @foreach($groups as $group)
-                                                <option @if($group->id == $user->group_id) selected
-                                                        @endif value="{{ $group->id }}">{{ $group->name }}</option>
-                                            @endforeach
-
+                                                <option selected value="{{ $user->group->id }}">{{ $user->group->name }}</option>
                                         </select>
 
                                         @if ($errors->has('group_id'))

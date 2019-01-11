@@ -32,7 +32,11 @@ class GroupController extends Controller
             'id' => 'required',
         ]);
 
-        $groups = Group::where('school_id', $request->id)->get();
+        $groups = Group::whereHas('schools', function ($query) use ($request) {
+            $query->where('school_id', '=', $request->id);
+        })->get();
+
+//        $groups = Group::where('school_id', $request->id)->get();
 
         return response()->json(['data'=> $groups, 'success'=>true]);
     }
@@ -107,8 +111,7 @@ class GroupController extends Controller
     {
         $group = Group::where('id', $id)->first();
 
-        $school = School::where('id', $group->school_id)->first();
-        $school->groups()->detach();
+        $group->schools()->detach();
 
         $group->delete();
 

@@ -13,7 +13,7 @@ class CreateSchoolsGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('schools_groups', function (Blueprint $table) {
+        Schema::create('group_school', function (Blueprint $table) {
             $table->integer('school_id')->unsigned();
             $table->foreign('school_id')->references('id')->on('schools');
 
@@ -30,6 +30,6 @@ class CreateSchoolsGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('schools_groups');
+        Schema::dropIfExists('group_school');
     }
 }
