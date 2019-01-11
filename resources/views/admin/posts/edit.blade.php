@@ -85,26 +85,6 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <h5>Завантажити попередній перегляд</h5>
-                                            <input name="old_image" type="hidden" value="{{ $post->image }}">
-                                            <input value="{{ $post->image }}" name="image" type='file'
-                                                   onchange="readURL(this);"/>
-
-                                            @if ($errors->has('image'))
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('image') }}</strong>
-                                                </span>
-                                            @endif
-
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <img class="post-image-preview" id="blah"
-                                                         src="{{ asset($post->image) }}" alt="your Preview"/>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group col-md-6">
-                                            <h5>Завантажити зображення</h5>
                                             <input name="old_preview" type="hidden" value="{{ $post->preview }}">
                                             <input value="{{ $post->preview }}" name="preview" type='file'
                                                    onchange="readURL2(this);"/>
@@ -120,6 +100,31 @@
                                                     <img class="post-image-preview" id="blah2"
                                                          src="{{ asset($post->preview) }}" alt="your image"/>
                                                 </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <h5>Завантажити зображення</h5>
+                                            <input name="old_image" type="hidden" value="{{ $post->image }}">
+                                            <input value="{{ $post->image }}" name="image[]" type='file'
+                                                   onchange="readURL(this);" multiple/>
+
+                                            @if ($errors->has('image'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('image') }}</strong>
+                                                </span>
+                                            @endif
+
+
+                                            <div class="row">
+
+                                                @foreach(json_decode($post->image) as $image)
+                                                    <div class="wrapper-many-post-images">
+                                                        <img class="post-image-preview many-post-images" id="blah"
+                                                             src="{{ asset($image) }}" alt="your Preview"/>
+                                                    </div>
+                                                @endforeach
+
                                             </div>
                                         </div>
                                     </div>

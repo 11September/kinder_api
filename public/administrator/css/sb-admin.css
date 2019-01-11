@@ -129,6 +129,21 @@ input[type="color"]:focus,
     outline: 0 none;
 }
 
+.wrapper-many-post-images{
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 50%;
+}
+
+.many-post-images{
+    text-align: center;
+    max-width: 150px !important;
+    max-height: 150px !important;
+    margin: 0 auto;
+}
+
 .scroll-to-top:focus, .scroll-to-top:hover {
     color: white;
 }

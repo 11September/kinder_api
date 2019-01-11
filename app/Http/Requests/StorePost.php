@@ -29,8 +29,8 @@ class StorePost extends FormRequest
             'until' => 'required|date',
             'school_id' => 'required',
             'group_id' => 'required',
-            'preview' => 'required|image',
-            'image' => 'required|image',
+            'preview' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ];
     }
 
@@ -49,6 +49,8 @@ class StorePost extends FormRequest
 
             'preview.image'  => 'Формат картинки',
             'image.image'  => 'Формат картинки',
+            'preview.mimes'  => 'Перевірте формат зображення',
+            'image.mimes'  => 'Перевірте формат зображення',
         ];
     }
 }

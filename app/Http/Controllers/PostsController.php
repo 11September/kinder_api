@@ -25,7 +25,7 @@ class PostsController extends Controller
         }
 
         try {
-            $posts = Post::select('id', 'title', 'body', 'preview')
+            $posts = Post::select('id', 'title', 'body', 'preview', 'image')
                 ->where('until', '>=', date('Y-m-d'))
                 ->where('school_id', $school_id)
                 ->latest()
@@ -36,10 +36,22 @@ class PostsController extends Controller
             }
 
             $posts = $posts->each(function ($item, $key) {
+                $data = null;
+
                 if ($item['preview']) {
                     $item['preview'] = Config::get('app.url') . $item['preview'];
                 }
+
+                if ($item['image']) {
+                    foreach(json_decode($item['image']) as $image){
+                        $data[] = Config::get('app.url') . $image;
+                    }
+                }
+
+                $item['image'] = $data;
             });
+
+
 
             return ['data' => $posts];
 
@@ -62,9 +74,13 @@ class PostsController extends Controller
                 return response()->json(['message' => 'Новина не знайдена'], 400);
             }
 
-            if (isset($post->image) || !empty($post->image)){
-                $post->image = Config::get('app.url') . $post->image;
+            if ($post['image']) {
+                foreach(json_decode($post['image']) as $image){
+                    $data[] = Config::get('app.url') . $image;
+                }
             }
+
+            $post['image'] = $data;
 
             if (isset($post->preview) || !empty($post->preview)){
                 $post->preview = Config::get('app.url') . $post->preview;
@@ -119,15 +135,22 @@ class PostsController extends Controller
         $post->until = $request->until;
         $post->school_id = $request->school_id;
 
+        if($request->hasfile('image'))
+        {
+            foreach($request->file('image') as $image)
+            {
+                $name = '/images/uploads/posts/' . time() . "-" . uniqid() . "." . $image->getClientOriginalName();
+                $image->move(public_path('/images/uploads/posts'), $name);
+                $data[] = $name;
+            }
+        }
+
         $preview = $request->file('preview');
         $input['preview'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
-        $preview->move(public_path('/images/uploads'), $input['preview']);
-        $post->preview = '/images/uploads/' . $input['preview'];
+        $preview->move(public_path('/images/uploads/posts'), $input['preview']);
 
-        $image = $request->file('image');
-        $input['image'] = time() . "-" . uniqid() . "." . $image->getClientOriginalExtension();
-        $image->move(public_path('/images/uploads'), $input['image']);
-        $post->image = '/images/uploads/' . $input['image'];
+        $post->preview = '/images/uploads/posts/' . $input['preview'];
+        $post->image = json_encode($data);
 
         $post->save();
 
@@ -151,32 +174,20 @@ class PostsController extends Controller
     {
         $post = Post::where('id', $id)->first();
 
-        if (isset($request->old_image) && !empty($request->old_image) && file_exists(public_path() . $request->old_image)){
+        if (isset($request->old_image) && !empty($request->old_image)){
             $post->image = $request->old_image;
         }else{
-            $image = public_path() . $post->image;
-            if(file_exists($image)) {
-                unlink($image);
-            }
-
-            $image = $request->file('image');
-            $input['image'] = time() . "-" . uniqid() . "." . $image->getClientOriginalExtension();
-            $image->move(public_path('/images/uploads'), $input['image']);
-            $post->image = '/images/uploads/' . $input['image'];
+            $this->deletePreviousEncodeImages($post->image);
+            $images = $this->storeNewEncodeImages($request->image);
+            $post->image = json_encode($images);
         }
 
         if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(public_path() . $request->old_preview)){
             $post->preview = $request->old_preview;
         }else{
-            $preview = public_path() . $post->preview;
-            if(file_exists($preview)) {
-                unlink($preview);
-            }
-
-            $preview = $request->file('preview');
-            $input['preview'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
-            $preview->move(public_path('/images/uploads'), $input['preview']);
-            $post->preview = '/images/uploads/' . $input['preview'];
+            $this->deletePreviousPreviewImage($post->preview);
+            $newPreview = $this->storeNewPreviewImage($request->preview);
+            $post->preview = $newPreview;
         }
 
         $post->title = $request->title;
@@ -194,20 +205,53 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
 
-        $image = public_path() . $post->image;
-        if(file_exists($image)) {
-            unlink($image);
+        $this->deletePreviousEncodeImages($post->image);
+        $this->deletePreviousPreviewImage($post->preview);
+        $post->groups()->detach();
+        $post->delete();
+
+        return redirect()->route('admin.posts')->with('message','Новина успішно видалена!');
+    }
+
+    public function deletePreviousEncodeImages($data)
+    {
+        foreach(json_decode($data) as $image){
+            $old_image = public_path() . $image;
+            if(file_exists($old_image)) {
+                unlink($old_image);
+            }
         }
 
-        $preview = public_path() . $post->preview;
+        return true;
+    }
+
+    public function storeNewEncodeImages($data)
+    {
+        foreach($data as $image)
+        {
+            $name = '/images/uploads/posts/' . time() . "-" . uniqid() . "." . $image->getClientOriginalName();
+            $image->move(public_path('/images/uploads/posts'), $name);
+            $newImages[] = $name;
+        }
+
+        return $newImages;
+    }
+
+    public function deletePreviousPreviewImage($data)
+    {
+        $preview = public_path() . $data;
         if(file_exists($preview)) {
             unlink($preview);
         }
 
-        $post->groups()->detach();
+        return true;
+    }
 
-        $post->delete();
+    public function storeNewPreviewImage($preview)
+    {
+        $image = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
+        $preview->move(public_path('/images/uploads/posts'), $image);
 
-        return redirect()->route('admin.posts')->with('message','Новина успішно видалена!');
+        return '/images/uploads/posts/' . $image;
     }
 }

@@ -81,7 +81,7 @@
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <h5>Завантажити попередній перегляд</h5>
-                                            <input required name="image" type='file' onchange="readURL(this);"/>
+                                            <input required name="preview" type='file' onchange="readURL(this);"/>
 
                                             @if ($errors->has('image'))
                                                 <span class="invalid-feedback" role="alert">
@@ -99,7 +99,7 @@
 
                                         <div class="form-group col-md-6">
                                             <h5>Завантажити зображення</h5>
-                                            <input required name="preview" type='file' onchange="readURL2(this);"/>
+                                            <input required name="image[]" type='file' onchange="readURL2(this);" multiple/>
 
                                             @if ($errors->has('preview'))
                                                 <span class="invalid-feedback" role="alert">
