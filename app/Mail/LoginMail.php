@@ -12,7 +12,7 @@ class LoginMail extends Mailable
     use Queueable, SerializesModels;
 
     public $user;
-    public $new_password;
+    public $password;
 
     /**
      * Create a new message instance.

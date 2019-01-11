@@ -85,6 +85,9 @@ class StudentsController extends Controller
 
         $user->save();
 
+        $user->load('group');
+        $user->load('school');
+
         \Mail::to($request->email)->send(new LoginMail($user, $password));
 
         return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий! Перевiрте пошту!');

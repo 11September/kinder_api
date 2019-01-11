@@ -36,8 +36,6 @@ class GroupController extends Controller
             $query->where('school_id', '=', $request->id);
         })->get();
 
-//        $groups = Group::where('school_id', $request->id)->get();
-
         return response()->json(['data'=> $groups, 'success'=>true]);
     }
 
