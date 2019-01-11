@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Group;
 use App\Http\Requests\StorePost;
+use App\Http\Requests\UpdatePost;
 use App\Post;
 use App\School;
 use Illuminate\Http\Request;
@@ -146,16 +147,8 @@ class PostsController extends Controller
         return view('admin.posts.edit',compact('schools','post', 'groups'));
     }
 
-    public function adminUpdate(Request $request, $id)
+    public function adminUpdate(UpdatePost $request, $id)
     {
-        $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-            'until' => 'required',
-            'school_id' => 'required',
-            'group_id' => 'required',
-        ]);
-
         $post = Post::where('id', $id)->first();
 
         if (isset($request->old_image) && !empty($request->old_image) && file_exists(public_path() . $request->old_image)){

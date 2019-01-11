@@ -184,7 +184,6 @@
         $(document).ready(function () {
             $('input[type=radio][name=school_id]').change(function() {
                 var school_id = $(this).val();
-                alert(school_id);
 
                 if (school_id) {
                     $.ajax({
@@ -198,6 +197,7 @@
                         data: {id: school_id},
                         success: function (data) {
                             var content = $('.wrapper-groups-holder');
+                            var required = null;
 
                             if (data.success) {
                                 content.empty();
@@ -208,7 +208,7 @@
                                         content.append(
                                             '<div class="form-check">' +
                                                 '<label class="container">' + item.name +
-                                                '<input required value="'+ item.id +'" name="group_id[]" type="checkbox">' +
+                                                '<input value="'+ item.id +'" name="group_id[]" type="checkbox">' +
                                                 '<span class="checkmark"></span>' +
                                                 '</label>' +
                                             '</div>'
