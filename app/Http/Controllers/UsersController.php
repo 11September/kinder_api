@@ -222,6 +222,31 @@ class UsersController extends Controller
         }
     }
 
+
+    public function SetPlayer(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'player' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $user->player_id = $request->player;
+            $user->save();
+
+            return response()->json(['message' => 'Player_id Встановлено!'], 200);
+
+        } catch (\Exception $exception) {
+            Log::warning('UsersController@SetPlayer Exception: ' . $exception->getMessage() . " - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
+
     public function storeBase64Image($data)
     {
         $folderPath = "images/uploads/avatars/";

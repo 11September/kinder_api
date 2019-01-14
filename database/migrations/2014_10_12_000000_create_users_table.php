@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->string('token')->unique();
             $table->enum('push', ['enabled', 'disabled']);
+            $table->string('player_id', 36)->nullable();
             $table->string('type')->default('default');
 
             $table->rememberToken();

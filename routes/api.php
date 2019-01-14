@@ -22,6 +22,7 @@ Route::middleware('cors')->post('login', 'UsersController@login')->name('Login')
 Route::middleware('cors')->post('restore_password', 'UsersController@ResetPassword')->name('Restore Password');
 Route::middleware('cors','token')->post('change_password', 'UsersController@ChangePassword')->name('Change Password');
 Route::middleware('cors','token')->post('set_avatar', 'UsersController@SetAvatar')->name('Set Avatar');
+Route::middleware('cors','token')->post('set_player', 'UsersController@SetPlayer')->name('Set User Player ID');
 Route::middleware('cors','token')->post('logout', 'UsersController@logout')->name('Logout');
 Route::middleware('cors','token')->get('profile', 'UsersController@profile')->name('Get All User Data');
 // Users Auth
