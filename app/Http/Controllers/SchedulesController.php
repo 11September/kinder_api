@@ -6,14 +6,36 @@ use App\Clas;
 use App\School;
 use App\Schedule;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class SchedulesController extends Controller
 {
+    public function index(Request $request, $school_id)
+    {
+        try {
+            $schedule = Schedule::where('school_id', $school_id)
+                ->with(array('lessons' => function ($query) {
+                    $query->select('id', 'name', 'from', 'to', 'schedule_id');
+                }))
+                ->get();
+
+            if (!$schedule || count($schedule) < 1) {
+                return response()->json(['message' => 'Розклад не знайдено!'], 404);
+            }
+
+            return ['data' => $schedule];
+
+        } catch (\Exception $exception) {
+            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
     public function adminIndex()
     {
         $list_schools = School::all();
 
-        return view('admin.schedules',compact('list_schools'));
+        return view('admin.schedules', compact('list_schools'));
     }
 
     public function adminShow($id)
@@ -24,7 +46,7 @@ class SchedulesController extends Controller
 
         $current_school = School::where('id', $id)->first();
 
-        return view('admin.schedules.show',compact('list_schools', 'schedules', 'current_school'));
+        return view('admin.schedules.show', compact('list_schools', 'schedules', 'current_school'));
     }
 
     public function adminGetLessonsByDay(Request $request)
@@ -36,7 +58,7 @@ class SchedulesController extends Controller
 
         $schedules = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->with('lessons')->first();
 
-        return response()->json(['data'=> $schedules, 'success'=>true]);
+        return response()->json(['data' => $schedules, 'success' => true]);
     }
 
     public function adminGetLessonsAll(Request $request)
@@ -47,7 +69,7 @@ class SchedulesController extends Controller
 
         $schedules = Schedule::where('school_id', $request->school_id)->with('lessons')->get();
 
-        return response()->json(['data'=> $schedules, 'success'=>true]);
+        return response()->json(['data' => $schedules, 'success' => true]);
     }
 
     public function adminDeleteLessonsByDay(Request $request)
@@ -59,7 +81,7 @@ class SchedulesController extends Controller
         $lesson = Clas::where('id', $request->id)->first();
         $lesson->delete();
 
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 
     public function adminSaveLessonsByDay(Request $request)
@@ -75,14 +97,14 @@ class SchedulesController extends Controller
             'lesson_id' => '',
         ]);
 
-        if ($request->lesson_id){
+        if ($request->lesson_id) {
             $lesson = Clas::where('id', $request->lesson_id)->first();
             $lesson->name = $request->name;
             $lesson->from = $request->from;
             $lesson->to = $request->to;
             $lesson->save();
-        }else{
-            if ($request->schedule_id){
+        } else {
+            if ($request->schedule_id) {
                 $schedule = Schedule::where('id', $request->schedule_id)->first();
 
                 $lesson = Clas::where('schedule_id', $schedule->id)->first();
@@ -91,17 +113,17 @@ class SchedulesController extends Controller
                 $lesson->to = $request->to;
                 $lesson->save();
 
-            }else{
+            } else {
                 $schedule = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->first();
 
-                if ($schedule){
+                if ($schedule) {
                     $lesson = new Clas();
                     $lesson->schedule_id = $schedule->id;
                     $lesson->name = $request->name;
                     $lesson->from = $request->from;
                     $lesson->to = $request->to;
                     $lesson->save();
-                }else{
+                } else {
                     $schedule = new Schedule();
                     $schedule->school_id = $request->school_id;
                     $schedule->day = $request->day;
@@ -117,6 +139,6 @@ class SchedulesController extends Controller
             }
         }
 
-        return response()->json(['success'=>true]);
+        return response()->json(['success' => true]);
     }
 }
