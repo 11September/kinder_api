@@ -176,6 +176,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Asvae\ApiTester\ServiceProvider::class,
+        Berkayk\OneSignal\OneSignalServiceProvider::class
 
     ],
 
