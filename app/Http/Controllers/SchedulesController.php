@@ -7,11 +7,16 @@ use App\School;
 use App\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
 
 class SchedulesController extends Controller
 {
-    public function index(Request $request, $school_id)
+    public function index($school_id)
     {
+        if (!$school_id || empty($school_id)) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
         try {
             $schedule = Schedule::where('school_id', $school_id)
                 ->with(array('lessons' => function ($query) {
