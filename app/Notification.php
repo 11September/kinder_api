@@ -10,8 +10,13 @@ class Notification extends Model
 
     protected $fillable = ['message'];
 
-    public function school()
+    public function groups()
     {
-        return $this->belongsTo(School::class);
+        return $this->belongsToMany(Group::class, "notification_groups")->withTimestamps();
+    }
+
+    public function schools()
+    {
+        return $this->belongsToMany(School::class, 'notification_schools')->withTimestamps();
     }
 }
