@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use OneSignal;
 use App\Group;
 use App\School;
 use App\Notification;
@@ -21,7 +23,7 @@ class NotificationsController extends Controller
             return ['data' => $notifications];
 
         } catch (\Exception $exception) {
-            Log::warning('GroupController@index Exception: '. $exception->getMessage());
+            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
@@ -30,7 +32,7 @@ class NotificationsController extends Controller
     {
         $schools = School::all();
 
-        return view('admin.notifications',compact('schools'));
+        return view('admin.notifications', compact('schools'));
     }
 
     public function adminStore(StoreNotification $request)
@@ -43,16 +45,20 @@ class NotificationsController extends Controller
         $notification->groups()->sync($request->group_id, false);
         $notification->schools()->sync($request->school_id, false);
 
+        $user = User::whereNotNull('player_id')->first();
 
-        OneSignal::sendNotificationToAll(
-            $request->message,
+        \OneSignal::sendNotificationUsingTags(
+            "Some Message",
+            array(
+                ["field" => "email", "relation" => "=", "value" => $user->email],
+                ["field" => "email", "relation" => "=", "value" => "email1@example.com"],
+            ),
             $url = null,
             $data = null,
             $buttons = null,
             $schedule = null
         );
 
-
-        return redirect()->route('admin.notifications')->with('message','Повiдомлення успішно додано!');
+        return redirect()->route('admin.notifications')->with('message', 'Повiдомлення успішно додано!');
     }
 }
