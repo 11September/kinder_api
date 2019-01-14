@@ -45,6 +45,8 @@ class NotificationsController extends Controller
 
 
 
+
+
         return redirect()->route('admin.notifications')->with('message','Повiдомлення успішно додано!');
     }
 }
