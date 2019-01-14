@@ -118,12 +118,14 @@
 
                                             <div class="row">
 
-                                                @foreach(json_decode($post->image) as $image)
-                                                    <div class="wrapper-many-post-images">
-                                                        <img class="post-image-preview many-post-images" id="blah"
-                                                             src="{{ asset($image) }}" alt="your Preview"/>
-                                                    </div>
-                                                @endforeach
+                                                @if(json_decode($post->image))
+                                                    @foreach(json_decode($post->image) as $image)
+                                                        <div class="wrapper-many-post-images">
+                                                            <img class="post-image-preview many-post-images" id="blah"
+                                                                 src="{{ asset($image) }}" alt="your Preview"/>
+                                                        </div>
+                                                    @endforeach
+                                                @endif
 
                                             </div>
                                         </div>
