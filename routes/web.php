@@ -41,8 +41,10 @@ Route::get('/admin/users/{id}', 'StudentsController@adminShow')->middleware('is_
 Route::get('/admin/users/{id}/edit', 'StudentsController@adminEdit')->middleware('is_admin')->name('admin.users.edit');
 Route::put('/admin/users/{id}', 'StudentsController@adminUpdate')->middleware('is_admin')->name('admin.users.update');
 Route::delete('/admin/users/{id}', 'StudentsController@adminDelete')->middleware('is_admin')->name('admin.users.delete');
-Route::post('/admin/users/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.users.getAllGroupsById');
 
+
+Route::post('/admin/users/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.users.getAllGroupsById');
+Route::post('/admin/posts/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.posts.getAllGroupsById');
 
 // Admin Schools
 Route::get('/admin/kindergartens', 'SchoolController@adminIndex')->middleware('is_admin')->name('admin.kindergartens');
@@ -69,6 +71,7 @@ Route::post('/admin/groups', 'GroupController@adminStore')->middleware('is_admin
 Route::get('/admin/groups/{id}/edit', 'GroupController@adminEdit')->middleware('is_admin')->name('admin.groups.edit');
 Route::put('/admin/groups/{id}', 'GroupController@adminUpdate')->middleware('is_admin')->name('admin.groups.update');
 Route::delete('/admin/groups/{id}', 'GroupController@adminDelete')->middleware('is_admin')->name('admin.groups.delete');
+Route::post('/admin/groups/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.users.getAllGroupsById');
 
 
 // Admin News
@@ -78,7 +81,6 @@ Route::post('/admin/posts', 'PostsController@adminStore')->middleware('is_admin'
 Route::get('/admin/posts/{id}/edit', 'PostsController@adminEdit')->middleware('is_admin')->name('admin.posts.edit');
 Route::put('/admin/posts/{id}', 'PostsController@adminUpdate')->middleware('is_admin')->name('admin.posts.update');
 Route::delete('/admin/posts/{id}', 'PostsController@adminDelete')->middleware('is_admin')->name('admin.posts.delete');
-Route::post('/admin/posts/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.posts.getAllGroupsById');
 
 
 // Admin Schedules
