@@ -44,7 +44,13 @@ class NotificationsController extends Controller
         $notification->schools()->sync($request->school_id, false);
 
 
-
+        OneSignal::sendNotificationToAll(
+            $request->message,
+            $url = null,
+            $data = null,
+            $buttons = null,
+            $schedule = null
+        );
 
 
         return redirect()->route('admin.notifications')->with('message','Повiдомлення успішно додано!');
