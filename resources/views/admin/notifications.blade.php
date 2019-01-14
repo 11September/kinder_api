@@ -95,7 +95,7 @@
                             <h3>Текст повiдомлення</h3>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" name="title" placeholder="Заголовок">
+                                <input type="text" class="form-control" name="title" placeholder="Заголовок" required>
 
                                 @if ($errors->has('title'))
                                     <span class="invalid-feedback" role="alert">

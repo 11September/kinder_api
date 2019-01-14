@@ -8,7 +8,7 @@ class Notification extends Model
 {
     protected $table = "notifications";
 
-    protected $fillable = ['message'];
+    protected $fillable = ['title', 'message'];
 
     public function groups()
     {
