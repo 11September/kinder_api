@@ -50,6 +50,10 @@ class NotificationsController extends Controller
 
         $params = [];
         $params['include_player_ids'] = array("e903b975-66a8-4f32-a34e-587ad0c0bc40","1b96389f-51aa-4e8f-83a2-0f21ca926831");
+
+        $params['headings'] = [
+            "en" => $request->title
+        ];
         $params['contents'] = [
             "en" => $request->message
         ];
