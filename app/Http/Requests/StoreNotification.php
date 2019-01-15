@@ -26,8 +26,9 @@ class StoreNotification extends FormRequest
         return [
             'title' => 'required',
             'message' => 'required',
-            'school_id' => 'required',
-            'group_id' => 'required',
+            'school_id' => 'required_unless:all,all',
+            'group_id' => 'required_unless:all,all',
+            'all' => 'required_without:school_id|required_without:group_id'
         ];
     }
 
@@ -36,8 +37,9 @@ class StoreNotification extends FormRequest
         return [
             'title.required' => 'Заголовок обов\'язкове поле!',
             'body.message' => 'Назва повiдомлення обов\'язкове поле!',
-            'school_id.required' => 'Виберіть школи!',
-            'group_id.required' => 'Виберіть групи!',
+            'school_id.required_unless' => 'Віберіть школи або виберіть відправку всім користувачам!',
+            'group_id.required_unless' => 'Виберіть групи або виберіть відправку всім користувачам!',
+            'all.required_without' => 'Виберіть школи, групи або виберіть відправку всім користувачам!',
         ];
     }
 }

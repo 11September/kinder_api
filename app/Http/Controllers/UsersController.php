@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use OneSignal;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -237,6 +238,8 @@ class UsersController extends Controller
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $user->player_id = $request->player;
             $user->save();
+
+            \OneSignal::sendNotificationToUser("Дякуємо за реєстрацію в нашому додатку!", $request->player, $url = null, $data = null);
 
             return response()->json(['message' => 'Player_id Встановлено!'], 200);
 

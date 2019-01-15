@@ -59,7 +59,7 @@
     <li class="nav-item {{ request()->is('admin/notifications*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('admin/notifications') }}">
             <i class="fas fa-bell"></i>
-            <span>Уведомления</span></a>
+            <span>Повідомлення</span></a>
     </li>
 
 </ul>

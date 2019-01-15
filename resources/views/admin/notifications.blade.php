@@ -51,28 +51,47 @@
                         <div class="col-md-4">
                             <h3>Список садкiв</h3>
 
-                            <ul class="list-group list-group-flex">
+                            <div class="wrapper-all-schools-and-check-all">
+                                <div class="wrapper-all-schools">
+                                    <ul class="list-group list-group-flex">
+                                        <div class="">
+                                            @foreach($schools as $school)
+                                                <div class="form-check">
+                                                    <label class="container">
+                                                        {{ $school->name }}
+                                                        <input value="{{ $school->id }}" class="school_id"
+                                                               name="school_id[]"
+                                                               type="checkbox">
+                                                        <span class="checkmark"></span>
+                                                    </label>
+                                                </div>
+                                            @endforeach
 
-                                <div class="">
-                                    @foreach($schools as $school)
-                                        <div class="form-check">
-                                            <label class="container">
-                                                {{ $school->name }}
-                                                <input value="{{ $school->id }}" class="school_id" name="school_id[]"
-                                                       type="checkbox">
-                                                <span class="checkmark"></span>
-                                            </label>
+                                            @if ($errors->has('school_id'))
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('school_id') }}</strong>
+                                                </span>
+                                            @endif
                                         </div>
-                                    @endforeach
-
-                                    @if ($errors->has('school_id'))
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $errors->first('school_id') }}</strong>
-                                        </span>
-                                    @endif
+                                    </ul>
                                 </div>
+                                <div class="wrapper-check-all">
+                                    <div class="form-check">
+                                        <label class="container">
+                                            Отправить всем
+                                            <input value="all" class="all-schools" name="all" type="checkbox">
+                                            <span class="checkmark"></span>
+                                        </label>
 
-                            </ul>
+                                        @if ($errors->has('school_id'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('school_id') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
 
                         <div class="col-md-4">
@@ -95,7 +114,7 @@
                             <h3>Текст повiдомлення</h3>
 
                             <div class="form-group">
-                                <input type="text" class="form-control" name="title" placeholder="Заголовок" required>
+                                <input value="{{ old('title') }}" type="text" class="form-control" name="title" placeholder="Заголовок" required>
 
                                 @if ($errors->has('title'))
                                     <span class="invalid-feedback" role="alert">
@@ -105,7 +124,8 @@
                             </div>
 
                             <div class="form-group">
-                                <textarea name="message" class="form-control" rows="5" required placeholder="Текст повiдомлення"></textarea>
+                                <textarea name="message" class="form-control" rows="5" required
+                                          placeholder="Текст повiдомлення">{{ old('message') }}</textarea>
 
                                 @if ($errors->has('message'))
                                     <span class="invalid-feedback" role="alert">
@@ -129,6 +149,18 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
+
+            $(".all-schools[type='checkbox']").change(function () {
+                if ($(this).prop("checked")) {
+                    // $(".school_id[type='checkbox']").prop('checked', true);
+                    $("input[type='checkbox']").prop('checked', true);
+                    alert("change");
+                }else{
+                    $("input[type='checkbox']").prop('checked', false);
+                }
+            });
+
+
             $("input.school_id[type='checkbox']").change(function () {
                 console.log('change');
                 var school_id = $(this).val();
@@ -155,7 +187,7 @@
                                             content.append(
                                                 '<div class="form-check" data-school-id="' + school_id + '">' +
                                                 '<label class="container">' + item.name +
-                                                '<input value="' + item.id + '" name="group_id[]" type="checkbox">' +
+                                                '<input class="input_group_id" value="' + item.id + '" name="group_id[]" type="checkbox">' +
                                                 '<span class="checkmark"></span>' +
                                                 '</label>' +
                                                 '</div>'
