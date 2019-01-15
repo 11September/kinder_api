@@ -37,27 +37,26 @@ class NotificationsController extends Controller
 
     public function adminStore(StoreNotification $request)
     {
-        $notification = new Notification();
-        $notification->title = $request->title;
-        $notification->message = $request->message;
-        $notification->save();
+//        $notification = new Notification();
+//        $notification->title = $request->title;
+//        $notification->message = $request->message;
+//        $notification->save();
+//
+//        $notification->groups()->sync($request->group_id, false);
+//        $notification->schools()->sync($request->school_id, false);
+//
+//        $user = User::whereNotNull('player_id')->first();
 
-        $notification->groups()->sync($request->group_id, false);
-        $notification->schools()->sync($request->school_id, false);
 
-        $user = User::whereNotNull('player_id')->first();
+        $params = [];
+        $params['include_player_ids'] = array("e903b975-66a8-4f32-a34e-587ad0c0bc40","1b96389f-51aa-4e8f-83a2-0f21ca926831");
+        $contents = [
+            "en" => "Some English Message",
+            "tr" => "Some Turkish Message"
+        ];
+        $params['contents'] = $contents;
 
-        \OneSignal::sendNotificationUsingTags(
-            "Some Message",
-            array(
-                ["field" => "email", "relation" => "=", "value" => $user->email],
-                ["field" => "email", "relation" => "=", "value" => "email1@example.com"],
-            ),
-            $url = null,
-            $data = null,
-            $buttons = null,
-            $schedule = null
-        );
+        \OneSignal::sendNotificationCustom($params);
 
         return redirect()->route('admin.notifications')->with('message', 'Повiдомлення успішно додано!');
     }
