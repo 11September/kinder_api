@@ -48,20 +48,32 @@ class NotificationsController extends Controller
 //        $user = User::whereNotNull('player_id')->first();
 
 //        If all
+        if ($request->all && $request->all == "all"){
+            $users = User::select('id', 'player_id')
+                ->where('player_id', '!=', null)
+                ->where('push', 'enabled')
+                ->get();
 
-//        Else school_ids and group_ids
+            dd($users);
 
-        $params = [];
-        $params['include_player_ids'] = array("e903b975-66a8-4f32-a34e-587ad0c0bc40","1b96389f-51aa-4e8f-83a2-0f21ca926831");
+        }else{
 
-        $params['headings'] = [
-            "en" => $request->title
-        ];
-        $params['contents'] = [
-            "en" => $request->message
-        ];
+            dd('else');
 
-        \OneSignal::sendNotificationCustom($params);
+            //        Else school_ids and group_ids
+
+            $params = [];
+            $params['include_player_ids'] = array("e903b975-66a8-4f32-a34e-587ad0c0bc40","1b96389f-51aa-4e8f-83a2-0f21ca926831");
+
+            $params['headings'] = [
+                "en" => $request->title
+            ];
+            $params['contents'] = [
+                "en" => $request->message
+            ];
+
+            \OneSignal::sendNotificationCustom($params);
+        }
 
         return redirect()->route('admin.notifications')->with('message', 'Повiдомлення успішно відправлено!');
     }

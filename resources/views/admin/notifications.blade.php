@@ -152,9 +152,7 @@
 
             $(".all-schools[type='checkbox']").change(function () {
                 if ($(this).prop("checked")) {
-                    // $(".school_id[type='checkbox']").prop('checked', true);
                     $("input[type='checkbox']").prop('checked', true);
-                    alert("change");
                 }else{
                     $("input[type='checkbox']").prop('checked', false);
                 }
