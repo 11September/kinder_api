@@ -69,8 +69,6 @@ class NotificationsController extends Controller
             if ($player_ids && !empty($player_ids)) {
                 $params['include_player_ids'] = $player_ids;
 
-                dd($params);
-
                 \OneSignal::sendNotificationCustom($params);
             }
         } else {
