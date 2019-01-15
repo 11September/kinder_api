@@ -47,14 +47,6 @@ class NotificationsController extends Controller
 //
 //        $user = User::whereNotNull('player_id')->first();
 
-        $params = [];
-        $params['headings'] = [
-            "en" => $request->title
-        ];
-        $params['contents'] = [
-            "en" => $request->message
-        ];
-
         if ($request->all && $request->all == "all") {
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
@@ -67,6 +59,13 @@ class NotificationsController extends Controller
             }
 
             if ($player_ids && !empty($player_ids)) {
+                $params = [];
+                $params['headings'] = [
+                    "en" => $request->title
+                ];
+                $params['contents'] = [
+                    "en" => $request->message
+                ];
                 $params['include_player_ids'] = $player_ids;
                 \OneSignal::sendNotificationCustom($params);
             }
@@ -84,6 +83,13 @@ class NotificationsController extends Controller
             }
 
             if ($player_ids && !empty($player_ids)) {
+                $params = [];
+                $params['headings'] = [
+                    "en" => $request->title
+                ];
+                $params['contents'] = [
+                    "en" => $request->message
+                ];
                 $params['include_player_ids'] = $player_ids;
                 \OneSignal::sendNotificationCustom($params);
             }
