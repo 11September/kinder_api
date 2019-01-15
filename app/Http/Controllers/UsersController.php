@@ -32,6 +32,7 @@ class UsersController extends Controller
             if (Auth::user()) {
                 $user = Auth::user();
                 $group = $user->group()->first();
+                $school = $user->school()->first();
 
                 $user->changeToken();
                 $user->save();
@@ -43,6 +44,7 @@ class UsersController extends Controller
                 $result = array_add($result, 'group', $group->name);
                 $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
                 $result = array_add($result, 'school_id', $user->school_id);
+                $result = array_add($result, 'school_name', $school->name);
 
                 return response($result);
             }
@@ -57,6 +59,7 @@ class UsersController extends Controller
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
                         $group = $user->group()->first();
+                        $school = $user->school()->first();
 
                         $user->changeToken();
                         $user->save();
@@ -68,6 +71,8 @@ class UsersController extends Controller
                         $result = array_add($result, 'group', $group->name);
                         $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
                         $result = array_add($result, 'school_id', $user->school_id);
+                        $result = array_add($result, 'school_name', $school->name);
+
                         return response($result);
                     } else {
                         return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
@@ -78,7 +83,7 @@ class UsersController extends Controller
             return response()->json(['message' => 'Користувача немає або логін / пароль не підходять'], 401);
 
         } catch (\Exception $exception) {
-            Log::warning('UsersController@login Exception: ' . $exception->getMessage());
+            Log::warning('UsersController@login Exception: ' . $exception->getMessage() . "Line - " . $exception->getLine());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
