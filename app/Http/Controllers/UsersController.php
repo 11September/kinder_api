@@ -247,6 +247,33 @@ class UsersController extends Controller
     }
 
 
+    public function SetPush(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'push' => [
+                'required',
+                'string',
+                Rule::in(['enabled', 'disabled']),
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $user->push = $request->push;
+            $user->save();
+
+            return response()->json(['message' => 'Push змiнено!'], 200);
+
+        } catch (\Exception $exception) {
+            Log::warning('UsersController@SetPlayer Exception: ' . $exception->getMessage() . " - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
     public function storeBase64Image($data)
     {
         $folderPath = "images/uploads/avatars/";
