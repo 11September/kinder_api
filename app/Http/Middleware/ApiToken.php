@@ -21,7 +21,7 @@ class ApiToken
         if($token && $request->header('x-auth-token')){
             return $next ($request);
         }else{
-            return response()->json(['message' => 'Невідповідність токена або користувач не авторизований'], 403);
+            return response()->json(['message' => 'Невідповідність токена або користувач не авторизований!'], 403);
         }
     }
 }

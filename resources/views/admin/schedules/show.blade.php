@@ -559,6 +559,8 @@
                     success: function (data) {
 
                         if (data.success) {
+                            $(e.target).find('.append-day-item').css('border', '2px solid #de6a1c');
+                            $(e.target).find('.delete-lesson').attr("data-id", data.id);
                             toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                         }
 

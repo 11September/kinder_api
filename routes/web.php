@@ -102,10 +102,10 @@ Route::get('/admin/adminDeleteLessonsByDay', 'SchedulesController@adminDeleteLes
 // Admin nutrition
 Route::get('/admin/nutritions', 'NutritionsController@adminIndex')->middleware('is_admin')->name('admin.nutritions');
 Route::get('/admin/nutritions/{id}', 'NutritionsController@adminShow')->middleware('is_admin')->name('admin.nutritions.show');
-Route::get('/admin/adminGetLessonsByDay', 'SchedulesController@adminGetLessonsByDay')->middleware('is_admin')->name('admin.schedules.adminGetLessonsByDay');
-Route::post('/admin/adminSaveLessonsByDay', 'SchedulesController@adminSaveLessonsByDay')->middleware('is_admin')->name('admin.schedules.adminSaveLessonsByDay');
+Route::get('/admin/adminGetFoodsByDay', 'NutritionsController@adminGetFoodsByDay')->middleware('is_admin')->name('admin.schedules.adminGetFoodsByDay');
+Route::post('/admin/adminSaveFoodByDay', 'NutritionsController@adminSaveFoodByDay')->middleware('is_admin')->name('admin.schedules.adminSaveFoodByDay');
 Route::get('/admin/adminGetLessonsAll', 'SchedulesController@adminGetLessonsAll')->middleware('is_admin')->name('admin.schedules.adminGetLessonsAll');
-Route::get('/admin/adminDeleteLessonsByDay', 'SchedulesController@adminDeleteLessonsByDay')->middleware('is_admin')->name('admin.schedules.adminDeleteLessonsByDay');
+Route::get('/admin/adminDeleteFoodByDay', 'NutritionsController@adminDeleteFoodByDay')->middleware('is_admin')->name('admin.nutritions.adminDeleteFoodByDay');
 
 
 

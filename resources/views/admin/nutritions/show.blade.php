@@ -51,7 +51,7 @@
                                 <li class="list-group-item @if($school->id == $current_school->id) active @endif">
                                     <div>
                                         <a class="orange-text"
-                                           href="{{ action('SchedulesController@adminShow', $school->id) }}">
+                                           href="{{ action('NutritionsController@adminShow', $school->id) }}">
                                             {{ $school->name }}
                                         </a>
                                     </div>
@@ -189,13 +189,53 @@
                                                     <div class="col-md-3"></div>
                                                     <div class="col-md-9">
 
-                                                        @foreach($schedule->lessons as $lesson)
-                                                            <div class="schedule-list-day">
-                                                                <p class="schedule-list-day-time">{{ $lesson->from }}
-                                                                    - {{ $lesson->to }}</p>
-                                                                <p class="schedule-list-day-name">{{ $lesson->name }}</p>
-                                                            </div>
-                                                        @endforeach
+                                                        <div class="schedule-list-day">
+                                                            <p class="schedule-list-day-time">
+                                                                Cніданок
+                                                            </p>
+
+                                                            @foreach($schedule->foods as $food)
+                                                                @if($food->type == "breakfast" )
+                                                                    <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+
+                                                        <div class="schedule-list-day">
+                                                            <p class="schedule-list-day-time">
+                                                                Обід
+                                                            </p>
+
+                                                            @foreach($schedule->foods as $food)
+                                                                @if($food->type == "lunch" )
+                                                                    <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+
+                                                        <div class="schedule-list-day">
+                                                            <p class="schedule-list-day-time">
+                                                                Полудень
+                                                            </p>
+
+                                                            @foreach($schedule->foods as $food)
+                                                                @if($food->type == "afternoon-tea" )
+                                                                    <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
+
+                                                        <div class="schedule-list-day">
+                                                            <p class="schedule-list-day-time">
+                                                                Вечеря
+                                                            </p>
+
+                                                            @foreach($schedule->foods as $food)
+                                                                @if($food->type == "dinner" )
+                                                                    <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                @endif
+                                                            @endforeach
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -314,13 +354,16 @@
                 } else {
                     $.ajax({
                         type: 'GET',
-                        url: '/admin/adminGetLessonsByDay',
+                        url: '/admin/adminGetFoodsByDay',
                         dataType: 'json',
                         data: {school_id: school_id, day: day},
                         success: function (data) {
 
+                            // console.log(data);
+                            // exit();
+
                             if (data.success && data.data) {
-                                var content = $('.wrapper-schedule').css('padding', '0 20%').empty();
+                                var content = $('.wrapper-schedule').css('padding', '0 15%').empty();
 
                                 var day_name;
                                 var schedule_id = data.data.id;
@@ -359,7 +402,17 @@
                                 $.each(data, function (index, item) {
                                     console.log(item);
 
-                                    $.each(item.lessons, function (i, item) {
+                                    $.each(item.foods, function (i, item) {
+                                        var selected_breakfast;
+                                        var selected_lunch;
+                                        var selected_afternoon_tea;
+                                        var selected_dinner;
+
+                                        if(item.type == "breakfast"){selected_breakfast = "selected"}
+                                        if(item.type == "lunch"){selected_lunch = "selected"}
+                                        if(item.type == "afternoon-tea"){selected_afternoon_tea = "selected"}
+                                        if(item.type == "dinner"){selected_dinner = "selected"}
+
                                         content.append('' +
                                             '<form method="post" class="newLessonForm">' +
                                             '<div class="row append-day-item append-day-item-border">\n' +
@@ -376,17 +429,19 @@
                                             '         </button>' +
                                             '         <a class="delete-lesson" data-id="' + item.id + '" href="#"><i class="fas fa-trash-alt"></i></a>' +
                                             '    </div>' +
-                                            '    <div class="col-md-6">\n' +
-                                            '    <span>Время с</span>' +
-                                            '        <input type="time" name="from" class="form-control" placeholder="" value="' + item.from + '">\n' +
-                                            '    </div>\n' +
-                                            '    <div class="col-md-6">\n' +
-                                            '    <span>Время до</span>' +
-                                            '        <input type="time" name="to" class="form-control" placeholder="" value="' + item.to + '">\n' +
+                                            '    <div class="col-md-12">\n' +
+                                            '         <span>Тип прийому їжі - </span>' +
+                                            '           <select required name="type">' +
+                                            '               <option '+selected_breakfast+' value="breakfast">Cніданок</option>' +
+                                            '               <option '+selected_lunch+' value="lunch">Обід</option>' +
+                                            '               <option '+selected_afternoon_tea+' value="afternoon-tea">Пiдвечiрок</option>' +
+                                            '               <option '+selected_dinner+' value="dinner">Вечеря</option>' +
+                                            '           </select>' +
                                             '    </div>\n' +
                                             '</div>' +
                                             '</form>'
                                         );
+
 
                                         // '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
 
@@ -407,7 +462,7 @@
                                 );
                             }
                             if (data.success && !data.data) {
-                                var content = $('.wrapper-schedule').css('padding', '0 20%').empty();
+                                var content = $('.wrapper-schedule').css('padding', '0 15%').empty();
 
                                 if (global_day == "Monday") {
                                     day_name = "Понеділок"
@@ -471,7 +526,7 @@
                 if (delete_lesson_id) {
                     $.ajax({
                         type: 'GET',
-                        url: '/admin/adminDeleteLessonsByDay',
+                        url: '/admin/adminDeleteFoodByDay',
                         dataType: 'json',
                         data: {id: delete_lesson_id},
                         success: function (data) {
@@ -520,13 +575,14 @@
                     '         </button>' +
                     '         <a class="delete-lesson" data-id="" href="#"><i class="fas fa-trash-alt"></i></a>' +
                     '    </div>' +
-                    '    <div class="col-md-6">\n' +
-                    '    <span>Время с</span>' +
-                    '        <input required type="time" name="from" class="form-control" placeholder="" value="">\n' +
-                    '    </div>\n' +
-                    '    <div class="col-md-6">\n' +
-                    '    <span>Время до</span>' +
-                    '        <input required type="time" name="to" class="form-control" placeholder="" value="">\n' +
+                    '    <div class="col-md-12">\n' +
+                    '         <span>Тип прийому їжі - </span>' +
+                    '           <select required name="type">' +
+                    '               <option value="breakfast">Cніданок</option>' +
+                    '               <option value="lunch">Обід</option>' +
+                    '               <option value="afternoon-tea">Пiдвечiрок</option>' +
+                    '               <option value="dinner">Вечеря</option>' +
+                    '           </select>' +
                     '    </div>\n' +
                     '</div>' +
                     '</form>'
@@ -553,12 +609,14 @@
                     },
 
                     type: 'POST',
-                    url: '/admin/adminSaveLessonsByDay',
+                    url: '/admin/adminSaveFoodByDay',
                     dataType: 'json',
                     data: serializeData,
                     success: function (data) {
 
                         if (data.success) {
+                            $(e.target).find('.append-day-item').css('border', '2px solid #de6a1c');
+                            $(e.target).find('.delete-lesson').attr("data-id", data.id);
                             toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                         }
 

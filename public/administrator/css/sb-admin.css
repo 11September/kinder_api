@@ -656,7 +656,7 @@ body.sidebar-toggled footer.sticky-footer {
     top: 10px;
     font-size: 33px;
     font-weight: 500;
-    color: #4957ff;
+    color: darkorange;
 }
 
 .schedule-list-day:not(:first-child) {
@@ -722,7 +722,7 @@ body.sidebar-toggled footer.sticky-footer {
 .control-lessons-buttons {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
 }
 
 .append-day-name {
@@ -754,8 +754,8 @@ body.sidebar-toggled footer.sticky-footer {
     background-color: darkorange;
     border-radius: 40px;
     color: white;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
 }
 
 .delete-lesson:hover {
@@ -781,19 +781,17 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 .newLessonForm .newLessonFormButton {
-    /*background: transparent;*/
     outline: none;
     border: none;
     text-decoration: none;
-
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: green;
     border-radius: 40px;
     color: white;
-    width: 40px;
-    height: 40px;
+    width: 35px;
+    height: 35px;
 }
 
 .newLessonForm .newLessonFormButton:hover {
@@ -957,4 +955,11 @@ body.sidebar-toggled footer.sticky-footer {
     height: 8px;
     border-radius: 50%;
     background: white;
+}
+
+@media all and (max-width: 1400px) {
+    .control-lessons-buttons{
+        justify-content: space-around;
+        padding: 0 0 10px 0;
+    }
 }
