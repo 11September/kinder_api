@@ -22,6 +22,8 @@ class DatabaseSeeder extends Seeder
             ElectivesSeeder::class,
             ClassesSeeder::class,
             ScheduleSeeder::class,
+            FoodsSeeder::class,
+            NutritionSeeder::class,
         ]);
     }
 }

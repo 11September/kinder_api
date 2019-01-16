@@ -44,11 +44,11 @@
             <span>Розклад занять</span></a>
     </li>
 
-    {{--<li class="nav-item">--}}
-        {{--<a class="nav-link" href="{{ url('admin/users') }}">--}}
-            {{--<i class="fas fa-utensils"></i>--}}
-            {{--<span>Меню питания</span></a>--}}
-    {{--</li>--}}
+    <li class="nav-item {{ request()->is('admin/nutritions*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('admin/nutritions') }}">
+            <i class="fas fa-utensils"></i>
+            <span>Меню харчування</span></a>
+    </li>
 
     <li class="nav-item {{ request()->is('admin/posts*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('admin/posts') }}">
