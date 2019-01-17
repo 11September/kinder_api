@@ -319,13 +319,46 @@
                                         }
                                     });
 
-                                    console.log(itemsBreakfast);
+                                    var itemsLunch = "";
+                                    $.each(item.foods, function (i, food) {
+                                        if (food.type == "lunch") {
+                                            itemsLunch += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                        }
+                                    });
+
+                                    var itemsAfternoonTea = "";
+                                    $.each(item.foods, function (i, food) {
+                                        if (food.type == "afternoon-tea") {
+                                            itemsAfternoonTea += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                        }
+                                    });
+
+                                    var itemsDinner = "";
+                                    $.each(item.foods, function (i, food) {
+                                        if (food.type == "dinner") {
+                                            itemsDinner += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                        }
+                                    });
 
                                     itemContentLoop += '<div class="schedule-list-day">' +
                                         '<p class="schedule-list-day-time">Cніданок</p>' +
                                         itemsBreakfast +
                                         '</div>';
 
+                                    itemContentLoop += '<div class="schedule-list-day">' +
+                                        '<p class="schedule-list-day-time">Обід</p>' +
+                                        itemsLunch +
+                                        '</div>';
+
+                                    itemContentLoop += '<div class="schedule-list-day">' +
+                                        '<p class="schedule-list-day-time">Полудень</p>' +
+                                        itemsAfternoonTea +
+                                        '</div>';
+
+                                    itemContentLoop += '<div class="schedule-list-day">' +
+                                        '<p class="schedule-list-day-time">Вечеря</p>' +
+                                        itemsDinner +
+                                        '</div>';
 
                                     itemContent = '<div class="col-md-6">' +
                                         '<div class="schedule-item">' +
@@ -344,7 +377,6 @@
                                     content.append(itemContent);
                                     itemContentLoop = "";
                                     itemContent = "";
-
                                 });
                             }
 
@@ -451,9 +483,6 @@
                                             '</form>'
                                         );
 
-
-                                        // '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
-
                                         console.log("sub each");
                                         console.log(item);
                                     });
@@ -514,8 +543,6 @@
                                     '</div>'
                                 );
                             }
-
-
                             console.log(data);
                         }, error: function () {
                             console.log(data);
