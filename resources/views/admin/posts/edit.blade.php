@@ -57,7 +57,7 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="exampleFormControlInput1">Дата До</label>
-                                            <input required name="until" value="{{ $post->until }}" type="date"
+                                            <input required name="until" value="{{ $post->until }}" type="date" max="2100-01-01"
                                                    class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
                                                    placeholder="Дата До">
 
