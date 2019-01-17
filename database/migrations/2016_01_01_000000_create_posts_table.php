@@ -20,7 +20,7 @@ class CreatePostsTable extends Migration
             $table->date('until');
             $table->integer('school_id');
             $table->string('preview')->nullable();
-            $table->string('image')->nullable();
+            $table->text('image', 1000)->nullable();
             $table->timestamps();
         });
     }

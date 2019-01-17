@@ -13,7 +13,7 @@ class SchedulesController extends Controller
 {
     public function index($school_id)
     {
-        if (!$school_id || empty($school_id)) {
+        if (!$school_id || empty($school_id) || !is_int($school_id)) {
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
