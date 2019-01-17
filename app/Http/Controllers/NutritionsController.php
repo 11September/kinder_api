@@ -17,9 +17,10 @@ class NutritionsController extends Controller
         }
 
         try {
-            $schedule = Schedule::where('school_id', $school_id)
-                ->with(array('lessons' => function ($query) {
-                    $query->select('id', 'name', 'from', 'to', 'schedule_id');
+            $schedule = Nutrition::where('school_id', $school_id)
+                ->with(array('foods' => function ($query) {
+                    $query->select('id', 'name', 'type', 'nutrition_id');
+                    $query->orderByRaw("FIELD(type, \"breakfast\", \"lunch\", \"afternoon-tea\", \"dinner\")");
                 }))
                 ->get();
 
@@ -71,6 +72,21 @@ class NutritionsController extends Controller
                 $query->orderByRaw("FIELD(type, \"breakfast\", \"lunch\", \"afternoon-tea\", \"dinner\")");
             }])
             ->first();
+
+        return response()->json(['data' => $schedules, 'success' => true]);
+    }
+
+    public function adminGetFoodsAll(Request $request)
+    {
+        $request->validate([
+            'school_id' => 'required',
+        ]);
+
+        $schedules = Nutrition::where('school_id', $request->school_id)
+            ->with(['foods' => function($query){
+                $query->orderByRaw("FIELD(type, \"breakfast\", \"lunch\", \"afternoon-tea\", \"dinner\")");
+            }])
+            ->get();
 
         return response()->json(['data' => $schedules, 'success' => true]);
     }

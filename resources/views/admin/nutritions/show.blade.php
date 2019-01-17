@@ -274,7 +274,7 @@
                 if (day == "all") {
                     $.ajax({
                         type: 'GET',
-                        url: '/admin/adminGetLessonsAll',
+                        url: '/admin/adminGetFoodsAll',
                         dataType: 'json',
                         data: {school_id: school_id},
                         success: function (data) {
@@ -311,19 +311,20 @@
                                     itemContent = "";
                                     var itemContentLoop = "";
 
-                                    $.each(item.lessons, function (i, item) {
 
-                                        console.log(item);
-
-                                        itemContentLoop += '<div class="schedule-list-day">' +
-                                            '<p class="schedule-list-day-time">' +
-                                            item.from + " - " + item.to +
-                                            '</p>' +
-                                            '<p class="schedule-list-day-name">' +
-                                            item.name +
-                                            '</p>' +
-                                            '</div>';
+                                    var itemsBreakfast = "";
+                                    $.each(item.foods, function (i, food) {
+                                        if (food.type == "breakfast") {
+                                            itemsBreakfast += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                        }
                                     });
+
+                                    console.log(itemsBreakfast);
+
+                                    itemContentLoop += '<div class="schedule-list-day">' +
+                                        '<p class="schedule-list-day-time">Cніданок</p>' +
+                                        itemsBreakfast +
+                                        '</div>';
 
 
                                     itemContent = '<div class="col-md-6">' +
@@ -408,10 +409,18 @@
                                         var selected_afternoon_tea;
                                         var selected_dinner;
 
-                                        if(item.type == "breakfast"){selected_breakfast = "selected"}
-                                        if(item.type == "lunch"){selected_lunch = "selected"}
-                                        if(item.type == "afternoon-tea"){selected_afternoon_tea = "selected"}
-                                        if(item.type == "dinner"){selected_dinner = "selected"}
+                                        if (item.type == "breakfast") {
+                                            selected_breakfast = "selected"
+                                        }
+                                        if (item.type == "lunch") {
+                                            selected_lunch = "selected"
+                                        }
+                                        if (item.type == "afternoon-tea") {
+                                            selected_afternoon_tea = "selected"
+                                        }
+                                        if (item.type == "dinner") {
+                                            selected_dinner = "selected"
+                                        }
 
                                         content.append('' +
                                             '<form method="post" class="newLessonForm">' +
@@ -432,10 +441,10 @@
                                             '    <div class="col-md-12">\n' +
                                             '         <span>Тип прийому їжі - </span>' +
                                             '           <select required name="type">' +
-                                            '               <option '+selected_breakfast+' value="breakfast">Cніданок</option>' +
-                                            '               <option '+selected_lunch+' value="lunch">Обід</option>' +
-                                            '               <option '+selected_afternoon_tea+' value="afternoon-tea">Пiдвечiрок</option>' +
-                                            '               <option '+selected_dinner+' value="dinner">Вечеря</option>' +
+                                            '               <option ' + selected_breakfast + ' value="breakfast">Cніданок</option>' +
+                                            '               <option ' + selected_lunch + ' value="lunch">Обід</option>' +
+                                            '               <option ' + selected_afternoon_tea + ' value="afternoon-tea">Пiдвечiрок</option>' +
+                                            '               <option ' + selected_dinner + ' value="dinner">Вечеря</option>' +
                                             '           </select>' +
                                             '    </div>\n' +
                                             '</div>' +
