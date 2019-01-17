@@ -822,6 +822,14 @@ body.sidebar-toggled footer.sticky-footer {
     justify-content: space-between;
 }
 
+.wrapper-schedule-one-school{
+    margin-bottom: 40px;
+}
+
+.wrapper-schedule-one-school .schedule-list-day{
+    padding: 5px 0;
+}
+
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */
 .container {

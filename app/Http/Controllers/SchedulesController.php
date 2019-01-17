@@ -40,7 +40,9 @@ class SchedulesController extends Controller
     {
         $list_schools = School::all();
 
-        return view('admin.schedules', compact('list_schools'));
+        $schedules = Schedule::with('lessons')->with('school')->get()->groupBy('school_id');
+
+        return view('admin.schedules', compact('list_schools', 'schedules'));
     }
 
     public function adminShow($id)

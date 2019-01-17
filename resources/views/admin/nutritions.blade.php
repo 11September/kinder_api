@@ -58,76 +58,109 @@
 
                     <div class="col-md-9">
                         <div class="row">
-                            <div class="col-md-4">
-                                <h4>Вибрати день тижня</h4>
 
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        Понеділок
-                                        <input value="Monday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
+                            @foreach($schedules as $schools)
+                                <div class="col-md-6 wrapper-schedule-one-school">
+
+                                    <h1>Розклад - {{ @$schools[0]->school->name }}</h1>
+                                    <div class="row">
+
+                                        @foreach($schools as $schedule)
+                                            <div class="col-md-6">
+                                                <div class="schedule-item">
+                                                    <div class="schedule-item-day">
+                                                        @if($schedule->day == "Monday")
+                                                            Пн
+                                                        @endif
+
+                                                        @if($schedule->day == "Tuesday")
+                                                            Вт
+                                                        @endif
+
+                                                        @if($schedule->day == "Wednesday")
+                                                            Ср
+                                                        @endif
+
+                                                        @if($schedule->day == "Thursday")
+                                                            Чт
+                                                        @endif
+
+                                                        @if($schedule->day == "Friday")
+                                                            Пт
+                                                        @endif
+
+                                                        @if($schedule->day == "Saturday")
+                                                            Сб
+                                                        @endif
+
+                                                        @if($schedule->day == "Sunday")
+                                                            Вс
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-md-3"></div>
+                                                        <div class="col-md-9">
+
+                                                            <div class="schedule-list-day">
+                                                                <p class="schedule-list-day-time">
+                                                                    Cніданок
+                                                                </p>
+
+                                                                @foreach($schedule->foods as $food)
+                                                                    @if($food->type == "breakfast" )
+                                                                        <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+
+                                                            <div class="schedule-list-day">
+                                                                <p class="schedule-list-day-time">
+                                                                    Обід
+                                                                </p>
+
+                                                                @foreach($schedule->foods as $food)
+                                                                    @if($food->type == "lunch" )
+                                                                        <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+
+                                                            <div class="schedule-list-day">
+                                                                <p class="schedule-list-day-time">
+                                                                    Полудень
+                                                                </p>
+
+                                                                @foreach($schedule->foods as $food)
+                                                                    @if($food->type == "afternoon-tea" )
+                                                                        <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+
+                                                            <div class="schedule-list-day">
+                                                                <p class="schedule-list-day-time">
+                                                                    Вечеря
+                                                                </p>
+
+                                                                @foreach($schedule->foods as $food)
+                                                                    @if($food->type == "dinner" )
+                                                                        <p class="schedule-list-day-name">{{ $food->name }}</p>
+                                                                    @endif
+                                                                @endforeach
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endforeach
+
+                                    </div>
                                 </div>
+                            @endforeach
 
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        Вівторок
-                                        <input value="Tuesday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
-                                </div>
 
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        Середа
-                                        <input value="Wednesday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        Четвер
-                                        <input value="Thursday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        П'ятниця
-                                        <input value="Friday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        Субота
-                                        <input value="Saturday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        Неділя
-                                        <input value="Sunday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
-                                </div>
-
-                                <div class="form-check">
-                                    <label class="container-checkbox">
-                                        Усі дні
-                                        <input checked value="Sunday" type="radio" name="day">
-                                        <span class="checkmark-radio"></span>
-                                    </label>
-                                </div>
-                            </div>
-                            <div class="col-md-8">
-
-                            </div>
                         </div>
                     </div>
                 </div>

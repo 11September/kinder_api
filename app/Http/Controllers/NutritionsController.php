@@ -41,7 +41,9 @@ class NutritionsController extends Controller
     {
         $list_schools = School::all();
 
-        return view('admin.nutritions', compact('list_schools'));
+        $schedules = Nutrition::with('foods')->with('school')->get()->groupBy('school_id');
+
+        return view('admin.nutritions', compact('list_schools', 'schedules'));
     }
 
     public function adminShow($id)
