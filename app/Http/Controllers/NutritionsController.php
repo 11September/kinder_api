@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Food;
-use App\Nutrition;
-use App\Schedule;
 use App\School;
+use App\Schedule;
+use App\Nutrition;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class NutritionsController extends Controller
 {
