@@ -64,7 +64,7 @@ class ElectivesContoller extends Controller
     {
         $schools = School::all();
 
-        if ($schools->first()->id){
+        if (isset($schools->first()->id)){
             $groups = Group::whereHas('schools', function ($query) use ($schools) {
                 $query->where('school_id', '=', $schools->first()->id);
             })->get();
