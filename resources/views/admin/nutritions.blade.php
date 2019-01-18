@@ -37,7 +37,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-2">
                         <h3>Cписок cадкiв</h3>
 
                         <ul class="list-group list-group-flex">
@@ -56,11 +56,11 @@
                         </ul>
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-md-10">
                         <div class="row">
 
                             @foreach($schedules as $schools)
-                                <div class="col-md-6 wrapper-schedule-one-school">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 wrapper-schedule-one-school">
 
                                     <h1>Розклад - {{ @$schools[0]->school->name }}</h1>
                                     <div class="row">
