@@ -64,9 +64,13 @@ class ElectivesContoller extends Controller
     {
         $schools = School::all();
 
-        $groups = Group::whereHas('schools', function ($query) use ($schools) {
-            $query->where('school_id', '=', $schools->first()->id);
-        })->get();
+        if ($schools->first()->id){
+            $groups = Group::whereHas('schools', function ($query) use ($schools) {
+                $query->where('school_id', '=', $schools->first()->id);
+            })->get();
+        }else{
+            $groups = Group::with('schools')->get();
+        }
 
         return view('admin.electives.create', compact('schools', 'groups'));
     }
