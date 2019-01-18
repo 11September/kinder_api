@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Group;
-use App\Http\Requests\StorePost;
-use App\Http\Requests\UpdatePost;
+use App\User;
 use App\Post;
+use App\Group;
 use App\School;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Config;
+use App\Http\Requests\StorePost;
+use App\Http\Requests\UpdatePost;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\File\File;
@@ -18,16 +20,22 @@ class PostsController extends Controller
 {
     public $sourse =  "http://8.dev-kit.ru";
 
-    public function index($school_id)
+    public function index(Request $request, $school_id)
     {
-        if (!$school_id) {
+        if (!$school_id || empty($school_id) || !is_numeric($school_id)) {
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
         try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $group = $user->group()->first();
+
             $posts = Post::select('id', 'title', 'body', 'preview', 'image')
                 ->where('until', '>=', date('Y-m-d'))
                 ->where('school_id', $school_id)
+                ->whereHas('groups', function ($query) use ($group) {
+                    $query->where('group_id', '=', $group->id);
+                })
                 ->latest()
                 ->get();
 

@@ -148,18 +148,32 @@
                                         <div class="form-group col-md-6">
                                             <label>Групи</label>
 
-                                            <div class="wrapper-groups-holder">
-                                                @foreach($groups as $group)
+                                            <div class="wrapper-all-schools-and-check-all">
+                                                <div class="wrapper-groups-holder">
+                                                    @foreach($groups as $group)
+                                                        <div class="form-check">
+                                                            <label class="container">
+                                                                {{ $group->name }}
+                                                                <input value="{{ $group->id }}" name="group_id[]"
+                                                                       type="checkbox" @if ($loop->first) checked @endif>
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+                                                    @endforeach
+                                                </div>
+
+                                                <div class="wrapper-check-all">
                                                     <div class="form-check">
                                                         <label class="container">
-                                                            {{ $group->name }}
-                                                            <input value="{{ $group->id }}" name="group_id[]"
-                                                                   type="checkbox" @if ($loop->first) checked @endif>
+                                                            Відзначити всі
+                                                            <input value="all" class="all-schools" name="all" type="checkbox">
                                                             <span class="checkmark"></span>
                                                         </label>
+
                                                     </div>
-                                                @endforeach
+                                                </div>
                                             </div>
+
 
                                         </div>
                                     </div>
@@ -182,6 +196,15 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
+            $(".all-schools[type='checkbox']").change(function () {
+                if ($(this).prop("checked")) {
+                    $("input[name='group_id[]']").prop('checked', true);
+                }else{
+                    $("input[name='group_id[]']").prop('checked', false);
+                }
+            });
+
+
             $('input[type=radio][name=school_id]').change(function() {
                 var school_id = $(this).val();
 

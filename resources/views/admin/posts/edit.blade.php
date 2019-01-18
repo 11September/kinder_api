@@ -57,7 +57,8 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="exampleFormControlInput1">Дата До</label>
-                                            <input required name="until" value="{{ $post->until }}" type="date" max="2100-01-01"
+                                            <input required name="until" value="{{ $post->until }}" type="date"
+                                                   max="2100-01-01"
                                                    class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
                                                    placeholder="Дата До">
 
@@ -162,25 +163,39 @@
                                         <div class="form-group col-md-6">
                                             <label>Групи</label>
 
-                                            <div class="wrapper-groups-holder">
-                                                @foreach($groups as $group)
+                                            <div class="wrapper-all-schools-and-check-all">
+                                                <div class="wrapper-groups-holder">
+                                                    @foreach($groups as $group)
 
+                                                        <div class="form-check">
+                                                            <label class="container">
+                                                                {{ $group->name }}
+                                                                <input
+
+                                                                    @foreach($post->groups as $post_group)
+                                                                    @if($group->id == $post_group->id) checked @endif
+                                                                    @endforeach
+
+                                                                    value="{{ $group->id }}" name="group_id[]"
+                                                                    type="checkbox">
+                                                                <span class="checkmark"></span>
+                                                            </label>
+                                                        </div>
+
+                                                    @endforeach
+                                                </div>
+
+                                                <div class="wrapper-check-all">
                                                     <div class="form-check">
                                                         <label class="container">
-                                                            {{ $group->name }}
-                                                            <input
-
-                                                                @foreach($post->groups as $post_group)
-                                                                @if($group->id == $post_group->id) checked @endif
-                                                                @endforeach
-
-                                                                value="{{ $group->id }}" name="group_id[]"
-                                                                type="checkbox">
+                                                            Відзначити всі
+                                                            <input value="all" class="all-schools" name="all"
+                                                                   type="checkbox">
                                                             <span class="checkmark"></span>
                                                         </label>
-                                                    </div>
 
-                                                @endforeach
+                                                    </div>
+                                                </div>
                                             </div>
 
                                         </div>
@@ -204,6 +219,14 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
+            $(".all-schools[type='checkbox']").change(function () {
+                if ($(this).prop("checked")) {
+                    $("input[name='group_id[]']").prop('checked', true);
+                }else{
+                    $("input[name='group_id[]']").prop('checked', false);
+                }
+            });
+
             $('input[type=radio][name=school_id]').change(function () {
                 var school_id = $(this).val();
 
