@@ -60,7 +60,7 @@
                         <div class="row">
 
                             @foreach($schedules as $schools)
-                                <div class="col-md-6 wrapper-schedule-one-school">
+                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 wrapper-schedule-one-school">
 
                                     <h1>Розклад - {{ @$schools[0]->school->name }}</h1>
                                     <div class="row">
@@ -99,8 +99,7 @@
                                                     </div>
 
                                                     <div class="row">
-                                                        <div class="col-md-3"></div>
-                                                        <div class="col-md-9">
+                                                        <div class="col-md-9 offset-md-3">
 
                                                             @foreach($schedule->lessons as $lesson)
                                                                 <div class="schedule-list-day">

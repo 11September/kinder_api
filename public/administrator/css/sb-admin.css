@@ -830,6 +830,10 @@ body.sidebar-toggled footer.sticky-footer {
     padding: 5px 0;
 }
 
+.wrapper-schedule-one-school .schedule-item-day{
+    left: 0;
+}
+
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */
 .container {

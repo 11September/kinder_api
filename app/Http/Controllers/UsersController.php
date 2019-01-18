@@ -229,7 +229,7 @@ class UsersController extends Controller
             $user->avatar = $image;
             $user->save();
 
-            return response()->json(['message' => 'Аватар змінено!', 'avatar' => $this->sourse . $image], 200);
+            return response()->json(['message' => 'Аватар змінено!', 'avatar' => Config::get('app.url') . $image], 200);
 
         } catch (\Exception $exception) {
             Log::warning('UsersController@SetAvatar Exception: ' . $exception->getMessage() . " - " . $exception->getLine());
