@@ -103,11 +103,11 @@ class NutritionsController extends Controller
             'school_id' => 'required',
             'day' => 'required',
             'schedule_id' => '',
-            'lesson_id' => '',
+            'food_id' => '',
         ]);
 
-        if ($request->lesson_id) {
-            $food = Food::where('id', $request->lesson_id)->first();
+        if ($request->food_id) {
+            $food = Food::where('id', $request->food_id)->first();
             $food->name = $request->name;
             $food->type = $request->type;
             $food->save();

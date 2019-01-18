@@ -515,6 +515,7 @@
                     '    <div class="col-md-3 padb-20 control-lessons-buttons">' +
                     '         <input type="text" hidden name="day" value="' + global_day + '">' +
                     '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
+                    '         <input type="text" class="lesson_id" hidden name="lesson_id" value="">' +
                     '         <button class="newLessonFormButton" type="submit">' +
                     '             <i class="far fa-save"></i>' +
                     '         </button>' +
@@ -559,8 +560,9 @@
                     success: function (data) {
 
                         if (data.success) {
-                            $(e.target).find('.append-day-item').css('border', '2px solid #de6a1c');
+                            $(e.target).find('.lesson_id').attr('value', data.id);
                             $(e.target).find('.delete-lesson').attr("data-id", data.id);
+                            $(e.target).find('.append-day-item').css('border', '2px solid #de6a1c');
                             toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                         }
 
