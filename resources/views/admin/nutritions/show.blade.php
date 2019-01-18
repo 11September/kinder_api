@@ -392,9 +392,6 @@
                         data: {school_id: school_id, day: day},
                         success: function (data) {
 
-                            // console.log(data);
-                            // exit();
-
                             if (data.success && data.data) {
                                 var content = $('.wrapper-schedule').css('padding', '0 15%').empty();
 
@@ -459,8 +456,8 @@
                                             '<div class="row append-day-item append-day-item-border">\n' +
                                             '    <div class="col-md-9 padb-20">\n' +
                                             '         <input required type="text" name="name" class="form-control" placeholder="" value="' + item.name + '">\n' +
-                                            '         <input type="text" hidden name="schedule_id" class="form-control" placeholder="" value="' + item.schedule_id + '">\n' +
-                                            '         <input type="text" hidden name="lesson_id" class="form-control" placeholder="" value="' + item.id + '">\n' +
+                                            '         <input type="text" hidden name="schedule_id" class="form-control" placeholder="" value="' + item.nutrition_id + '">\n' +
+                                            '         <input type="text" hidden name="food_id" class="form-control" placeholder="" value="' + item.id + '">\n' +
                                             '    </div>\n' +
                                             '    <div class="col-md-3 padb-20 control-lessons-buttons">' +
                                             '         <input type="text" hidden name="day" value="' + global_day + '">' +
@@ -482,9 +479,6 @@
                                             '</div>' +
                                             '</form>'
                                         );
-
-                                        console.log("sub each");
-                                        console.log(item);
                                     });
                                 });
 

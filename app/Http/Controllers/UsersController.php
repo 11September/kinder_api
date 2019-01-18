@@ -15,8 +15,6 @@ use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
 {
-    public $sourse =  "http://8.dev-kit.ru";
-
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
