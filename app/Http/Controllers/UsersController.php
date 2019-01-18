@@ -37,12 +37,18 @@ class UsersController extends Controller
                 $user->changeToken();
                 $user->save();
 
+                if (!$user->avatar || empty($user->avatar)){
+                    $avatar = null;
+                }else{
+                    $avatar = Config::get('app.url') . $user->avatar;
+                }
+
                 $result = array();
                 $result = array_add($result, 'token', $user->token);
                 $result = array_add($result, 'email', $user->email);
                 $result = array_add($result, 'parent_name', $user->parent_name);
                 $result = array_add($result, 'group', $group->name);
-                $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
+                $result = array_add($result, 'avatar', $avatar);
                 $result = array_add($result, 'school_id', $user->school_id);
                 $result = array_add($result, 'school_name', $school->name);
 
@@ -64,12 +70,18 @@ class UsersController extends Controller
                         $user->changeToken();
                         $user->save();
 
+                        if (!$user->avatar || empty($user->avatar)){
+                            $avatar = null;
+                        }else{
+                            $avatar = Config::get('app.url') . $user->avatar;
+                        }
+
                         $result = array();
                         $result = array_add($result, 'token', $user->token);
                         $result = array_add($result, 'email', $user->email);
                         $result = array_add($result, 'parent_name', $user->parent_name);
                         $result = array_add($result, 'group', $group->name);
-                        $result = array_add($result, 'avatar', (Config::get('app.url') . $user->avatar));
+                        $result = array_add($result, 'avatar', $avatar);
                         $result = array_add($result, 'school_id', $user->school_id);
                         $result = array_add($result, 'school_name', $school->name);
 
