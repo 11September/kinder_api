@@ -237,7 +237,7 @@
                         },
 
                         type: 'POST',
-                        url: '/admin/posts/getAllGroupsById',
+                        url: '/admin/groups/getAllGroupsById',
                         dataType: 'json',
                         data: {id: school_id},
                         success: function (data) {
