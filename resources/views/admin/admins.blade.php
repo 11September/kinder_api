@@ -15,6 +15,115 @@
             <li class="breadcrumb-item active">Адміністрація</li>
         </ol>
 
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card mb-3">
+
+                    <div class="card-header">
+                        <h2>Створити адміністратора</h2>
+                    </div>
+
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if (Session::has('message'))
+                                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                        {{Session::get('message')}}
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        @include('admin.partials.errors')
+
+                        <form action="{{ url('admin/admins/store') }}" method="post">
+                            {{ csrf_field() }}
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">ПІБ</label>
+                                        <input required name="name" value="{{ old('name') }}" type="text"
+                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                               placeholder="ПІБ">
+
+                                        @if ($errors->has('name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="exampleFormControlInput1">Email</label>
+                                        <input required type="email" name="email"
+                                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                               id="email"
+                                               value="{{ old('email') }}" placeholder="name@example.com">
+
+                                        @if ($errors->has('email'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('email') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="password">Пароль</label>
+                                        <input id="password" type="password"
+                                               class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
+                                               name="password" required>
+
+                                        @if ($errors->has('password'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="password-confirm">Підтвердження паролю</label>
+                                        <input id="password-confirm" type="password"
+                                               class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
+                                               name="password_confirmation" required>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label for="exampleFormControlSelect1">Роль</label>
+                                        <select name="type"
+                                                class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}">
+                                            <option value="admin">Адміністратор</option>
+                                            <option value="moderator">Вихователь групи</option>
+                                        </select>
+
+                                        @if ($errors->has('type'))
+                                            <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $errors->first('type') }}</strong>
+                                                </span>
+                                        @endif
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary mb-2">Створити</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="card mb-3">
             <div class="card-header">
                 <i class="fas fa-table"></i>
@@ -48,9 +157,9 @@
                                 <td>{{ $user->type }}</td>
 
                                 <td class="action-td">
-                                    <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редагувати</a>
+                                    <a class="btn btn-warning" href="{{ action('AdminController@adminEdit', $user->id) }}">Редагувати</a>
 
-                                    <form id="delete-form" method="POST" action="/admin/users/{{$user->id}}">
+                                    <form id="delete-form" method="POST" action="/admin/admins/delete/{{$user->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
@@ -66,85 +175,6 @@
                     </table>
                 </div>
             </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6">
-                <div class="card mb-3">
-
-                    <div class="card-header">
-                        <h2>Створити адміністратора</h2>
-                    </div>
-
-                    <div class="card-body">
-
-                        <form action="{{ url('admin/admins/store') }}" method="post">
-                            {{ csrf_field() }}
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">ПІБ</label>
-                                <input required name="name" value="{{ old('name') }}" type="text"
-                                       class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="ПІБ дитини">
-
-                                @if ($errors->has('name'))
-                                    <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('name') }}</strong>
-                                            </span>
-                                @endif
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlInput1">Email</label>
-                                <input required type="email" name="email" class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
-                                       value="{{ old('email') }}" placeholder="name@example.com">
-
-                                @if ($errors->has('email'))
-                                    <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('email') }}</strong>
-                                            </span>
-                                @endif
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password">Пароль</label>
-                                <input id="password" type="password"
-                                       class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}"
-                                       name="password" required>
-
-                                @if ($errors->has('password'))
-                                    <span class="invalid-feedback" role="alert">
-                                                <strong>{{ $errors->first('password') }}</strong>
-                                            </span>
-                                @endif
-                            </div>
-
-                            <div class="form-group">
-                                <label for="password-confirm">Підтвердження паролю</label>
-                                <input id="password-confirm" type="password" class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
-                                       name="password_confirmation" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1">Роль</label>
-                                <select name="type" class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}">
-                                    <option value="admin">Адміністратор</option>
-                                    <option value="moderator">Вихователь групи </option>
-                                </select>
-
-                                @if ($errors->has('type'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('type') }}</strong>
-                                    </span>
-                                @endif
-
-                            </div>
-
-                            <button type="submit" class="btn btn-primary mb-2">Створити</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-
         </div>
 
     </div>

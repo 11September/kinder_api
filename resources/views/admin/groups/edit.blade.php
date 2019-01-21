@@ -128,7 +128,7 @@
                                         <select required name="user_id" class="form-control" id="user_id">
 
                                             @foreach($users as $administrator)
-                                                <option @if($administrator->id == $group->user_id) selected
+                                                <option @if($administrator->id == @$group->user_id) selected
                                                         @endif value="{{ $administrator->id }}">{{ $administrator->name }}</option>
                                             @endforeach
 

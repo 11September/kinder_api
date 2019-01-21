@@ -30,14 +30,13 @@ Route::get('/admin/admins', 'AdminController@admins')->middleware('is_admin')->n
 Route::post('/admin/admins/store', 'AdminController@store')->middleware('is_admin')->name('admin');
 Route::get('/admin/admins/{id}/edit', 'AdminController@adminEdit')->middleware('is_admin')->name('admin.admins.edit');
 Route::put('/admin/admins/{id}', 'AdminController@adminUpdate')->middleware('is_admin')->name('admin.admins.update');
-Route::get('/admin/admins/delete/{user}', 'AdminController@delete')->middleware('is_admin')->name('admin');
+Route::delete('/admin/admins/delete/{user}', 'AdminController@adminDelete')->middleware('is_admin')->name('admin.admins.delete');
 
 
 // Admin Users
 Route::get('/admin/users', 'StudentsController@adminIndex')->middleware('is_admin')->name('admin.users');
 Route::get('/admin/users/create', 'StudentsController@adminCreate')->middleware('is_admin')->name('admin.users.create');
 Route::post('/admin/users', 'StudentsController@adminStore')->middleware('is_admin')->name('admin.users.store');
-Route::get('/admin/users/{id}', 'StudentsController@adminShow')->middleware('is_admin')->name('admin.users.show');
 Route::get('/admin/users/{id}/edit', 'StudentsController@adminEdit')->middleware('is_admin')->name('admin.users.edit');
 Route::put('/admin/users/{id}', 'StudentsController@adminUpdate')->middleware('is_admin')->name('admin.users.update');
 Route::delete('/admin/users/{id}', 'StudentsController@adminDelete')->middleware('is_admin')->name('admin.users.delete');
