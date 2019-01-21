@@ -24,6 +24,16 @@ class Group extends Model
         return $this->belongsToMany(Post::class, 'post_groups');
     }
 
+    public function admin()
+    {
+        return $this->hasOne(User::class, 'id', 'user_id');
+    }
+
+    public function moderator()
+    {
+        return $this->hasOne(User::class, 'id', 'moderator_id');
+    }
+
     public function scopeFilter($query, $params)
     {
         if ($id = array_get($params, 'id')) {

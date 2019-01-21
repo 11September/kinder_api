@@ -127,9 +127,21 @@
                                         <label for="user_id">Вибрати адміністратора</label>
                                         <select required name="user_id" class="form-control" id="user_id">
 
-                                            @foreach($users as $administrator)
-                                                <option @if($administrator->id == @$group->user_id) selected
-                                                        @endif value="{{ $administrator->id }}">{{ $administrator->name }}</option>
+                                            @foreach($admins as $administrator)
+                                                <option @if($administrator->id == @$group->user_id) selected @endif
+                                                value="{{ $administrator->id }}">{{ $administrator->name }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="moderator_id">Вибрати вихователя</label>
+                                        <select required name="moderator_id" class="form-control" id="moderator_id">
+
+                                            @foreach($moderators as $moderator)
+                                                <option @if($moderator->id == @$group->moderator_id) selected @endif
+                                                    value="{{ $moderator->id }}">{{ $moderator->name }}</option>
                                             @endforeach
 
                                         </select>

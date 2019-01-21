@@ -56,8 +56,13 @@
                                         </a>
 
                                         <p class="group-count">{{ $group->students_count }} чоловiк</p>
+                                        <p class="group-count">
+                                            Адміністратор - <span class="orange-text">{{ @$group->admin->name }}</span>
+                                        </p>
+                                        <p class="group-count">
+                                            Модератор - <span class="orange-text">{{ @$group->moderator->name }}</span>
+                                        </p>
                                     </div>
-
 
                                     <form id="delete-form" method="POST" action="/admin/groups/{{$group->id}}">
                                         {{ csrf_field() }}
@@ -111,9 +116,21 @@
                                         <label for="user_id">Вибрати адміністратора</label>
                                         <select required name="user_id" class="form-control" id="user_id">
 
-                                            @foreach($users as $administrator)
+                                            @foreach($admins as $administrator)
                                                 <option
                                                     value="{{ $administrator->id }}">{{ $administrator->name }}</option>
+                                            @endforeach
+
+                                        </select>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="moderator_id">Вибрати вихователя</label>
+                                        <select required name="moderator_id" class="form-control" id="moderator_id">
+
+                                            @foreach($moderators as $moderator)
+                                                <option
+                                                    value="{{ $moderator->id }}">{{ $moderator->name }}</option>
                                             @endforeach
 
                                         </select>

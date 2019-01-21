@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreGroup;
+use App\Http\Requests\UpdateGroup;
 use App\User;
 use App\Group;
 use App\School;
@@ -41,26 +43,25 @@ class GroupController extends Controller
 
     public function adminIndex()
     {
-        $users = User::where('type', 'admin')->get();
+        $admins = User::select('id', 'name')->where('type', 'admin')->get();
+        $moderators = User::select('id', 'name')->where('type', 'moderator')->get();
 
         $schools = School::all();
 
-        $groups = Group::withCount(['students'])->get();
+        $groups = Group::withCount(['students'])
+            ->with('admin')
+            ->with('moderator')
+            ->get();
 
-        return view('admin.groups',compact('users', 'schools', 'groups'));
+        return view('admin.groups',compact('admins','moderators', 'schools', 'groups'));
     }
 
-    public function adminStore(Request $request)
+    public function adminStore(StoreGroup $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'user_id' => 'required',
-            'school_id' => 'required',
-        ]);
-
         $group = new Group();
         $group->name = $request->name;
         $group->user_id = $request->user_id;
+        $group->moderator_id = $request->moderator_id;
 
         $group->save();
 
@@ -71,7 +72,8 @@ class GroupController extends Controller
 
     public function adminEdit($id)
     {
-        $users = User::where('type', 'admin')->get();
+        $admins = User::select('id', 'name')->where('type', 'admin')->get();
+        $moderators = User::select('id', 'name')->where('type', 'moderator')->get();
 
         $schools = School::all();
 
@@ -79,22 +81,17 @@ class GroupController extends Controller
 
         $group = Group::where('id', $id)->withCount(['students'])->with('schools')->first();
 
-        return view('admin.groups.edit',compact('users', 'schools', 'group', 'groups'));
+        return view('admin.groups.edit',compact('admins', 'moderators', 'schools', 'group', 'groups'));
     }
 
-    public function adminUpdate(Request $request ,$id)
+    public function adminUpdate(UpdateGroup $request ,$id)
     {
-        $request->validate([
-            'name' => 'required',
-            'user_id' => 'required',
-            'school_id' => 'required',
-        ]);
-
         $group = Group::where('id', $id)->first();
 
         $group->update([
             'name' => $request->name,
             'user_id' => $request->user_id,
+            'moderator_id' => $request->moderator_id,
         ]);
 
         $group->schools()->sync($request->school_id);
