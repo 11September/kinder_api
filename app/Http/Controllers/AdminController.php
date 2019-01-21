@@ -60,10 +60,8 @@ class AdminController extends Controller
         return view('admin.admins.edit', compact('user', 'users'));
     }
 
-    public function adminUpdate(UpdateAdmin $request, $id)
+    public function adminUpdate(UpdateAdmin $request, User $user)
     {
-        $user = User::where('id', $id)->first();
-
         if ($request->password && !empty($request->password) && ($request->password == $request->password_confirmation)) {
             $user->password = Hash::make($request->password);
         }

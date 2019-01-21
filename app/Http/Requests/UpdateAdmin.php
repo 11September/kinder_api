@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateAdmin extends FormRequest
@@ -25,7 +26,13 @@ class UpdateAdmin extends FormRequest
     {
         return [
             'name' => 'required|string',
-            'email' => 'string|email|max:255',
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                'email',
+                Rule::unique('users')->ignore($this->user->id, 'id')
+            ],
             'type' => 'required|string',
         ];
     }
