@@ -21,7 +21,7 @@ class Group extends Model
 
     public function posts()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsToMany(Post::class, 'post_groups');
     }
 
     public function scopeFilter($query, $params)
