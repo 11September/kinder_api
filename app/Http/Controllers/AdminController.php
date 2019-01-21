@@ -23,9 +23,11 @@ class AdminController extends Controller
         $schools = School::count();
         $groups = Group::count();
         $users = User::where('type', 'default')->count();
+        $admins = User::where('type', '!=' ,'default')->count();
+
         $news = Post::count();
 
-        return view('admin.panel', compact('schools', 'groups', 'users', 'news'));
+        return view('admin.panel', compact('schools', 'groups', 'users', 'admins', 'news'));
     }
 
     public function admins()
