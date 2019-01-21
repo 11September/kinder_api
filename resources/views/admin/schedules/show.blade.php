@@ -55,6 +55,12 @@
                                             {{ $school->name }}
                                         </a>
                                     </div>
+
+                                    <div class="list-group-flex-wrapper-notification">
+                                        <a class="notification-school" data-id="{{ $school->id }}" href="#">
+                                            <p class="list-group-flex-notification"><i class="fas fa-bell"></i></p>
+                                        </a>
+                                    </div>
                                 </li>
                             @endforeach
 
@@ -571,6 +577,49 @@
                         console.log(data);
                     }
                 });
+
+                clicked.prop('disabled', false);
+            });
+
+            $(".card-body").on("click", '.notification-school', function (e) {
+                e.preventDefault();
+
+                var clicked = $(e.target);
+                var notification_school_id = $(this).attr("data-id");
+                clicked.prop('disabled', true);
+
+                toastr.warning("<br/><div class='wrapper-confirmationRevertYes'><button type='button' class='btn clear confirmationRevertYes'>Отправить</button></div>",'Дійсно відправити користувачам повідомлення зі зміною розкладу?',
+                    {
+                        closeButton: true,
+                        timeOut : 3000,
+                        extendedTimeOut : 6000,
+                        allowHtml: true,
+                        onShown: function (toast) {
+                            $(".confirmationRevertYes").click(function(){
+                                $.ajax({
+                                    headers: {
+                                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                    },
+
+                                    type: 'POST',
+                                    url: '/admin/notifications/notifyScheduleBySchool',
+                                    dataType: 'json',
+                                    data: {id: notification_school_id},
+                                    success: function (data) {
+                                        if (data.success) {
+                                            toastr.success('Повідомлення успішно відправлено!', {timeOut: 3000});
+                                        }
+
+                                        if (data.error) {
+                                            toastr.error('Вибачте виникла помилка!', {timeOut: 3000});
+                                        }
+                                    }, error: function () {
+                                        console.log(data);
+                                    }
+                                });
+                            });
+                        }
+                    });
 
                 clicked.prop('disabled', false);
             });

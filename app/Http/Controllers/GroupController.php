@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Group;
 use App\School;
-use App\User;
-use function GuzzleHttp\Promise\all;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use function GuzzleHttp\Promise\all;
 
 class GroupController extends Controller
 {

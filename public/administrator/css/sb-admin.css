@@ -834,6 +834,32 @@ body.sidebar-toggled footer.sticky-footer {
     left: 0;
 }
 
+.list-group-flex-notification{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 100%;
+    margin: 0;
+}
+
+.list-group-flex-notification i{
+    font-size: 20px;
+}
+
+.list-group-flex-wrapper-notification a:hover{
+    text-decoration: none;
+}
+
+.wrapper-confirmationRevertYes{
+    width: 100%;
+}
+
+.confirmationRevertYes{
+    background-color: #1e7532;
+    color: white;
+}
+
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */
 .container {
