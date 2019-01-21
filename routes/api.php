@@ -33,9 +33,3 @@ Route::middleware('cors','token')->get('post/{id}', 'PostsController@show')->nam
 
 Route::middleware('cors','token')->get('schedules/{school_id}', 'SchedulesController@index')->name('Get Schedules');
 Route::middleware('cors','token')->get('nutritions/{school_id}', 'NutritionsController@index')->name('Get Nutritions');
-
-//Route::middleware('cors','token')->get('schools', 'SchoolController@index')->name('All Schools');
-//Route::middleware('cors','token')->get('groups', 'GroupController@index')->name('All Groups');
-//Route::middleware('cors','token')->get('students', 'StudentsController@index')->name('All Students');
-//Route::middleware('cors','token')->get('electives', 'ElectivesContoller@index')->name('All Electives');
-//Route::middleware('cors','token')->get('elective', 'ElectivesContoller@show')->name('One Elective');

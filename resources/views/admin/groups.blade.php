@@ -60,7 +60,7 @@
                                             Адміністратор - <span class="orange-text">{{ @$group->admin->name }}</span>
                                         </p>
                                         <p class="group-count">
-                                            Модератор - <span class="orange-text">{{ @$group->moderator->name }}</span>
+                                            Вихователь - <span class="orange-text">{{ @$group->moderator->name }}</span>
                                         </p>
                                     </div>
 
