@@ -40,6 +40,8 @@ class UpdateAdmin extends FormRequest
             'email.unique' => "Такий емейл існує",
 
             'password.required' => "Пароль обов'язкове поле",
+            'password.min' => "Пароль повинен містити не менше 6 символів",
+            'password.max' => "Пароль повинен містити максимум 255 символів",
             'password.confirmed' => "Паролі повинні співпадати",
 
             'type.required' => "Роль обов'язкове поле"
