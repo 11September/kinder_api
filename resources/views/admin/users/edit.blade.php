@@ -177,7 +177,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Група</label>
 
-                                        @if(!$user->group->id)
+                                        @if(!isset($user->group) || empty($user->group->id))
                                             <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}">
 
                                                 @foreach($groups as $group)
