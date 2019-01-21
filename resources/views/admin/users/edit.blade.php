@@ -176,10 +176,23 @@
                                     </div>
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect2">Група</label>
-                                        <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
-                                                id="exampleFormControlSelect2">
+
+                                        @if(!$user->group->id)
+                                            <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}">
+
+                                                @foreach($groups as $group)
+                                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                                @endforeach
+
+                                            </select>
+                                        @else
+                                            <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
+                                                    id="exampleFormControlSelect2">
                                                 <option selected value="{{ @$user->group->id }}">{{ @$user->group->name }}</option>
-                                        </select>
+                                            </select>
+                                        @endif
+
+
 
                                         @if ($errors->has('group_id'))
                                             <span class="invalid-feedback" role="alert">

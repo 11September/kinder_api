@@ -97,6 +97,12 @@ class StudentsController extends Controller
 
         $schools = School::all();
 
+        if (count($schools) <= 1){
+            $groups = Group::whereHas('schools', function ($query) use ($schools) {
+                $query->where('school_id', '=', $schools->first()->id);
+            })->get();
+        }
+
         return view('admin.users.edit', compact('user', 'groups', 'schools'));
     }
 
