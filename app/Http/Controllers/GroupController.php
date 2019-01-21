@@ -109,6 +109,7 @@ class GroupController extends Controller
         $group = Group::where('id', $id)->first();
 
         $group->schools()->detach();
+        $group->posts()->detach();
 
         $group->delete();
 
