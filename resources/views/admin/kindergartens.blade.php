@@ -48,14 +48,14 @@
                             </div>
 
 
-                            <form id="delete-form" method="POST" action="/admin/kindergartens/{{$school->id}}">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+                            {{--<form id="delete-form" method="POST" action="/admin/kindergartens/{{$school->id}}">--}}
+                                {{--{{ csrf_field() }}--}}
+                                {{--{{ method_field('DELETE') }}--}}
 
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-danger" value="&#10008">
-                                </div>
-                            </form>
+                                {{--<div class="form-group">--}}
+                                    {{--<input type="submit" class="btn btn-danger" value="&#10008">--}}
+                                {{--</div>--}}
+                            {{--</form>--}}
                         </li>
                     @endforeach
 
