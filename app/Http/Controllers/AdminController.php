@@ -7,6 +7,7 @@ use App\User;
 use App\Group;
 use App\School;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreAdmin;
 use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
@@ -33,20 +34,14 @@ class AdminController extends Controller
         return view('admin.admins', compact('users'));
     }
 
-    public function store(Request $request)
+    public function store(StoreAdmin $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'email' => 'required',
-            'type' => 'required',
-        ]);
-
         $user = new User();
         $user->name = $request->name;
         $user->email = $request->email;
         $user->type = $request->type;
         $user->token = str_random(6);
-        $user->password = Hash::make(str_random(6));
+        $user->password = Hash::make($request->password);
 
         $user->save();
 

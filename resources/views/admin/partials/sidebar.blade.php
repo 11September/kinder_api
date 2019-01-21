@@ -8,7 +8,7 @@
 
     <li class="nav-item {{ request()->is('admin/admins*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('admin/admins') }}">
-            <i class="fas fa-hotel"></i>
+            <i class="fas fa-key"></i>
             <span>Адміністрація</span>
         </a>
     </li>
@@ -31,12 +31,6 @@
             <i class="fas fa-layer-group"></i>
             <span>Групи</span></a>
     </li>
-
-    {{--<li class="nav-item {{ request()->is('admin/electives*') ? 'active' : '' }}">--}}
-        {{--<a class="nav-link" href="{{ url('admin/electives') }}">--}}
-            {{--<i class="fas fa-list-ul"></i>--}}
-            {{--<span>Список гуртків</span></a>--}}
-    {{--</li>--}}
 
     <li class="nav-item {{ request()->is('admin/schedules*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('admin/schedules') }}">
