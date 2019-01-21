@@ -100,10 +100,8 @@ class StudentsController extends Controller
         return view('admin.users.edit', compact('user', 'groups', 'schools'));
     }
 
-    public function adminUpdate(UpdateStudent $request, $id)
+    public function adminUpdate(UpdateStudent $request, User $user)
     {
-        $user = User::where('id', $id)->first();
-
         if ($request->password && !empty($request->password) && ($request->password == $request->password_confirmation)) {
             $user->password = Hash::make($request->password);
         }
@@ -116,16 +114,18 @@ class StudentsController extends Controller
             return redirect()->back()->with('message', 'Паролі не збігаються або не відповідають формату!');
         }
 
-        $user->name = $request->name;
-        $user->birthday = $request->birthday;
-        $user->parent_name = $request->parent_name;
-        $user->parent_phone = $request->parent_phone;
-        $user->parents = $request->parents;
-        $user->email = $request->email;
-        $user->address = $request->address;
-        $user->school_id = $request->school_id;
-        $user->group_id = $request->group_id;
-        $user->status = $request->status;
+        $user->update([
+            'name' => $request->name,
+            'birthday' => $request->birthday,
+            'parent_name' => $request->parent_name,
+            'parent_phone' => $request->parent_phone,
+            'parents' => $request->parents,
+            'email' => $request->email,
+            'address' => $request->address,
+            'school_id' => $request->school_id,
+            'group_id' => $request->group_id,
+            'status' => $request->status,
+        ]);
 
         $user->save();
 

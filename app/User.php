@@ -40,6 +40,11 @@ class User extends Authenticatable
         return $this->token = str_random(5);
     }
 
+    public function email()
+    {
+        return $this->email;
+    }
+
     public function getUserToken()
     {
         return $this->token;

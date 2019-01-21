@@ -105,7 +105,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Email</label>
                                         <input required type="email" value="{{ $user->email }}" name="email"
-                                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email" readonly
+                                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
                                                placeholder="name@example.com">
 
                                         @if ($errors->has('email'))

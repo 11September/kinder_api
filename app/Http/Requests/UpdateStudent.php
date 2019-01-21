@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateStudent extends FormRequest
@@ -29,8 +30,14 @@ class UpdateStudent extends FormRequest
             'parent_name' => 'required|string',
             'parent_phone' => 'required|string|min:10|max:13',
             'parents' => 'required',
-            'email' => 'required|string|email|max:255',
-            'address' => '',
+            'email' => [
+                'required',
+                'string',
+                'max:255',
+                'email',
+                Rule::unique('users')->ignore($this->user->id, 'id')
+            ],
+            'required' => '',
             'school_id' => 'required',
             'group_id' => 'required',
             'status' => 'required',

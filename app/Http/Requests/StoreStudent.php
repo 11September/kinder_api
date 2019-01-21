@@ -21,6 +21,7 @@ class StoreStudent extends FormRequest
      *
      * @return array
      */
+
     public function rules()
     {
         return [

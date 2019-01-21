@@ -38,7 +38,7 @@ Route::get('/admin/users', 'StudentsController@adminIndex')->middleware('is_admi
 Route::get('/admin/users/create', 'StudentsController@adminCreate')->middleware('is_admin')->name('admin.users.create');
 Route::post('/admin/users', 'StudentsController@adminStore')->middleware('is_admin')->name('admin.users.store');
 Route::get('/admin/users/{id}/edit', 'StudentsController@adminEdit')->middleware('is_admin')->name('admin.users.edit');
-Route::put('/admin/users/{id}', 'StudentsController@adminUpdate')->middleware('is_admin')->name('admin.users.update');
+Route::put('/admin/users/{user}', 'StudentsController@adminUpdate')->middleware('is_admin')->name('admin.users.update');
 Route::delete('/admin/users/{id}', 'StudentsController@adminDelete')->middleware('is_admin')->name('admin.users.delete');
 
 // Admin Schools
