@@ -52,13 +52,13 @@ Route::delete('/admin/kindergartens/{id}', 'SchoolController@adminDelete')->midd
 
 
 // Admin Electives
-Route::get('/admin/electives', 'ElectivesContoller@adminIndex')->middleware('is_admin')->name('admin.electives');
-Route::get('/admin/electives/create', 'ElectivesContoller@adminCreate')->middleware('is_admin')->name('admin.electives.create');
-Route::post('/admin/electives', 'ElectivesContoller@adminStore')->middleware('is_admin')->name('admin.electives.store');
-Route::get('/admin/electives/{id}', 'ElectivesContoller@adminShow')->middleware('is_admin')->name('admin.electives.show');
-Route::get('/admin/electives/{id}/edit', 'ElectivesContoller@adminEdit')->middleware('is_admin')->name('admin.electives.edit');
-Route::put('/admin/electives/{id}', 'ElectivesContoller@adminUpdate')->middleware('is_admin')->name('admin.electives.update');
-Route::delete('/admin/electives/{id}', 'ElectivesContoller@adminDelete')->middleware('is_admin')->name('admin.electives.delete');
+//Route::get('/admin/electives', 'ElectivesContoller@adminIndex')->middleware('is_admin')->name('admin.electives');
+//Route::get('/admin/electives/create', 'ElectivesContoller@adminCreate')->middleware('is_admin')->name('admin.electives.create');
+//Route::post('/admin/electives', 'ElectivesContoller@adminStore')->middleware('is_admin')->name('admin.electives.store');
+//Route::get('/admin/electives/{id}', 'ElectivesContoller@adminShow')->middleware('is_admin')->name('admin.electives.show');
+//Route::get('/admin/electives/{id}/edit', 'ElectivesContoller@adminEdit')->middleware('is_admin')->name('admin.electives.edit');
+//Route::put('/admin/electives/{id}', 'ElectivesContoller@adminUpdate')->middleware('is_admin')->name('admin.electives.update');
+//Route::delete('/admin/electives/{id}', 'ElectivesContoller@adminDelete')->middleware('is_admin')->name('admin.electives.delete');
 
 // Admin Groups
 Route::get('/admin/groups', 'GroupController@adminIndex')->middleware('is_admin')->name('admin.groups');

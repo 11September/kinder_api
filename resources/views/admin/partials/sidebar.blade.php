@@ -32,11 +32,11 @@
             <span>Групи</span></a>
     </li>
 
-    <li class="nav-item {{ request()->is('admin/electives*') ? 'active' : '' }}">
-        <a class="nav-link" href="{{ url('admin/electives') }}">
-            <i class="fas fa-list-ul"></i>
-            <span>Список гуртків</span></a>
-    </li>
+    {{--<li class="nav-item {{ request()->is('admin/electives*') ? 'active' : '' }}">--}}
+        {{--<a class="nav-link" href="{{ url('admin/electives') }}">--}}
+            {{--<i class="fas fa-list-ul"></i>--}}
+            {{--<span>Список гуртків</span></a>--}}
+    {{--</li>--}}
 
     <li class="nav-item {{ request()->is('admin/schedules*') ? 'active' : '' }}">
         <a class="nav-link" href="{{ url('admin/schedules') }}">
