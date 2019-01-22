@@ -15,10 +15,12 @@ class CreateFoodsTable extends Migration
     {
         Schema::create('foods', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('nutrition_id');
+            $table->integer('nutrition_id')->unsigned();
             $table->string('name');
             $table->enum('type', ['breakfast', 'lunch', 'afternoon-tea', 'dinner']);
             $table->timestamps();
+
+            $table->foreign('nutrition_id')->references('id')->on('nutritions')->onDelete('cascade');
         });
     }
 

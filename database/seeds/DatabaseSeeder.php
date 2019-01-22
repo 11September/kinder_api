@@ -17,13 +17,13 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             SchoolSeeder::class,
             GroupSeeder::class,
-            StudentSeeder::class,
+//            StudentSeeder::class,
             PostSeeder::class,
-            ElectivesSeeder::class,
-            ClassesSeeder::class,
+//            ElectivesSeeder::class,
             ScheduleSeeder::class,
-            FoodsSeeder::class,
+            ClassesSeeder::class,
             NutritionSeeder::class,
+            FoodsSeeder::class,
         ]);
     }
 }

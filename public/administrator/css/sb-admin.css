@@ -860,6 +860,10 @@ body.sidebar-toggled footer.sticky-footer {
     color: white;
 }
 
+.delete-form{
+    /*display: none;*/
+}
+
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */
 .container {

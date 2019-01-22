@@ -111,7 +111,6 @@
 @endsection
 
 @section('scripts')
-
     <script src="{{ asset('administrator/js/jquery.dataTables.js') }}"></script>
     <script src="{{ asset('administrator/js/dataTables.bootstrap4.js') }}"></script>
 

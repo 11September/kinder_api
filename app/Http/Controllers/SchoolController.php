@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use App\Group;
-use App\Http\Requests\StoreSchool;
-use App\Http\Requests\UpdateSchool;
 use App\School;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreSchool;
+use App\Http\Requests\UpdateSchool;
 use Illuminate\Support\Facades\Log;
 
 class SchoolController extends Controller
@@ -74,7 +75,20 @@ class SchoolController extends Controller
     public function adminDelete($id)
     {
         $school = School::find($id);
+
         $school->groups()->detach();
+        $school->nutritions()->delete();
+
+        $school->schedules()->delete();
+        $school->students()->delete();
+
+        $posts = Post::where('school_id', $id)->get();
+
+        foreach ($posts as $post){
+            $post->groups()->detach();
+            $post->delete();
+        }
+
         $school->delete();
 
         return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно видалено!');

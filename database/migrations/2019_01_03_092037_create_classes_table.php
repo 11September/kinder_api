@@ -15,11 +15,13 @@ class CreateClassesTable extends Migration
     {
         Schema::create('classes', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('schedule_id');
+            $table->integer('schedule_id')->unsigned();
             $table->string('name');
             $table->time('from');
             $table->time('to');
             $table->timestamps();
+
+            $table->foreign('schedule_id')->references('id')->on('schedules')->onDelete('cascade');
         });
     }
 

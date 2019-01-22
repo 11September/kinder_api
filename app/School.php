@@ -22,6 +22,16 @@ class School extends Model
         return $this->hasMany(User::class);
     }
 
+    public function schedules()
+    {
+        return $this->hasMany(Schedule::class);
+    }
+
+    public function nutritions()
+    {
+        return $this->hasMany(Nutrition::class);
+    }
+
     public function groups()
     {
         return $this->belongsToMany(Group::class, 'group_school')->withTimestamps();

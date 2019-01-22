@@ -17,7 +17,7 @@ class CreatePostGroupsTable extends Migration
             $table->increments('id');
 
             $table->integer('post_id')->unsigned();
-            $table->foreign('post_id')->references('id')->on('posts');
+            $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
 
             $table->integer('group_id')->unsigned();
             $table->foreign('group_id')->references('id')->on('groups');
