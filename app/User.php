@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -37,7 +38,7 @@ class User extends Authenticatable
 
     public function changeToken()
     {
-        return $this->token = str_random(5);
+        return $this->token = Hash::make(time());
     }
 
     public function email()

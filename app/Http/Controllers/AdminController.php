@@ -43,7 +43,7 @@ class AdminController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->type = $request->type;
-        $user->token = str_random(6);
+        $user->token = Hash::make($request->email);
         $user->password = Hash::make($request->password);
 
         $user->save();
