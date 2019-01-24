@@ -99,9 +99,12 @@ class UsersController extends Controller
     }
 
 
-    public function logout()
+    public function logout(Request $request)
     {
         try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $user->changeToken();
+
             Auth::logout();
 
             return response()->json(['success' => true], 200);
