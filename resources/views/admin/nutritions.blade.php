@@ -32,6 +32,11 @@
 
                     @include('admin.partials.errors')
 
+                    <div class="col-md-6">
+                        <i class="fas fa-table"></i>
+                        Розклад харчування
+                    </div>
+
                 </div>
             </div>
 

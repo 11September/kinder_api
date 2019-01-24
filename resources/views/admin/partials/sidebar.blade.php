@@ -56,4 +56,10 @@
             <span>Повідомлення</span></a>
     </li>
 
+    <li class="nav-item {{ request()->is('admin/conversations*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('admin/conversations') }}">
+            <i class="fas fa-comments"></i>
+            <span>Листування</span></a>
+    </li>
+
 </ul>

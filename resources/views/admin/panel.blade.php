@@ -102,10 +102,10 @@
                         <div class="card-body-icon">
                             <i class="fas fa-comments"></i>
                         </div>
-                        <p class="panel-heading">Повідомлення</p>
-                        <div class="mr-5 panel-count">{{ $news }}</div>
+                        <p class="panel-heading">Листування</p>
+                        <div class="mr-5 panel-count">{{ $messages }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="#">
+                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/conversations') }}">
                         <span class="float-left">Докладніше</span>
                         <span class="float-right">
                             <i class="fas fa-angle-right"></i>

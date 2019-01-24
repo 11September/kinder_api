@@ -6,6 +6,8 @@ use App\Post;
 use App\User;
 use App\Group;
 use App\School;
+use App\Message;
+use App\Conversation;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAdmin;
 use App\Http\Requests\UpdateAdmin;
@@ -24,10 +26,10 @@ class AdminController extends Controller
         $groups = Group::count();
         $users = User::where('type', 'default')->count();
         $admins = User::where('type', '!=' ,'default')->count();
-
         $news = Post::count();
+        $messages = Message::count();
 
-        return view('admin.panel', compact('schools', 'groups', 'users', 'admins', 'news'));
+        return view('admin.panel', compact('schools', 'groups', 'users', 'admins', 'news', 'messages'));
     }
 
     public function admins()

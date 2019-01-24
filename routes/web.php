@@ -97,3 +97,13 @@ Route::get('/admin/notifications', 'NotificationsController@adminIndex')->middle
 Route::post('/admin/notifications', 'NotificationsController@adminStore')->middleware('is_admin')->name('admin.notifications.store');
 Route::post('/admin/notifications/notifyScheduleBySchool', 'NotificationsController@notifyScheduleBySchool')->middleware('is_admin')->name('admin.notifications.notifyScheduleBySchool');
 Route::post('/admin/notifications/notifyFoodsBySchool', 'NotificationsController@notifyFoodsBySchool')->middleware('is_admin')->name('admin.notifications.notifyFoodsBySchool');
+
+
+// Admin Conversations
+Route::get('/admin/conversations', 'ConversationController@admin')->middleware('is_admin')->name('admin.messages');
+Route::get('/admin/conversations/group/{id}', 'ConversationController@adminShowGroupUsers')->middleware('is_admin')->name('admin.groupUsers');
+Route::get('/admin/conversations/{id}', 'ConversationController@checkConversation')->middleware('is_admin')->name('admin.conversation.checkConversation');
+Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->middleware('is_admin')->name('admin.conversation.user');
+
+Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('is_admin')->name('admin.messages.store');
+//Route::get('/admin/messages/{id}', 'MessagesController@adminShow')->middleware('is_admin')->name('admin.messages.show');
