@@ -2,7 +2,7 @@
 
 namespace App;
 
-use GuzzleHttp\Psr7\Request;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,11 +22,11 @@ class Message extends Model
         return $this->belongsTo(Conversation::class);
     }
 
-    public function getSelfMessageAttribute()
+    public function getSelfMessageAttribute(Request $request)
     {
-//        User::where('token', '=', $request->header('x-auth-token'))->first()
-//        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-        dd(Auth::user(), $this->user_id, Auth::id(), auth()->id());
+        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+        dd($user, Auth::user(), $this->user_id, Auth::id(), auth()->id());
         return $this->user_id === auth()->id();
     }
 }
