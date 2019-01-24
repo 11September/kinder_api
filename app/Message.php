@@ -2,9 +2,8 @@
 
 namespace App;
 
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
 {
@@ -22,11 +21,9 @@ class Message extends Model
         return $this->belongsTo(Conversation::class);
     }
 
-    public function getSelfMessageAttribute(Request $request)
+    public function getSelfMessageAttribute()
     {
-        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-
-        dd($user, Auth::user(), $this->user_id, Auth::id(), auth()->id());
+        dd($this->user()->id, Auth::user(), $this->user_id, Auth::id(), auth()->id());
         return $this->user_id === auth()->id();
     }
 }
