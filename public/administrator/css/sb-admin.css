@@ -1030,7 +1030,11 @@ body.sidebar-toggled footer.sticky-footer {
     margin-right: 10%;
 }
 
-/* Clear floats */
+.normal.unread{
+    background-color: skyblue;
+}
+
+    /* Clear floats */
 .chat-container::after {
     content: "";
     clear: both;
@@ -1063,6 +1067,23 @@ body.sidebar-toggled footer.sticky-footer {
 .time-left {
     float: left;
     color: #999;
+}
+
+.badge-primary{
+    background-color: darkorange;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    font-size: small;
+    border-radius: 15px;
+}
+
+.list-group-item.active .badge-primary{
+    background-color: white;
+    color: darkorange;
 }
 /* chat end */
 

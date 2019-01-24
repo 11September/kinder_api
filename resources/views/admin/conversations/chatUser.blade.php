@@ -66,7 +66,8 @@
 
                             @foreach($groups as $item)
                                 <li class="list-group-item @if($item->id == $users[0]->group_id) active @endif">
-                                    <a class="orange-text" href="{{ action('ConversationController@adminShowGroupUsers', $item->id) }}">{{ $item->name }}</a>
+                                    <a class="orange-text"
+                                       href="{{ action('ConversationController@adminShowGroupUsers', $item->id) }}">{{ $item->name }}</a>
                                 </li>
                             @endforeach
 
@@ -117,7 +118,7 @@
                                 @foreach($conversation->messages as $message)
 
                                     <div
-                                        class="chat-container @if($message->user_id == Auth::user()->id) darker @else normal @endif">
+                                        class="chat-container @if($message->user_id == Auth::user()->id) darker @else normal @endif @if($message->status == "unread") unread @endif">
                                         <p>{{ $message->message }}</p>
                                         <span class="time-right">{{ $message->created_at }}</span>
                                     </div>
@@ -151,7 +152,7 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            setTimeout(function(){
+            setTimeout(function () {
 
                 var count = $('.list-group-item.active').find('.badge');
                 var user_id = $('.list-group-item.active').find('.user_id').val();
@@ -162,13 +163,14 @@
                     },
 
                     type: 'get',
-                    url: '/admin/messages/setReadMessages/' +user_id+ '',
+                    url: '/admin/messages/setReadMessages/' + user_id + '',
                     dataType: 'json',
                     // data: {id: user_id},
                     success: function (data) {
 
                         if (data.success) {
                             count.fadeOut();
+                            $('.unread').removeClass('unread');
                         }
 
                     }, error: function () {
@@ -176,8 +178,7 @@
                     }
                 });
 
-            },3000);
-
+            }, 3000);
 
 
             $('.choose_school').on('change', function () {
