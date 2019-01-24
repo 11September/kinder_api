@@ -56,3 +56,23 @@ DB::table('users')->insert([
     'status' => "active",
     'type' => "admin"
 ]);
+
+DB::table('users')->insert([
+    'name' => "Станислав",
+    'email' => "moderator@admin.com",
+    'email_verified_at' => now(),
+    'password' => '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', // secret
+    'token' => str_random(5),
+    'remember_token' => str_random(10),
+    'push' => $faker->randomElement(['enabled', 'disabled']),
+
+    'parent_name' => $faker->name,
+    'parent_phone' => $faker->phoneNumber,
+    'parents' => $faker->randomElement(['father', 'mother']),
+    'address' => $faker->address,
+    'birthday' => $faker->date(),
+    'school_id' => 1,
+    'group_id' => 1,
+    'status' => "active",
+    'type' => "moderator"
+]);

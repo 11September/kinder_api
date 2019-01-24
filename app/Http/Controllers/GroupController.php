@@ -2,31 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreGroup;
-use App\Http\Requests\UpdateGroup;
 use App\User;
 use App\Group;
 use App\School;
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreGroup;
+use App\Http\Requests\UpdateGroup;
 use Illuminate\Support\Facades\Log;
 use function GuzzleHttp\Promise\all;
 
 class GroupController extends Controller
 {
-    public function index(Request $request)
+    public function GroupUsers(Request $request)
     {
         try {
-            $groups = Group::select('id', 'name', 'number', 'school_id')
-                ->filter($request->all())
+            $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
+
+            $users = User::select('id', 'name', 'parent_name', 'birthday', 'type')
+                ->where('group_id', '=', $user->group_id)
+                ->where('type', 'default')
                 ->get();
 
-            return ['data' => $groups];
+            $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)->first();
+
+            $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'type')
+                ->where('group_id', '=', $group->id)
+                ->where('type', 'admin')
+                ->OrWhere('type', 'moderator')
+                ->get();
+
+            $group_users = $admins_group->merge($users);
+
+            return ['data' => $group_users];
 
         } catch (\Exception $exception) {
-            Log::warning('GroupController@index Exception: '. $exception->getMessage());
+            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
+
 
     public function getAllGroupsById(Request $request)
     {
@@ -38,7 +52,7 @@ class GroupController extends Controller
             $query->where('school_id', '=', $request->id);
         })->get();
 
-        return response()->json(['data'=> $groups, 'success'=>true]);
+        return response()->json(['data' => $groups, 'success' => true]);
     }
 
     public function adminIndex()
@@ -53,7 +67,7 @@ class GroupController extends Controller
             ->with('moderator')
             ->get();
 
-        return view('admin.groups',compact('admins','moderators', 'schools', 'groups'));
+        return view('admin.groups', compact('admins', 'moderators', 'schools', 'groups'));
     }
 
     public function adminStore(StoreGroup $request)
@@ -67,7 +81,7 @@ class GroupController extends Controller
 
         $group->schools()->attach($request->school_id);
 
-        return redirect()->route('admin.groups')->with('message','Група успішно додана!');
+        return redirect()->route('admin.groups')->with('message', 'Група успішно додана!');
     }
 
     public function adminEdit($id)
@@ -81,10 +95,10 @@ class GroupController extends Controller
 
         $group = Group::where('id', $id)->withCount(['students'])->with('schools')->first();
 
-        return view('admin.groups.edit',compact('admins', 'moderators', 'schools', 'group', 'groups'));
+        return view('admin.groups.edit', compact('admins', 'moderators', 'schools', 'group', 'groups'));
     }
 
-    public function adminUpdate(UpdateGroup $request ,$id)
+    public function adminUpdate(UpdateGroup $request, $id)
     {
         $group = Group::where('id', $id)->first();
 
@@ -98,7 +112,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        return redirect()->route('admin.groups')->with('message','Група успішно оновлена!');
+        return redirect()->route('admin.groups')->with('message', 'Група успішно оновлена!');
     }
 
     public function adminDelete($id)
@@ -110,6 +124,6 @@ class GroupController extends Controller
 
         $group->delete();
 
-        return redirect()->route('admin.groups')->with('message','Група успішно видалена!');
+        return redirect()->route('admin.groups')->with('message', 'Група успішно видалена!');
     }
 }

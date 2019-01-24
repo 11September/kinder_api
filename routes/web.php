@@ -18,11 +18,6 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-
-//Route::group(['prefix' => 'admin'], function () {
-//    Voyager::routes();
-//});
-
 Route::get('/admin', 'AdminController@admin')->middleware('is_admin')->name('admin');
 
 // Admin Admins

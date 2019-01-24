@@ -33,3 +33,5 @@ Route::middleware('cors','token')->get('post/{id}', 'PostsController@show')->nam
 
 Route::middleware('cors','token')->get('schedules/{school_id}', 'SchedulesController@index')->name('Get Schedules');
 Route::middleware('cors','token')->get('nutritions/{school_id}', 'NutritionsController@index')->name('Get Nutritions');
+
+Route::middleware('cors','token')->get('group_users', 'GroupController@GroupUsers')->name('Get Users Group');
