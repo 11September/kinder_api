@@ -28,8 +28,6 @@ class ConversationController extends Controller
 
             $conversation = Conversation::where('user1_id', $user->id)->where('user2_id', $request->user_id)->with('messages')->first();
 
-            dd($conversation);
-
             if (!$conversation) {
                 $conversation = new Conversation();
                 $conversation->user1_id = $user->id;
