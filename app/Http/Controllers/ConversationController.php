@@ -34,6 +34,8 @@ class ConversationController extends Controller
 
         $users = $group->students;
 
+        $users->load('messages');
+
         return view('admin.conversations.adminShowGroupUsers', compact('list_schools', 'group', 'users'));
     }
 

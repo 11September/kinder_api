@@ -65,7 +65,7 @@
 
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Дата народження дитини</label>
-                                        <input required name="birthday" value="{{ $user->birthday }}" type="date"
+                                        <input required name="birthday" value="{{ $user->birthday }}" type="date" max="2100-01-01"
                                                class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" placeholder="Дата народження дитини">
 
                                         @if ($errors->has('birthday'))
