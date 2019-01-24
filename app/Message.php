@@ -24,6 +24,7 @@ class Message extends Model
 
     public function getSelfMessageAttribute()
     {
+//        User::where('token', '=', $request->header('x-auth-token'))->first()
 //        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
         dd(Auth::user(), $this->user_id, Auth::id(), auth()->id());
         return $this->user_id === auth()->id();

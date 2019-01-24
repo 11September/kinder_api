@@ -29,6 +29,8 @@ class UsersController extends Controller
         try {
             if (Auth::user()) {
                 $user = Auth::user();
+                Auth::login($user);
+
                 $group = $user->group()->first();
                 $school = $user->school()->first();
 
@@ -62,6 +64,8 @@ class UsersController extends Controller
 
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                        Auth::login($user);
+
                         $group = $user->group()->first();
                         $school = $user->school()->first();
 
