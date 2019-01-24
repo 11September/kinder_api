@@ -227,7 +227,10 @@ class UsersController extends Controller
                 return response()->json(['message' => 'Збереження не вдалося. Перевірте картинку!'], 422);
             }
 
-            $this->deletePreviousImage($user->avatar);
+            if (isset($user->avatar) || !empty($user->avatar)){
+                $this->deletePreviousImage($user->avatar);
+            }
+
             $user->avatar = $image;
             $user->save();
 
