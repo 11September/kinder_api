@@ -18,14 +18,14 @@ class GroupController extends Controller
         try {
             $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
 
-            $users = User::select('id', 'name', 'parent_name', 'birthday', 'type')
+            $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type')
                 ->where('group_id', '=', $user->group_id)
                 ->where('type', 'default')
                 ->get();
 
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)->first();
 
-            $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'type')
+            $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type')
                 ->where('group_id', '=', $group->id)
                 ->where('type', 'admin')
                 ->OrWhere('type', 'moderator')
