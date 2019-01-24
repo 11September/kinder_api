@@ -30,7 +30,7 @@ class ConversationController extends Controller
                 ->with('messages')
                 ->with(array
                 ('messages' => function ($query) {
-                        $query->select('id', 'user_id', 'message', 'status');
+                        $query->select('id', 'user_id', 'conversation_id', 'message', 'status');
                     }))
                 ->first();
 
