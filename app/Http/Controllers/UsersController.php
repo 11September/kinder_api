@@ -28,9 +28,6 @@ class UsersController extends Controller
 
         try {
             if (Auth::user()) {
-
-                dd("Auth now");
-
                 $user = Auth::user();
 
                 $credentials = $request->only('email', 'password');
