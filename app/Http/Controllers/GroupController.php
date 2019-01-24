@@ -31,8 +31,6 @@ class GroupController extends Controller
                 }
             }
 
-            dd($user->group_id);
-
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)->first();
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type')
