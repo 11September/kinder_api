@@ -23,11 +23,11 @@ class GroupController extends Controller
                 ->where('type', 'default')
                 ->get();
 
-            foreach ($users as $user) {
-                if (!$user->avatar || empty($user->avatar)){
-                    $avatar = null;
+            foreach ($users as $item) {
+                if (!$item->avatar || empty($item->avatar)){
+                    $item->avatar;
                 }else{
-                    $user->avatar = Config::get('app.url') . $user->avatar;
+                    $item->avatar = Config::get('app.url') . $item->avatar;
                 }
             }
 
@@ -41,11 +41,11 @@ class GroupController extends Controller
                 ->OrWhere('type', 'moderator')
                 ->get();
 
-            foreach ($admins_group as $user) {
-                if (!$user->avatar || empty($user->avatar)){
-                    $avatar = null;
+            foreach ($admins_group as $item) {
+                if (!$item->avatar || empty($item->avatar)){
+                    $item->avatar;
                 }else{
-                    $user->avatar = Config::get('app.url') . $user->avatar;
+                    $item->avatar = Config::get('app.url') . $item->avatar;
                 }
             }
 
