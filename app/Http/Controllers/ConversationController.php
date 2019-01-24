@@ -26,7 +26,13 @@ class ConversationController extends Controller
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
-            $conversation = Conversation::where('user1_id', $user->id)->where('user2_id', $request->user_id)->with('messages')->first();
+            $conversation = Conversation::where('user1_id', $user->id)->where('user2_id', $request->user_id)
+                ->with('messages')
+                ->with(array
+                ('messages' => function ($query) {
+                        $query->select('id', 'user_id', 'message', 'status');
+                    }))
+                ->first();
 
             if (!$conversation) {
                 $conversation = new Conversation();
@@ -60,9 +66,9 @@ class ConversationController extends Controller
         $list_schools = School::with('groups')->get();
 
         $group = Group::where('id', $id)
-            ->with(array('students'=>function($query){
-                        $query->where('type', '=', 'default');
-                    }))
+            ->with(array('students' => function ($query) {
+                $query->where('type', '=', 'default');
+            }))
             ->first();
 
         $users = $group->students;
