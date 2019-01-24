@@ -62,6 +62,8 @@ class UsersController extends Controller
 
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+                        $this->guard()->user();
+
                         $group = $user->group()->first();
                         $school = $user->school()->first();
 
