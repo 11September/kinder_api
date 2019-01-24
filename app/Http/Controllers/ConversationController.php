@@ -16,7 +16,7 @@ class ConversationController extends Controller
     public function createOrGetConversation(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'user_id' => 'exists:users,id'
+            'user_id' => 'required|exists:users,id'
         ]);
 
         if ($validator->fails()) {
