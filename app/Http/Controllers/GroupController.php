@@ -33,10 +33,14 @@ class GroupController extends Controller
 
             $group_users = $admins_group->merge($users);
 
+            if (!$group_users || count($group_users) < 1){
+                return response()->json(['message' => 'Користувачів не знайдено!'], 404);
+            }
+
             return ['data' => $group_users];
 
         } catch (\Exception $exception) {
-            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
+            Log::warning('GroupController@GroupUsers Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
