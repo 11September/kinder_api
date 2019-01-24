@@ -80,10 +80,24 @@
                                 @foreach($users as $user)
 
                                     <a href="{{ action('ConversationController@checkConversation', $user->id) }}"
-                                       class="list-group-item list-group-item-action flex-column align-items-start">
+                                       class="list-group-item list-group-item-action flex-column align-items-start
+                                        @if($user->id == $conversation->user2->id) active @endif">
                                         <div class="d-flex w-100 justify-content-between">
                                             <h5 class="mb-1">{{ $user->name }}</h5>
-                                            <small class="badge badge-primary badge-pill">14</small>
+                                            <input class="user_id" type="hidden" name="user_id" value="{{ $user->id }}">
+
+                                            @php($count = 0)
+                                            @foreach($user->messages as $message)
+                                                @if($message->status == "unread")
+                                                    @php($count++)
+                                                @endif
+                                            @endforeach
+
+                                            @if($count != 0)
+                                                <small class="badge badge-primary badge-pill">{{ $count }}</small>
+                                            @endif
+
+                                            {{--<small class="badge badge-primary badge-pill">14</small>--}}
                                         </div>
                                         <p class="mb-1">{{ $user->parent_name }}</p>
                                         <small>{{ $user->parent_phone }}</small>
@@ -137,6 +151,35 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
+            setTimeout(function(){
+
+                var count = $('.list-group-item.active').find('.badge');
+                var user_id = $('.list-group-item.active').find('.user_id').val();
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+
+                    type: 'get',
+                    url: '/admin/messages/setReadMessages/' +user_id+ '',
+                    dataType: 'json',
+                    // data: {id: user_id},
+                    success: function (data) {
+
+                        if (data.success) {
+                            count.fadeOut();
+                        }
+
+                    }, error: function () {
+                        console.log(data);
+                    }
+                });
+
+            },3000);
+
+
+
             $('.choose_school').on('change', function () {
                 var school_id = $(this).val();
                 if (school_id) {

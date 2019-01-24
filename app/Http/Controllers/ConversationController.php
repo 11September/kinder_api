@@ -36,6 +36,8 @@ class ConversationController extends Controller
 
         $users->load('messages');
 
+//        dd($users);
+
         return view('admin.conversations.adminShowGroupUsers', compact('list_schools', 'group', 'users'));
     }
 
@@ -70,7 +72,7 @@ class ConversationController extends Controller
         $conversation = Conversation::where('id', $id)->with('messages', 'user2')->first();
 
         $user = User::where('id', $conversation->user2_id)->first();
-        $users = User::where('group_id', $user->group_id)->where('type', 'default')->get();
+        $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
 
         $list_schools = School::with('groups')->get();
 
