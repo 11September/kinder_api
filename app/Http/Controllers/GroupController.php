@@ -18,7 +18,7 @@ class GroupController extends Controller
         try {
             $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
 
-            $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type')
+            $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $user->group_id)
                 ->where('type', 'default')
                 ->get();
@@ -29,11 +29,18 @@ class GroupController extends Controller
                 }else{
                     $item->avatar = Config::get('app.url') . $item->avatar;
                 }
+
+                if ($item->parents == 'father'){
+                    $item->parents = "Батько";
+                }
+                if ($item->parents == 'mother'){
+                    $item->parents = "Мати";
+                }
             }
 
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)->first();
 
-            $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type')
+            $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $group->id)
                 ->where('type', 'admin')
                 ->OrWhere('type', 'moderator')
@@ -44,6 +51,13 @@ class GroupController extends Controller
                     $item->avatar;
                 }else{
                     $item->avatar = Config::get('app.url') . $item->avatar;
+                }
+
+                if ($item->parents == 'father'){
+                    $item->parents = "Батько";
+                }
+                if ($item->parents == 'mother'){
+                    $item->parents = "Мати";
                 }
             }
 
