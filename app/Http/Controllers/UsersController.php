@@ -62,8 +62,6 @@ class UsersController extends Controller
 
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                        $this->guard()->user();
-
                         $group = $user->group()->first();
                         $school = $user->school()->first();
 
@@ -106,6 +104,7 @@ class UsersController extends Controller
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $user->changeToken();
+            $user->save();
 
             Auth::logout();
 
