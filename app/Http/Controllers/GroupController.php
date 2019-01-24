@@ -40,7 +40,7 @@ class GroupController extends Controller
                 ->OrWhere('type', 'moderator')
                 ->get();
 
-            foreach ($users as $user) {
+            foreach ($admins_group as $user) {
                 if (!$user->avatar || empty($user->avatar)){
                     $avatar = null;
                 }else{
