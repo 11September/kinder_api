@@ -22,10 +22,10 @@ class Message extends Model
         return $this->belongsTo(Conversation::class);
     }
 
-    public function getSelfMessageAttribute(Request $request)
+    public function getSelfMessageAttribute()
     {
-        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-        dd($user, $this->user_id, Auth::id());
+//        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+        dd(Auth::user(), $this->user_id, Auth::id());
         return $this->user_id === auth()->id();
     }
 }
