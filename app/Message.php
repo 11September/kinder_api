@@ -23,7 +23,11 @@ class Message extends Model
 
     public function getSelfMessageAttribute()
     {
-        dd($this->user()->id, Auth::user(), $this->user_id, Auth::id(), auth()->id());
+//        $request = request();
+        $value = request('x-auth-token', $default = null);
+        dd($value);
+
+        dd($this->user(), Auth::user(), $this->user_id, Auth::id(), auth()->id());
         return $this->user_id === auth()->id();
     }
 }
