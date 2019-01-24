@@ -219,13 +219,15 @@ class UsersController extends Controller
         }
 
         try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
             $image = $this->storeBase64Image($request->avatar);
 
             if (!$image){
                 return response()->json(['message' => 'Збереження не вдалося. Перевірте картинку!'], 422);
             }
 
-            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $this->deletePreviousImage($user->avatar);
             $user->avatar = $image;
             $user->save();
 
@@ -310,6 +312,16 @@ class UsersController extends Controller
         }else{
             return null;
         }
+    }
+
+    public function deletePreviousImage($data)
+    {
+        $preview = public_path() . $data;
+        if(file_exists($preview)) {
+            unlink($preview);
+        }
+
+        return true;
     }
 
 }
