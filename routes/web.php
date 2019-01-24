@@ -102,4 +102,3 @@ Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->mid
 
 Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('is_admin')->name('admin.messages.store');
 Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->middleware('is_admin')->name('admin.messages.setReadMessages');
-//Route::get('/admin/messages/{id}', 'MessagesController@adminShow')->middleware('is_admin')->name('admin.messages.show');

@@ -35,3 +35,4 @@ Route::middleware('cors','token')->get('schedules/{school_id}', 'SchedulesContro
 Route::middleware('cors','token')->get('nutritions/{school_id}', 'NutritionsController@index')->name('Get Nutritions');
 
 Route::middleware('cors','token')->get('group_users', 'GroupController@GroupUsers')->name('Get Users Group');
+Route::middleware('cors','token')->post('conversation', 'ConversationController@createOrGetConversation')->name('Get User Conversation Or Create Conversation');

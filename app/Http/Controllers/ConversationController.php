@@ -2,15 +2,50 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversation;
+use App\User;
 use App\Group;
 use App\School;
-use App\User;
+use App\Conversation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 
 class ConversationController extends Controller
 {
+    public function createOrGetConversation(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'exists:users,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+            $conversation = Conversation::where('user1_id', $user->id)->where('user2_id', $request->user_id)->with('messages')->first();
+
+            dd($conversation);
+
+            if (!$conversation) {
+                $conversation = new Conversation();
+                $conversation->user1_id = $user->id;
+                $conversation->user2_id = $request->user_id;
+
+                $conversation->save();
+            }
+
+            return ['data' => $conversation];
+
+        } catch (\Exception $exception) {
+            Log::warning('ConversationController@createOrGetConversation Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
     public function admin()
     {
         $schools = School::all();
@@ -35,8 +70,6 @@ class ConversationController extends Controller
         $users = $group->students;
 
         $users->load('messages');
-
-//        dd($users);
 
         return view('admin.conversations.adminShowGroupUsers', compact('list_schools', 'group', 'users'));
     }
