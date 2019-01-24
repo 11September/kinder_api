@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StoreGroup;
 use App\Http\Requests\UpdateGroup;
 use Illuminate\Support\Facades\Log;
-use function GuzzleHttp\Promise\all;
+use Illuminate\Support\Facades\Config;
 
 class GroupController extends Controller
 {
@@ -23,6 +23,15 @@ class GroupController extends Controller
                 ->where('type', 'default')
                 ->get();
 
+            foreach ($users as $user) {
+                if (!$user->avatar || empty($user->avatar)){
+                    $avatar = null;
+                }else{
+                    $user->avatar = Config::get('app.url') . $user->avatar;
+                }
+            }
+
+
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)->first();
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type')
@@ -30,6 +39,14 @@ class GroupController extends Controller
                 ->where('type', 'admin')
                 ->OrWhere('type', 'moderator')
                 ->get();
+
+            foreach ($users as $user) {
+                if (!$user->avatar || empty($user->avatar)){
+                    $avatar = null;
+                }else{
+                    $user->avatar = Config::get('app.url') . $user->avatar;
+                }
+            }
 
             $group_users = $admins_group->merge($users);
 
