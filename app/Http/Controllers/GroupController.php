@@ -21,19 +21,20 @@ class GroupController extends Controller
             $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $user->group_id)
                 ->where('type', 'default')
+                ->where('id', '!=', $user->id)
                 ->get();
 
             foreach ($users as $item) {
-                if (!$item->avatar || empty($item->avatar)){
+                if (!$item->avatar || empty($item->avatar)) {
                     $item->avatar;
-                }else{
+                } else {
                     $item->avatar = Config::get('app.url') . $item->avatar;
                 }
 
-                if ($item->parents == 'father'){
+                if ($item->parents == 'father') {
                     $item->parents = "Батько";
                 }
-                if ($item->parents == 'mother'){
+                if ($item->parents == 'mother') {
                     $item->parents = "Мати";
                 }
             }
@@ -43,27 +44,28 @@ class GroupController extends Controller
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $group->id)
                 ->where('type', 'admin')
+                ->where('id', '!=', $user->id)
                 ->OrWhere('type', 'moderator')
                 ->get();
 
             foreach ($admins_group as $item) {
-                if (!$item->avatar || empty($item->avatar)){
+                if (!$item->avatar || empty($item->avatar)) {
                     $item->avatar;
-                }else{
+                } else {
                     $item->avatar = Config::get('app.url') . $item->avatar;
                 }
 
-                if ($item->parents == 'father'){
+                if ($item->parents == 'father') {
                     $item->parents = "Батько";
                 }
-                if ($item->parents == 'mother'){
+                if ($item->parents == 'mother') {
                     $item->parents = "Мати";
                 }
             }
 
             $group_users = $admins_group->merge($users);
 
-            if (!$group_users || count($group_users) < 1){
+            if (!$group_users || count($group_users) < 1) {
                 return response()->json(['message' => 'Користувачів не знайдено!'], 404);
             }
 
