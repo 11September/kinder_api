@@ -34,6 +34,14 @@ class ConversationController extends Controller
                     }))
                 ->first();
 
+            foreach ($conversation->messages as $message) {
+                if ($message->user_id == $user->id) {
+                    $message->self = true;
+                } else {
+                    $message->self = false;
+                }
+            }
+
             if (!$conversation) {
                 $conversation = new Conversation();
                 $conversation->user1_id = $user->id;

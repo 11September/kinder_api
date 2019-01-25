@@ -9,7 +9,7 @@ class Message extends Model
 {
     protected $fillable = ['body', 'status'];
 
-    protected $appends = ['selfMessage'];
+//    protected $appends = ['selfMessage'];
 
     public function user()
     {
@@ -23,8 +23,6 @@ class Message extends Model
 
     public function getSelfMessageAttribute()
     {
-        $user = Auth::user();
-
-        return $this->user_id == $user->id;
+        return $this->user_id == Auth::id();
     }
 }
