@@ -27,6 +27,7 @@ class ConversationController extends Controller
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
             $conversation = Conversation::where('user1_id', $user->id)->where('user2_id', $request->user_id)
+                ->OrWhere('user2_id', $request->user_id, 'user2_id', $user->id)
                 ->with('messages')
                 ->with(array
                 ('messages' => function ($query) {

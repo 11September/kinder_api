@@ -37,3 +37,4 @@ Route::middleware('cors','token')->get('nutritions/{school_id}', 'NutritionsCont
 Route::middleware('cors','token')->get('group_users', 'GroupController@GroupUsers')->name('Get Users Group');
 Route::middleware('cors','token')->post('conversation', 'ConversationController@createOrGetConversation')->name('Get User Conversation Or Create Conversation');
 Route::middleware('cors','token')->post('store_message', 'MessagesController@storeMessage')->name('Store Message');
+Route::middleware('cors','token')->post('messages_mark_read', 'MessagesController@messagesMarkRead')->name('Store Message');

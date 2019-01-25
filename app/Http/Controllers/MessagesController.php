@@ -59,6 +59,19 @@ class MessagesController extends Controller
         }
     }
 
+    public function messagesMarkRead(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'conversation_id' => 'required|exists:conversations,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+
+    }
+
     public function adminIndex()
     {
         $schools = School::all();
