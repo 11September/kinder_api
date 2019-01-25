@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Group;
-use App\Message;
 use App\School;
+use App\Message;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -33,10 +33,25 @@ class MessagesController extends Controller
             $message->user_id = $user->id;
             $message->save();
 
-            unset($message->created_at);
-            unset($message->updated_at);
+            $messages = Message::select('id', 'message', 'status', 'user_id')
+                ->where('conversation_id', $request->conversation_id)
+                ->oldest()
+                ->get();
 
-            return ['message' => 'Повідомлення збережено!', 'data' => $message];
+            foreach ($messages as $message) {
+                if ($message->user_id == $user->id) {
+                    $message->self = true;
+                } else {
+                    $message->self = false;
+                }
+            }
+
+            foreach ($messages as $message) {
+                unset($message->id);
+                unset($message->user_id);
+            }
+
+            return ['message' => 'Повідомлення збережено!', 'data' => $messages];
 
         } catch (\Exception $exception) {
             Log::warning('MessagesController@storeMessage Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
