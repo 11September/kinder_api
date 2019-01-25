@@ -140,9 +140,6 @@ class MessagesController extends Controller
             ->where('id', '>', $request->message_id)
             ->get();
 
-//        $message = Message::where('id', $id)->get();
-//        $messages = Message::where('conversation_id', $message->conversation_id)
-
         return response()->json(['success' => true, 'data' => $messages]);
     }
 }
