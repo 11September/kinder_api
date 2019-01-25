@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller
@@ -27,36 +26,6 @@ class UsersController extends Controller
         }
 
         try {
-            if (Auth::user()) {
-                $user = Auth::user();
-
-                $credentials = $request->only('email', 'password');
-                Auth::attempt($credentials);
-
-                $group = $user->group()->first();
-                $school = $user->school()->first();
-
-                $user->changeToken();
-                $user->save();
-
-                if (!$user->avatar || empty($user->avatar)){
-                    $avatar = null;
-                }else{
-                    $avatar = Config::get('app.url') . $user->avatar;
-                }
-
-                $result = array();
-                $result = array_add($result, 'token', $user->token);
-                $result = array_add($result, 'email', $user->email);
-                $result = array_add($result, 'parent_name', $user->parent_name);
-                $result = array_add($result, 'group', $group->name);
-                $result = array_add($result, 'avatar', $avatar);
-                $result = array_add($result, 'school_id', $user->school_id);
-                $result = array_add($result, 'school_name', $school->name);
-
-                return response($result);
-            }
-
             $user = User::where('email', $request->email)->first();
             if ($user) {
 
@@ -66,7 +35,10 @@ class UsersController extends Controller
 
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
-                        Auth::login($user);
+
+                        $credentials = $request->only('email', 'password');
+                        Auth::attempt($credentials);
+
 
                         $group = $user->group()->first();
                         $school = $user->school()->first();
@@ -74,9 +46,9 @@ class UsersController extends Controller
                         $user->changeToken();
                         $user->save();
 
-                        if (!$user->avatar || empty($user->avatar)){
+                        if (!$user->avatar || empty($user->avatar)) {
                             $avatar = null;
-                        }else{
+                        } else {
                             $avatar = Config::get('app.url') . $user->avatar;
                         }
 
@@ -233,11 +205,11 @@ class UsersController extends Controller
 
             $image = $this->storeBase64Image($request->avatar);
 
-            if (!$image){
+            if (!$image) {
                 return response()->json(['message' => 'Збереження не вдалося. Перевірте картинку!'], 422);
             }
 
-            if (isset($user->avatar) || !empty($user->avatar)){
+            if (isset($user->avatar) || !empty($user->avatar)) {
                 $this->deletePreviousImage($user->avatar);
             }
 
@@ -310,7 +282,7 @@ class UsersController extends Controller
         $folderPathSave = "/images/uploads/avatars/";
         $image_parts = explode(";base64,", $data);
 
-        if (!$image_parts || !isset($image_parts[1]) || $image_parts[1] == null || $image_parts[1] == ""){
+        if (!$image_parts || !isset($image_parts[1]) || $image_parts[1] == null || $image_parts[1] == "") {
             return null;
         }
 
@@ -322,7 +294,7 @@ class UsersController extends Controller
 
         if (file_put_contents($file, $image_base64) !== false) {
             return $image;
-        }else{
+        } else {
             return null;
         }
     }
@@ -330,7 +302,7 @@ class UsersController extends Controller
     public function deletePreviousImage($data)
     {
         $preview = public_path() . $data;
-        if(file_exists($preview)) {
+        if (file_exists($preview)) {
             unlink($preview);
         }
 
