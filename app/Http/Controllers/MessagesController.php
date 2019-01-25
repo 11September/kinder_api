@@ -7,12 +7,36 @@ use App\Message;
 use App\School;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class MessagesController extends Controller
 {
-    public function __construct()
+    public function storeMessage(Request $request)
     {
-        return $this->middleware('auth');
+        $validator = Validator::make($request->all(), [
+            'conversation_id' => 'required|exists:conversations,id',
+            'message' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+            $message = new Message();
+            $message->conversation_id = $request->conversation_id;
+            $message->message = $request->message;
+            $message->user_id = $user->id;
+            $message->save();
+
+            return ['message' => 'Повідомлення збережено!', 'data' => $message];
+
+        } catch (\Exception $exception) {
+            Log::warning('MessagesController@storeMessage Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
     }
 
     public function adminIndex()
@@ -40,7 +64,7 @@ class MessagesController extends Controller
     public function adminStore(Request $request)
     {
         $request->validate([
-            'conversation_id' => 'required',
+            'conversation_id' => 'required|exists:conversations,id',
             'message' => 'required|string',
         ]);
 
