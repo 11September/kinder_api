@@ -103,3 +103,9 @@ Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->mid
 Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('is_admin')->name('admin.messages.store');
 Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->middleware('is_admin')->name('admin.messages.setReadMessages');
 Route::post('/admin/messages/fetchMessages', 'MessagesController@fetchMessages')->middleware('is_admin')->name('admin.messages.fetchMessages');
+
+
+
+
+
+Route::get('group_users', 'GroupController@GroupUsers2')->name('Get Users Group');
