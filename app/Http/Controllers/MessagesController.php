@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversation;
 use App\User;
 use App\Group;
 use App\School;
@@ -124,5 +125,24 @@ class MessagesController extends Controller
         }
 
         return response()->json(['success' => true]);
+    }
+
+    public function fetchMessages(Request $request)
+    {
+        $request->validate([
+            'message_id' => 'required',
+            'conversation_id' => 'required|exists:conversations,id',
+            'user_id' => 'required',
+        ]);
+
+        $messages = Message::where('conversation_id', $request->conversation_id)
+            ->where('user_id', $request->user_id)
+            ->where('id', '>', $request->message_id)
+            ->get();
+
+//        $message = Message::where('id', $id)->get();
+//        $messages = Message::where('conversation_id', $message->conversation_id)
+
+        return response()->json(['success' => true, 'data' => $messages]);
     }
 }

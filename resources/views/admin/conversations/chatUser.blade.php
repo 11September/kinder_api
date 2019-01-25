@@ -86,6 +86,8 @@
                                         <div class="d-flex w-100 justify-content-between">
                                             <h5 class="mb-1">{{ $user->name }}</h5>
                                             <input class="user_id" type="hidden" name="user_id" value="{{ $user->id }}">
+                                            <input class="conversation_id" type="hidden" name="conversation_id"
+                                                   value="{{ $conversation->id }}">
 
                                             @php($count = 0)
                                             @foreach($user->messages as $message)
@@ -96,6 +98,8 @@
 
                                             @if($count != 0)
                                                 <small class="badge badge-primary badge-pill">{{ $count }}</small>
+                                            @else
+                                                <small class="badge badge-primary badge-pill"></small>
                                             @endif
 
                                             {{--<small class="badge badge-primary badge-pill">14</small>--}}
@@ -112,7 +116,7 @@
                     </div>
 
                     <div class="col-md-6">
-                        <div class="wrapper-chat">
+                        <div id="wrapper-chat" class="wrapper-chat">
 
                             @if(isset($conversation->messages))
                                 @foreach($conversation->messages as $message)
@@ -121,6 +125,8 @@
                                         class="chat-container @if($message->user_id == Auth::user()->id) darker @else normal @endif @if($message->status == "unread") unread @endif">
                                         <p>{{ $message->message }}</p>
                                         <span class="time-right">{{ $message->created_at }}</span>
+                                        <input type="hidden" class="message_id" name="message_id"
+                                               value="{{ $message->id }}">
                                     </div>
 
                                 @endforeach
@@ -152,8 +158,8 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-            setTimeout(function () {
 
+            function setRead() {
                 var count = $('.list-group-item.active').find('.badge');
                 var user_id = $('.list-group-item.active').find('.user_id').val();
 
@@ -177,8 +183,60 @@
                         console.log(data);
                     }
                 });
+            }
 
+            setTimeout(function () {
+                setRead();
             }, 3000);
+
+
+            setInterval(function () {
+                var content = $('.wrapper-chat');
+                var count = $('.list-group-item.active').find('.badge');
+                var user_id = $('.list-group-item.active').find('.user_id').val();
+                var conversation_id = $('.list-group-item.active').find('.conversation_id').val();
+                var message_id = $('.wrapper-chat .chat-container').last().find('.message_id').val();
+
+                // alert(message_id);
+
+                if (message_id) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'post',
+                        url: '/admin/messages/fetchMessages/',
+                        dataType: 'json',
+                        data: {message_id: message_id, conversation_id: conversation_id, user_id: user_id},
+                        success: function (data) {
+
+                            if (data.success) {
+                                if (data.data && data.data !== '' && data.data.length != 0) {
+                                    var new_count = data.data.length;
+                                    count.css('display', 'flex').text(new_count);
+
+                                    $.each(data.data, function (index, item) {
+                                        $('#wrapper-chat').append(
+                                            '<div class="chat-container normal unread">' +
+                                            '<p>' + item.message + '</p>' +
+                                            '<span class="time-right"></span>' +
+                                            '<input type="hidden" class="message_id" name="message_id" value="' + item.id + '">' +
+                                            '</div>'
+                                        );
+                                    });
+
+                                    setTimeout(function () {
+                                        setRead();
+                                    }, 3000);
+                                }
+                            }
+                        }, error: function () {
+                            console.log(data);
+                        }
+                    });
+                }
+            }, 5000);
 
 
             $('.choose_school').on('change', function () {

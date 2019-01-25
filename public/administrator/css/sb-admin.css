@@ -1000,6 +1000,12 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* chat */
+#wrapper-chat{
+    padding: 0 10px;
+    max-height: 750px;
+    overflow-x: scroll;
+}
+
 .wrapper-chat{
     margin-bottom: 20px;
     border-bottom: 2px solid lightgrey;

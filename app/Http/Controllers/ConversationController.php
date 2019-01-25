@@ -39,20 +39,20 @@ class ConversationController extends Controller
                     }))
                 ->first();
 
-            foreach ($conversation->messages as $message) {
-                if ($message->user_id == $user->id) {
-                    $message->self = true;
-                } else {
-                    $message->self = false;
-                }
-            }
-
             if (!$conversation) {
                 $conversation = new Conversation();
                 $conversation->user1_id = $user->id;
                 $conversation->user2_id = $request->user_id;
 
                 $conversation->save();
+            }else{
+                foreach ($conversation->messages as $message) {
+                    if ($message->user_id == $user->id) {
+                        $message->self = true;
+                    } else {
+                        $message->self = false;
+                    }
+                }
             }
 
             return ['data' => $conversation];
@@ -93,7 +93,13 @@ class ConversationController extends Controller
 
     public function checkConversation($id)
     {
-        $conversation = Conversation::where('user1_id', Auth::id())->where('user2_id', $id)->with('messages')->first();
+        $conversation = Conversation::where([
+            ['user1_id', '=', Auth::id()],
+            ['user2_id', '=', $id],
+        ])->OrWhere([
+            ['user2_id', '=', Auth::id()],
+            ['user1_id', '=', $id],
+        ])->with('messages')->first();
 
         if (!$conversation) {
             $conversation = new Conversation();
