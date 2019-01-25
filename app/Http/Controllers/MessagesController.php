@@ -33,6 +33,9 @@ class MessagesController extends Controller
             $message->user_id = $user->id;
             $message->save();
 
+            unset($message->created_at);
+            unset($message->updated_at);
+
             return ['message' => 'Повідомлення збережено!', 'data' => $message];
 
         } catch (\Exception $exception) {
