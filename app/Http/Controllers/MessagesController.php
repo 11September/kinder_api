@@ -40,6 +40,8 @@ class MessagesController extends Controller
 
             $conversation = Conversation::where('id', $request->conversation_id)->first();
 
+            dd($conversation);
+
             $need_user_id = null;
             if ($conversation->user1_id == $user->id) {
                 $need_user_id = $conversation->user2_id;
@@ -47,6 +49,8 @@ class MessagesController extends Controller
             if ($conversation->user2_id == $user->id) {
                 $need_user_id = $conversation->user1_id;
             }
+
+
 
             $user = User::select('id', 'player_id')
                 ->where('id', $need_user_id)
