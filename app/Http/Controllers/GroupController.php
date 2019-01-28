@@ -57,7 +57,7 @@ class GroupController extends Controller
                 ->where('type', '!=', 'default')
                 ->where('id', '!=', $user->id)
                 ->where('id', '=', $group->admin->id)
-                ->where('id', '=', $user->moderator->id)
+                ->where('id', '=', $group->moderator->id)
                 ->get();
 
             dd($admins_group);
