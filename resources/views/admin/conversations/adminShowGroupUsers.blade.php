@@ -69,6 +69,8 @@
                             </select>
                         </div>
 
+                        <h3>Cписок груп</h3>
+
                         <ul class="list-group list-group-flex" id="wrapper-list-groups">
 
                             <li class="list-group-item active">

@@ -46,10 +46,8 @@
                         <h3>Cписок cадкiв</h3>
 
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Садок</label>
                             <select required name="school_id"
-                                    class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
-                                    id="exampleFormControlSelect1">
+                                    class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}">
 
                                 @foreach($schools as $school)
                                     <option class="choose_school_option"
@@ -58,6 +56,8 @@
 
                             </select>
                         </div>
+
+                        <h3>Cписок груп</h3>
 
                         <ul class="list-group list-group-flex" id="wrapper-list-groups">
                             @foreach($groups as $item)
