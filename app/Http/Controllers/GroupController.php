@@ -39,11 +39,20 @@ class GroupController extends Controller
                 }
             }
 
-            $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)->first();
+            $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)
+                ->whereHas('admin', function ($query) {
+                    $query->select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents');
+                })
+                ->whereHas('moderator', function ($query) {
+                    $query->select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents');
+                })
+                ->first();
+
+            dd($group);
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $group->id)
-                ->where('type', '!=' ,'default')
+                ->where('type', '!=', 'default')
                 ->where('id', '!=', $user->id)
                 ->get();
 
