@@ -42,27 +42,25 @@ class GroupController extends Controller
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)
                 ->with(array
                     ('admin' => function ($query) {
-                            $query->select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents');
+                            $query->select('id');
                         })
                 )
                 ->with(array
                     ('moderator' => function ($query) {
-                            $query->select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents');
+                            $query->select('id');
                         })
                 )
                 ->first();
-
-            $admins_group = null;
-            $admins_group->push($group->admin);
-            $admins_group->push($group->moderator);
-
-            dd($admins_group);
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $group->id)
                 ->where('type', '!=', 'default')
                 ->where('id', '!=', $user->id)
+                ->where('id', '=', $group->admin->id)
+                ->where('id', '=', $user->moderator->id)
                 ->get();
+
+            dd($admins_group);
 
             foreach ($admins_group as $item) {
                 if (!$item->avatar || empty($item->avatar)) {
