@@ -56,11 +56,9 @@ class GroupController extends Controller
             $moderId = $group->moderator->id;
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
-//                ->where('type', '!=', 'default')
+                ->where('type', '!=', 'default')
                 ->whereIn('id', [$adminId, $moderId])
                 ->get();
-
-            dd($group->admin->id, $group->moderator->id, $admins_group);
 
             foreach ($admins_group as $item) {
                 if (!$item->avatar || empty($item->avatar)) {
