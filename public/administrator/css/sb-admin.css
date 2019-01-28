@@ -1040,6 +1040,14 @@ body.sidebar-toggled footer.sticky-footer {
     background-color: skyblue;
 }
 
+.fa-ul{
+    margin-left: 25px;
+}
+
+#list-groups-with-description .list-group-item{
+    margin: 10px;
+}
+
     /* Clear floats */
 .chat-container::after {
     content: "";

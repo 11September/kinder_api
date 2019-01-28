@@ -45,7 +45,7 @@
                     <div class="col-md-4">
                         <h3>Список груп</h3>
 
-                        <ul class="list-group list-group-flex">
+                        <ul class="list-group list-group-flex" id="list-groups-with-description">
 
                             @foreach($groups as $group)
                                 <li class="list-group-item">
@@ -55,13 +55,16 @@
                                             {{ $group->name }}
                                         </a>
 
-                                        <ul>
+                                        <p>
+                                        <ul class="fa-ul">
                                             @foreach(@$group->schools as $school)
-                                                <li>{{ $school->name }}</li>
+                                                <li><span class="fa-li"><i
+                                                            class="fas fa-hotel"></i></span>{{ $school->name }}</li>
                                             @endforeach
                                         </ul>
+                                        </p>
 
-                                        <p class="group-count">{{ $group->students_count }} чоловiк</p>
+                                        <p class="group-count"><span class="orange-text">{{ $group->students_count }}</span> чоловiк</p>
                                         <p class="group-count">
                                             Адміністратор - <span class="orange-text">{{ @$group->admin->name }}</span>
                                         </p>
