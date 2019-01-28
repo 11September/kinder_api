@@ -40,10 +40,10 @@ class GroupController extends Controller
             }
 
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)
-                ->whereHas('admin', function ($query) {
+                ->with('admin', function ($query) {
                     $query->select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents');
                 })
-                ->whereHas('moderator', function ($query) {
+                ->with('moderator', function ($query) {
                     $query->select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents');
                 })
                 ->first();
