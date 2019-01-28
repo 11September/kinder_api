@@ -54,7 +54,8 @@ class GroupController extends Controller
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('type', '!=', 'default')
-                ->whereIn('id', [$group->admin->id, $group->moderator->id])
+                ->where('id', $group->admin->id)
+                ->where('id', $group->moderator->id)
                 ->whereNotIn('id', $user->id)
                 ->get();
 
