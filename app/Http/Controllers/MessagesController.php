@@ -70,7 +70,38 @@ class MessagesController extends Controller
             return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
         }
 
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $conversation = Conversation::where('id', $request->conversation_id)->first();
 
+            $need_user_id = null;
+            if ($conversation->user1_id == $user->id) {
+                $need_user_id = $conversation->user2_id;
+            }
+            if ($conversation->user2_id == $user->id) {
+                $need_user_id = $conversation->user1_id;
+            }
+
+            $messages = Message::where('conversation_id', $conversation->id)
+                ->where('user_id', $need_user_id)
+                ->where('status', 'unread')
+                ->get();
+
+            if (!$messages || count($messages) < 1){
+                return response()->json(['message' => 'Повідомлень не знайдено!'], 404);
+            }
+
+            foreach ($messages as $message) {
+                $message->status = 'read';
+                $message->save();
+            }
+
+            return ['message' => 'Повідомлення помічені як прочитані!'];
+
+        } catch (\Exception $exception) {
+            Log::warning('MessagesController@messagesMarkRead Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
     }
 
     public function adminIndex()
