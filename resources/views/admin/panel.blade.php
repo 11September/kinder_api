@@ -20,12 +20,15 @@
                         <p class="panel-heading">Садки</p>
                         <div class="mr-5 panel-count">{{ $schools }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/kindergartens') }}">
-                        <span class="float-left">Докладніше</span>
-                        <span class="float-right">
+
+                    @if(Auth::user()->type == "admin")
+                        <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/kindergartens') }}">
+                            <span class="float-left">Докладніше</span>
+                            <span class="float-right">
                              <i class="fas fa-angle-right"></i>
                         </span>
-                    </a>
+                        </a>
+                    @endif
                 </div>
             </div>
             <div class="col-xl-4 col-sm-6 mb-3">
@@ -37,12 +40,16 @@
                         <p class="panel-heading">Адміністрація</p>
                         <div class="mr-5 panel-count">{{ $admins }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/admins') }}">
-                        <span class="float-left">Докладніше</span>
-                        <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                    </a>
+
+                    @if(Auth::user()->type == "admin")
+                        <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/admins') }}">
+                            <span class="float-left">Докладніше</span>
+                            <span class="float-right">
+                            <i class="fas fa-angle-right"></i>
+                          </span>
+                        </a>
+                    @endif
+
                 </div>
             </div>
             <div class="col-xl-4 col-sm-6 mb-3">
@@ -54,12 +61,16 @@
                         <p class="panel-heading">Користувачi</p>
                         <div class="mr-5 panel-count">{{ $users }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/users') }}">
-                        <span class="float-left">Докладніше</span>
-                        <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                    </a>
+
+                    @if(Auth::user()->type == "admin")
+                        <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/users') }}">
+                            <span class="float-left">Докладніше</span>
+                            <span class="float-right">
+                            <i class="fas fa-angle-right"></i>
+                          </span>
+                        </a>
+                    @endif
+
                 </div>
             </div>
             <div class="col-xl-4 col-sm-6 mb-3">
@@ -71,12 +82,16 @@
                         <p class="panel-heading">Групи</p>
                         <div class="mr-5 panel-count">{{ $groups }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/groups') }}">
-                        <span class="float-left">Докладніше</span>
-                        <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                    </a>
+
+                    @if(Auth::user()->type == "admin")
+                        <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/groups') }}">
+                            <span class="float-left">Докладніше</span>
+                            <span class="float-right">
+                            <i class="fas fa-angle-right"></i>
+                          </span>
+                        </a>
+                    @endif
+
                 </div>
             </div>
             <div class="col-xl-4 col-sm-6 mb-3">
@@ -88,12 +103,16 @@
                         <p class="panel-heading">Новини</p>
                         <div class="mr-5 panel-count">{{ $news }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/posts') }}">
-                        <span class="float-left">Докладніше</span>
-                        <span class="float-right">
-                    <i class="fas fa-angle-right"></i>
-                  </span>
-                    </a>
+
+                    @if(Auth::user()->type == "admin")
+                        <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/posts') }}">
+                            <span class="float-left">Докладніше</span>
+                            <span class="float-right">
+                            <i class="fas fa-angle-right"></i>
+                          </span>
+                        </a>
+                    @endif
+
                 </div>
             </div>
             <div class="col-xl-4 col-sm-6 mb-3">
@@ -105,12 +124,16 @@
                         <p class="panel-heading">Листування</p>
                         <div class="mr-5 panel-count">{{ $messages }}</div>
                     </div>
-                    <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/conversations') }}">
-                        <span class="float-left">Докладніше</span>
-                        <span class="float-right">
-                            <i class="fas fa-angle-right"></i>
-                        </span>
-                    </a>
+
+                    @if(Auth::user()->type == "admin")
+                        <a class="card-footer text-white clearfix small z-1" href="{{ url('admin/conversations') }}">
+                            <span class="float-left">Докладніше</span>
+                            <span class="float-right">
+                                <i class="fas fa-angle-right"></i>
+                            </span>
+                        </a>
+                    @endif
+
                 </div>
             </div>
         </div>

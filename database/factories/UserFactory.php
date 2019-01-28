@@ -58,10 +58,10 @@ DB::table('users')->insert([
 ]);
 
 DB::table('users')->insert([
-    'name' => "Станислав",
+    'name' => "Вихователь",
     'email' => "moderator@admin.com",
     'email_verified_at' => now(),
-    'password' => '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', // secret
+    'password' => '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', // password
     'token' => str_random(5),
     'remember_token' => str_random(10),
     'push' => $faker->randomElement(['enabled', 'disabled']),

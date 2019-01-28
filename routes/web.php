@@ -18,7 +18,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
-Route::get('/admin', 'AdminController@admin')->middleware('is_admin')->name('admin');
+Route::get('/admin', 'AdminController@admin')->middleware('access_admin')->name('admin');
 
 // Admin Admins
 Route::get('/admin/admins', 'AdminController@admins')->middleware('is_admin')->name('admin.admins');
@@ -44,16 +44,6 @@ Route::get('/admin/kindergartens/{id}/edit', 'SchoolController@adminEdit')->midd
 Route::put('/admin/kindergartens/{id}', 'SchoolController@adminUpdate')->middleware('is_admin')->name('admin.kindergartens.update');
 Route::delete('/admin/kindergartens/{id}', 'SchoolController@adminDelete')->middleware('is_admin')->name('admin.kindergartens.delete');
 
-
-// Admin Electives
-//Route::get('/admin/electives', 'ElectivesContoller@adminIndex')->middleware('is_admin')->name('admin.electives');
-//Route::get('/admin/electives/create', 'ElectivesContoller@adminCreate')->middleware('is_admin')->name('admin.electives.create');
-//Route::post('/admin/electives', 'ElectivesContoller@adminStore')->middleware('is_admin')->name('admin.electives.store');
-//Route::get('/admin/electives/{id}', 'ElectivesContoller@adminShow')->middleware('is_admin')->name('admin.electives.show');
-//Route::get('/admin/electives/{id}/edit', 'ElectivesContoller@adminEdit')->middleware('is_admin')->name('admin.electives.edit');
-//Route::put('/admin/electives/{id}', 'ElectivesContoller@adminUpdate')->middleware('is_admin')->name('admin.electives.update');
-//Route::delete('/admin/electives/{id}', 'ElectivesContoller@adminDelete')->middleware('is_admin')->name('admin.electives.delete');
-
 // Admin Groups
 Route::get('/admin/groups', 'GroupController@adminIndex')->middleware('is_admin')->name('admin.groups');
 Route::get('/admin/groups/create', 'GroupController@adminCreate')->middleware('is_admin')->name('admin.groups.create');
@@ -61,7 +51,7 @@ Route::post('/admin/groups', 'GroupController@adminStore')->middleware('is_admin
 Route::get('/admin/groups/{id}/edit', 'GroupController@adminEdit')->middleware('is_admin')->name('admin.groups.edit');
 Route::put('/admin/groups/{id}', 'GroupController@adminUpdate')->middleware('is_admin')->name('admin.groups.update');
 Route::delete('/admin/groups/{id}', 'GroupController@adminDelete')->middleware('is_admin')->name('admin.groups.delete');
-Route::post('/admin/groups/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('is_admin')->name('admin.users.getAllGroupsById');
+Route::post('/admin/groups/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('access_admin')->name('admin.users.getAllGroupsById');
 
 // Admin News
 Route::get('/admin/posts', 'PostsController@adminIndex')->middleware('is_admin')->name('admin.posts');
@@ -95,11 +85,11 @@ Route::post('/admin/notifications/notifyFoodsBySchool', 'NotificationsController
 
 
 // Admin Conversations
-Route::get('/admin/conversations', 'ConversationController@admin')->middleware('is_admin')->name('admin.messages');
-Route::get('/admin/conversations/group/{id}', 'ConversationController@adminShowGroupUsers')->middleware('is_admin')->name('admin.groupUsers');
-Route::get('/admin/conversations/{id}', 'ConversationController@checkConversation')->middleware('is_admin')->name('admin.conversation.checkConversation');
-Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->middleware('is_admin')->name('admin.conversation.user');
+Route::get('/admin/conversations', 'ConversationController@admin')->middleware('access_admin')->name('admin.messages');
+Route::get('/admin/conversations/group/{id}', 'ConversationController@adminShowGroupUsers')->middleware('access_admin')->name('admin.groupUsers');
+Route::get('/admin/conversations/{id}', 'ConversationController@checkConversation')->middleware('access_admin')->name('admin.conversation.checkConversation');
+Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->middleware('access_admin')->name('admin.conversation.user');
 
-Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('is_admin')->name('admin.messages.store');
-Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->middleware('is_admin')->name('admin.messages.setReadMessages');
-Route::post('/admin/messages/fetchMessages', 'MessagesController@fetchMessages')->middleware('is_admin')->name('admin.messages.fetchMessages');
+Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('access_admin')->name('admin.messages.store');
+Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->middleware('access_admin')->name('admin.messages.setReadMessages');
+Route::post('/admin/messages/fetchMessages', 'MessagesController@fetchMessages')->middleware('access_admin')->name('admin.messages.fetchMessages');
