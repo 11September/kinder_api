@@ -52,7 +52,11 @@ class GroupController extends Controller
                 )
                 ->first();
 
-            dd($group);
+            $admins_group = null;
+            $admins_group->put('users', $group->admin);
+            $admins_group->put('users', $group->moderator);
+
+            dd($admins_group);
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $group->id)
