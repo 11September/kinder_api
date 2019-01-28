@@ -1045,7 +1045,8 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 #list-groups-with-description .list-group-item{
-    margin: 10px;
+    margin: 0;
+    padding: 10px;
 }
 
     /* Clear floats */
