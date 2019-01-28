@@ -55,8 +55,7 @@ class GroupController extends Controller
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('type', '!=', 'default')
                 ->where('id', '!=', $user->id)
-                ->where('id', '=', $group->admin->id)
-                ->where('id', '=', $group->moderator->id)
+                ->where(['id', '=', $group->admin->id], ['id', '=', $group->moderator->id])
                 ->get();
 
             dd($group->admin->id, $group->moderator->id, $admins_group);
