@@ -52,10 +52,12 @@ class GroupController extends Controller
                 )
                 ->first();
 
+            $adminId = $group->admin->id;
+
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
 //                ->where('type', '!=', 'default')
-                ->where('id', $group->admin->id)
-                ->where('id', $group->moderator->id)
+                ->where('id', $adminId)
+//                ->where('id', $group->moderator->id)
 //                ->where('id', '!=', $user->id)
                 ->get();
 
