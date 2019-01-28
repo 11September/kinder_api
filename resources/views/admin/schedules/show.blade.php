@@ -43,21 +43,39 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-3">
+
+
                         <h3>Cписок cадкiв</h3>
 
-                        <ul class="list-group list-group-flex">
+                        <div class="form-group">
+                            <select required name="school_id"
+                                    class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}">
 
-                            @foreach($list_schools as $school)
-                                <li class="list-group-item @if($school->id == $current_school->id) active @endif">
+                                @foreach($list_schools as $school)
+                                    <option class="choose_school_option"
+                                            value="{{ $school->id }}">{{ $school->name }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+
+
+                        <h3>Cписок груп</h3>
+
+                        <ul class="list-group list-group-flex" id="wrapper-list-groups">
+
+                            @foreach($groups as $group)
+                                <li class="list-group-item @if($group->id == $current_school->id) active @endif">
                                     <div>
                                         <a class="orange-text"
-                                           href="{{ action('SchedulesController@adminShow', $school->id) }}">
-                                            {{ $school->name }}
+                                           href="{{ action('SchedulesController@adminShow', $group->id) }}">
+                                            {{ $group->name }}
                                         </a>
                                     </div>
 
                                     <div class="list-group-flex-wrapper-notification">
-                                        <a class="notification-school" data-id="{{ $school->id }}" href="#">
+                                        <a class="notification-school" data-id="{{ $group->id }}" href="#">
                                             <p class="list-group-flex-notification"><i class="fas fa-bell"></i></p>
                                         </a>
                                     </div>
@@ -226,6 +244,49 @@
 
     <script>
         $(document).ready(function () {
+
+            $('.choose_school').on('change', function () {
+                var school_id = $(this).val();
+                if (school_id) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/groups/getAllGroupsById',
+                        dataType: 'json',
+                        data: {id: school_id},
+                        success: function (data) {
+
+                            if (data.success) {
+                                $('#wrapper-list-groups').empty();
+
+                                if (data.data && data.data !== '') {
+                                    $.each(data.data, function (index, item) {
+                                        console.log(item);
+
+                                        $('#wrapper-list-groups').append(
+                                            '<li class="list-group-item">' +
+                                            '<a class="orange-text" href="/admin/schedules/'+item.id+'">' + item.name + '</a>' +
+                                            '</li>'
+                                        );
+                                    });
+                                } else {
+                                    console.log("empty data");
+                                    $('#wrapper-list-groups').empty();
+                                }
+                            }
+
+                        }, error: function () {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+
+
+
             var global_school_id;
             var global_day;
 

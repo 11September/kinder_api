@@ -45,84 +45,92 @@
                     <div class="col-md-2">
                         <h3>Cписок cадкiв</h3>
 
-                        <ul class="list-group list-group-flex">
+                        <div class="form-group">
+                            <select required name="school_id"
+                                    class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}">
 
-                            @foreach($list_schools as $school)
+                                @foreach($schools as $school)
+                                    <option class="choose_school_option"
+                                            value="{{ $school->id }}">{{ $school->name }}</option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+                        <h3>Cписок груп</h3>
+
+                        <ul class="list-group list-group-flex" id="wrapper-list-groups">
+                            @foreach($groups as $group)
                                 <li class="list-group-item">
-                                    <div>
-                                        <a class="orange-text"
-                                           href="{{ action('SchedulesController@adminShow', $school->id) }}">
-                                            {{ $school->name }}
-                                        </a>
-                                    </div>
+                                    <a class="orange-text" href="{{ action('SchedulesController@adminShow', $group->id) }}">{{ $group->name }}</a>
                                 </li>
                             @endforeach
-
                         </ul>
+
                     </div>
 
                     <div class="col-md-10">
                         <div class="row">
 
-                            @foreach($schedules as $schools)
-                                <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 wrapper-schedule-one-school">
+                            {{--@foreach($schedules as $schools)--}}
+                                {{--<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 wrapper-schedule-one-school">--}}
 
-                                    <h1>Розклад - {{ @$schools[0]->school->name }}</h1>
-                                    <div class="row">
+                                    {{--<h1>Розклад - {{ @$schools[0]->school->name }}</h1>--}}
+                                    {{--<div class="row">--}}
 
-                                        @foreach($schools as $schedule)
-                                            <div class="col-md-6">
-                                                <div class="schedule-item">
-                                                    <div class="schedule-item-day">
-                                                        @if($schedule->day == "Monday")
-                                                            Пн
-                                                        @endif
+                                        {{--@foreach($schools as $schedule)--}}
+                                            {{--<div class="col-md-6">--}}
+                                                {{--<div class="schedule-item">--}}
+                                                    {{--<div class="schedule-item-day">--}}
+                                                        {{--@if($schedule->day == "Monday")--}}
+                                                            {{--Пн--}}
+                                                        {{--@endif--}}
 
-                                                        @if($schedule->day == "Tuesday")
-                                                            Вт
-                                                        @endif
+                                                        {{--@if($schedule->day == "Tuesday")--}}
+                                                            {{--Вт--}}
+                                                        {{--@endif--}}
 
-                                                        @if($schedule->day == "Wednesday")
-                                                            Ср
-                                                        @endif
+                                                        {{--@if($schedule->day == "Wednesday")--}}
+                                                            {{--Ср--}}
+                                                        {{--@endif--}}
 
-                                                        @if($schedule->day == "Thursday")
-                                                            Чт
-                                                        @endif
+                                                        {{--@if($schedule->day == "Thursday")--}}
+                                                            {{--Чт--}}
+                                                        {{--@endif--}}
 
-                                                        @if($schedule->day == "Friday")
-                                                            Пт
-                                                        @endif
+                                                        {{--@if($schedule->day == "Friday")--}}
+                                                            {{--Пт--}}
+                                                        {{--@endif--}}
 
-                                                        @if($schedule->day == "Saturday")
-                                                            Сб
-                                                        @endif
+                                                        {{--@if($schedule->day == "Saturday")--}}
+                                                            {{--Сб--}}
+                                                        {{--@endif--}}
 
-                                                        @if($schedule->day == "Sunday")
-                                                            Вс
-                                                        @endif
-                                                    </div>
+                                                        {{--@if($schedule->day == "Sunday")--}}
+                                                            {{--Вс--}}
+                                                        {{--@endif--}}
+                                                    {{--</div>--}}
 
-                                                    <div class="row">
-                                                        <div class="col-md-9 offset-md-3">
+                                                    {{--<div class="row">--}}
+                                                        {{--<div class="col-md-9 offset-md-3">--}}
 
-                                                            @foreach($schedule->lessons as $lesson)
-                                                                <div class="schedule-list-day">
-                                                                    <p class="schedule-list-day-time">{{ $lesson->from }}
-                                                                        - {{ $lesson->to }}</p>
-                                                                    <p class="schedule-list-day-name">{{ $lesson->name }}</p>
-                                                                </div>
-                                                            @endforeach
+                                                            {{--@foreach($schedule->lessons as $lesson)--}}
+                                                                {{--<div class="schedule-list-day">--}}
+                                                                    {{--<p class="schedule-list-day-time">{{ $lesson->from }}--}}
+                                                                        {{--- {{ $lesson->to }}</p>--}}
+                                                                    {{--<p class="schedule-list-day-name">{{ $lesson->name }}</p>--}}
+                                                                {{--</div>--}}
+                                                            {{--@endforeach--}}
 
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
+                                                        {{--</div>--}}
+                                                    {{--</div>--}}
+                                                {{--</div>--}}
+                                            {{--</div>--}}
+                                        {{--@endforeach--}}
 
-                                    </div>
-                                </div>
-                            @endforeach
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--@endforeach--}}
 
 
                         </div>
@@ -136,5 +144,47 @@
 @endsection
 
 @section('scripts')
+    <script>
+        $(document).ready(function () {
+            $('.choose_school').on('change', function () {
+                var school_id = $(this).val();
+                if (school_id) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
 
+                        type: 'POST',
+                        url: '/admin/groups/getAllGroupsById',
+                        dataType: 'json',
+                        data: {id: school_id},
+                        success: function (data) {
+
+                            if (data.success) {
+                                $('#wrapper-list-groups').empty();
+
+                                if (data.data && data.data !== '') {
+                                    $.each(data.data, function (index, item) {
+                                        console.log(item);
+
+                                        $('#wrapper-list-groups').append(
+                                            '<li class="list-group-item">' +
+                                            '<a class="orange-text" href="/admin/schedules/'+item.id+'">' + item.name + '</a>' +
+                                            '</li>'
+                                        );
+                                    });
+                                } else {
+                                    console.log("empty data");
+                                    $('#wrapper-list-groups').empty();
+                                }
+                            }
+
+                        }, error: function () {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 @endsection

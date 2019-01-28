@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Clas;
+use App\Group;
 use App\School;
 use App\Schedule;
 use Illuminate\Http\Request;
@@ -38,22 +39,28 @@ class SchedulesController extends Controller
 
     public function adminIndex()
     {
-        $list_schools = School::all();
+        $schools = School::all();
 
-        $schedules = Schedule::with('lessons')->with('school')->get()->groupBy('school_id');
+        $groups = Group::whereHas('schools', function ($query) use ($schools) {
+            $query->where('school_id', '=', $schools->first()->id);
+        })->get();
 
-        return view('admin.schedules', compact('list_schools', 'schedules'));
+        return view('admin.schedules', compact('schools', 'groups'));
     }
 
     public function adminShow($id)
     {
         $list_schools = School::all();
 
+        $groups = Group::whereHas('schools', function ($query) use ($list_schools) {
+            $query->where('school_id', '=', $list_schools->first()->id);
+        })->get();
+
         $schedules = Schedule::where('school_id', $id)->with('lessons')->get();
 
         $current_school = School::where('id', $id)->first();
 
-        return view('admin.schedules.show', compact('list_schools', 'schedules', 'current_school'));
+        return view('admin.schedules.show', compact('list_schools', 'schedules', 'current_school', 'groups'));
     }
 
     public function adminGetLessonsByDay(Request $request)

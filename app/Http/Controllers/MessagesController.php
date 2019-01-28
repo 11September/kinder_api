@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversation;
 use App\User;
+use OneSignal;
 use App\Group;
 use App\School;
 use App\Message;
+use App\Conversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -34,6 +35,32 @@ class MessagesController extends Controller
             $message->user_id = $user->id;
             $message->save();
 
+
+            //  Push to User
+
+            $conversation = Conversation::where('id', $request->conversation_id)->first();
+
+            $need_user_id = null;
+            if ($conversation->user1_id == $user->id) {
+                $need_user_id = $conversation->user2_id;
+            }
+            if ($conversation->user2_id == $user->id) {
+                $need_user_id = $conversation->user1_id;
+            }
+
+            $user = User::select('id', 'player_id')
+                ->where('id', $need_user_id)
+                ->where('player_id', '!=', null)
+                ->where('push', 'enabled')
+                ->whereIn('school_id', $request->school_id)
+                ->whereIn('group_id', $request->group_id)
+                ->first();
+
+            \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+            //  Push to User end
+
+
+            //           Fetch this conversations
             $messages = Message::select('id', 'message', 'status', 'user_id')
                 ->where('conversation_id', $request->conversation_id)
                 ->oldest()
@@ -51,6 +78,7 @@ class MessagesController extends Controller
                 unset($message->id);
                 unset($message->user_id);
             }
+            //           Fetch this conversations
 
             return ['message' => 'Повідомлення збережено!', 'data' => $messages];
 
@@ -87,7 +115,7 @@ class MessagesController extends Controller
                 ->where('status', 'unread')
                 ->get();
 
-            if (!$messages || count($messages) < 1){
+            if (!$messages || count($messages) < 1) {
                 return response()->json(['message' => 'Повідомлень не знайдено!'], 404);
             }
 
