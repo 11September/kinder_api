@@ -53,7 +53,6 @@ class GroupController extends Controller
                 ->first();
 
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
-                ->where('group_id', '=', $group->id)
                 ->where('type', '!=', 'default')
                 ->where('id', '!=', $user->id)
                 ->where('id', '=', $group->admin->id)
