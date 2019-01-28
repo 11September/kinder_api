@@ -17,7 +17,7 @@
                 <a class="orange-text" href="{{ url('admin/schedules') }}">Розклад</a>
             </li>
 
-            <li class="breadcrumb-item active">{{ $current_school->name }}</li>
+            <li class="breadcrumb-item active">{{ $current_group->name }}</li>
         </ol>
 
         <div class="card mb-3">
@@ -52,13 +52,12 @@
                                     class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}">
 
                                 @foreach($list_schools as $school)
-                                    <option class="choose_school_option"
-                                            value="{{ $school->id }}">{{ $school->name }}</option>
+                                    <option class="choose_school_option" value="{{ $school->id }}"
+                                            @if($school->id == $current_school->id) selected @endif>{{ $school->name }}</option>
                                 @endforeach
 
                             </select>
                         </div>
-
 
 
                         <h3>Cписок груп</h3>
@@ -66,7 +65,7 @@
                         <ul class="list-group list-group-flex" id="wrapper-list-groups">
 
                             @foreach($groups as $group)
-                                <li class="list-group-item @if($group->id == $current_school->id) active @endif">
+                                <li class="list-group-item @if($group->id == $current_group->id) active @endif">
                                     <div>
                                         <a class="orange-text"
                                            href="{{ action('SchedulesController@adminShow', $group->id) }}">
@@ -97,6 +96,8 @@
                                             <input value="Monday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -107,6 +108,8 @@
                                             <input value="Tuesday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -117,6 +120,8 @@
                                             <input value="Wednesday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -127,6 +132,8 @@
                                             <input value="Thursday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -137,6 +144,8 @@
                                             <input value="Friday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -147,6 +156,8 @@
                                             <input value="Saturday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -157,6 +168,8 @@
                                             <input value="Sunday" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -167,6 +180,8 @@
                                             <input checked value="all" type="radio" name="day">
                                             <input class="hidden-school" hidden value="{{ $current_school->id }}"
                                                    type="text" name="school_id">
+                                            <input class="hidden-group" hidden value="{{ $current_group->id }}"
+                                                   type="text" name="group_id">
                                             <span class="checkmark-radio"></span>
                                         </label>
                                     </div>
@@ -268,7 +283,7 @@
 
                                         $('#wrapper-list-groups').append(
                                             '<li class="list-group-item">' +
-                                            '<a class="orange-text" href="/admin/schedules/'+item.id+'">' + item.name + '</a>' +
+                                            '<a class="orange-text" href="/admin/schedules/' + item.id + '">' + item.name + '</a>' +
                                             '</li>'
                                         );
                                     });
@@ -286,16 +301,18 @@
             });
 
 
-
             var global_school_id;
+            var global_group_id;
             var global_day;
 
             $('.all-days-checkboxes input').on('change', function () {
                 var day = $('input[name=day]:checked', '.all-days-checkboxes').val();
                 var school_id = $(this).siblings(".hidden-school").val();
+                var group_id = $(this).siblings(".hidden-group").val();
 
                 global_day = day;
                 global_school_id = school_id;
+                global_group_id = group_id;
 
                 // if all
                 if (day == "all") {
@@ -303,7 +320,7 @@
                         type: 'GET',
                         url: '/admin/adminGetLessonsAll',
                         dataType: 'json',
-                        data: {school_id: school_id},
+                        data: {school_id: school_id, group_id: global_group_id},
                         success: function (data) {
 
                             if (data.success) {
@@ -383,7 +400,7 @@
                         type: 'GET',
                         url: '/admin/adminGetLessonsByDay',
                         dataType: 'json',
-                        data: {school_id: school_id, day: day},
+                        data: {school_id: school_id, day: day, group_id: group_id},
                         success: function (data) {
 
                             if (data.success && data.data) {
@@ -438,6 +455,7 @@
                                             '    <div class="col-md-3 padb-20 control-lessons-buttons">' +
                                             '         <input type="text" hidden name="day" value="' + global_day + '">' +
                                             '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
+                                            '         <input type="text" hidden name="group_id" value="' + global_group_id + '">' +
                                             '         <button class="newLessonFormButton" type="submit">' +
                                             '              <i class="far fa-save"></i>' +
                                             '         </button>' +
@@ -454,8 +472,6 @@
                                             '</div>' +
                                             '</form>'
                                         );
-
-                                        // '             <a class="save-lesson" data-day="' + global_day + '" data-school="' + global_school_id + '" data-id="" href="#"><i class="far fa-save"></i></a>' +
 
                                         console.log("sub each");
                                         console.log(item);
@@ -582,6 +598,7 @@
                     '    <div class="col-md-3 padb-20 control-lessons-buttons">' +
                     '         <input type="text" hidden name="day" value="' + global_day + '">' +
                     '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
+                    '         <input type="text" hidden name="group_id" value="' + global_group_id + '">' +
                     '         <input type="text" class="lesson_id" hidden name="lesson_id" value="">' +
                     '         <button class="newLessonFormButton" type="submit">' +
                     '             <i class="far fa-save"></i>' +
@@ -649,23 +666,23 @@
                 var notification_school_id = $(this).attr("data-id");
                 clicked.prop('disabled', true);
 
-                toastr.warning("<br/><div class='wrapper-confirmationRevertYes'><button type='button' class='btn clear confirmationRevertYes'>Отправить</button></div>",'Дійсно відправити користувачам повідомлення зі зміною розкладу?',
+                toastr.warning("<br/><div class='wrapper-confirmationRevertYes'><button type='button' class='btn clear confirmationRevertYes'>Отправить</button></div>", 'Дійсно відправити користувачам повідомлення зі зміною розкладу?',
                     {
                         closeButton: true,
-                        timeOut : 3000,
-                        extendedTimeOut : 6000,
+                        timeOut: 3000,
+                        extendedTimeOut: 6000,
                         allowHtml: true,
                         onShown: function (toast) {
-                            $(".confirmationRevertYes").click(function(){
+                            $(".confirmationRevertYes").click(function () {
                                 $.ajax({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                     },
 
                                     type: 'POST',
-                                    url: '/admin/notifications/notifyScheduleBySchool',
+                                    url: '/admin/notifications/notifyScheduleByGroup',
                                     dataType: 'json',
-                                    data: {id: notification_school_id},
+                                    data: {group_id: notification_school_id},
                                     success: function (data) {
                                         if (data.success) {
                                             toastr.success('Повідомлення успішно відправлено!', {timeOut: 3000});

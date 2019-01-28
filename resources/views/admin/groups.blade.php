@@ -55,6 +55,12 @@
                                             {{ $group->name }}
                                         </a>
 
+                                        <ul>
+                                            @foreach(@$group->schools as $school)
+                                                <li>{{ $school->name }}</li>
+                                            @endforeach
+                                        </ul>
+
                                         <p class="group-count">{{ $group->students_count }} чоловiк</p>
                                         <p class="group-count">
                                             Адміністратор - <span class="orange-text">{{ @$group->admin->name }}</span>

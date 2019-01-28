@@ -89,10 +89,10 @@ class NotificationsController extends Controller
         return redirect()->route('admin.notifications')->with('message', 'Повiдомлення успішно відправлено!');
     }
 
-    public function notifyScheduleBySchool(Request $request)
+    public function notifyScheduleByGroup(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'id' => 'required',
+            'group_id' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -103,7 +103,7 @@ class NotificationsController extends Controller
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
-                ->where('school_id', $request->id)
+                ->where('group_id', $request->group_id)
                 ->get();
 
             $player_ids = array();
@@ -126,7 +126,7 @@ class NotificationsController extends Controller
             return response()->json(['success'=>true]);
 
         } catch (\Exception $exception) {
-            Log::warning('NotificationsController@notifyScheduleBySchool Exception: ' . $exception->getMessage());
+            Log::warning('NotificationsController@notifyScheduleByGroup Exception: ' . $exception->getMessage());
             return response()->json(['error'=> true]);
         }
     }

@@ -90,7 +90,7 @@ Route::get('/admin/adminDeleteFoodByDay', 'NutritionsController@adminDeleteFoodB
 // Admin Notifications
 Route::get('/admin/notifications', 'NotificationsController@adminIndex')->middleware('is_admin')->name('admin.notifications');
 Route::post('/admin/notifications', 'NotificationsController@adminStore')->middleware('is_admin')->name('admin.notifications.store');
-Route::post('/admin/notifications/notifyScheduleBySchool', 'NotificationsController@notifyScheduleBySchool')->middleware('is_admin')->name('admin.notifications.notifyScheduleBySchool');
+Route::post('/admin/notifications/notifyScheduleByGroup', 'NotificationsController@notifyScheduleByGroup')->middleware('is_admin')->name('admin.notifications.notifyScheduleByGroup');
 Route::post('/admin/notifications/notifyFoodsBySchool', 'NotificationsController@notifyFoodsBySchool')->middleware('is_admin')->name('admin.notifications.notifyFoodsBySchool');
 
 

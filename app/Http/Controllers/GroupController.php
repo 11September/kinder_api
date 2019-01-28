@@ -114,6 +114,7 @@ class GroupController extends Controller
         $groups = Group::withCount(['students'])
             ->with('admin')
             ->with('moderator')
+            ->with('schools')
             ->get();
 
         return view('admin.groups', compact('admins', 'moderators', 'schools', 'groups'));

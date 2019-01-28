@@ -72,67 +72,6 @@
                     <div class="col-md-10">
                         <div class="row">
 
-                            {{--@foreach($schedules as $schools)--}}
-                                {{--<div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 wrapper-schedule-one-school">--}}
-
-                                    {{--<h1>Розклад - {{ @$schools[0]->school->name }}</h1>--}}
-                                    {{--<div class="row">--}}
-
-                                        {{--@foreach($schools as $schedule)--}}
-                                            {{--<div class="col-md-6">--}}
-                                                {{--<div class="schedule-item">--}}
-                                                    {{--<div class="schedule-item-day">--}}
-                                                        {{--@if($schedule->day == "Monday")--}}
-                                                            {{--Пн--}}
-                                                        {{--@endif--}}
-
-                                                        {{--@if($schedule->day == "Tuesday")--}}
-                                                            {{--Вт--}}
-                                                        {{--@endif--}}
-
-                                                        {{--@if($schedule->day == "Wednesday")--}}
-                                                            {{--Ср--}}
-                                                        {{--@endif--}}
-
-                                                        {{--@if($schedule->day == "Thursday")--}}
-                                                            {{--Чт--}}
-                                                        {{--@endif--}}
-
-                                                        {{--@if($schedule->day == "Friday")--}}
-                                                            {{--Пт--}}
-                                                        {{--@endif--}}
-
-                                                        {{--@if($schedule->day == "Saturday")--}}
-                                                            {{--Сб--}}
-                                                        {{--@endif--}}
-
-                                                        {{--@if($schedule->day == "Sunday")--}}
-                                                            {{--Вс--}}
-                                                        {{--@endif--}}
-                                                    {{--</div>--}}
-
-                                                    {{--<div class="row">--}}
-                                                        {{--<div class="col-md-9 offset-md-3">--}}
-
-                                                            {{--@foreach($schedule->lessons as $lesson)--}}
-                                                                {{--<div class="schedule-list-day">--}}
-                                                                    {{--<p class="schedule-list-day-time">{{ $lesson->from }}--}}
-                                                                        {{--- {{ $lesson->to }}</p>--}}
-                                                                    {{--<p class="schedule-list-day-name">{{ $lesson->name }}</p>--}}
-                                                                {{--</div>--}}
-                                                            {{--@endforeach--}}
-
-                                                        {{--</div>--}}
-                                                    {{--</div>--}}
-                                                {{--</div>--}}
-                                            {{--</div>--}}
-                                        {{--@endforeach--}}
-
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--@endforeach--}}
-
-
                         </div>
                     </div>
                 </div>

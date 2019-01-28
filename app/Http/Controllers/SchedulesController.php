@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Clas;
 use App\Group;
 use App\School;
@@ -12,14 +13,13 @@ use Illuminate\Support\Facades\Validator;
 
 class SchedulesController extends Controller
 {
-    public function index($school_id)
+    public function index(Request $request)
     {
-        if (!$school_id || empty($school_id) || !is_numeric($school_id)) {
-            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
-        }
-
         try {
-            $schedule = Schedule::where('school_id', $school_id)
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+            $schedule = Schedule::where('school_id', $user->school_id)
+                ->where('group_id', $user->group_id)
                 ->with(array('lessons' => function ($query) {
                     $query->select('id', 'name', 'from', 'to', 'schedule_id');
                 }))
@@ -52,25 +52,35 @@ class SchedulesController extends Controller
     {
         $list_schools = School::all();
 
-        $groups = Group::whereHas('schools', function ($query) use ($list_schools) {
-            $query->where('school_id', '=', $list_schools->first()->id);
+        $current_group = Group::where('id', $id)->first();
+
+        $current_school = School::whereHas('groups', function ($query) use ($current_group) {
+            $query->where('group_id', '=', $current_group->id);
+        })->first();
+
+        $groups = Group::whereHas('schools', function ($query) use ($current_school) {
+            $query->where('school_id', '=', $current_school->id);
         })->get();
 
-        $schedules = Schedule::where('school_id', $id)->with('lessons')->get();
+        $schedules = Schedule::where('school_id', $current_school->id)
+            ->where('group_id', $current_group->id)
+            ->with('lessons')
+            ->get();
 
-        $current_school = School::where('id', $id)->first();
-
-        return view('admin.schedules.show', compact('list_schools', 'schedules', 'current_school', 'groups'));
+        return view('admin.schedules.show', compact('list_schools', 'schedules', 'current_school', 'current_group' ,'groups'));
     }
 
     public function adminGetLessonsByDay(Request $request)
     {
         $request->validate([
             'school_id' => 'required',
+            'group_id' => 'required',
             'day' => 'required',
         ]);
 
-        $schedules = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->with('lessons')->first();
+        $schedules = Schedule::where('school_id', $request->school_id)
+            ->where('group_id', $request->group_id)
+            ->where('day', $request->day)->with('lessons')->first();
 
         return response()->json(['data' => $schedules, 'success' => true]);
     }
@@ -79,9 +89,13 @@ class SchedulesController extends Controller
     {
         $request->validate([
             'school_id' => 'required',
+            'group_id' => 'required',
         ]);
 
-        $schedules = Schedule::where('school_id', $request->school_id)->with('lessons')->get();
+        $schedules = Schedule::where('school_id', $request->school_id)
+            ->where('group_id', $request->group_id)
+            ->with('lessons')
+            ->get();
 
         return response()->json(['data' => $schedules, 'success' => true]);
     }
@@ -106,6 +120,7 @@ class SchedulesController extends Controller
             'to' => 'required',
 
             'school_id' => 'required',
+            'group_id' => 'required',
             'day' => 'required',
             'schedule_id' => '',
             'lesson_id' => '',
@@ -119,7 +134,7 @@ class SchedulesController extends Controller
             $lesson->save();
         } else {
             if ($request->schedule_id) {
-                $schedule = Schedule::where('id', $request->schedule_id)->first();
+                $schedule = Schedule::where('id', $request->schedule_id)->where('group_id', $request->group_id)->first();
 
                 $lesson = Clas::where('schedule_id', $schedule->id)->first();
                 $lesson->name = $request->name;
@@ -128,7 +143,7 @@ class SchedulesController extends Controller
                 $lesson->save();
 
             } else {
-                $schedule = Schedule::where('school_id', $request->school_id)->where('day', $request->day)->first();
+                $schedule = Schedule::where('school_id', $request->school_id)->where('group_id', $request->group_id)->where('day', $request->day)->first();
 
                 if ($schedule) {
                     $lesson = new Clas();
@@ -140,6 +155,7 @@ class SchedulesController extends Controller
                 } else {
                     $schedule = new Schedule();
                     $schedule->school_id = $request->school_id;
+                    $schedule->group_id = $request->group_id;
                     $schedule->day = $request->day;
                     $schedule->save();
 
