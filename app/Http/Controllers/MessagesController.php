@@ -47,14 +47,11 @@ class MessagesController extends Controller
             if ($conversation->user2_id == $user->id) {
                 $need_user_id = $conversation->user1_id;
             }
-            dd($need_user_id);
 
             $user = User::select('id', 'player_id')
                 ->where('id', $need_user_id)
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
-                ->whereIn('school_id', $request->school_id)
-                ->whereIn('group_id', $request->group_id)
                 ->first();
 
             \OneSignal::sendNotificationToUser($message->message, $user->player_id);
