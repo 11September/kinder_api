@@ -59,26 +59,28 @@ class MessagesController extends Controller
 
 
             //           Fetch this conversations
-            $messages = Message::select('id', 'message', 'status', 'user_id')
-                ->where('conversation_id', $request->conversation_id)
-                ->oldest()
-                ->get();
 
-            foreach ($messages as $message) {
-                if ($message->user_id == $user->id) {
-                    $message->self = true;
-                } else {
-                    $message->self = false;
-                }
-            }
+//            $messages = Message::select('id', 'message', 'status', 'user_id')
+//                ->where('conversation_id', $request->conversation_id)
+//                ->oldest()
+//                ->get();
+//
+//            foreach ($messages as $message) {
+//                if ($message->user_id == $user->id) {
+//                    $message->self = true;
+//                } else {
+//                    $message->self = false;
+//                }
+//            }
+//
+//            foreach ($messages as $message) {
+//                unset($message->id);
+//                unset($message->user_id);
+//            }
 
-            foreach ($messages as $message) {
-                unset($message->id);
-                unset($message->user_id);
-            }
             //           Fetch this conversations
 
-            return ['message' => 'Повідомлення збережено!', 'data' => $messages];
+            return ['message' => 'Повідомлення збережено!'];
 
         } catch (\Exception $exception) {
             Log::warning('MessagesController@storeMessage Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
