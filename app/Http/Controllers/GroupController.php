@@ -53,8 +53,8 @@ class GroupController extends Controller
                 ->first();
 
             $admins_group = null;
-            $admins_group->put('users', $group->admin);
-            $admins_group->put('users', $group->moderator);
+            $admins_group->push($group->admin);
+            $admins_group->push($group->moderator);
 
             dd($admins_group);
 
