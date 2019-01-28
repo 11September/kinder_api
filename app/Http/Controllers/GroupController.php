@@ -59,7 +59,7 @@ class GroupController extends Controller
                 ->where('id', '=', $group->moderator->id)
                 ->get();
 
-            dd($admins_group);
+            dd($group->admin->id, $group->moderator->id, $admins_group);
 
             foreach ($admins_group as $item) {
                 if (!$item->avatar || empty($item->avatar)) {
