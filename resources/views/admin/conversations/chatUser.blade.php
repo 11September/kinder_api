@@ -208,7 +208,7 @@
                         },
 
                         type: 'post',
-                        url: '/admin/messages/fetchMessages/',
+                        url: '{{ url('admin/messages/fetchMessages') }}',
                         dataType: 'json',
                         data: {message_id: message_id, conversation_id: conversation_id, user_id: user_id},
                         success: function (data) {
