@@ -16,10 +16,11 @@ class SchedulesController extends Controller
     public function index(Request $request)
     {
         try {
-            return response()->json(['message' => 'Розклад не знайдено!'], 404);
-
-
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+            if (!$user->school_id || !$user->group_id){
+                return response()->json(['message' => 'Розклад не знайдено!'], 404);
+            }
 
             $schedule = Schedule::where('school_id', $user->school_id)
                 ->where('group_id', $user->group_id)
