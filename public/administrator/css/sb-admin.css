@@ -18,6 +18,16 @@ dl, ol, ul {
     margin-bottom: 0;
 }
 
+.no-marg{
+    margin: 0;
+    padding: 0;
+}
+
+.small-school{
+    width: 100%;
+    font-size: 16px;
+}
+
 .page-link{
     color: darkorange;
 }
@@ -572,6 +582,10 @@ body.sidebar-toggled footer.sticky-footer {
     border-color: darkorange;
 }
 
+.orange{
+    color: darkorange;
+}
+
 .orange-text {
     color: darkorange;
     font-weight: bold;
@@ -1047,6 +1061,10 @@ body.sidebar-toggled footer.sticky-footer {
 #list-groups-with-description .list-group-item{
     margin: 0;
     padding: 10px;
+}
+
+.jconfirm .jconfirm-box div.jconfirm-content-pane .jconfirm-content{
+    overflow: unset !important;
 }
 
     /* Clear floats */
