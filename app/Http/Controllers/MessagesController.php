@@ -35,9 +35,6 @@ class MessagesController extends Controller
             $message->user_id = $user->id;
             $message->save();
 
-
-            //  Push to User
-
             $conversation = Conversation::where('id', $request->conversation_id)->first();
 
             $need_user_id = null;
@@ -55,30 +52,6 @@ class MessagesController extends Controller
                 ->first();
 
             \OneSignal::sendNotificationToUser($message->message, $user->player_id);
-            //  Push to User end
-
-
-            //           Fetch this conversations
-
-//            $messages = Message::select('id', 'message', 'status', 'user_id')
-//                ->where('conversation_id', $request->conversation_id)
-//                ->oldest()
-//                ->get();
-//
-//            foreach ($messages as $message) {
-//                if ($message->user_id == $user->id) {
-//                    $message->self = true;
-//                } else {
-//                    $message->self = false;
-//                }
-//            }
-//
-//            foreach ($messages as $message) {
-//                unset($message->id);
-//                unset($message->user_id);
-//            }
-
-            //           Fetch this conversations
 
             return ['message' => 'Повідомлення збережено!'];
 
