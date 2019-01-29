@@ -13,10 +13,6 @@ use Illuminate\Http\Request;
 |
 */
 
-//Route::middleware('auth:api')->get('/user', function (Request $request) {
-//    return $request->user();
-//});
-
 // Users Auth
 Route::middleware('cors')->post('login', 'UsersController@login')->name('Login');
 Route::middleware('cors')->post('restore_password', 'UsersController@ResetPassword')->name('Restore Password');
@@ -38,3 +34,4 @@ Route::middleware('cors','token')->get('group_users', 'GroupController@GroupUser
 Route::middleware('cors','token')->post('conversation', 'ConversationController@createOrGetConversation')->name('Get User Conversation Or Create Conversation');
 Route::middleware('cors','token')->post('store_message', 'MessagesController@storeMessage')->name('Store Message');
 Route::middleware('cors','token')->post('messages_mark_read', 'MessagesController@messagesMarkRead')->name('Store Message');
+Route::middleware('cors','token')->get('unread_messages_counter', 'MessagesController@unreadMessagesCounter')->name('Unread Messages Counter');

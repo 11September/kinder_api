@@ -88,6 +88,39 @@ class MessagesController extends Controller
         }
     }
 
+    public function unreadMessagesCounter(Request $request)
+    {
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+
+            $conversations = Conversation::where([
+                ['user1_id', '=', $user->id],
+            ])->OrWhere([
+                ['user2_id', '=', $user->id],
+            ])->with('messages')
+                ->with(array
+                ('messages' => function ($query) {
+                        $query->select('id', 'user_id', 'conversation_id', 'status');
+                    }))
+                ->get();
+
+            $counter = 0;
+            foreach ($conversations as $conversation) {
+                foreach ($conversation->messages as $message) {
+                    if ($message->user_id !== $user->id && $message->status == "unread") {
+                        $counter++;
+                    }
+                }
+            }
+
+            return ['count' => $counter];
+
+        } catch (\Exception $exception) {
+            Log::warning('ConversationController@createOrGetConversation Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
     public function messagesMarkRead(Request $request)
     {
         $validator = Validator::make($request->all(), [
