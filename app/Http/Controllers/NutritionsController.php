@@ -56,8 +56,6 @@ class NutritionsController extends Controller
             }])
             ->get();
 
-//        dd($schedules);
-
         $current_school = School::where('id', $id)->first();
 
         return view('admin.nutritions.show', compact('list_schools', 'schedules', 'current_school'));

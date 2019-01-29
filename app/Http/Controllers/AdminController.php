@@ -24,7 +24,7 @@ class AdminController extends Controller
     {
         $schools = School::count();
         $groups = Group::count();
-        $users = User::where('type', 'default')->count();
+        $users = User::where('type', 'default')->active()->count();
         $admins = User::where('type', '!=' ,'default')->count();
         $news = Post::count();
         $messages = Message::count();

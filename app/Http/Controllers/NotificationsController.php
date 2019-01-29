@@ -14,21 +14,6 @@ use Illuminate\Support\Facades\Validator;
 
 class NotificationsController extends Controller
 {
-    public function index(Request $request)
-    {
-        try {
-            $notifications = Notification::select('id', 'message', 'school_id')
-                ->filter($request->all())
-                ->get();
-
-            return ['data' => $notifications];
-
-        } catch (\Exception $exception) {
-            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
-            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
-        }
-    }
-
     public function adminIndex()
     {
         $schools = School::all();
@@ -42,6 +27,7 @@ class NotificationsController extends Controller
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
+                ->active()
                 ->get();
 
             $player_ids = array();
@@ -64,6 +50,7 @@ class NotificationsController extends Controller
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
+                ->active()
                 ->whereIn('school_id', $request->school_id)
                 ->whereIn('group_id', $request->group_id)
                 ->get();
@@ -103,6 +90,7 @@ class NotificationsController extends Controller
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
+                ->active()
                 ->where('group_id', $request->group_id)
                 ->get();
 
@@ -145,6 +133,7 @@ class NotificationsController extends Controller
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
+                ->active()
                 ->where('school_id', $request->id)
                 ->get();
 

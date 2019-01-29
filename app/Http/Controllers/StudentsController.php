@@ -20,6 +20,7 @@ class StudentsController extends Controller
     {
         try {
             $students = Student::select('id', 'FIO', 'birthday', 'user_id')
+                ->active()
                 ->with(array('users' => function ($query) {
                     $query->select('id', 'name', 'email');
                 }))
@@ -39,6 +40,7 @@ class StudentsController extends Controller
     public function adminIndex()
     {
         $users = User::where('type', 'default')
+            ->active()
             ->with(array('school' => function ($query) {
                 $query->select('id', 'name');
             }))

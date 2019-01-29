@@ -49,6 +49,7 @@ class MessagesController extends Controller
                 ->where('id', $need_user_id)
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
+                ->active()
                 ->first();
 
             \OneSignal::sendNotificationToUser($message->message, $user->player_id);

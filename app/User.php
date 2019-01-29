@@ -36,6 +36,11 @@ class User extends Authenticatable
         'password', 'remember_token', 'role_id', 'token'
     ];
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', '=', 'active');
+    }
+
     public function changeToken()
     {
         return $this->token = Hash::make(time());

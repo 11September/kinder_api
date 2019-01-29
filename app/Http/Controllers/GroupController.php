@@ -37,6 +37,7 @@ class GroupController extends Controller
             $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('group_id', '=', $group_id)
                 ->where('type', 'default')
+                ->active()
                 ->where('id', '!=', $current_user_id)
                 ->get();
 
