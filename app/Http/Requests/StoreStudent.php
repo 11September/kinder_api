@@ -28,7 +28,7 @@ class StoreStudent extends FormRequest
             'name' => 'required|string',
             'birthday' => 'required|date',
             'parent_name' => 'required|string',
-            'parent_phone' => 'required|string|min:10|max:13',
+            'parent_phone' => 'required|string|min:10|max:18|unique:users,parent_phone',
             'parents' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
             'address' => '',
@@ -46,6 +46,8 @@ class StoreStudent extends FormRequest
             'birthday.required' => "Дата народження дитини обов'язкове поле",
             'parent_name.required' => "ПІБ батьків обов'язкове поле",
             'parent_phone.required' => "Номер телефону батьків обов'язкове поле",
+            'parent_phone.unique' => "Номер телефону вже прив'язаний до користувача",
+
             'email.required' => "Email батьків обов'язкове поле",
             'address.required' => "Адреса батьків обов'язкове поле",
             'password.required' => "Пароль обов'язкове поле",
@@ -57,7 +59,7 @@ class StoreStudent extends FormRequest
             'birthday.date' => "День народження має бути датою",
 
             'parent_phone.min' => "Мінімальна кількість символів 10 для номеру телефона",
-            'parent_phone.max' => "Мінімальна кількість символів 13 для номеру телефона",
+            'parent_phone.max' => "Максимальна кількість символів 13 для номеру телефона",
 
             'email.email' => "Email маэ бути згiдно формату",
             'email.unique' => "Такий емейл існує",

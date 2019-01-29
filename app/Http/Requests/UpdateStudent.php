@@ -28,7 +28,13 @@ class UpdateStudent extends FormRequest
             'name' => 'required|string',
             'birthday' => 'required|date',
             'parent_name' => 'required|string',
-            'parent_phone' => 'required|string|min:10|max:13',
+            'parent_phone' => [
+                "required",
+                "string",
+                "min:10",
+                "max:18",
+                Rule::unique('users')->ignore($this->user->id, 'id')
+            ],
             'parents' => 'required',
             'email' => [
                 'required',

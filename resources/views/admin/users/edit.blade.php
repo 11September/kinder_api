@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-    <link href="{{ asset('administrator/css/dataTables.bootstrap4.css') }}" rel="stylesheet">
+
 @endsection
 
 @section('content')
@@ -90,7 +90,7 @@
                                     <div class="form-group">
                                         <label for="exampleFormControlInput1">Номер Телефону Батьків</label>
                                         <input required name="parent_phone" value="{{ $user->parent_phone }}"
-                                               type="text" class="form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефону Батьків">
+                                               type="text" class="mask-phone form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефону Батьків">
 
                                         @if ($errors->has('parent_phone'))
                                             <span class="invalid-feedback" role="alert">
@@ -280,7 +280,11 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('administrator/js/jquery.inputmask.bundle.js') }}"></script>
+
     <script>
+        $('.mask-phone').inputmask({"mask": "+38(099)-99-99-999"});
+
         $(document).ready(function () {
             $('.choose_school').on('change', function () {
                 var school_id = $(this).val();
