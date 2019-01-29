@@ -5,6 +5,13 @@
     </button>
 
     <ul class="navbar-nav ml-auto">
+        <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link" href="{{ url('admin/conversations') }}" role="button">
+                <i class="fas fa-envelope fa-fw"></i>
+                <span class="badge badge-danger">{{ $counter }}</span>
+            </a>
+        </li>
+
         <li class="nav-item dropdown no-arrow">
             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown"
                aria-haspopup="true" aria-expanded="false">
