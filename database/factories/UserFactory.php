@@ -51,8 +51,8 @@ DB::table('users')->insert([
     'parents' => $faker->randomElement(['father', 'mother']),
     'address' => $faker->address,
     'birthday' => $faker->date(),
-    'school_id' => 1,
-    'group_id' => 1,
+    'school_id' => null,
+    'group_id' => null,
     'status' => "active",
     'type' => "admin"
 ]);
@@ -71,8 +71,8 @@ DB::table('users')->insert([
     'parents' => $faker->randomElement(['father', 'mother']),
     'address' => $faker->address,
     'birthday' => $faker->date(),
-    'school_id' => 1,
-    'group_id' => 1,
+    'school_id' => null,
+    'group_id' => null,
     'status' => "active",
     'type' => "moderator"
 ]);

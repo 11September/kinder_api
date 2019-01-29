@@ -1,7 +1,7 @@
 @extends('admin.template.master')
 
 @section('css')
-
+    <link href="{{ asset('administrator/css/jquery-confirm.min.css') }}" rel="stylesheet">
 @endsection
 
 @section('content')
@@ -49,14 +49,16 @@
                             </div>
 
 
-                            <form id="delete-form" method="POST" action="/admin/kindergartens/{{$schooll->id}}">
-                                {{ csrf_field() }}
-                                {{ method_field('DELETE') }}
+                            <div class="wrapper-school-delete">
+                                <form id="delete-form" method="POST" action="/admin/kindergartens/{{$schooll->id}}">
+                                    {{ csrf_field() }}
+                                    {{ method_field('DELETE') }}
 
-                                <div class="form-group">
-                                    <input type="submit" class="btn btn-danger" value="&#10008">
-                                </div>
-                            </form>
+                                    <div class="form-group">
+                                        <input type="submit" class="btn btn-danger del-school" value="&#10008">
+                                    </div>
+                                </form>
+                            </div>
                         </li>
                     @endforeach
 
@@ -79,7 +81,8 @@
                             <div class="form-group">
                                 <label for="exampleFormControlSelect2">Назва садка</label>
                                 <input type="text" name="name" class="form-control" required
-                                     value="@if (old('name')) {{old('name')}} @else {{ $school->name }} @endif"  placeholder="Назва садка">
+                                       value="@if (old('name')) {{old('name')}} @else {{ $school->name }} @endif"
+                                       placeholder="Назва садка">
                             </div>
                         </div>
 
@@ -131,5 +134,64 @@
 @endsection
 
 @section('scripts')
+    <script src="{{ asset('administrator/js/jquery-confirm.min.js') }}"></script>
 
+    <script>
+        $(document).ready(function () {
+            $('.del-school').click(function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                var clicked = $(e.target);
+
+                $.confirm({
+                    // useBootstrap: false,
+                    title: 'Видалення садка',
+                    content: 'Підтвердіть видалення садка',
+                    icon: 'fa fa-question-circle',
+                    animation: 'scale',
+                    closeAnimation: 'scale',
+                    opacity: 0.5,
+                    buttons: {
+                        'confirm': {
+                            text: 'Видалити',
+                            btnClass: 'btn-red',
+                            action: function () {
+                                $.confirm({
+                                    title: 'Підтвердіть видалення садка',
+                                    content: 'Попередження: при видаленні садка видаляться всі учні, розклад занять, розклад харчування, новини що належать даному садочку.',
+                                    icon: 'fa fa-warning',
+                                    animation: 'scale',
+                                    closeAnimation: 'zoom',
+                                    buttons: {
+                                        confirm: {
+                                            text: 'Так, видалити!',
+                                            btnClass: 'btn-red',
+                                            action: function () {
+                                                clicked.parent().parent().submit();
+                                            }
+                                        },
+                                        cancel: {
+                                            text: 'Скасувати',
+                                            btnClass: 'btn-blue',
+                                            action: function () {
+                                                // $.alert('you clicked on <strong>cancel</strong>');
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        },
+
+                        'cancel': {
+                            text: 'Скасувати',
+                            btnClass: 'btn-blue',
+                            action: function () {
+                                // $.alert('you clicked on <strong>cancel</strong>');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 @endsection
