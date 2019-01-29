@@ -31,7 +31,7 @@ Route::middleware('cors','token')->get('profile', 'UsersController@profile')->na
 Route::middleware('cors','token')->get('posts/{school_id}', 'PostsController@index')->name('Get Posts');
 Route::middleware('cors','token')->get('post/{id}', 'PostsController@show')->name('Get Post');
 
-Route::middleware('cors','token')->get('schedules/{school_id}', 'SchedulesController@index')->name('Get Schedules');
+Route::middleware('cors','token')->get('schedules', 'SchedulesController@index')->name('Get Schedules');
 Route::middleware('cors','token')->get('nutritions/{school_id}', 'NutritionsController@index')->name('Get Nutritions');
 
 Route::middleware('cors','token')->get('group_users', 'GroupController@GroupUsers')->name('Get Users Group');
