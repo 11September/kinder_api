@@ -26,6 +26,7 @@ dl, ol, ul {
 .small-school{
     width: 100%;
     font-size: 16px;
+    display: block;
 }
 
 .page-link{
