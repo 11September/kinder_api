@@ -16,12 +16,28 @@ class GroupController extends Controller
     public function GroupUsers(Request $request)
     {
         try {
+            $group_id = null;
+            $current_user_id = null;
+
             $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
+            $current_user_id = $user->id;
+
+            if(!$user->group_id || !isset($user->group_id)){
+                $group = Group::where('user_id', $user->id)->OrWhere('moderator_id', $user->id)->first();
+
+                if (!$group){
+                    return response()->json(['message' => 'Користувачів не знайдено!'], 404);
+                }
+
+                $group_id = $group->id;
+            }else{
+                $group_id = $user->group_id;
+            }
 
             $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
-                ->where('group_id', '=', $user->group_id)
+                ->where('group_id', '=', $group_id)
                 ->where('type', 'default')
-                ->where('id', '!=', $user->id)
+                ->where('id', '!=', $current_user_id)
                 ->get();
 
             foreach ($users as $item) {
@@ -39,7 +55,7 @@ class GroupController extends Controller
                 }
             }
 
-            $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $user->group_id)
+            $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $group_id)
                 ->with(array
                     ('admin' => function ($query) {
                             $query->select('id');
@@ -58,6 +74,7 @@ class GroupController extends Controller
             $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('type', '!=', 'default')
                 ->whereIn('id', [$adminId, $moderId])
+                ->where('id', '!=', $current_user_id)
                 ->get();
 
             foreach ($admins_group as $item) {
@@ -164,13 +181,11 @@ class GroupController extends Controller
     {
         $group = Group::where('id', $id)->first();
 
-        $group->update([
-            'name' => $request->name,
-            'user_id' => $request->user_id,
-            'moderator_id' => $request->moderator_id,
-        ]);
-
         $group->schools()->sync($request->school_id);
+
+        $group->name = $request->name;
+        $group->user_id = $request->user_id;
+        $group->moderator_id = $request->moderator_id;
 
         $group->save();
 
