@@ -138,14 +138,18 @@
 
                                     <div class="form-group">
                                         <label for="moderator_id">Вибрати вихователя</label>
-                                        <select required name="moderator_id" class="form-control" id="moderator_id">
 
+                                        <select required name="moderator_id" class="form-control" id="moderator_id">
                                             @foreach($moderators as $moderator)
                                                 <option
                                                     value="{{ $moderator->id }}">{{ $moderator->name }}</option>
                                             @endforeach
-
                                         </select>
+
+                                        @if(!$moderators || count($moderators) == 0)
+                                            <p>На жаль немає вільних вихователів. Створіть <a class="orange-link" href="{{ url('/admin/admins') }}">нового</a> вихователя.</p>
+                                        @endif
+
                                     </div>
 
                                     <button type="submit" class="btn btn-primary mb-2">Створити</button>

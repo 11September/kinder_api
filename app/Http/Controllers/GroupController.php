@@ -22,15 +22,15 @@ class GroupController extends Controller
             $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
             $current_user_id = $user->id;
 
-            if(!$user->group_id || !isset($user->group_id)){
+            if (!$user->group_id || !isset($user->group_id)) {
                 $group = Group::where('user_id', $user->id)->OrWhere('moderator_id', $user->id)->first();
 
-                if (!$group){
+                if (!$group) {
                     return response()->json(['message' => 'Користувачів не знайдено!'], 404);
                 }
 
                 $group_id = $group->id;
-            }else{
+            } else {
                 $group_id = $user->group_id;
             }
 
@@ -137,7 +137,7 @@ class GroupController extends Controller
     public function adminIndex()
     {
         $admins = User::select('id', 'name')->where('type', 'admin')->get();
-        $moderators = User::select('id', 'name')->where('type', 'moderator')->get();
+
 
         $schools = School::all();
 
@@ -145,6 +145,17 @@ class GroupController extends Controller
             ->with('admin')
             ->with('moderator')
             ->with('schools')
+            ->get();
+
+//       Check free tutors
+        $moderators_ids = array();
+        foreach ($groups as $key => $group) {
+            $moderators_ids[$key] = $group->moderator_id;
+        }
+
+        $moderators = User::select('id', 'name')
+            ->where('type', 'moderator')
+            ->whereNotIn('id', $moderators_ids)
             ->get();
 
         return view('admin.groups', compact('admins', 'moderators', 'schools', 'groups'));
