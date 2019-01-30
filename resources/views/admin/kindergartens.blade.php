@@ -49,8 +49,6 @@
 
 
                             <div class="wrapper-school-delete">
-                                {{--<a href="#" class="delete-school"><i class="fas fa-trash-alt"></i></a>--}}
-
                                 <form class="delete-form" id="delete-form" method="POST"
                                       action="/admin/kindergartens/{{$school->id}}">
                                     {{ csrf_field() }}
@@ -95,12 +93,10 @@
                                 @foreach($groups as $group)
 
                                     @if(@$group->schools && count($group->schools ) > 0)
-                                        <p class="no-marg orange">Садки:</p>
+                                        @foreach(@$group->schools as $school)
+                                            <p class="no-marg"><span class="orange">Садок - </span><small class="small-school">{{ $school->name }}</small></p>
+                                        @endforeach
                                     @endif
-
-                                    @foreach(@$group->schools as $school)
-                                        <small class="small-school">{{ $school->name }}</small>
-                                    @endforeach
 
                                     <div class="form-check">
                                         <label class="container">

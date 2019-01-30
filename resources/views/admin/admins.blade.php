@@ -154,12 +154,20 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->type }}</td>
+                                <td>
+                                    @if($user->type == "moderator")
+                                        Вихователь групи
+                                    @endif
+                                    @if($user->type == "admin")
+                                        Адміністратор
+                                    @endif
+                                </td>
 
                                 <td class="action-td">
-                                    <a class="btn btn-warning" href="{{ action('AdminController@adminEdit', $user->id) }}">Редагувати</a>
+                                    <a class="btn btn-warning"
+                                       href="{{ action('AdminController@adminEdit', $user->id) }}">Редагувати</a>
 
-                                    <form id="delete-form" method="POST" action="/admin/admins/delete/{{$user->id}}">
+                                    <form method="POST" action="/admin/admins/delete/{{$user->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 
@@ -190,15 +198,15 @@
         $(document).ready(function () {
             $('#dataTable').DataTable({
                 "language": {
-                    "sProcessing":   "Зачекайте...",
-                    "sLengthMenu":   "Показати _MENU_ записів",
-                    "sZeroRecords":  "Записи відсутні.",
-                    "sInfo":         "Записи з _START_ по _END_ із _TOTAL_ записів",
-                    "sInfoEmpty":    "Записи з 0 по 0 із 0 записів",
+                    "sProcessing": "Зачекайте...",
+                    "sLengthMenu": "Показати _MENU_ записів",
+                    "sZeroRecords": "Записи відсутні.",
+                    "sInfo": "Записи з _START_ по _END_ із _TOTAL_ записів",
+                    "sInfoEmpty": "Записи з 0 по 0 із 0 записів",
                     "sInfoFiltered": "(відфільтровано з _MAX_ записів)",
-                    "sInfoPostFix":  "",
-                    "sSearch":       "Пошук:",
-                    "sUrl":          "",
+                    "sInfoPostFix": "",
+                    "sSearch": "Пошук:",
+                    "sUrl": "",
                     "oPaginate": {
                         "sFirst": "Перша",
                         "sPrevious": "Попередня",
@@ -206,7 +214,7 @@
                         "sLast": "Остання"
                     },
                     "oAria": {
-                        "sSortAscending":  ": активувати для сортування стовпців за зростанням",
+                        "sSortAscending": ": активувати для сортування стовпців за зростанням",
                         "sSortDescending": ": активувати для сортування стовпців за спаданням"
                     }
                 }
