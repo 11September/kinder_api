@@ -186,6 +186,8 @@ class MessagesController extends Controller
             $need_user_id = $conversation->user1_id;
         }
 
+        dd($user, $conversation, $need_user_id);
+
         $user = User::select('id', 'player_id')
             ->where('id', $need_user_id)
             ->where('player_id', '!=', null)
