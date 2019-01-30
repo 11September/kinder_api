@@ -163,7 +163,7 @@ class ConversationController extends Controller
         $user = User::where('id', $conversation->user2_id)->first();
         $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
 
-        dd($users);
+        dd($conversation, $user, $users);
 
         $list_schools = School::with('groups')->get();
 
