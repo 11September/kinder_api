@@ -109,6 +109,9 @@ class GroupController extends Controller
 
                 if (isset($conversations->messages)){
                     foreach ($conversations->messages as $message) {
+
+                        dd($message);
+
                         if ($message->user_id != $user->id){
                             $count++;
                         }
