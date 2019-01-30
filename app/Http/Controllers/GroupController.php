@@ -113,7 +113,7 @@ class GroupController extends Controller
                 foreach ($conversations as $conversation) {
 
 
-                    if (isset($conversations->messages)) {
+                    if (isset($conversation->messages)) {
 
                         dd("isset");
 
