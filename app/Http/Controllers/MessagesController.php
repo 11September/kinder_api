@@ -208,4 +208,38 @@ class MessagesController extends Controller
 
         return response()->json(['success' => true, 'data' => $messages]);
     }
+
+    public function AdminMessagesCounter(Request $request)
+    {
+        try {
+            $user = Auth::user();
+
+            $conversations = Conversation::where([
+                ['user1_id', '=', $user->id],
+            ])->OrWhere([
+                ['user2_id', '=', $user->id],
+            ])->with('messages')
+                ->with(array
+                ('messages' => function ($query) {
+                        $query->select('id', 'user_id', 'conversation_id', 'status');
+                    }))
+                ->get();
+
+            $counter = 0;
+            foreach ($conversations as $conversation) {
+                foreach ($conversation->messages as $message) {
+                    if ($message->user_id !== $user->id && $message->status == "unread") {
+                        $counter++;
+                    }
+                }
+            }
+
+            return ['success' => true, 'count' => $counter];
+
+        } catch (\Exception $exception) {
+            Log::warning('MessagesController@messagesMarkRead Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
+            return response()->json(['success' => false, 'message' => 'Упс! Щось пішло не так!'], 500);
+        }
+
+    }
 }

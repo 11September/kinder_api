@@ -71,6 +71,39 @@ class ConversationController extends Controller
             $query->where('school_id', '=', $schools->first()->id);
         })->get();
 
+
+        $user = Auth::user();
+        $conversations = Conversation::where([
+            ['user1_id', '=', $user->id],
+        ])->OrWhere([
+            ['user2_id', '=', $user->id],
+        ])->with('messages')
+            ->with(array
+            ('messages' => function ($query) {
+                    $query->select('id', 'user_id', 'conversation_id', 'status');
+                }))
+            ->get();
+
+        $conversations->load('user1', 'user2');
+
+        foreach ($conversations as $conversation) {
+
+            $counter_group = 0;
+
+            foreach ($groups as $group) {
+                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id){
+
+                    foreach ($conversation->messages as $message) {
+                        if ($message->user_id !== $user->id && $message->status == "unread") {
+                            $counter_group++;
+                        }
+                    }
+
+                    $group->counter = $counter_group;
+                }
+            }
+        }
+
         return view('admin.conversations.index', compact('schools', 'groups'));
     }
 

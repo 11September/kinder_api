@@ -93,3 +93,4 @@ Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->mid
 Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('access_admin')->name('admin.messages.store');
 Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->middleware('access_admin')->name('admin.messages.setReadMessages');
 Route::post('/admin/messages/fetchMessages', 'MessagesController@fetchMessages')->middleware('access_admin')->name('admin.messages.fetchMessages');
+Route::get('/admin/messages/unread_messages_counter', 'MessagesController@AdminMessagesCounter')->middleware('access_admin')->name('admin.messages.counter');

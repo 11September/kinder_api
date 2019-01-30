@@ -44,3 +44,28 @@ window.setTimeout(function() {
         $(this).remove();
     });
 }, 3000);
+
+
+$(document).ready(function () {
+    setInterval(function () {
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+
+            type: 'GET',
+            url: '/admin/messages/unread_messages_counter',
+            dataType: 'json',
+            success: function (data) {
+
+                if (data.success) {
+                    $('#counter_unread').text(data.count);
+                }
+
+            }, error: function () {
+                console.log(data);
+            }
+        });
+
+    }, 5000);
+});

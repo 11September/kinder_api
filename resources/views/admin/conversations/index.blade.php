@@ -62,7 +62,12 @@
                         <ul class="list-group list-group-flex" id="wrapper-list-groups">
                             @foreach($groups as $item)
                                 <li class="list-group-item">
-                                    <a class="orange-text" href="{{ action('ConversationController@adminShowGroupUsers', $item->id) }}">{{ $item->name }}</a>
+                                    <div>
+                                        <a class="orange-text" href="{{ action('ConversationController@adminShowGroupUsers', $item->id) }}">{{ $item->name }}</a>
+                                    </div>
+                                    <div>
+                                        <small class="badge badge-primary badge-pill">{{ $item->counter }}</small>
+                                    </div>
                                 </li>
                             @endforeach
                         </ul>
