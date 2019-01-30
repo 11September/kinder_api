@@ -58,7 +58,7 @@ class PostsController extends Controller
             return ['data' => $posts];
 
         } catch (\Exception $exception) {
-            Log::warning('PostsController@index Exception: '. $exception->getMessage());
+            Log::warning('PostsController@index Exception: ' . $exception->getMessage() . "Line - " . $exception->getLine());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
