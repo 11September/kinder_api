@@ -99,17 +99,17 @@ class GroupController extends Controller
                 return response()->json(['message' => 'Користувачів не знайдено!'], 404);
             }
 
-            $group_users->load('messages');
+//            $group_users->load('messages');
 
             foreach ($group_users as $user) {
                 $count = 0;
-                foreach ($user->messages as $message) {
-                    if ($message->status == "unread") {
-                        $count++;
-                    }
-                }
+//                foreach ($user->messages as $message) {
+//                    if ($message->status == "unread") {
+//                        $count++;
+//                    }
+//                }
 
-                unset($user->messages);
+//                unset($user->messages);
                 $user->count = $count;
             }
 
