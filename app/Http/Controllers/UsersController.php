@@ -56,9 +56,9 @@ class UsersController extends Controller
                         $result = array_add($result, 'token', $user->token);
                         $result = array_add($result, 'email', $user->email);
                         $result = array_add($result, 'parent_name', $user->parent_name);
-                        $result = array_add($result, 'group', ($group->name) ? $group->name : null);
+                        $result = array_add($result, 'group', (isset($group->name)) ? $group->name : null);
                         $result = array_add($result, 'avatar', $avatar);
-                        $result = array_add($result, 'school_id', ($user->school_id) ? $user->school_id : null);
+                        $result = array_add($result, 'school_id', (isset($user->school_id)) ? $user->school_id : null);
                         $result = array_add($result, 'school_name', $school->name);
 
                         return response($result);
