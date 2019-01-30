@@ -164,6 +164,8 @@
                 var count = $('.list-group-item.active').find('.badge');
                 var user_id = $('.list-group-item.active').find('.user_id').val();
 
+                alert(user_id);
+
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
