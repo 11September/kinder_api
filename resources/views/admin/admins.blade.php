@@ -44,10 +44,10 @@
                             {{ csrf_field() }}
 
                             <div class="row">
-                                <div class="col-md-4">
+                                <div class="col-md-4 ">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">ПІБ</label>
-                                        <input required name="name" value="{{ old('name') }}" type="text"
+                                        <label for="name">ПІБ</label>
+                                        <input required name="name" value="{{ old('name') }}" type="text" id="name"
                                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                placeholder="ПІБ">
 
@@ -59,7 +59,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Email</label>
+                                        <label for="email">Email</label>
                                         <input required type="email" name="email"
                                                class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
                                                id="email"
@@ -97,8 +97,22 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Роль</label>
-                                        <select name="type"
+                                        <label for="birthday">Дата народження</label>
+                                        <input required name="birthday" value="{{ old('birthday') }}" type="date"
+                                               max="2100-01-01" id="birthday"
+                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}"
+                                               placeholder="Дата народження дитини">
+
+                                        @if ($errors->has('birthday'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('birthday') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="type">Роль</label>
+                                        <select name="type" id="type"
                                                 class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}">
                                             <option value="admin">Адміністратор</option>
                                             <option value="moderator">Вихователь групи</option>
@@ -112,12 +126,15 @@
 
                                     </div>
 
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-primary mb-2">Створити</button>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <div class="form-group float-right">
+                                        <button type="submit" class="btn btn-primary mb-2">Oновити</button>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </form>
                     </div>
                 </div>

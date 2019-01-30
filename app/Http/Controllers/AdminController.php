@@ -43,6 +43,7 @@ class AdminController extends Controller
     {
         $user = new User();
         $user->name = $request->name;
+        $user->birthday = $request->birthday;
         $user->email = $request->email;
         $user->type = $request->type;
         $user->school_id = null;
@@ -57,7 +58,7 @@ class AdminController extends Controller
 
     public function adminEdit(Request $request, $id)
     {
-        $user = User::select('id', 'name', 'email', 'type')->where('id', $id)->first();
+        $user = User::select('id', 'name', 'email', 'type', 'birthday')->where('id', $id)->first();
 
         $users = User::select('id', 'name', 'email', 'type')->where('type', '!=', 'default')->get();
 
@@ -79,6 +80,7 @@ class AdminController extends Controller
         }
 
         $user->name = $request->name;
+        $user->birthday = $request->birthday;
         $user->email = $request->email;
         $user->type = $request->type;
 

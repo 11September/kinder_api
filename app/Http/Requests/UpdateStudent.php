@@ -55,6 +55,7 @@ class UpdateStudent extends FormRequest
         return [
             'name.required' => "ПІБ дитини обов'язкове поле",
             'birthday.required' => "Дата народження дитини обов'язкове поле",
+            'birthday.date' => "День народження має бути датою",
             'parent_name.required' => "ПІБ батьків обов'язкове поле",
             'parent_phone.required' => "Номер телефону батьків обов'язкове поле",
             'email.required' => "Email батьків обов'язкове поле",
@@ -64,8 +65,6 @@ class UpdateStudent extends FormRequest
             'group_id.required' => "Група обов'язкове поле",
             'status.required' => "Статус обов'язкове поле",
             'parents.required' => "ВибБатько / Мати обов'язкове поле",
-
-            'birthday.date' => "День народження має бути датою",
 
             'parent_phone.min' => "Мінімальна кількість символів 10 для номеру телефона",
             'parent_phone.max' => "Мінімальна кількість символів 13 для номеру телефона",

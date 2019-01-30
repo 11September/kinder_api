@@ -102,11 +102,30 @@
 
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label for="birthday">Дата народження</label>
+                                        <input required name="birthday" value="{{ $user->birthday }}" type="date"
+                                               max="2100-01-01" id="birthday"
+                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}"
+                                               placeholder="Дата народження дитини">
+
+                                        @if ($errors->has('birthday'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('birthday') }}</strong>
+                                            </span>
+                                        @endif
+                                    </div>
+
+
+                                    <div class="form-group">
                                         <label for="">Роль</label>
                                         <select name="type"
                                                 class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}">
-                                            <option @if($user->type == "admin") selected @endif value="admin">Адміністратор</option>
-                                            <option @if($user->type == "moderator") selected @endif value="moderator">Вихователь групи</option>
+                                            <option @if($user->type == "admin") selected @endif value="admin">
+                                                Адміністратор
+                                            </option>
+                                            <option @if($user->type == "moderator") selected @endif value="moderator">
+                                                Вихователь групи
+                                            </option>
                                         </select>
 
                                         @if ($errors->has('type'))
@@ -116,13 +135,15 @@
                                         @endif
 
                                     </div>
+                                </div>
 
-                                    <div class="form-group">
+                                <div class="col-md-12">
+                                    <div class="form-group float-right">
                                         <button type="submit" class="btn btn-primary mb-2">Oновити</button>
                                     </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -197,15 +218,15 @@
         $(document).ready(function () {
             $('#dataTable').DataTable({
                 "language": {
-                    "sProcessing":   "Зачекайте...",
-                    "sLengthMenu":   "Показати _MENU_ записів",
-                    "sZeroRecords":  "Записи відсутні.",
-                    "sInfo":         "Записи з _START_ по _END_ із _TOTAL_ записів",
-                    "sInfoEmpty":    "Записи з 0 по 0 із 0 записів",
+                    "sProcessing": "Зачекайте...",
+                    "sLengthMenu": "Показати _MENU_ записів",
+                    "sZeroRecords": "Записи відсутні.",
+                    "sInfo": "Записи з _START_ по _END_ із _TOTAL_ записів",
+                    "sInfoEmpty": "Записи з 0 по 0 із 0 записів",
                     "sInfoFiltered": "(відфільтровано з _MAX_ записів)",
-                    "sInfoPostFix":  "",
-                    "sSearch":       "Пошук:",
-                    "sUrl":          "",
+                    "sInfoPostFix": "",
+                    "sSearch": "Пошук:",
+                    "sUrl": "",
                     "oPaginate": {
                         "sFirst": "Перша",
                         "sPrevious": "Попередня",
@@ -213,7 +234,7 @@
                         "sLast": "Остання"
                     },
                     "oAria": {
-                        "sSortAscending":  ": активувати для сортування стовпців за зростанням",
+                        "sSortAscending": ": активувати для сортування стовпців за зростанням",
                         "sSortDescending": ": активувати для сортування стовпців за спаданням"
                     }
                 }

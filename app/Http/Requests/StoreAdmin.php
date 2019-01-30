@@ -27,6 +27,7 @@ class StoreAdmin extends FormRequest
             'name' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|max:255|confirmed',
+            'birthday' => 'required|date',
             'type' => 'required|string',
         ];
     }
@@ -45,6 +46,8 @@ class StoreAdmin extends FormRequest
             'password.max' => "Пароль повинен містити максимум 255 символів",
             'password.confirmed' => "Паролі повинні співпадати",
 
+            'birthday.required' => "Дата народження дитини обов'язкове поле",
+            'birthday.date' => "Дата народження має бути датою",
             'type.required' => "Роль обов'язкове поле"
         ];
     }

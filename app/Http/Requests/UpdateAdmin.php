@@ -34,6 +34,7 @@ class UpdateAdmin extends FormRequest
                 Rule::unique('users')->ignore($this->user->id, 'id')
             ],
             'type' => 'required|string',
+            'birthday' => 'required|date',
         ];
     }
 
@@ -51,6 +52,8 @@ class UpdateAdmin extends FormRequest
             'password.max' => "Пароль повинен містити максимум 255 символів",
             'password.confirmed' => "Паролі повинні співпадати",
 
+            'birthday.required' => "Дата народження дитини обов'язкове поле",
+            'birthday.date' => "Дата народження має бути датою",
             'type.required' => "Роль обов'язкове поле"
         ];
     }
