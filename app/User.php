@@ -46,6 +46,11 @@ class User extends Authenticatable
         return $this->token = Hash::make(time());
     }
 
+    public function deletePlayerId()
+    {
+        return $this->player_id = null;
+    }
+
     public function email()
     {
         return $this->email;

@@ -81,6 +81,7 @@ class UsersController extends Controller
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $user->changeToken();
+            $user->deletePlayerId();
             $user->save();
 
             Auth::logout();
