@@ -105,7 +105,11 @@ class GroupController extends Controller
             foreach ($group_users as $user) {
                 $count = 0;
 
-                $conversations = Conversation::where('user1_id', $user->id)->OrWhere('user2_id', $user->id)->with('messages')->get();
+                $conversations = Conversation::where('user1_id', $user->id)->with('messages')->get();
+
+                if (!$conversations){
+                    $conversations = Conversation::where('user2_id', $user->id)->with('messages')->get();
+                }
 
                 if (isset($conversations->messages)){
                     foreach ($conversations->messages as $message) {
