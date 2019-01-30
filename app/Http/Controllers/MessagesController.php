@@ -175,7 +175,7 @@ class MessagesController extends Controller
         $message->save();
 
 
-        $user = Auth::id();
+        $user = Auth::user();
         $conversation = Conversation::where('id', $request->conversation_id)->first();
 
         $need_user_id = null;
