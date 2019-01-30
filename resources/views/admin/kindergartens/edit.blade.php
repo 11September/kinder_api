@@ -93,12 +93,19 @@
                                 @foreach($groups as $group)
 
                                     @if(@$group->schools && count($group->schools ) > 0)
-                                        <p class="no-marg orange">Садки:</p>
-                                    @endif
 
-                                    @foreach(@$group->schools as $school)
-                                        <small class="small-school">{{ $school->name }}</small>
-                                    @endforeach
+                                        <p class="no-marg"><span class="orange">Садки:</span></p>
+
+                                        @foreach(@$group->schools as $school)
+
+                                            <small class="small-school">{{ $school->name . ", " }}</small>
+
+                                            @if ($loop->last)
+                                                <small class="small-school">{{ $school->name }}</small>
+                                            @endif
+
+                                        @endforeach
+                                    @endif
 
                                     <div class="form-check">
                                         <label class="container">
