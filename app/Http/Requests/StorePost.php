@@ -29,8 +29,8 @@ class StorePost extends FormRequest
             'until' => 'required|date',
             'school_id' => 'required',
             'group_id' => 'required',
-            'preview' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'preview' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
+            'image.*' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10240',
         ];
     }
 
