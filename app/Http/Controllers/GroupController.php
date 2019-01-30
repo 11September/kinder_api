@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversation;
 use App\User;
 use App\Group;
 use App\School;
@@ -100,13 +99,9 @@ class GroupController extends Controller
                 return response()->json(['message' => 'Користувачів не знайдено!'], 404);
             }
 
-//            $group_users->load('messages');
+            $group_users->load('messages');
 
             foreach ($group_users as $user) {
-
-                $conversations = Conversation::where('user1_id', $user->id)->OrWhere('user2_id', $user->id)->with('messages')->get();
-                dd($conversations);
-
                 $count = 0;
                 foreach ($user->messages as $message) {
                     if ($message->status == "unread") {
