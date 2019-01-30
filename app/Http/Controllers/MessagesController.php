@@ -174,6 +174,27 @@ class MessagesController extends Controller
         $message->user_id = Auth::id();
         $message->save();
 
+
+        $user = Auth::id();
+        $conversation = Conversation::where('id', $request->conversation_id)->first();
+
+        $need_user_id = null;
+        if ($conversation->user1_id == $user->id) {
+            $need_user_id = $conversation->user2_id;
+        }
+        if ($conversation->user2_id == $user->id) {
+            $need_user_id = $conversation->user1_id;
+        }
+
+        $user = User::select('id', 'player_id')
+            ->where('id', $need_user_id)
+            ->where('player_id', '!=', null)
+            ->where('push', 'enabled')
+            ->active()
+            ->first();
+
+        \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+
         return redirect()->route('admin.conversation.user', $request->conversation_id);
     }
 
