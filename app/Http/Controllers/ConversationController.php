@@ -153,6 +153,8 @@ class ConversationController extends Controller
 
         $users = $group->students;
 
+        dd($users);
+
         return view('admin.messages.show', compact('list_schools', 'group', 'users'));
     }
 
