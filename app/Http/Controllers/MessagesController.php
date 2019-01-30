@@ -52,7 +52,9 @@ class MessagesController extends Controller
                 ->active()
                 ->first();
 
-            \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+            if ($user->player_id){
+                \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+            }
 
             return ['message' => 'Повідомлення збережено!'];
 
@@ -193,7 +195,9 @@ class MessagesController extends Controller
             ->active()
             ->first();
 
-        \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+        if ($user->player_id){
+            \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+        }
 
         return redirect()->route('admin.conversation.user', $request->conversation_id);
     }
