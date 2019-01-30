@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Conversation;
 use App\User;
 use App\Group;
 use App\School;
@@ -100,6 +101,16 @@ class GroupController extends Controller
             }
 
 //            $group_users->load('messages');
+
+            foreach ($group_users as $user) {
+                $conversations = Conversation::where('user1_id', $user->id)->OrWhere('user2_id', $user->id)->with('messages')->get();
+
+                dd($conversations);
+
+            }
+
+
+
 
             foreach ($group_users as $user) {
                 $count = 0;
