@@ -35,8 +35,6 @@ class PostsController extends Controller
                 $group = $user->group()->first();
             }
 
-            dd($group);
-
             $posts = Post::select('id', 'title', 'body', 'preview', 'image')
                 ->where('until', '>=', date('Y-m-d'))
                 ->where('school_id', $school_id)
@@ -45,6 +43,8 @@ class PostsController extends Controller
                 })
                 ->latest()
                 ->get();
+
+            dd($group, $posts);
 
             $posts = $posts->each(function ($item, $key) {
                 $data = null;
