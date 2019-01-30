@@ -39,7 +39,6 @@ class UsersController extends Controller
                         $credentials = $request->only('email', 'password');
                         Auth::attempt($credentials);
 
-
                         $group = $user->group()->first();
                         $school = $user->school()->first();
 
