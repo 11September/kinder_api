@@ -110,9 +110,6 @@ class GroupController extends Controller
                 $conversations = Conversation::where('user1_id', $user->id)->OrWhere('user2_id', $user->id)->with('messages')->get();
 
                 foreach ($conversations as $conversation) {
-
-                    dd("isset");
-
                     foreach ($conversation->messages as $message) {
 
                         dd("message", $message);
