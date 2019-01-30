@@ -110,16 +110,20 @@ class GroupController extends Controller
                 $conversations = Conversation::where('user1_id', $user->id)->where('user2_id', $user->id)->with('messages')->get();
 
 
-                if (isset($conversations->messages)){
+                foreach ($conversations as $conversation) {
 
-                    dd("isset");
 
-                    foreach ($conversations->messages as $message) {
+                    if (isset($conversations->messages)) {
 
-                        dd("message" ,$message);
+                        dd("isset");
 
-                        if ($message->user_id != $user->id){
-                            $count++;
+                        foreach ($conversations->messages as $message) {
+
+                            dd("message", $message);
+
+                            if ($message->user_id != $user->id) {
+                                $count++;
+                            }
                         }
                     }
                 }
@@ -128,8 +132,6 @@ class GroupController extends Controller
             }
 
             dd($group_users);
-
-
 
 
             foreach ($group_users as $user) {
@@ -221,9 +223,9 @@ class GroupController extends Controller
 
         $moderators_ids = array();
         foreach ($groups as $key => $item) {
-            if ($item->moderator_id == $group->moderator_id){
+            if ($item->moderator_id == $group->moderator_id) {
                 continue;
-            }else{
+            } else {
                 $moderators_ids[$key] = $item->moderator_id;
             }
         }
@@ -249,7 +251,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        if ($user->id != $request->moderator_id){
+        if ($user->id != $request->moderator_id) {
             $user->school_id = null;
             $user->group_id = null;
             $user->save();
