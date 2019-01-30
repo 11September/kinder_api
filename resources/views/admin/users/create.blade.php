@@ -182,9 +182,11 @@
                                                 class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect2">
 
-                                            @foreach($groups as $group)
-                                                <option value="{{ $group->id }}">{{ $group->name }}</option>
-                                            @endforeach
+                                            @if($groups)
+                                                @foreach($groups as $group)
+                                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                                @endforeach
+                                            @endif
 
                                         </select>
 
