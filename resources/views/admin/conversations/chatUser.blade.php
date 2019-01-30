@@ -104,7 +104,6 @@
                                                 <small class="badge badge-primary badge-pill"></small>
                                             @endif
 
-                                            {{--<small class="badge badge-primary badge-pill">14</small>--}}
                                         </div>
                                         <p class="mb-1">{{ $user->parent_name }}</p>
                                         <small>{{ $user->parent_phone }}</small>
