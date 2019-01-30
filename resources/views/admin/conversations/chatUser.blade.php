@@ -170,7 +170,7 @@
                     },
 
                     type: 'get',
-                    url: '/admin/messages/setReadMessages/' + user_id + '',
+                    url: '{{ url('admin/messages/setReadMessages/') }}' + user_id + '',
                     dataType: 'json',
                     // data: {id: user_id},
                     success: function (data) {
