@@ -176,7 +176,7 @@
                 $.confirm({
                     // useBootstrap: false,
                     title: 'Видалення садка',
-                    content: 'Підтвердіть видалення садка',
+                    content: 'Підтвердіть видалення групи',
                     icon: 'fa fa-question-circle',
                     animation: 'scale',
                     closeAnimation: 'scale',
@@ -187,8 +187,8 @@
                             btnClass: 'btn-red',
                             action: function () {
                                 $.confirm({
-                                    title: 'Підтвердіть видалення садка',
-                                    content: 'Попередження: при видаленні садка видаляться всі учні, розклад занять, розклад харчування, новини що належать даному садочку.',
+                                    title: 'Підтвердіть видалення групи',
+                                    content: 'Попередження: при відаленні групи видалялися: розклад зайняти, розклад харчування, новини что належати данi групi.',
                                     icon: 'fa fa-warning',
                                     animation: 'scale',
                                     closeAnimation: 'zoom',
