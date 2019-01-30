@@ -44,8 +44,6 @@ class PostsController extends Controller
                 ->latest()
                 ->get();
 
-            dd($group, $posts);
-
             $posts = $posts->each(function ($item, $key) {
                 $data = null;
 
