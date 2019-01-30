@@ -39,10 +39,6 @@ class PostsController extends Controller
                 ->latest()
                 ->get();
 
-            if (!$posts || count($posts) < 1){
-                return response()->json(['message' => 'Новин не знайдено!'], 404);
-            }
-
             $posts = $posts->each(function ($item, $key) {
                 $data = null;
 
@@ -58,8 +54,6 @@ class PostsController extends Controller
 
                 $item['image'] = $data;
             });
-
-
 
             return ['data' => $posts];
 

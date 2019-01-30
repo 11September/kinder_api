@@ -147,7 +147,6 @@ class GroupController extends Controller
             ->with('schools')
             ->get();
 
-//       Check free tutors
         $moderators_ids = array();
         foreach ($groups as $key => $group) {
             $moderators_ids[$key] = $group->moderator_id;
