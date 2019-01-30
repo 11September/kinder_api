@@ -29,12 +29,13 @@ class PostsController extends Controller
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
-//            $group = $user->group()->first();
             if (!$user->group()->first()){
                 $group = Group::where('moderator_id', $user->id)->OrWhere('user_id', $user->id)->first();
             }else{
                 $group = $user->group()->first();
             }
+
+            dd($group);
 
             $posts = Post::select('id', 'title', 'body', 'preview', 'image')
                 ->where('until', '>=', date('Y-m-d'))
