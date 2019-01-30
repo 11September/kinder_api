@@ -83,7 +83,6 @@ Route::post('/admin/notifications', 'NotificationsController@adminStore')->middl
 Route::post('/admin/notifications/notifyScheduleByGroup', 'NotificationsController@notifyScheduleByGroup')->middleware('is_admin')->name('admin.notifications.notifyScheduleByGroup');
 Route::post('/admin/notifications/notifyFoodsBySchool', 'NotificationsController@notifyFoodsBySchool')->middleware('is_admin')->name('admin.notifications.notifyFoodsBySchool');
 
-
 // Admin Conversations
 Route::get('/admin/conversations', 'ConversationController@admin')->middleware('access_admin')->name('admin.messages');
 Route::get('/admin/conversations/group/{id}', 'ConversationController@adminShowGroupUsers')->middleware('access_admin')->name('admin.groupUsers');
