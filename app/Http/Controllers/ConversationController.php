@@ -169,8 +169,6 @@ class ConversationController extends Controller
             $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
         }
 
-        dd($conversation, $user, $users);
-
         $list_schools = School::with('groups')->get();
 
         $groups = Group::whereHas('schools', function ($query) use ($list_schools) {
