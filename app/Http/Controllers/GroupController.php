@@ -107,7 +107,7 @@ class GroupController extends Controller
 
                 $conversations = Conversation::where('user1_id', $user->id)->with('messages')->get();
 
-                if (!$conversations){
+                if (!$conversations || count($conversations) < 1){
                     $conversations = Conversation::where('user2_id', $user->id)->with('messages')->get();
                 }
 
