@@ -111,6 +111,9 @@ class GroupController extends Controller
 
 
                 if (isset($conversations->messages)){
+
+                    dd("isset");
+
                     foreach ($conversations->messages as $message) {
 
                         dd("message" ,$message);
