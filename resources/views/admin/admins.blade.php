@@ -130,7 +130,7 @@
 
                                 <div class="col-md-12">
                                     <div class="form-group float-right">
-                                        <button type="submit" class="btn btn-primary mb-2">Oновити</button>
+                                        <button type="submit" class="btn btn-primary mb-2">Створити</button>
                                     </div>
                                 </div>
 
