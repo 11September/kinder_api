@@ -161,7 +161,13 @@ class ConversationController extends Controller
         $conversation = Conversation::where('id', $id)->with('messages', 'user2')->first();
 
         $user = User::where('id', $conversation->user2_id)->first();
-        $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
+
+        if ($user->group_id){
+            $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
+        }else{
+            $user = User::where('id', $conversation->user1_id)->first();
+            $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
+        }
 
         dd($conversation, $user, $users);
 
