@@ -84,7 +84,7 @@
 
                                     <a href="{{ action('ConversationController@checkConversation', $user->id) }}"
                                        class="list-group-item list-group-item-action flex-column align-items-start
-                                        @if($user->id == $conversation->user2->id) active @endif">
+                                        @if($user->id == $conversation->user2->id || $user->id == $conversation->user1->id) active @endif">
                                         <div class="d-flex w-100 justify-content-between">
                                             <h5 class="mb-1">{{ $user->name }}</h5>
                                             <input class="user_id" type="hidden" name="user_id" value="{{ $user->id }}">
