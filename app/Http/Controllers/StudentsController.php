@@ -61,6 +61,8 @@ class StudentsController extends Controller
             $groups = Group::whereHas('schools', function ($query) use ($schools) {
                 $query->where('school_id', '=', $schools->first()->id);
             })->get();
+        }else{
+            $groups = null;
         }
 
         return view('admin.users.create', compact('schools', 'groups'));
