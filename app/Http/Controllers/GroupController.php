@@ -70,7 +70,7 @@ class GroupController extends Controller
                 )
                 ->first();
 
-            dd($group);
+//            dd($group);
 
             $adminId = $group->admin->id;
             $moderId = $group->moderator->id;
