@@ -164,8 +164,6 @@
                 var count = $('.list-group-item.active').find('.badge');
                 var user_id = $('.list-group-item.active').find('.user_id').val();
 
-                alert(user_id);
-
                 $.ajax({
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -199,8 +197,6 @@
                 var user_id = $('.list-group-item.active').find('.user_id').val();
                 var conversation_id = $('.list-group-item.active').find('.conversation_id').val();
                 var message_id = $('.wrapper-chat .chat-container').last().find('.message_id').val();
-
-                // alert(message_id);
 
                 if (message_id) {
                     $.ajax({
