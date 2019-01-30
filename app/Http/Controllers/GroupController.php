@@ -101,6 +101,8 @@ class GroupController extends Controller
 
             $group_users->load('messages');
 
+            dd($group_users);
+
             foreach ($group_users as $user) {
                 $count = 0;
                 foreach ($user->messages as $message) {
