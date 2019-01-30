@@ -52,7 +52,7 @@ class MessagesController extends Controller
                 ->active()
                 ->first();
 
-            if ($user->player_id){
+            if (isset($user->player_id) && !empty($user->player_id)){
                 \OneSignal::sendNotificationToUser($message->message, $user->player_id);
             }
 
@@ -195,7 +195,7 @@ class MessagesController extends Controller
             ->active()
             ->first();
 
-        if ($user->player_id){
+        if (isset($user->player_id) && !empty($user->player_id)){
             \OneSignal::sendNotificationToUser($message->message, $user->player_id);
         }
 
