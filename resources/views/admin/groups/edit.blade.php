@@ -175,7 +175,7 @@
 
                 $.confirm({
                     // useBootstrap: false,
-                    title: 'Видалення садка',
+                    title: 'Видалення групи',
                     content: 'Підтвердіть видалення групи',
                     icon: 'fa fa-question-circle',
                     animation: 'scale',
