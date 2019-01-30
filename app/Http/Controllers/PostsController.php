@@ -61,7 +61,7 @@ class PostsController extends Controller
                 $item['image'] = $data;
             });
 
-            return ['data' => $posts];
+            return response()->json(['data' => $posts], 200);
 
         } catch (\Exception $exception) {
             Log::warning('PostsController@index Exception: ' . $exception->getMessage() . "Line - " . $exception->getLine());
