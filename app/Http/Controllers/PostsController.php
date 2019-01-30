@@ -131,8 +131,6 @@ class PostsController extends Controller
 
     public function adminStore(StorePost $request)
     {
-        dd($request->all());
-
         $post = new Post();
         $post->title = $request->title;
         $post->body = $request->body;
