@@ -55,7 +55,7 @@ class MessagesController extends Controller
 
             if (isset($user->player_id) && !empty($user->player_id)) {
                 $player_ids = array();
-                $player_ids = $user->player_id;
+                $player_ids[0] = $user->player_id;
                 $params = [];
                 $params['headings'] = [
                     "en" => $user_who_send->name
