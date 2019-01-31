@@ -92,18 +92,10 @@
                                         <div class="d-flex w-100 justify-content-between">
                                             <h5 class="mb-1">{{ $user->name }}</h5>
 
-                                            @php($count = 0)
-                                            @foreach($user->messages as $message)
-                                                @if($message->status == "unread")
-                                                    @php($count++)
-                                                @endif
-                                            @endforeach
-
-                                            @if($count != 0)
-                                                <small class="badge badge-primary badge-pill">{{ $count }}</small>
+                                            @if($user->count != 0)
+                                                <small class="badge badge-primary badge-pill">{{ $user->count }}</small>
                                             @endif
 
-                                            {{--<small class="badge badge-primary badge-pill">14</small>--}}
                                         </div>
                                         <p class="mb-1">{{ $user->parent_name }}</p>
                                         <small>{{ $user->parent_phone }}</small>

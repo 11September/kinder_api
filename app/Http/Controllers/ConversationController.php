@@ -109,6 +109,7 @@ class ConversationController extends Controller
 
     public function adminShowGroupUsers($id)
     {
+        $current_user_id = Auth::id();
         $list_schools = School::with('groups')->get();
 
         $group = Group::where('id', $id)
@@ -119,7 +120,27 @@ class ConversationController extends Controller
 
         $users = $group->students;
 
-        $users->load('messages');
+        foreach ($users as $user) {
+            $count = 0;
+
+            $conversations = Conversation::where([
+                ['user1_id', '=', $user->id],
+                ['user2_id', '=', $current_user_id]
+            ])->OrWhere([
+                ['user1_id', '=', $current_user_id],
+                ['user2_id', '=', $user->id]
+            ])->with('messages')->get();
+
+            foreach ($conversations as $conversation) {
+                foreach ($conversation->messages as $message) {
+                    if ($message->user_id != $current_user_id && $message->status == "unread") {
+                        $count++;
+                    }
+                }
+            }
+
+            $user->count = $count;
+        }
 
         return view('admin.conversations.adminShowGroupUsers', compact('list_schools', 'group', 'users'));
     }

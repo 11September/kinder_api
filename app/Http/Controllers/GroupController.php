@@ -70,7 +70,7 @@ class GroupController extends Controller
                 return response()->json(['message' => 'Користувачів не знайдено!'], 404);
             }
 
-            $current_user_id;
+
             foreach ($group_users as $user) {
                 if (!$user->avatar || empty($user->avatar)) {
                     $user->avatar;
