@@ -28,7 +28,7 @@ class MessagesController extends Controller
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-//            $user_who_send = $user;
+            $user_who_send = $user;
 
             $message = new Message();
             $message->conversation_id = $request->conversation_id;
@@ -54,7 +54,17 @@ class MessagesController extends Controller
                 ->first();
 
             if (isset($user->player_id) && !empty($user->player_id)) {
-                \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+
+                $params = [];
+                $params['headings'] = [
+                    "en" => $user_who_send->name
+                ];
+                $params['contents'] = [
+                    "en" => $message->message
+                ];
+                $params['include_player_ids'] = $user->player_id;
+
+                \OneSignal::sendNotificationToUser($params);
             }
 
             return ['message' => 'Повідомлення збережено!'];
