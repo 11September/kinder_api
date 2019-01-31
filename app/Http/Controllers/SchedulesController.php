@@ -49,9 +49,9 @@ class SchedulesController extends Controller
             $groups = Group::whereHas('schools', function ($query) use ($schools) {
                 $query->where('school_id', '=', $schools->first()->id);
             })->get();
+        }else{
+            $groups = [];
         }
-
-        $groups = [];
 
         return view('admin.schedules', compact('schools', 'groups'));
     }
