@@ -392,6 +392,40 @@ input[type="color"]:focus,
     max-width: 25rem;
 }
 
+.card-login .form-group label{
+
+}
+
+.login-link{
+    font-size: 20px;
+    color: #0a0600;
+    text-decoration: none;
+}
+
+.login-link:hover{
+    text-decoration: none;
+    color: darkorange;
+}
+
+.login-forgot-link{
+    font-size: 16px;
+    color: #0a0600;
+    text-decoration: none;
+}
+
+.login-forgot-link:hover{
+    text-decoration: none;
+    color: darkorange;
+}
+
+/*.card-login .container input{*/
+    /*position: unset;*/
+    /*opacity: unset;*/
+    /*cursor: pointer;*/
+    /*height: unset;*/
+    /*width: -webkit-fill-available;*/
+/*}*/
+
 .card-register {
     max-width: 40rem;
 }
@@ -880,7 +914,7 @@ body.sidebar-toggled footer.sticky-footer {
 
 /* Кастомизация Радио Кнопки */
 /* Customize the label (the container) */
-.container {
+form .container {
     display: block;
     position: relative;
     padding-left: 35px;
@@ -895,7 +929,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* Hide the browser's default checkbox */
-.container input {
+form .container input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
@@ -904,7 +938,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* Create a custom checkbox */
-.checkmark {
+form .checkmark {
     position: absolute;
     top: 0;
     left: 0;
@@ -914,29 +948,29 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+form .container:hover input ~ .checkmark {
     background-color: #ccc;
 }
 
 /* When the checkbox is checked, add a blue background */
-.container input:checked ~ .checkmark {
+form .container input:checked ~ .checkmark {
     background-color: #ef8100;
 }
 
 /* Create the checkmark/indicator (hidden when not checked) */
-.checkmark:after {
+form .checkmark:after {
     content: "";
     position: absolute;
     display: none;
 }
 
 /* Show the checkmark when checked */
-.container input:checked ~ .checkmark:after {
+form .container input:checked ~ .checkmark:after {
     display: block;
 }
 
 /* Style the checkmark/indicator */
-.container .checkmark:after {
+form .container .checkmark:after {
     left: 10px;
     top: 6px;
     width: 5px;
@@ -949,7 +983,7 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* Кастомизация Чекбоксов */
-.container-checkbox {
+form .container-checkbox {
     line-height: 1;
     display: block;
     position: relative;
@@ -964,14 +998,14 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* Hide the browser's default radio button */
-.container-checkbox input {
+form .container-checkbox input {
     position: absolute;
     opacity: 0;
     cursor: pointer;
 }
 
 /* Create a custom radio button */
-.checkmark-radio {
+form .checkmark-radio {
     position: absolute;
     top: 0;
     left: 0;
@@ -982,29 +1016,29 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* On mouse-over, add a grey background color */
-.container-checkbox:hover input ~ .checkmark-radio {
+form .container-checkbox:hover input ~ .checkmark-radio {
     background-color: #ccc;
 }
 
 /* When the radio button is checked, add a blue background */
-.container-checkbox input:checked ~ .checkmark-radio {
+form .container-checkbox input:checked ~ .checkmark-radio {
     background-color: #ef8100;
 }
 
 /* Create the indicator (the dot/circle - hidden when not checked) */
-.checkmark-radio:after {
+form .checkmark-radio:after {
     content: "";
     position: absolute;
     display: none;
 }
 
 /* Show the indicator (dot/circle) when checked */
-.container-checkbox input:checked ~ .checkmark-radio:after {
+form .container-checkbox input:checked ~ .checkmark-radio:after {
     display: block;
 }
 
 /* Style the indicator (dot/circle) */
-.container-checkbox .checkmark-radio:after {
+form .container-checkbox .checkmark-radio:after {
     top: 9px;
     left: 9px;
     width: 8px;
