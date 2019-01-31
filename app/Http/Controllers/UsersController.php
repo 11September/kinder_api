@@ -269,7 +269,7 @@ class UsersController extends Controller
             $user->push = $request->push;
             $user->save();
 
-            return response()->json(['message' => 'Push повiдомлення змiнено!'], 200);
+            return response()->json(['message' => 'Push повiдомлення змiнено!', 'data' => $user->push], 200);
 
         } catch (\Exception $exception) {
             Log::warning('UsersController@SetPlayer Exception: ' . $exception->getMessage() . " - " . $exception->getLine());
