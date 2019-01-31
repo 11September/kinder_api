@@ -58,7 +58,7 @@ class MessagesController extends Controller
                 $player_ids[0] = $user->player_id;
                 $params = [];
                 $params['headings'] = [
-                    "en" => $user_who_send->name
+                    "en" => $user_who_send->parent_name
                 ];
                 $params['contents'] = [
                     "en" => $message->message
