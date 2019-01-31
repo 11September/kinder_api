@@ -64,9 +64,9 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Дата народження дитини</label>
+                                        <label for="birthday">Дата народження дитини</label>
                                         <input required name="birthday" value="{{ old('birthday') }}" type="date"
-                                               max="2100-01-01"
+                                               max="2100-01-01" id="birthday"
                                                class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}"
                                                placeholder="Дата народження дитини">
 
@@ -274,6 +274,21 @@
     <script src="{{ asset('administrator/js/jquery.inputmask.bundle.js') }}"></script>
 
     <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("birthday").setAttribute("max", today);
+
+
         $(document).ready(function () {
             $('.mask-phone').inputmask({"mask": "+38(099)-99-99-999"});
 
