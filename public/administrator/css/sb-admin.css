@@ -67,7 +67,7 @@ dl, ol, ul {
     font-size: xx-large;
 }
 
-.card-body .form-group input{
+#login .form-group input{
     position: unset;
     opacity: unset;
     cursor: pointer;
