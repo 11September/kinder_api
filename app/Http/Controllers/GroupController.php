@@ -70,8 +70,6 @@ class GroupController extends Controller
                 )
                 ->first();
 
-//            dd($group);
-
             $adminId = $group->admin->id;
             $moderId = $group->moderator->id;
 
@@ -102,12 +100,7 @@ class GroupController extends Controller
                 return response()->json(['message' => 'Користувачів не знайдено!'], 404);
             }
 
-//            $group_users->load('messages');
-
-
             $current_user_id;
-
-
             foreach ($group_users as $user) {
                 $count = 0;
 
@@ -121,28 +114,12 @@ class GroupController extends Controller
 
                 foreach ($conversations as $conversation) {
                     foreach ($conversation->messages as $message) {
-                        if ($message->user_id != $current_user_id) {
+                        if ($message->user_id != $current_user_id && $message->status == "unread") {
                             $count++;
                         }
                     }
-
                 }
 
-                $user->count = $count;
-            }
-
-            dd($group_users);
-
-
-            foreach ($group_users as $user) {
-                $count = 0;
-//                foreach ($user->messages as $message) {
-//                    if ($message->status == "unread") {
-//                        $count++;
-//                    }
-//                }
-
-//                unset($user->messages);
                 $user->count = $count;
             }
 
