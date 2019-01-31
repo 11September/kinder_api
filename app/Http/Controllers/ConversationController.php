@@ -67,9 +67,13 @@ class ConversationController extends Controller
     {
         $schools = School::all();
 
-        $groups = Group::whereHas('schools', function ($query) use ($schools) {
-            $query->where('school_id', '=', $schools->first()->id);
-        })->get();
+        if ($schools->first()){
+            $groups = Group::whereHas('schools', function ($query) use ($schools) {
+                $query->where('school_id', '=', $schools->first()->id);
+            })->get();
+        }else{
+            $groups = [];
+        }
 
 
         $user = Auth::user();
