@@ -52,7 +52,7 @@ class MessagesController extends Controller
                 ->active()
                 ->first();
 
-            if (isset($user->player_id) && !empty($user->player_id)){
+            if (isset($user->player_id) && !empty($user->player_id)) {
                 \OneSignal::sendNotificationToUser($message->message, $user->player_id);
             }
 
@@ -73,7 +73,7 @@ class MessagesController extends Controller
                 ['user1_id', '=', $user->id],
             ])->OrWhere([
                 ['user2_id', '=', $user->id],
-            ])->with('messages')
+            ])
                 ->with(array
                 ('messages' => function ($query) {
                         $query->select('id', 'user_id', 'conversation_id', 'status');
@@ -83,7 +83,7 @@ class MessagesController extends Controller
             $counter = 0;
             foreach ($conversations as $conversation) {
                 foreach ($conversation->messages as $message) {
-                    if ($message->user_id !== $user->id && $message->status == "unread") {
+                    if ($message->user_id != $user->id && $message->status == "unread") {
                         $counter++;
                     }
                 }
@@ -195,7 +195,7 @@ class MessagesController extends Controller
             ->active()
             ->first();
 
-        if (isset($user->player_id) && !empty($user->player_id)){
+        if (isset($user->player_id) && !empty($user->player_id)) {
             \OneSignal::sendNotificationToUser($message->message, $user->player_id);
         }
 
