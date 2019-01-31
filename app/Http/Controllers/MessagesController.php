@@ -64,7 +64,7 @@ class MessagesController extends Controller
                 ];
                 $params['include_player_ids'] = $user->player_id;
 
-                \OneSignal::sendNotificationToUser($params);
+                \OneSignal::sendNotificationCustom($params);
             }
 
             return ['message' => 'Повідомлення збережено!'];
