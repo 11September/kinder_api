@@ -31,7 +31,7 @@ class StoreStudent extends FormRequest
             'parent_phone' => 'required|string|min:10|max:18|unique:users,parent_phone',
             'parents' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
-            'address' => 'min:6',
+            'address' => '',
             'password' => 'required|string|min:6|max:255|confirmed',
             'school_id' => 'required',
             'group_id' => 'required',
