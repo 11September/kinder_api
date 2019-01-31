@@ -18,8 +18,6 @@ class SchoolController extends Controller
 
         $groups = Group::with('schools')->get();
 
-//        dd($groups);
-
         return view('admin.kindergartens', compact('schools', 'groups'));
     }
 
@@ -40,6 +38,8 @@ class SchoolController extends Controller
         $school = School::where('id', $id)->with('groups')->first();
 
         $groups = Group::with('schools')->get();
+
+//        dd($school, $groups);
 
         $schools = School::withCount('groups')->get();
 

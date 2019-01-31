@@ -91,19 +91,15 @@
                                 <label>Групи</label>
 
                                 @foreach($groups as $group)
-
                                     @if(@$group->schools && count($group->schools ) > 0)
-
                                         <p class="no-marg"><span class="orange">Садки:</span></p>
 
-                                        @foreach(@$group->schools as $school)
-
+                                        @foreach(@$group->schools as $group_school)
                                             @if ($loop->last)
-                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $school->name }}</small>
+                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $group_school->name }}</small>
                                             @else
-                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $school->name . ", " }}</small>
+                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $group_school->name . ", " }}</small>
                                             @endif
-
                                         @endforeach
                                     @endif
 
@@ -112,9 +108,11 @@
                                             {{ $group->name }}
                                             <input
 
-                                                @foreach($school->groups as $school_group)
-                                                @if($group->id == $school_group->id) checked @endif
-                                                @endforeach
+                                            @foreach($school->groups as $item)
+                                                @if($group->id == $item->id)
+                                                    checked="checked"
+                                                @endif
+                                            @endforeach
 
                                                 value="{{ $group->id }}" name="group_id[]"
                                                 class="{{ $errors->has('group_id') ? ' is-invalid' : '' }}"
@@ -123,7 +121,6 @@
                                         </label>
 
                                     </div>
-
                                 @endforeach
 
                                 @if ($errors->has('group_id'))
@@ -138,7 +135,6 @@
                         <div class="col-md-12">
                             <button type="submit" class="btn btn-primary mb-2">Оновити</button>
                         </div>
-
                     </div>
                 </form>
 
