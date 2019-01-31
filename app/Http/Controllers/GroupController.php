@@ -42,20 +42,20 @@ class GroupController extends Controller
                 ->where('id', '!=', $current_user_id)
                 ->get();
 
-            foreach ($users as $item) {
-                if (!$item->avatar || empty($item->avatar)) {
-                    $item->avatar;
-                } else {
-                    $item->avatar = Config::get('app.url') . $item->avatar;
-                }
-
-                if ($item->parents == 'father') {
-                    $item->parents = "Батько";
-                }
-                if ($item->parents == 'mother') {
-                    $item->parents = "Мати";
-                }
-            }
+//            foreach ($users as $item) {
+//                if (!$item->avatar || empty($item->avatar)) {
+//                    $item->avatar;
+//                } else {
+//                    $item->avatar = Config::get('app.url') . $item->avatar;
+//                }
+//
+//                if ($item->parents == 'father') {
+//                    $item->parents = "Батько";
+//                }
+//                if ($item->parents == 'mother') {
+//                    $item->parents = "Мати";
+//                }
+//            }
 
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $group_id)
                 ->with(array
@@ -79,20 +79,20 @@ class GroupController extends Controller
                 ->where('id', '!=', $current_user_id)
                 ->get();
 
-            foreach ($admins_group as $item) {
-                if (!$item->avatar || empty($item->avatar)) {
-                    $item->avatar;
-                } else {
-                    $item->avatar = Config::get('app.url') . $item->avatar;
-                }
-
-                if ($item->parents == 'father') {
-                    $item->parents = "Батько";
-                }
-                if ($item->parents == 'mother') {
-                    $item->parents = "Мати";
-                }
-            }
+//            foreach ($admins_group as $item) {
+//                if (!$item->avatar || empty($item->avatar)) {
+//                    $item->avatar;
+//                } else {
+//                    $item->avatar = Config::get('app.url') . $item->avatar;
+//                }
+//
+//                if ($item->parents == 'father') {
+//                    $item->parents = "Батько";
+//                }
+//                if ($item->parents == 'mother') {
+//                    $item->parents = "Мати";
+//                }
+//            }
 
             $group_users = $admins_group->merge($users);
 
@@ -102,6 +102,19 @@ class GroupController extends Controller
 
             $current_user_id;
             foreach ($group_users as $user) {
+                if (!$user->avatar || empty($user->avatar)) {
+                    $user->avatar;
+                } else {
+                    $user->avatar = Config::get('app.url') . $user->avatar;
+                }
+
+                if ($user->parents == 'father') {
+                    $user->parents = "Батько";
+                }
+                if ($user->parents == 'mother') {
+                    $user->parents = "Мати";
+                }
+
                 $count = 0;
 
                 $conversations = Conversation::where([
