@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin - Dashboard</title>
+    <title>Адміністративна панель "СадОк Медікавер"</title>
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
