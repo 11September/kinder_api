@@ -126,7 +126,7 @@
                                         <label for="exampleFormControlInput1">Адреса</label>
                                         <input type="text" name="address"
                                                class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}"
-                                               id="address"
+                                               id="address" value="{{ old('address') }}"
                                                placeholder="Адреса">
 
                                         @if ($errors->has('address'))
@@ -159,12 +159,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="exampleFormControlSelect1">Садок</label>
+
                                         <select required name="school_id"
                                                 class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
                                                 id="exampleFormControlSelect1">
 
                                             @foreach($schools as $school)
-                                                <option class="choose_school_option"
+                                                <option class="choose_school_option" {{ old("school_id") == $school->id ? "selected":"" }}
                                                         value="{{ $school->id }}">{{ $school->name }}</option>
                                             @endforeach
 
@@ -184,7 +185,7 @@
 
                                             @if($groups)
                                                 @foreach($groups as $group)
-                                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                                    <option {{ old("school_id") == $group->id ? "selected":"" }} value="{{ $group->id }}">{{ $group->name }}</option>
                                                 @endforeach
                                             @endif
 

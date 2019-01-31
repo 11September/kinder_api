@@ -25,13 +25,13 @@ class StoreStudent extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string',
+            'name' => 'required|string|min:6',
             'birthday' => 'required|date',
-            'parent_name' => 'required|string',
+            'parent_name' => 'required|string|min:6',
             'parent_phone' => 'required|string|min:10|max:18|unique:users,parent_phone',
             'parents' => 'required',
             'email' => 'required|string|email|max:255|unique:users',
-            'address' => 'required',
+            'address' => 'min:6',
             'password' => 'required|string|min:6|max:255|confirmed',
             'school_id' => 'required',
             'group_id' => 'required',
@@ -43,15 +43,28 @@ class StoreStudent extends FormRequest
     {
         return [
             'name.required' => "ПІБ дитини обов'язкове поле",
+            'name.min' => "ПІБ дитини повинен містити не менше 6 символів",
+
             'birthday.required' => "Дата народження дитини обов'язкове поле",
             'birthday.date' => "Дата народження має бути датою",
+
             'parent_name.required' => "ПІБ батьків обов'язкове поле",
+            'parent_name.min' => "ПІБ батьків повинен містити не менше 6 символів",
+
             'parent_phone.required' => "Номер телефону батьків обов'язкове поле",
             'parent_phone.unique' => "Номер телефону вже прив'язаний до користувача",
 
             'email.required' => "Email батьків обов'язкове поле",
+            'email.email' => "Email маэ бути згiдно формату",
+            'email.unique' => "Email повинен бути унікальним",
+
             'address.required' => "Адреса батьків обов'язкове поле",
+            'address.min' => "Мінімальна кількість символів 6 для адреси",
+
             'password.required' => "Пароль обов'язкове поле",
+            'password.min' => "Пароль повинен містити не менше 6 символів",
+            'password.confirmed' => "Паролі повинні співпадати",
+
             'school_id.required' => "Садок обов'язкове поле",
             'group_id.required' => "Група обов'язкове поле",
             'status.required' => "Статус обов'язкове поле",
@@ -59,10 +72,6 @@ class StoreStudent extends FormRequest
 
             'parent_phone.min' => "Мінімальна кількість символів 10 для номеру телефона",
             'parent_phone.max' => "Максимальна кількість символів 13 для номеру телефона",
-
-            'email.email' => "Email маэ бути згiдно формату",
-            'email.unique' => "Такий емейл існує",
-            'password.confirmed' => "Паролі повинні співпадати",
         ];
     }
 }

@@ -39,8 +39,6 @@ class SchoolController extends Controller
 
         $groups = Group::with('schools')->get();
 
-//        dd($school, $groups);
-
         $schools = School::withCount('groups')->get();
 
         return view('admin.kindergartens.edit', compact('schools', 'groups', 'school'));
