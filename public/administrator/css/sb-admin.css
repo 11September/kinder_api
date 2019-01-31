@@ -202,6 +202,10 @@ input[type="color"]:focus,
     font-family: 'Font Awesome 5 Free';
 }
 
+.form-group .fa-hotel{
+    margin-right: 5px;
+}
+
 .navbar-nav .nav-item.dropdown.show .dropdown-toggle::after {
     content: '\f107';
 }

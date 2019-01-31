@@ -18,6 +18,8 @@ class SchoolController extends Controller
 
         $groups = Group::with('schools')->get();
 
+//        dd($groups);
+
         return view('admin.kindergartens', compact('schools', 'groups'));
     }
 

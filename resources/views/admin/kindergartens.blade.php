@@ -98,10 +98,10 @@
 
                                         @foreach(@$group->schools as $school)
 
-                                            <small class="small-school">{{ $school->name . ", " }}</small>
-
                                             @if ($loop->last)
-                                                <small class="small-school">{{ $school->name }}</small>
+                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $school->name }}</small>
+                                            @else
+                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $school->name . ", " }}</small>
                                             @endif
 
                                         @endforeach
