@@ -54,7 +54,7 @@ class MessagesController extends Controller
                 ->first();
 
             if (isset($user->player_id) && !empty($user->player_id)) {
-                \OneSignal::sendNotificationToUser($user_who_send->name ,$message->message, $user->player_id);
+                \OneSignal::sendNotificationToUser(["heading" => $user_who_send->name, "contents" => $message->message, $user->player_id]);
             }
 
             return ['message' => 'Повідомлення збережено!'];
