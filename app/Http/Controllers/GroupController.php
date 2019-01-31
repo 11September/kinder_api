@@ -42,21 +42,6 @@ class GroupController extends Controller
                 ->where('id', '!=', $current_user_id)
                 ->get();
 
-//            foreach ($users as $item) {
-//                if (!$item->avatar || empty($item->avatar)) {
-//                    $item->avatar;
-//                } else {
-//                    $item->avatar = Config::get('app.url') . $item->avatar;
-//                }
-//
-//                if ($item->parents == 'father') {
-//                    $item->parents = "Батько";
-//                }
-//                if ($item->parents == 'mother') {
-//                    $item->parents = "Мати";
-//                }
-//            }
-
             $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $group_id)
                 ->with(array
                     ('admin' => function ($query) {
@@ -78,21 +63,6 @@ class GroupController extends Controller
                 ->whereIn('id', [$adminId, $moderId])
                 ->where('id', '!=', $current_user_id)
                 ->get();
-
-//            foreach ($admins_group as $item) {
-//                if (!$item->avatar || empty($item->avatar)) {
-//                    $item->avatar;
-//                } else {
-//                    $item->avatar = Config::get('app.url') . $item->avatar;
-//                }
-//
-//                if ($item->parents == 'father') {
-//                    $item->parents = "Батько";
-//                }
-//                if ($item->parents == 'mother') {
-//                    $item->parents = "Мати";
-//                }
-//            }
 
             $group_users = $admins_group->merge($users);
 
