@@ -62,7 +62,7 @@ class MessagesController extends Controller
                 $params['contents'] = [
                     "en" => $message->message
                 ];
-                $params['include_player_ids'] = $user->player_id;
+                $params['player_id'] = $user->player_id;
 
                 \OneSignal::sendNotificationCustom($params);
             }
