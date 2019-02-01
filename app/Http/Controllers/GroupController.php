@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Conversation;
 use App\User;
 use App\Group;
 use App\School;
+use App\Conversation;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreGroup;
 use App\Http\Requests\UpdateGroup;
@@ -27,6 +27,8 @@ class GroupController extends Controller
                 ->active()
                 ->orderBy('type', 'moderator')
                 ->get();
+
+            dd($users);
 
             $group = Group::select('id', 'user_id')->where('id', $user->group_id)->first();
 
