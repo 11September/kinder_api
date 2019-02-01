@@ -96,9 +96,13 @@
                                                 <small class="badge badge-primary badge-pill">{{ $user->count }}</small>
                                             @endif
 
+                                            @if($user->type == "moderator")
+                                                <p class="orange-text">Вихователь</p>
+                                            @endif
+
                                         </div>
-                                        <p class="mb-1">{{ $user->parent_name }}</p>
-                                        <small>{{ $user->parent_phone }}</small>
+                                        <p class="mb-1">{{ @$user->parent_name }}</p>
+                                        <small>{{ @$user->parent_phone }}</small>
 
                                     </a>
 
