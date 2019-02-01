@@ -17,59 +17,29 @@ class GroupController extends Controller
     public function GroupUsers(Request $request)
     {
         try {
-            $group_id = null;
-            $current_user_id = null;
-
             $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
             $current_user_id = $user->id;
 
-            if (!$user->group_id || !isset($user->group_id)) {
-                $group = Group::where('user_id', $user->id)->OrWhere('moderator_id', $user->id)->first();
-
-                if (!$group) {
-                    return response()->json(['message' => 'Користувачів не знайдено!'], 404);
-                }
-
-                $group_id = $group->id;
-            } else {
-                $group_id = $user->group_id;
-            }
-
             $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
-                ->where('group_id', '=', $group_id)
-                ->where('type', 'default')
+                ->where('id', '!=', $user->id)
+                ->where('group_id', '=', $user->group_id)
+                ->where('type', '!=', 'admin')
                 ->active()
-                ->where('id', '!=', $current_user_id)
+                ->orderBy('type', 'moderator')
                 ->get();
 
-            $group = Group::select('id', 'user_id', 'moderator_id')->where('id', $group_id)
-                ->with(array
-                    ('admin' => function ($query) {
-                            $query->select('id');
-                        })
-                )
-                ->with(array
-                    ('moderator' => function ($query) {
-                            $query->select('id');
-                        })
-                )
-                ->first();
+            $group = Group::select('id', 'user_id')->where('id', $user->group_id)->first();
 
-            $adminId = $group->admin->id;
-            $moderId = $group->moderator->id;
-
-            $admins_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
-                ->where('type', '!=', 'default')
-                ->whereIn('id', [$adminId, $moderId])
-                ->where('id', '!=', $current_user_id)
+            $admin_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
+                ->where('type', '=', 'admin')
+                ->where('id', '=', $group->user_id)
                 ->get();
 
-            $group_users = $admins_group->merge($users);
+            $group_users = $admin_group->merge($users);
 
             if (!$group_users || count($group_users) < 1) {
                 return response()->json(['message' => 'Користувачів не знайдено!'], 404);
             }
-
 
             foreach ($group_users as $user) {
                 if (!$user->avatar || empty($user->avatar)) {
