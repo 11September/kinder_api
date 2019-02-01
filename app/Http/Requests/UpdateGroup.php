@@ -36,7 +36,7 @@ class UpdateGroup extends FormRequest
         return [
             'name.required' => 'Назва групи обов\'язкове!',
             'user_id.required' => 'Адміністратор групи обов\'язкове поле!',
-            'moderator_id.required' => 'Модератор групи обов\'язкове поле!',
+            'moderator_id.required' => 'Виберіть групи обов\'язкове поле!',
             'school_id.required' => 'Виберіть школу!',
         ];
     }

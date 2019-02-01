@@ -55,23 +55,42 @@
                                             {{ $group->name }}
                                         </a>
 
-                                        <p>
-                                        <ul class="fa-ul">
-                                            @foreach(@$group->schools as $school)
-                                                <li><span class="fa-li"><i
-                                                            class="fas fa-hotel"></i></span>{{ $school->name }}</li>
+                                        <div>
+                                            <ul class="fa-ul">
+                                                @foreach(@$group->schools as $school)
+                                                    <li><span class="fa-li"><i
+                                                                class="fas fa-hotel"></i></span>{{ $school->name }}</li>
+                                                @endforeach
+                                            </ul>
+                                        </div>
+
+                                        <p class="group-count">
+                                            @php $count = 0 @endphp
+
+                                            @foreach($group->students as $student)
+                                                @if($student->type == "default")
+                                                    @php $count++ @endphp
+                                                @endif
                                             @endforeach
-                                        </ul>
+                                            <span class="orange-text">{{ $count }}</span> чоловiк
                                         </p>
 
-                                        <p class="group-count"><span
-                                                class="orange-text">{{ $group->students_count }}</span> чоловiк</p>
                                         <p class="group-count">
                                             Адміністратор - <span class="orange-text">{{ @$group->admin->name }}</span>
                                         </p>
+
+
                                         <p class="group-count">
-                                            Вихователь - <span class="orange-text">{{ @$group->moderator->name }}</span>
+                                            Вихователi:
                                         </p>
+
+                                        @foreach(@$group->students as $user)
+                                            @if($user->type == "moderator")
+                                                <p class="orange-text moderator_group"><i
+                                                        class="fas fa-user"></i>{{ $user->name }}</p>
+                                            @endif
+                                        @endforeach
+
                                     </div>
 
                                     <div class="wrapper-school-delete">
@@ -108,7 +127,7 @@
                                                 <label class="container-checkbox">
                                                     {{ $school->name }}
                                                     <input required value="{{ $school->id }}" type="radio"
-                                                           name="school_id">
+                                                           name="school_id" {{ old("school_id") == $school->id ? "checked":"" }}>
                                                     <span class="checkmark-radio"></span>
                                                 </label>
                                             </div>
@@ -120,17 +139,30 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Назва групи</label>
-                                        <input required type="text" name="name" class="form-control" id="name"
-                                               placeholder="Назва групи">
+                                        <input required type="text" name="name"
+                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}"
+                                               id="name"
+                                               value="{{ old('name') }}" placeholder="Назва групи">
+
+                                        @if ($errors->has('name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
                                         <label for="user_id">Вибрати адміністратора</label>
-                                        <select required name="user_id" class="form-control" id="user_id">
+
+                                        <select required name="user_id"
+                                                class="form-control {{ $errors->has('user_id') ? ' is-invalid' : '' }}"
+                                                id="user_id">
 
                                             @foreach($admins as $administrator)
-                                                <option
-                                                    value="{{ $administrator->id }}">{{ $administrator->name }}</option>
+                                                <option value="{{ $administrator->id }}"
+                                                    {{ old("user_id") == $administrator->id ? "selected":"" }}>
+                                                    {{ $administrator->name }}
+                                                </option>
                                             @endforeach
 
                                         </select>
@@ -139,15 +171,22 @@
                                     <div class="form-group">
                                         <label for="moderator_id">Вибрати вихователя</label>
 
-                                        <select required name="moderator_id" class="form-control" id="moderator_id">
-                                            @foreach($moderators as $moderator)
-                                                <option
-                                                    value="{{ $moderator->id }}">{{ $moderator->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        @foreach($moderators as $moderator)
+                                            <div class="form-check">
+                                                <label class="container">
+                                                    {{ $moderator->name }}
+                                                    <input value="{{ $moderator->id }}" class="school_id"
+                                                           name="moderator_id[]"
+                                                           type="checkbox">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        @endforeach
 
                                         @if(!$moderators || count($moderators) == 0)
-                                            <p>На жаль немає вільних вихователів. Створіть <a class="orange-link" href="{{ url('/admin/admins') }}">нового</a> вихователя.</p>
+                                            <p>На жаль немає вільних вихователів. Створіть <a class="orange-link"
+                                                                                              href="{{ url('/admin/admins') }}">нового</a>
+                                                вихователя.</p>
                                         @endif
 
                                     </div>

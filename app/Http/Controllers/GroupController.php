@@ -133,20 +133,15 @@ class GroupController extends Controller
 
         $schools = School::all();
 
-        $groups = Group::withCount(['students'])
-            ->with('admin')
-            ->with('moderator')
+        $groups = Group::with('admin')
             ->with('schools')
+            ->with('students')
             ->get();
-
-        $moderators_ids = array();
-        foreach ($groups as $key => $group) {
-            $moderators_ids[$key] = $group->moderator_id;
-        }
 
         $moderators = User::select('id', 'name')
             ->where('type', 'moderator')
-            ->whereNotIn('id', $moderators_ids)
+            ->where('school_id', null)
+            ->where('group_id', null)
             ->get();
 
         return view('admin.groups', compact('admins', 'moderators', 'schools', 'groups'));
@@ -157,16 +152,22 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->name;
         $group->user_id = $request->user_id;
-        $group->moderator_id = $request->moderator_id;
 
         $group->save();
 
         $group->schools()->attach($request->school_id);
 
-        $user = User::where('id', $request->moderator_id)->first();
-        $user->school_id = $request->school_id;
-        $user->group_id = $group->id;
-        $user->save();
+        foreach ($request->moderator_id as $value){
+            $user = User::where('id', $value)
+                ->where('school_id', null)
+                ->where('group_id', null)
+                ->first();
+
+            $user->school_id = $request->school_id;
+            $user->group_id = $group->id;
+            $user->type = "moderator";
+            $user->save();
+        }
 
         return redirect()->route('admin.groups')->with('message', 'Група успішно додана!');
     }
@@ -177,23 +178,29 @@ class GroupController extends Controller
 
         $schools = School::all();
 
-        $groups = Group::withCount(['students'])->get();
+        $groups = Group::with('students')->get();
 
-        $group = Group::where('id', $id)->withCount(['students'])->with('schools')->first();
+        $group = Group::where('id', $id)->with('students')->with('schools')->first();
 
         $moderators_ids = array();
-        foreach ($groups as $key => $item) {
-            if ($item->moderator_id == $group->moderator_id) {
-                continue;
-            } else {
-                $moderators_ids[$key] = $item->moderator_id;
+        foreach ($group->students as $key => $student) {
+            if ($student->type == "moderator"){
+                $moderators_ids[$key] = $student->id;
             }
         }
 
-        $moderators = User::select('id', 'name')
+        $currentModerators = User::select('id', 'name', 'group_id')
             ->where('type', 'moderator')
-            ->whereNotIn('id', $moderators_ids)
+            ->whereIn('id', $moderators_ids)
             ->get();
+
+        $availableModerators = User::select('id', 'name', 'group_id')
+            ->where('type', 'moderator')
+            ->where('school_id', null)
+            ->where('group_id', null)
+            ->get();
+
+        $moderators = $currentModerators->merge($availableModerators);
 
         return view('admin.groups.edit', compact('admins', 'moderators', 'schools', 'group', 'groups'));
     }
@@ -201,26 +208,16 @@ class GroupController extends Controller
     public function adminUpdate(UpdateGroup $request, $id)
     {
         $group = Group::where('id', $id)->first();
-        $user = User::where('id', $group->moderator_id)->first();
 
         $group->schools()->sync($request->school_id);
 
         $group->name = $request->name;
         $group->user_id = $request->user_id;
-        $group->moderator_id = $request->moderator_id;
 
         $group->save();
 
-        if ($user->id != $request->moderator_id) {
-            $user->school_id = null;
-            $user->group_id = null;
-            $user->save();
-
-            $user = User::where('id', $request->moderator_id)->first();
-            $user->school_id = $request->school_id;
-            $user->group_id = $group->id;
-            $user->save();
-        }
+        User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null]);
+        User::where('type', 'moderator')->whereIn('id', $request->moderator_id)->update(['group_id' => $group->id, 'school_id' => $request->school_id]);
 
         return redirect()->route('admin.groups')->with('message', 'Група успішно оновлена!');
     }
@@ -232,10 +229,14 @@ class GroupController extends Controller
         $group->schools()->detach();
         $group->posts()->detach();
 
-        $user = User::where('id', $group->moderator_id)->first();
-        $user->school_id = null;
-        $user->group_id = null;
-        $user->save();
+        $users = User::where('group_id', $group->id)->where('type', 'moderator')->get();
+        foreach ($users as $item){
+            $user = User::where('id', $item->id)->first();
+            $user->school_id = null;
+            $user->group_id = null;
+            $user->type = "moderator";
+            $user->save();
+        }
 
         $group->delete();
 

@@ -65,7 +65,14 @@
                                             {{ $list_groups->name }}
                                         </a>
 
-                                        <p class="group-count">{{ $list_groups->students_count }} чоловiк</p>
+                                        @php $count = 0 @endphp
+                                        @foreach($list_groups->students as $student)
+                                            @if($student->type == "default")
+                                                @php $count++ @endphp
+                                            @endif
+                                        @endforeach
+
+                                        <p class="group-count">{{ $count }} чоловiк</p>
                                     </div>
 
                                     <div class="wrapper-school-delete">
@@ -122,13 +129,19 @@
                                     <div class="form-group">
                                         <label for="name">Назва групи</label>
                                         <input required type="text" value="{{ $group->name }}" name="name"
-                                               class="form-control" id="name"
+                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" id="name"
                                                placeholder="Название Группы">
+
+                                        @if ($errors->has('name'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('name') }}</strong>
+                                            </span>
+                                        @endif
                                     </div>
 
                                     <div class="form-group">
                                         <label for="user_id">Вибрати адміністратора</label>
-                                        <select required name="user_id" class="form-control" id="user_id">
+                                        <select required name="user_id" class="form-control {{ $errors->has('user_id') ? ' is-invalid' : '' }}" id="user_id">
 
                                             @foreach($admins as $administrator)
                                                 <option @if($administrator->id == @$group->user_id) selected @endif
@@ -140,14 +153,27 @@
 
                                     <div class="form-group">
                                         <label for="moderator_id">Вибрати вихователя</label>
-                                        <select required name="moderator_id" class="form-control" id="moderator_id">
 
-                                            @foreach($moderators as $moderator)
-                                                <option @if($moderator->id == @$group->moderator_id) selected @endif
-                                                value="{{ $moderator->id }}">{{ $moderator->name }}</option>
-                                            @endforeach
+                                        @foreach($moderators as $moderator)
+                                            <div class="form-check">
+                                                <label class="container">
+                                                    {{ $moderator->name }}
+                                                    <input value="{{ $moderator->id }}" class="school_id"
+                                                           name="moderator_id[]"
+                                                           @if($moderator->group_id == $group->id)
+                                                                checked="checked"
+                                                           @endif
+                                                           type="checkbox">
+                                                    <span class="checkmark"></span>
+                                                </label>
+                                            </div>
+                                        @endforeach
 
-                                        </select>
+                                        @if(!$moderators || count($moderators) == 0)
+                                            <p>На жаль немає вільних вихователів. Створіть <a class="orange-link"
+                                                                                              href="{{ url('/admin/admins') }}">нового</a>
+                                                вихователя.</p>
+                                        @endif
                                     </div>
 
                                     <button type="submit" class="btn btn-primary mb-2">Оновити</button>

@@ -82,6 +82,13 @@ body.fixed-nav.sidebar-toggled #content-wrapper {
     padding-left: 0;
 }
 
+.moderator_group{
+    margin-bottom: 0;
+}
+.moderator_group i{
+    margin-right: 5px;
+}
+
 @media (min-width: 768px) {
     body.fixed-nav #content-wrapper {
         padding-left: 225px;
