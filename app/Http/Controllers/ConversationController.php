@@ -32,7 +32,7 @@ class ConversationController extends Controller
             ])->OrWhere([
                 ['user2_id', '=', $user->id],
                 ['user1_id', '=', $request->user_id],
-            ])->with('messages')
+            ])
                 ->with(array
                 ('messages' => function ($query) {
                         $query->select('id', 'user_id', 'conversation_id', 'message', 'status');
@@ -45,7 +45,7 @@ class ConversationController extends Controller
                 $conversation->user2_id = $request->user_id;
 
                 $conversation->save();
-            }else{
+            } else {
                 foreach ($conversation->messages as $message) {
                     if ($message->user_id == $user->id) {
                         $message->self = true;
@@ -67,11 +67,11 @@ class ConversationController extends Controller
     {
         $schools = School::all();
 
-        if ($schools->first()){
+        if ($schools->first()) {
             $groups = Group::whereHas('schools', function ($query) use ($schools) {
                 $query->where('school_id', '=', $schools->first()->id);
             })->get();
-        }else{
+        } else {
             $groups = [];
         }
 
@@ -95,7 +95,7 @@ class ConversationController extends Controller
             $counter_group = 0;
 
             foreach ($groups as $group) {
-                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id){
+                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id) {
 
                     foreach ($conversation->messages as $message) {
                         if ($message->user_id !== $user->id && $message->status == "unread") {
@@ -187,9 +187,9 @@ class ConversationController extends Controller
 
         $user = User::where('id', $conversation->user2_id)->first();
 
-        if ($user->group_id){
+        if ($user->group_id) {
             $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
-        }else{
+        } else {
             $user = User::where('id', $conversation->user1_id)->first();
             $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
         }
