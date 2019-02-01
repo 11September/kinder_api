@@ -28,8 +28,6 @@ class GroupController extends Controller
                 ->orderBy('type', 'moderator')
                 ->get();
 
-            dd($users);
-
             $group = Group::select('id', 'user_id')->where('id', $user->group_id)->first();
 
             $admin_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
