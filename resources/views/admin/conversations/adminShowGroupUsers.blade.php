@@ -96,11 +96,11 @@
                                                 <small class="badge badge-primary badge-pill">{{ $user->count }}</small>
                                             @endif
 
-                                            @if($user->type == "moderator")
-                                                <p class="orange-text mb-1">Вихователь</p>
-                                            @endif
-
                                         </div>
+                                        @if($user->type == "moderator")
+                                            <p class="orange-text mb-1">Вихователь</p>
+                                        @endif
+
                                         <p class="mb-1">{{ @$user->parent_name }}</p>
                                         <small>{{ @$user->parent_phone }}</small>
 
