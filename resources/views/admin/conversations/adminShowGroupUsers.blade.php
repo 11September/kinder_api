@@ -97,7 +97,7 @@
                                             @endif
 
                                             @if($user->type == "moderator")
-                                                <p class="orange-text">Вихователь</p>
+                                                <p class="orange-text mb-1">Вихователь</p>
                                             @endif
 
                                         </div>
