@@ -162,6 +162,7 @@ return [
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
 
+
         /*
          * Package Service Providers...
          */
@@ -176,7 +177,8 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         Asvae\ApiTester\ServiceProvider::class,
-        Berkayk\OneSignal\OneSignalServiceProvider::class
+        Berkayk\OneSignal\OneSignalServiceProvider::class,
+        Collective\Html\HtmlServiceProvider::class,
 
     ],
 
@@ -228,6 +230,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
         'OneSignal' => Berkayk\OneSignal\OneSignalFacade::class,
+
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
     ],
 
 ];
