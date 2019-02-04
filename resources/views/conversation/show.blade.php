@@ -59,7 +59,7 @@
 @section('additional_js')
     <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
     <script>
-        var socket = io.connect('http://8.dev-kit.ru:8890');
+        var socket = io.connect('{{ env('APP_URL') }}:8890');
         socket.emit('add user', {'client':{{Auth::user()->id}},'conversation':{{$conversation->id}}});
 
         socket.on('message', function (data) {
