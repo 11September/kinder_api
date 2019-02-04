@@ -1,22 +1,25 @@
 @extends('layouts.app')
 @section('additional_css')
     <style>
-        .panel-body{
+        .panel-body {
             height: 50vh;
             overflow-y: scroll;
         }
-        .message{
+
+        .message {
             padding: 10pt;
             border-radius: 5pt;
             margin: 5pt;
         }
-        .owner{
+
+        .owner {
             background-color: #ccd7e0;
             float: right;
         }
-        .not_owner{
+
+        .not_owner {
             background-color: #eaeff2;
-            float:left;
+            float: left;
         }
     </style>
 @endsection
@@ -42,14 +45,14 @@
                     @endforeach
                 </div>
                 <div class="panel-footer">
-                        <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
-                        <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
-                        <br/>
-                        <div class="row">
-                            <div class="col-md-offset-4 col-md-4">
-                                <button class="btn btn-primary btn-block" onclick="button_send_msg()">Send</button>
-                            </div>
+                    <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
+                    <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
+                    <br/>
+                    <div class="row">
+                        <div class="col-md-offset-4 col-md-4">
+                            <button class="btn btn-primary btn-block" onclick="button_send_msg()">Send</button>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -60,27 +63,27 @@
     <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
     <script>
         var socket = io.connect('{{ env('APP_URL') }}:8890');
-        socket.emit('add user', {'client':{{Auth::user()->id}},'conversation':{{$conversation->id}}});
+        socket.emit('add user', {'client':{{Auth::user()->id}}, 'conversation':{{$conversation->id}}});
 
         socket.on('message', function (data) {
             $('#panel-body').append(
-                    '<div class="row">'+
-                    '<div class="message not_owner">'+
-                    data.message+'<br/>'+
-                    '<b>now</b>'+
-                    '</div>'+
-                    '</div>');
+                '<div class="row">' +
+                '<div class="message not_owner">' +
+                data.message + '<br/>' +
+                '<b>now</b>' +
+                '</div>' +
+                '</div>');
 
             scrollToEnd();
 
-         });
+        });
     </script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function () {
             scrollToEnd();
 
-            $(document).keypress(function(e) {
-                if(e.which == 13) {
+            $(document).keypress(function (e) {
+                if (e.which == 13) {
                     var msg = $('#msg').val();
                     $('#msg').val('');//reset
                     send_msg(msg);
@@ -88,16 +91,16 @@
             });
         });
 
-        function button_send_msg(){
+        function button_send_msg() {
             var msg = $('#msg').val();
             $('#msg').val('');//reset
             send_msg(msg);
         }
 
 
-        function send_msg(msg){
+        function send_msg(msg) {
             $.ajax({
-                headers: { 'X-CSRF-Token' : $('#csrf_token_input').val() },
+                headers: {'X-CSRF-Token': $('#csrf_token_input').val()},
                 type: "POST",
                 url: "{{route('message.store')}}",
                 data: {
@@ -105,15 +108,15 @@
                     'conversation_id':{{$conversation->id}},
                 },
                 success: function (data) {
-                    if(data==true){
+                    if (data == true) {
 
                         $('#panel-body').append(
-                                '<div class="row">'+
-                                '<div class="message owner">'+
-                                msg+'<br/>'+
-                                '<b>now</b>'+
-                                '</div>'+
-                                '</div>');
+                            '<div class="row">' +
+                            '<div class="message owner">' +
+                            msg + '<br/>' +
+                            '<b>now</b>' +
+                            '</div>' +
+                            '</div>');
 
                         scrollToEnd();
                     }
@@ -124,7 +127,7 @@
             });
         }
 
-        function scrollToEnd(){
+        function scrollToEnd() {
             var d = $('#panel-body');
             d.scrollTop(d.prop("scrollHeight"));
         }
