@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use LRedis;
 use App\User;
 use App\Group;
 use App\School;
@@ -13,6 +14,32 @@ use Illuminate\Support\Facades\Validator;
 
 class ConversationController extends Controller
 {
+
+    public function store(Request $request){
+        $c1 = Conversation::where('user1_id',Auth::user()->id)->where('user2_id',$request->user_id)->count();
+        $c2 = Conversation::where('user2_id',Auth::user()->id)->where('user1_id',$request->user_id)->count();
+        if($c1 != 0 || $c2 != 0)
+            return redirect()->back();
+
+        $c = new Conversation();
+        $c->user1_id = Auth::user()->id;
+        $c->user2_id = $request->user_id;
+        $c->save();
+
+        return redirect()->back();
+    }
+
+    public function show($id){
+        $conversation = Conversation::findOrFail($id);
+        if($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id)
+            return view('conversation.show',compact('conversation'));
+
+        return redirect()->back();
+    }
+
+
+
+
     public function createOrGetConversation(Request $request)
     {
         $validator = Validator::make($request->all(), [

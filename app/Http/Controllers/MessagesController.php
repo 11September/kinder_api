@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Redis;
+use LRedis;
 use App\User;
 use OneSignal;
 use App\Group;
@@ -15,6 +17,32 @@ use Illuminate\Support\Facades\Validator;
 
 class MessagesController extends Controller
 {
+    public function store(Request $request){
+        $conversation = Conversation::findOrFail($request->conversation_id);
+        if($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
+            $message = new Message;
+            $message->conversation_id = $request->conversation_id;
+            $message->user_id = Auth::user()->id;
+            $message->message = $request->message;
+            $message->status = "unread";
+            $message->save();
+
+            $receiver_id = ($conversation->user1_id == Auth::user()->id)? $conversation->user2_id : $conversation->user1_id;
+            $data = [
+                'conversation_id'=>$request->conversation_id,
+                'message'=> $request->message,
+                'client_id' => $receiver_id
+            ];
+            $redis = Redis::connection();
+            $redis->publish('message', json_encode($data));
+
+            return response()->json(true);
+        }
+        return response()->json("permission error");
+    }
+
+
+
     public function storeMessage(Request $request)
     {
         $validator = Validator::make($request->all(), [
