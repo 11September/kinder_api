@@ -21,9 +21,8 @@ redisClient.on("message", function (channel, data) {
     if (data.client_id in users) {
         if (data.conversation_id in users[data.client_id]) {
             users[data.client_id][data.conversation_id].emit("message", {
-                "conversation_id": data.conversation_id,
-                "message": data.message,
-                "user_id" : data.client_id
+                // "conversation_id": data.conversation_id,
+                "message": data.message
             });
         }
     }
