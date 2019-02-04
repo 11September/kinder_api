@@ -23,7 +23,7 @@ redisClient.on("message", function (channel, data) {
             users[data.client_id][data.conversation_id].emit("message", {
                 "conversation_id": data.conversation_id,
                 "message": data.message,
-                "user_id" : socket.user_id
+                "user_id" : data.client_id
             });
         }
     }
