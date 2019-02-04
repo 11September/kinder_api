@@ -66,6 +66,9 @@
         socket.emit('add user', {'client':{{Auth::user()->id}}, 'conversation':{{$conversation->id}}});
 
         socket.on('message', function (data) {
+
+            console.log(data);
+
             $('#panel-body').append(
                 '<div class="row">' +
                 '<div class="message not_owner">' +
