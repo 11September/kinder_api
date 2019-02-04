@@ -18,11 +18,12 @@ use Illuminate\Support\Facades\Validator;
 class MessagesController extends Controller
 {
     public function store(Request $request){
+        $user = User::where('token', '=', $request->header('x-auth-token'))->first();
         $conversation = Conversation::findOrFail($request->conversation_id);
-        if($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
+        if($conversation->user1_id == $user->id || $conversation->user2_id == $user->id){
             $message = new Message;
             $message->conversation_id = $request->conversation_id;
-            $message->user_id = Auth::user()->id;
+            $message->user_id = $user->id;
             $message->message = $request->message;
             $message->status = "unread";
             $message->save();
