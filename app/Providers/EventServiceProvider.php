@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Log;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -31,6 +32,9 @@ class EventServiceProvider extends ServiceProvider
         parent::boot();
 
         Event::listen('message', function ($channel, $data) {
+
+            Log::warning("event");
+
             $message = new Message();
             $message->conversation_id = 1;
             $message->user_id = 1;
