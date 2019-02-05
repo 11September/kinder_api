@@ -72,6 +72,13 @@ io.on('connection', function (socket) {
         console.log('user_id - ',data.client, " ;conversation - ", data.conversation)
     });
 
+
+    socket.on('message', (message) => {
+        console.log("message", message);
+
+        io.emit('message', {text: message.message});
+    });
+
     socket.on('disconnect', function () {
         if (!(socket.user_id in users)) return;
         if (!(socket.conversation_id in users[socket.user_id])) return;
