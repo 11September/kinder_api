@@ -38,7 +38,7 @@ class NewMessage implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return ['message'];
-//        return new PrivateChannel('channel-name');
+//        return ['message'];
+        return new PrivateChannel('message');
     }
 }
