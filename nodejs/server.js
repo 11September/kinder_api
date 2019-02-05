@@ -15,26 +15,45 @@ redisClient.auth('password', function(err){
 */
 
 
-redisClient.subscribe('message');
-
-redisClient.on("message", function (channel, data) {
-    var data = JSON.parse(data);
-
-    console.log('channel', channel, data);
-
-    if (data.client_id in users) {
-        if (data.conversation_id in users[data.client_id]) {
-            users[data.client_id][data.conversation_id].emit("message", {
-                "conversation_id": data.conversation_id,
-                "message": data.message
-            });
-        }
-    }
-});
+// redisClient.subscribe('message');
+//
+// redisClient.on("message", function (channel, data) {
+//     var data = JSON.parse(data);
+//
+//     console.log('channel', channel, data);
+//
+//     if (data.client_id in users) {
+//         if (data.conversation_id in users[data.client_id]) {
+//             users[data.client_id][data.conversation_id].emit("message", {
+//                 "conversation_id": data.conversation_id,
+//                 "message": data.message
+//             });
+//         }
+//     }
+// });
 
 
 io.on('connection', function (socket) {
     console.log('connection');
+
+
+    redisClient.subscribe('message');
+
+    redisClient.on("message", function (channel, data) {
+        var data = JSON.parse(data);
+
+        console.log('channel', channel, data);
+
+        if (data.client_id in users) {
+            if (data.conversation_id in users[data.client_id]) {
+                users[data.client_id][data.conversation_id].emit("message", {
+                    "conversation_id": data.conversation_id,
+                    "message": data.message
+                });
+            }
+        }
+    });
+
 
     socket.on("add user", function (data) {
         if (!(data.client in users)) {
