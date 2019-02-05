@@ -16,6 +16,7 @@ class NewMessage implements ShouldBroadcast
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     public $username;
+    public $age = 30;
 
     /**
      * Create a new event instance.
