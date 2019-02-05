@@ -1,30 +1,3 @@
-// let app = require('express')();
-// let server = require('http').Server(app);
-// let io = require('socket.io')(server);
-// server.listen(8890);
-//
-//
-// io.on('connection', (socket) => {
-//
-//     console.log("connection");
-//
-//     socket.on('disconnect', function () {
-//
-//         console.log("disconect");
-//
-//         io.emit('users-changed', {user: socket.nickname, event: 'left'});
-//     });
-//
-//     socket.on('message', (message) => {
-//
-//         console.log("message", message);
-//
-//         io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});
-//     });
-// });
-
-
-
 var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
@@ -87,8 +60,6 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
         if (!(socket.user_id in users)) return;
         if (!(socket.conversation_id in users[socket.user_id])) return;
-
-
 
         delete users[socket.user_id][socket.conversation_id];
         if (Object.keys(users[socket.user_id]).length === 0) {

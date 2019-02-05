@@ -36,4 +36,4 @@ Route::middleware('cors','token')->post('store_message', 'MessagesController@sto
 Route::middleware('cors','token')->post('messages_mark_read', 'MessagesController@messagesMarkRead')->name('Store Message');
 Route::middleware('cors','token')->get('unread_messages_counter', 'MessagesController@unreadMessagesCounter')->name('Unread Messages Counter');
 
-Route::middleware('cors','token')->post('message','MessagesController@store')->name('message.store');
+//Route::middleware('cors','token')->post('message','MessagesController@ApiStore')->name('message.store');
