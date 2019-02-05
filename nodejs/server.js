@@ -16,6 +16,8 @@ redisClient.auth('password', function(err){
 
 redisClient.subscribe('message');
 
+
+
 redisClient.on("message", function (channel, data) {
     var data = JSON.parse(data);
     if (data.client_id in users) {
@@ -36,6 +38,8 @@ io.on('connection', function (socket) {
         users[data.client][data.conversation] = socket;
         socket.user_id = data.client;
         socket.conversation_id = data.conversation;
+
+        console.log('user_id - ',data.client, " ;conversation - ", data.conversation)
     });
 
     socket.on('disconnect', function () {
