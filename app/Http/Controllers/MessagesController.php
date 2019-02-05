@@ -30,15 +30,15 @@ class MessagesController extends Controller
 
             $receiver_id = ($conversation->user1_id == Auth::user()->id)? $conversation->user2_id : $conversation->user1_id;
 
-            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
+//            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
 
-//            $data = [
-//                'conversation_id'=>$request->conversation_id,
-//                'message'=> $request->message,
-//                'client_id' => $receiver_id
-//            ];
-//            $redis = Redis::connection();
-//            $redis->publish('message', json_encode($data));
+            $data = [
+                'conversation_id'=>$request->conversation_id,
+                'message'=> $request->message,
+                'client_id' => $receiver_id
+            ];
+            $redis = Redis::connection();
+            $redis->publish('message', json_encode($data));
 
             return response()->json(true);
         }
