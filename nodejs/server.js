@@ -52,6 +52,8 @@ redisClient.on("message", function (channel, data) {
                 "message": data.message
             });
         }
+
+        console.log('message - ', data);
     }
 });
 
