@@ -17,22 +17,14 @@ redisClient.auth('password', function(err){
 
 
 io.on('connection', function (socket) {
-    console.log('connection');
 
     redisClient.subscribe('message');
 
     redisClient.on("message", function (channel, data) {
-
-        socket.on('message', function (data) {
-            io.emit("message", {
-                "conversation_id": data.conversation_id,
-                "message": data.message
-            });
-        });
-
         var data = JSON.parse(data);
 
         console.log('channel', channel);
+        console.log('message without if', data);
 
         if (data.client_id in users) {
             if (data.conversation_id in users[data.client_id]) {
