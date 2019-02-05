@@ -62,7 +62,7 @@ class MessagesController extends Controller
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $user_who_send = $user;
 
-            $conversation = Conversation::findOrFail($request->conversation_id);
+            $conversation = Conversation::where('id', $request->conversation_id)->first();
             if($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
                 $message = new Message();
                 $message->conversation_id = $request->conversation_id;
