@@ -25,6 +25,8 @@ class NewMessage implements ShouldBroadcast
      */
     public function __construct($username)
     {
+        dd("new message");
+
         $this->username = $username;
     }
 
