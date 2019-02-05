@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
 
     socket.on('message', (message) => {
 
-        console.log("message", message.text);
+        console.log("message", message);
 
         io.emit('message', {text: message.text, from: socket.nickname, created: new Date()});
     });
