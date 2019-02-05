@@ -18,9 +18,10 @@ use Illuminate\Support\Facades\Validator;
 
 class MessagesController extends Controller
 {
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         $conversation = Conversation::findOrFail($request->conversation_id);
-        if($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
+        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id) {
             $message = new Message;
             $message->conversation_id = $request->conversation_id;
             $message->user_id = Auth::user()->id;
@@ -28,13 +29,13 @@ class MessagesController extends Controller
             $message->status = "unread";
             $message->save();
 
-            $receiver_id = ($conversation->user1_id == Auth::user()->id)? $conversation->user2_id : $conversation->user1_id;
+            $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
 
 //            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
 
             $data = [
-                'conversation_id'=>$request->conversation_id,
-                'message'=> $request->message,
+                'conversation_id' => $request->conversation_id,
+                'message' => $request->message,
                 'client_id' => $receiver_id
             ];
             $redis = Redis::connection();
@@ -44,7 +45,6 @@ class MessagesController extends Controller
         }
         return response()->json("permission error");
     }
-
 
 
     public function storeMessage(Request $request)
@@ -63,13 +63,13 @@ class MessagesController extends Controller
             $user_who_send = $user;
 
             $conversation = Conversation::where('id', $request->conversation_id)->first();
-            if($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
-                $message = new Message();
-                $message->conversation_id = $request->conversation_id;
-                $message->message = $request->message;
-                $message->user_id = $user->id;
-                $message->save();
-            }
+
+            $message = new Message();
+            $message->conversation_id = $request->conversation_id;
+            $message->message = $request->message;
+            $message->user_id = $user->id;
+            $message->save();
+
 
             $need_user_id = null;
             if ($conversation->user1_id == $user->id) {
@@ -88,8 +88,8 @@ class MessagesController extends Controller
 
 
             $data = [
-                'conversation_id'=>$request->conversation_id,
-                'message'=> $request->message,
+                'conversation_id' => $request->conversation_id,
+                'message' => $request->message,
                 'client_id' => $need_user_id
             ];
             $redis = Redis::connection();
