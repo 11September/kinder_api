@@ -46,6 +46,8 @@ redisClient.subscribe('message');
 redisClient.on("message", function (channel, data) {
     var data = JSON.parse(data);
 
+
+    console.log('channel', channel);
     console.log('message without if', data);
 
     if (data.client_id in users) {
