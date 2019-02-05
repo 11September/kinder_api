@@ -15,31 +15,26 @@ redisClient.auth('password', function(err){
 */
 
 
+redisClient.subscribe('message');
+
+redisClient.on("message", function (channel, data) {
+    var data = JSON.parse(data);
+
+    console.log('channel', channel, data);
+
+    if (data.client_id in users) {
+        if (data.conversation_id in users[data.client_id]) {
+            users[data.client_id][data.conversation_id].emit("message", {
+                "conversation_id": data.conversation_id,
+                "message": data.message
+            });
+        }
+    }
+});
+
 
 io.on('connection', function (socket) {
-
-    redisClient.subscribe('message');
-
-    redisClient.on("message", function (channel, data) {
-        var data = JSON.parse(data);
-
-        console.log('channel', channel);
-        console.log('message without if', data);
-
-        if (data.client_id in users) {
-            if (data.conversation_id in users[data.client_id]) {
-                users[data.client_id][data.conversation_id].emit("message", {
-                    "conversation_id": data.conversation_id,
-                    "message": data.message
-                });
-            }
-
-            console.log('message - ', data);
-        }
-    });
-
-
-
+    console.log('connection');
 
     socket.on("add user", function (data) {
         if (!(data.client in users)) {
@@ -49,7 +44,7 @@ io.on('connection', function (socket) {
         socket.user_id = data.client;
         socket.conversation_id = data.conversation;
 
-        console.log('user_id - ',data.client, " ;conversation - ", data.conversation)
+        console.log('user_id - ', data.client, " ;conversation - ", data.conversation)
     });
 
     // socket.on('message', function (data) {
@@ -62,6 +57,8 @@ io.on('connection', function (socket) {
     // });
 
     socket.on('disconnect', function () {
+        console.log('disconnect');
+
         if (!(socket.user_id in users)) return;
         if (!(socket.conversation_id in users[socket.user_id])) return;
 
