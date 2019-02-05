@@ -42,7 +42,8 @@ io.on('connection', function (socket) {
             if (data.conversation_id in users[data.client_id]) {
                 users[data.client_id][data.conversation_id].emit("message", {
                     "conversation_id": data.conversation_id,
-                    "message": data.message
+                    "message": data.message,
+                    "self": false,
                 });
             }
         }
