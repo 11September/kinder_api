@@ -62,13 +62,14 @@ class MessagesController extends Controller
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $user_who_send = $user;
 
-            $message = new Message();
-            $message->conversation_id = $request->conversation_id;
-            $message->message = $request->message;
-            $message->user_id = $user->id;
-            $message->save();
-
-            $conversation = Conversation::where('id', $request->conversation_id)->first();
+            $conversation = Conversation::findOrFail($request->conversation_id);
+            if($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
+                $message = new Message();
+                $message->conversation_id = $request->conversation_id;
+                $message->message = $request->message;
+                $message->user_id = $user->id;
+                $message->save();
+            }
 
             $need_user_id = null;
             if ($conversation->user1_id == $user->id) {
@@ -84,6 +85,15 @@ class MessagesController extends Controller
                 ->where('push', 'enabled')
                 ->active()
                 ->first();
+
+
+            $data = [
+                'conversation_id'=>$request->conversation_id,
+                'message'=> $request->message,
+                'client_id' => $need_user_id
+            ];
+            $redis = Redis::connection();
+            $redis->publish('message', json_encode($data));
 
             if (isset($user->player_id) && !empty($user->player_id)) {
                 $player_ids = array();
