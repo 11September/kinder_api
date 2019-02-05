@@ -34,6 +34,7 @@
                         </div>
                     </div>
                 </div>
+
                 <div class="panel-body" id="panel-body">
                     @foreach($conversation->messages as $message)
                         <div class="row">

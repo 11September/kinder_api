@@ -48,7 +48,7 @@ io.on('connection', function (socket) {
     });
 
 
-    socket.on('message', (data) => {
+    socket.on('message', function (data) {
         console.log("message", data);
 
         io.emit("message", {

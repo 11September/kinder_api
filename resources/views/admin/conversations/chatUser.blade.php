@@ -1,7 +1,28 @@
 @extends('admin.template.master')
 
 @section('css')
+    <style>
+        .panel-body {
+            height: 50vh;
+            overflow-y: scroll;
+        }
 
+        .message {
+            padding: 10pt;
+            border-radius: 5pt;
+            margin: 5pt;
+        }
+
+        .owner {
+            background-color: #ccd7e0;
+            float: right;
+        }
+
+        .not_owner {
+            background-color: #eaeff2;
+            float: left;
+        }
+    </style>
 @endsection
 
 @section('content')
@@ -136,17 +157,39 @@
                         </div>
 
 
-                        <form action="{{ action('MessagesController@adminStore') }}" method="post">
-                            {{ csrf_field() }}
-
-                            <input type="hidden" name="conversation_id" value="{{ $conversation->id }}">
-
-                            <div class="form-group">
-                                <textarea class="form-control" name="message" id="" cols="30" rows="3"></textarea>
+                        <div class="panel-body" id="panel-body">
+                            @foreach($conversation->messages as $message)
+                                <div class="row">
+                                    <div class="message {{ ($message->user_id != Auth::user()->id) ? 'not_owner':'owner'}}">
+                                        {{$message->message}}<br/>
+                                        <b>{{$message->created_at->diffForHumans()}}</b>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                        <div class="panel-footer">
+                            <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
+                            <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
+                            <br/>
+                            <div class="row">
+                                <div class="col-md-offset-4 col-md-4">
+                                    <button class="btn btn-primary btn-block" onclick="button_send_msg()">Send</button>
+                                </div>
                             </div>
+                        </div>
 
-                            <button type="submit" class="btn btn-primary">Отправить</button>
-                        </form>
+
+                        {{--<form action="{{ action('MessagesController@adminStore') }}" method="post">--}}
+                            {{--{{ csrf_field() }}--}}
+
+                            {{--<input type="hidden" name="conversation_id" value="{{ $conversation->id }}">--}}
+
+                            {{--<div class="form-group">--}}
+                                {{--<textarea class="form-control" name="message" id="" cols="30" rows="3"></textarea>--}}
+                            {{--</div>--}}
+
+                            {{--<button type="submit" class="btn btn-primary">Отправить</button>--}}
+                        {{--</form>--}}
                     </div>
                 </div>
 
@@ -157,6 +200,84 @@
 @endsection
 
 @section('scripts')
+    <script src="https://cdn.socket.io/socket.io-1.3.4.js"></script>
+    <script>
+        var socket = io.connect('{{ env('APP_URL') }}:8890');
+        socket.emit('add user', {'client':{{Auth::user()->id}}, 'conversation':{{$conversation->id}}});
+
+        socket.on('message', function (data) {
+
+            console.log(data);
+
+            $('#panel-body').append(
+                '<div class="row">' +
+                '<div class="message not_owner">' +
+                data.message + '<br/>' +
+                '<b>now</b>' +
+                '</div>' +
+                '</div>');
+
+            scrollToEnd();
+
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            scrollToEnd();
+
+            $(document).keypress(function (e) {
+                if (e.which == 13) {
+                    var msg = $('#msg').val();
+                    $('#msg').val('');//reset
+                    send_msg(msg);
+                }
+            });
+        });
+
+        function button_send_msg() {
+            var msg = $('#msg').val();
+            $('#msg').val('');//reset
+            send_msg(msg);
+        }
+
+
+        function send_msg(msg) {
+            $.ajax({
+                headers: {'X-CSRF-Token': $('#csrf_token_input').val()},
+                type: "POST",
+                url: "{{route('message.store')}}",
+                data: {
+                    'message': msg,
+                    'conversation_id':{{$conversation->id}},
+                },
+                success: function (data) {
+                    if (data == true) {
+
+                        $('#panel-body').append(
+                            '<div class="row">' +
+                            '<div class="message owner">' +
+                            msg + '<br/>' +
+                            '<b>now</b>' +
+                            '</div>' +
+                            '</div>');
+
+                        scrollToEnd();
+                    }
+                },
+                error: function (e) {
+                    console.log(e);
+                }
+            });
+        }
+
+        function scrollToEnd() {
+            var d = $('#panel-body');
+            d.scrollTop(d.prop("scrollHeight"));
+        }
+
+    </script>
+
+
     <script>
         $(document).ready(function () {
 

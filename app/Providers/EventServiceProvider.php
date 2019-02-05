@@ -30,16 +30,5 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         parent::boot();
-
-        Event::listen('message', function ($channel, $data) {
-
-            Log::warning("event");
-
-            $message = new Message();
-            $message->conversation_id = 1;
-            $message->user_id = 1;
-            $message->message = "ololo";
-            $message->status = "unread";
-        });
     }
 }
