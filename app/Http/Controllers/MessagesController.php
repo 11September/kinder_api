@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Events\NewMessage;
-use Illuminate\Support\Facades\Redis;
 use LRedis;
 use App\User;
 use OneSignal;
@@ -11,9 +9,11 @@ use App\Group;
 use App\School;
 use App\Message;
 use App\Conversation;
+use App\Events\NewMessage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class MessagesController extends Controller
@@ -30,7 +30,8 @@ class MessagesController extends Controller
 
             $receiver_id = ($conversation->user1_id == Auth::user()->id)? $conversation->user2_id : $conversation->user1_id;
 
-            event(new NewMessage("lol"));
+            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
+
 //            $data = [
 //                'conversation_id'=>$request->conversation_id,
 //                'message'=> $request->message,
