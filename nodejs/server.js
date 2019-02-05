@@ -7,6 +7,8 @@ server.listen(8890);
 
 io.on('connection', (socket) => {
 
+    console.log("connection");
+
     socket.on('disconnect', function(){
     io.emit('users-changed', {user: socket.nickname, event: 'left'});
     });
