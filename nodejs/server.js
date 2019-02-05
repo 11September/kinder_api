@@ -73,10 +73,13 @@ io.on('connection', function (socket) {
     });
 
 
-    socket.on('message', (message) => {
-        console.log("message", message);
+    socket.on('message', (data) => {
+        console.log("message", data);
 
-        io.emit('message', {text: message.message});
+        io.emit("message", {
+            "conversation_id": data.conversation_id,
+            "message": data.message
+        });
     });
 
     socket.on('disconnect', function () {
