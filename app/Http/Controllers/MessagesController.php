@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\NewMessage;
 use Illuminate\Support\Facades\Redis;
 use LRedis;
 use App\User;
@@ -28,13 +29,15 @@ class MessagesController extends Controller
             $message->save();
 
             $receiver_id = ($conversation->user1_id == Auth::user()->id)? $conversation->user2_id : $conversation->user1_id;
-            $data = [
-                'conversation_id'=>$request->conversation_id,
-                'message'=> $request->message,
-                'client_id' => $receiver_id
-            ];
-            $redis = Redis::connection();
-            $redis->publish('message', json_encode($data));
+
+            event(new NewMessage("lol"));
+//            $data = [
+//                'conversation_id'=>$request->conversation_id,
+//                'message'=> $request->message,
+//                'client_id' => $receiver_id
+//            ];
+//            $redis = Redis::connection();
+//            $redis->publish('message', json_encode($data));
 
             return response()->json(true);
         }
