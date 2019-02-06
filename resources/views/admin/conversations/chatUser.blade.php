@@ -2,7 +2,7 @@
 
 @section('css')
     <style>
-        .panel-body {
+        .wrapper-chat {
             height: 50vh;
             overflow-y: scroll;
         }
@@ -105,7 +105,7 @@
 
                                     <a href="{{ action('ConversationController@checkConversation', $user->id) }}"
                                        class="list-group-item list-group-item-action flex-column align-items-start
-                                        @if($user->id == $conversation->user2->id || $user->id == $conversation->user1->id) active @endif">
+                                        @if($user->id == $conversation->user2_id || $user->id == $conversation->user1_id) active @endif">
                                         <div class="d-flex w-100 justify-content-between">
                                             <h5 class="mb-1">{{ $user->name }}</h5>
                                             <input class="user_id" type="hidden" name="user_id" value="{{ $user->id }}">
@@ -146,7 +146,7 @@
                                     <div
                                         class="chat-container @if($message->user_id == Auth::user()->id) darker @else normal @endif @if($message->status == "unread") unread @endif">
                                         <p>{{ $message->message }}</p>
-                                        <span class="time-right">{{ $message->created_at }}</span>
+                                        <span class="time-right">{{$message->created_at->diffForHumans()}}</span>
                                         <input type="hidden" class="message_id" name="message_id"
                                                value="{{ $message->id }}">
                                     </div>
@@ -157,16 +157,22 @@
                         </div>
 
 
-                        <div class="panel-body" id="panel-body">
-                            @foreach($conversation->messages as $message)
-                                <div class="row">
-                                    <div class="message {{ ($message->user_id != Auth::user()->id) ? 'not_owner':'owner'}}">
-                                        {{$message->message}}<br/>
-                                        <b>{{$message->created_at->diffForHumans()}}</b>
-                                    </div>
-                                </div>
-                            @endforeach
-                        </div>
+                        {{--<div id="wrapper-chat" class="wrapper-chat">--}}
+                            {{--<div class="panel-body" id="panel-body">--}}
+                                {{--@if(isset($conversation->messages))--}}
+                                    {{--@foreach($conversation->messages as $message)--}}
+                                        {{--<div class="row">--}}
+                                            {{--<div--}}
+                                                {{--class="message {{ ($message->user_id != Auth::user()->id) ? 'not_owner':'owner'}}">--}}
+                                                {{--{{$message->message}}<br/>--}}
+                                                {{--<b>{{$message->created_at->diffForHumans()}}</b>--}}
+                                            {{--</div>--}}
+                                        {{--</div>--}}
+                                    {{--@endforeach--}}
+                                {{--@endif--}}
+                            {{--</div>--}}
+                        {{--</div>--}}
+
                         <div class="panel-footer">
                             <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
                             <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
@@ -180,15 +186,15 @@
 
 
                         {{--<form action="{{ action('MessagesController@adminStore') }}" method="post">--}}
-                            {{--{{ csrf_field() }}--}}
+                        {{--{{ csrf_field() }}--}}
 
-                            {{--<input type="hidden" name="conversation_id" value="{{ $conversation->id }}">--}}
+                        {{--<input type="hidden" name="conversation_id" value="{{ $conversation->id }}">--}}
 
-                            {{--<div class="form-group">--}}
-                                {{--<textarea class="form-control" name="message" id="" cols="30" rows="3"></textarea>--}}
-                            {{--</div>--}}
+                        {{--<div class="form-group">--}}
+                        {{--<textarea class="form-control" name="message" id="" cols="30" rows="3"></textarea>--}}
+                        {{--</div>--}}
 
-                            {{--<button type="submit" class="btn btn-primary">Отправить</button>--}}
+                        {{--<button type="submit" class="btn btn-primary">Отправить</button>--}}
                         {{--</form>--}}
                     </div>
                 </div>
@@ -209,16 +215,17 @@
 
             console.log(data);
 
-            $('#panel-body').append(
-                '<div class="row">' +
-                '<div class="message not_owner">' +
-                data.message + '<br/>' +
-                '<b>now</b>' +
-                '</div>' +
+            $('#wrapper-chat').append(
+                '<div class="chat-container normal unread">' +
+                '<p>' + data.message + '</p>' +
+                '<span class="time-right">Зараз</span>' +
                 '</div>');
 
             scrollToEnd();
 
+            setTimeout(function () {
+                setRead();
+            }, 3000);
         });
     </script>
     <script>
@@ -245,7 +252,7 @@
             $.ajax({
                 headers: {'X-CSRF-Token': $('#csrf_token_input').val()},
                 type: "POST",
-                url: "{{route('message.store')}}",
+                url: "{{route('admin.messages.store')}}",
                 data: {
                     'message': msg,
                     'conversation_id':{{$conversation->id}},
@@ -253,12 +260,10 @@
                 success: function (data) {
                     if (data == true) {
 
-                        $('#panel-body').append(
-                            '<div class="row">' +
-                            '<div class="message owner">' +
-                            msg + '<br/>' +
-                            '<b>now</b>' +
-                            '</div>' +
+                        $('#wrapper-chat').append(
+                            '<div class="chat-container darker">' +
+                            '<p>' + msg + '</p>'+
+                            '<span class="time-right">Зараз</span>' +
                             '</div>');
 
                         scrollToEnd();
@@ -271,7 +276,7 @@
         }
 
         function scrollToEnd() {
-            var d = $('#panel-body');
+            var d = $('#wrapper-chat');
             d.scrollTop(d.prop("scrollHeight"));
         }
 
@@ -284,6 +289,8 @@
             function setRead() {
                 var count = $('.list-group-item.active').find('.badge');
                 var user_id = $('.list-group-item.active').find('.user_id').val();
+
+                // alert(count, user_id);
 
                 $.ajax({
                     headers: {
@@ -312,51 +319,51 @@
             }, 3000);
 
 
-            setInterval(function () {
-                var content = $('.wrapper-chat');
-                var count = $('.list-group-item.active').find('.badge');
-                var user_id = $('.list-group-item.active').find('.user_id').val();
-                var conversation_id = $('.list-group-item.active').find('.conversation_id').val();
-                var message_id = $('.wrapper-chat .chat-container').last().find('.message_id').val();
+            {{--setInterval(function () {--}}
+                {{--var content = $('.wrapper-chat');--}}
+                {{--var count = $('.list-group-item.active').find('.badge');--}}
+                {{--var user_id = $('.list-group-item.active').find('.user_id').val();--}}
+                {{--var conversation_id = $('.list-group-item.active').find('.conversation_id').val();--}}
+                {{--var message_id = $('.wrapper-chat .chat-container').last().find('.message_id').val();--}}
 
-                if (message_id) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
+                {{--if (message_id) {--}}
+                    {{--$.ajax({--}}
+                        {{--headers: {--}}
+                            {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+                        {{--},--}}
 
-                        type: 'post',
-                        url: '{{ url('admin/messages/fetchMessages') }}',
-                        dataType: 'json',
-                        data: {message_id: message_id, conversation_id: conversation_id, user_id: user_id},
-                        success: function (data) {
+                        {{--type: 'post',--}}
+                        {{--url: '{{ url('admin/messages/fetchMessages') }}',--}}
+                        {{--dataType: 'json',--}}
+                        {{--data: {message_id: message_id, conversation_id: conversation_id, user_id: user_id},--}}
+                        {{--success: function (data) {--}}
 
-                            if (data.success) {
-                                if (data.data && data.data !== '' && data.data.length != 0) {
-                                    var new_count = data.data.length;
-                                    count.css('display', 'flex').text(new_count);
+                            {{--if (data.success) {--}}
+                                {{--if (data.data && data.data !== '' && data.data.length != 0) {--}}
+                                    {{--var new_count = data.data.length;--}}
+                                    {{--count.css('display', 'flex').text(new_count);--}}
 
-                                    $.each(data.data, function (index, item) {
-                                        $('#wrapper-chat').append(
-                                            '<div class="chat-container normal unread">' +
-                                            '<p>' + item.message + '</p>' +
-                                            '<span class="time-right"></span>' +
-                                            '<input type="hidden" class="message_id" name="message_id" value="' + item.id + '">' +
-                                            '</div>'
-                                        );
-                                    });
+                                    {{--$.each(data.data, function (index, item) {--}}
+                                        {{--$('#wrapper-chat').append(--}}
+                                            {{--'<div class="chat-container normal unread">' +--}}
+                                            {{--'<p>' + item.message + '</p>' +--}}
+                                            {{--'<span class="time-right"></span>' +--}}
+                                            {{--'<input type="hidden" class="message_id" name="message_id" value="' + item.id + '">' +--}}
+                                            {{--'</div>'--}}
+                                        {{--);--}}
+                                    {{--});--}}
 
-                                    setTimeout(function () {
-                                        setRead();
-                                    }, 3000);
-                                }
-                            }
-                        }, error: function () {
-                            console.log(data);
-                        }
-                    });
-                }
-            }, 5000);
+                                    {{--setTimeout(function () {--}}
+                                        {{--setRead();--}}
+                                    {{--}, 3000);--}}
+                                {{--}--}}
+                            {{--}--}}
+                        {{--}, error: function () {--}}
+                            {{--console.log(data);--}}
+                        {{--}--}}
+                    {{--});--}}
+                {{--}--}}
+            {{--}, 5000);--}}
 
 
             $('.choose_school').on('change', function () {

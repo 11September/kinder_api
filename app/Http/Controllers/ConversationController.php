@@ -146,12 +146,20 @@ class ConversationController extends Controller
         $group = Group::where('id', $id)
             ->with(array('students' => function ($query) {
                 $query->select('id', 'name', 'parent_name', 'parent_phone', 'group_id', 'type');
-                $query->where('type', '!=', 'admin');
                 $query->orderBy('type', 'moderator');
+                $query->where('id', '!=', Auth::user()->id);
+            }))
+            ->with(array('admin' => function ($query) {
+                $query->select('id', 'name', 'parent_name', 'parent_phone', 'group_id', 'type');
+                $query->where('id', '!=', Auth::user()->id);
             }))
             ->first();
 
         $users = $group->students;
+
+        if ($group->admin){
+            $users->prepend($group->admin);
+        }
 
         foreach ($users as $user) {
             $count = 0;
@@ -212,15 +220,45 @@ class ConversationController extends Controller
 
     public function user($id)
     {
-        $conversation = Conversation::where('id', $id)->with('messages', 'user2')->first();
+        $conversation = Conversation::where('id', $id)->with('messages', 'user2', 'user1')->first();
 
-        $user = User::where('id', $conversation->user2_id)->first();
+        if (Auth::user()->group_id){
+            $group = Group::where('id', Auth::user()->group_id)
+                ->with(array('admin' => function ($query) {
+                    $query->select('id', 'name', 'parent_name', 'parent_phone', 'group_id', 'type');
+                    $query->where('id', '!=', Auth::user()->id);
+                    $query->orderBy('type', 'moderator');
+                }))
+                ->first();
 
-        if ($user->group_id) {
-            $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
-        } else {
-            $user = User::where('id', $conversation->user1_id)->first();
-            $users = User::where('group_id', $user->group_id)->where('type', 'default')->with('messages')->get();
+            $users = User::where('group_id', Auth::user()->group_id)->where('id', '!=', Auth::user()->id)->with('messages')->get();
+
+            if ($group->admin){
+                $users->prepend($group->admin);
+            }
+        }else{
+            $current_user_id = null;
+            if ($conversation->user1_id != Auth::user()->id) {
+                $current_user_id = $conversation->user1_id;
+            }else{
+                $current_user_id = $conversation->user2_id;
+            }
+
+            $user_for_group = User::where('id', $current_user_id)->first();
+
+            $group = Group::where('id', $user_for_group->group_id)
+                ->with(array('admin' => function ($query) {
+                    $query->select('id', 'name', 'parent_name', 'parent_phone', 'group_id', 'type');
+                    $query->where('id', '!=', Auth::user()->id);
+                    $query->orderBy('type', 'moderator');
+                }))
+                ->first();
+
+            $users = User::where('group_id', $group->id)->where('id', '!=', Auth::user()->id)->orderBy('type', 'moderator')->with('messages')->get();
+
+            if (isset($group->admin)){
+                $users->prepend($group->admin);
+            }
         }
 
         $list_schools = School::with('groups')->get();

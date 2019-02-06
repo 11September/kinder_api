@@ -101,9 +101,14 @@
                                             <p class="orange-text mb-1">Вихователь</p>
                                         @endif
 
-                                        <p class="mb-1">{{ @$user->parent_name }}</p>
-                                        <small>{{ @$user->parent_phone }}</small>
+                                        @if($user->type == "admin")
+                                            <p class="orange-text mb-1">Адмiн</p>
+                                        @endif
 
+                                        @if($user->type == "default")
+                                            <p class="mb-1">{{ @$user->parent_name }}</p>
+                                            <small>{{ @$user->parent_phone }}</small>
+                                        @endif
                                     </a>
 
                                 @endforeach

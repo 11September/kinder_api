@@ -18,35 +18,6 @@ use Illuminate\Support\Facades\Validator;
 
 class MessagesController extends Controller
 {
-    public function store(Request $request)
-    {
-        $conversation = Conversation::findOrFail($request->conversation_id);
-        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id) {
-            $message = new Message;
-            $message->conversation_id = $request->conversation_id;
-            $message->user_id = Auth::user()->id;
-            $message->message = $request->message;
-            $message->status = "unread";
-            $message->save();
-
-            $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
-
-//            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
-
-            $data = [
-                'conversation_id' => $request->conversation_id,
-                'message' => $request->message,
-                'client_id' => $receiver_id
-            ];
-            $redis = Redis::connection();
-            $redis->publish('message', json_encode($data));
-
-            return response()->json(true);
-        }
-        return response()->json("permission error");
-    }
-
-
     public function storeMessage(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -224,36 +195,67 @@ class MessagesController extends Controller
             'message' => 'required|string',
         ]);
 
-        $message = new Message();
-        $message->conversation_id = $request->conversation_id;
-        $message->message = $request->message;
-        $message->user_id = Auth::id();
-        $message->save();
+        $conversation = Conversation::findOrFail($request->conversation_id);
+        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
+            $message = new Message();
+            $message->conversation_id = $request->conversation_id;
+            $message->message = $request->message;
+            $message->user_id = Auth::id();
+            $message->save();
 
+            $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
+            $user = User::select('id', 'player_id')
+                ->where('id', $receiver_id)
+                ->where('player_id', '!=', null)
+                ->where('push', 'enabled')
+                ->active()
+                ->first();
 
-        $user = Auth::user();
-        $conversation = Conversation::where('id', $request->conversation_id)->first();
+            if ($user && isset($user->player_id) && !empty($user->player_id)) {
+                \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+            }
 
-        $need_user_id = null;
-        if ($conversation->user1_id == $user->id) {
-            $need_user_id = $conversation->user2_id;
+            $data = [
+                'conversation_id' => $request->conversation_id,
+                'message' => $request->message,
+                'client_id' => $receiver_id
+            ];
+            $redis = Redis::connection();
+            $redis->publish('message', json_encode($data));
+
+            return response()->json(true);
         }
-        if ($conversation->user2_id == $user->id) {
-            $need_user_id = $conversation->user1_id;
+
+        return response()->json("permission error");
+    }
+
+
+    public function store(Request $request)
+    {
+        $conversation = Conversation::findOrFail($request->conversation_id);
+        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id) {
+            $message = new Message;
+            $message->conversation_id = $request->conversation_id;
+            $message->user_id = Auth::user()->id;
+            $message->message = $request->message;
+            $message->status = "unread";
+            $message->save();
+
+            $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
+
+//            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
+
+            $data = [
+                'conversation_id' => $request->conversation_id,
+                'message' => $request->message,
+                'client_id' => $receiver_id
+            ];
+            $redis = Redis::connection();
+            $redis->publish('message', json_encode($data));
+
+            return response()->json(true);
         }
-
-        $user = User::select('id', 'player_id')
-            ->where('id', $need_user_id)
-            ->where('player_id', '!=', null)
-            ->where('push', 'enabled')
-            ->active()
-            ->first();
-
-        if (isset($user->player_id) && !empty($user->player_id)) {
-            \OneSignal::sendNotificationToUser($message->message, $user->player_id);
-        }
-
-        return redirect()->route('admin.conversation.user', $request->conversation_id);
+        return response()->json("permission error");
     }
 
     public function setReadMessages($user_id)
