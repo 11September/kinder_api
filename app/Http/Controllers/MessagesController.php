@@ -58,7 +58,7 @@ class MessagesController extends Controller
             $redis->publish('message', json_encode($data));
 
             if (isset($user->player_id) && !empty($user->player_id)) {
-                $this->sendToOneSignal($user);
+                $this->sendToOneSignal($user, $request->message);
             }
 
             return ['message' => 'Повідомлення збережено!'];
@@ -186,7 +186,7 @@ class MessagesController extends Controller
                 ->first();
 
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
-                $this->sendToOneSignal(Auth::user());
+                $this->sendToOneSignal(Auth::user(), $request->message);
             }
 
 //            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
@@ -299,7 +299,7 @@ class MessagesController extends Controller
         }
     }
 
-    public function sendToOneSignal($data)
+    public function sendToOneSignal($data, $message)
     {
         $player_ids = array();
         $player_ids[0] = $data->player_id;
@@ -308,7 +308,7 @@ class MessagesController extends Controller
             "en" => (isset($data->parent_name)) ? $data->parent_name : $data->name
         ];
         $params['contents'] = [
-            "en" => $data->message
+            "en" => $message
         ];
         $params['include_player_ids'] = $player_ids;
 
