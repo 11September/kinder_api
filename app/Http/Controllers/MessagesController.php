@@ -211,8 +211,6 @@ class MessagesController extends Controller
                 ->active()
                 ->first();
 
-            dd($receiver_id);
-
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
                 \OneSignal::sendNotificationToUser($message->message, $user->player_id);
             }
