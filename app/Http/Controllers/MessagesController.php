@@ -301,7 +301,7 @@ class MessagesController extends Controller
 
     public function sendToOneSignal($user, $message)
     {
-        dd("in signal method", $user);
+//        dd("in signal method", $user);
 
         $player_ids = array();
         $player_ids[0] = $user->player_id;
