@@ -186,12 +186,12 @@ class MessagesController extends Controller
                 ->first();
 
 
-            dd($user);
+            dd("do if", $user);
 
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
                 $user = Auth::user();
 
-                dd($user);
+                dd("in if", $user);
 
                 $this->sendToOneSignal($user, $request->message);
             }
@@ -308,7 +308,7 @@ class MessagesController extends Controller
 
     public function sendToOneSignal($user, $message)
     {
-        dd($user);
+        dd("in signal method", $user);
 
         $player_ids = array();
         $player_ids[0] = $user->player_id;
