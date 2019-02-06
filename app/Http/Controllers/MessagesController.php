@@ -186,6 +186,8 @@ class MessagesController extends Controller
                 ->first();
 
 
+            dd($user);
+
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
                 $user = Auth::user();
 
