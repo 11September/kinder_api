@@ -57,7 +57,7 @@ class MessagesController extends Controller
             $redis = Redis::connection();
             $redis->publish('message', json_encode($data));
 
-            if (isset($user->player_id) && !empty($user->player_id)) {
+            if ($user && isset($user->player_id) && !empty($user->player_id)) {
                 $this->sendToOneSignal($user, $request->message);
             }
 
@@ -185,13 +185,8 @@ class MessagesController extends Controller
                 ->active()
                 ->first();
 
-            if ($user->player_id != null) {
-                dd($user->player_id);
-//            if ($user && $user->player_id != null && isset($user->player_id) && !empty($user->player_id)) {
+            if ($user && isset($user->player_id) && !empty($user->player_id)) {
                 $user = Auth::user();
-
-                dd("in if", $user);
-
                 $this->sendToOneSignal($user, $request->message);
             }
 
@@ -212,49 +207,49 @@ class MessagesController extends Controller
     }
 
 
-    public function store(Request $request)
-    {
-        $conversation = Conversation::findOrFail($request->conversation_id);
-        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id) {
-            $message = new Message;
-            $message->conversation_id = $request->conversation_id;
-            $message->user_id = Auth::user()->id;
-            $message->message = $request->message;
-            $message->status = "unread";
-            $message->save();
-
-            $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
-
-//            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
-
-            $data = [
-                'conversation_id' => $request->conversation_id,
-                'message' => $request->message,
-                'client_id' => $receiver_id
-            ];
-            $redis = Redis::connection();
-            $redis->publish('message', json_encode($data));
-
-            return response()->json(true);
-        }
-        return response()->json("permission error");
-    }
-
-    public function setReadMessages($user_id)
-    {
-        if (!$user_id || empty($user_id) || !is_numeric($user_id)) {
-            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
-        }
-
-        $messages = Message::where('user_id', $user_id)->get();
-
-        foreach ($messages as $message) {
-            $message->status = 'read';
-            $message->save();
-        }
-
-        return response()->json(['success' => true]);
-    }
+//    public function store(Request $request)
+//    {
+//        $conversation = Conversation::findOrFail($request->conversation_id);
+//        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id) {
+//            $message = new Message;
+//            $message->conversation_id = $request->conversation_id;
+//            $message->user_id = Auth::user()->id;
+//            $message->message = $request->message;
+//            $message->status = "unread";
+//            $message->save();
+//
+//            $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
+//
+////            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
+//
+//            $data = [
+//                'conversation_id' => $request->conversation_id,
+//                'message' => $request->message,
+//                'client_id' => $receiver_id
+//            ];
+//            $redis = Redis::connection();
+//            $redis->publish('message', json_encode($data));
+//
+//            return response()->json(true);
+//        }
+//        return response()->json("permission error");
+//    }
+//
+//    public function setReadMessages($user_id)
+//    {
+//        if (!$user_id || empty($user_id) || !is_numeric($user_id)) {
+//            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+//        }
+//
+//        $messages = Message::where('user_id', $user_id)->get();
+//
+//        foreach ($messages as $message) {
+//            $message->status = 'read';
+//            $message->save();
+//        }
+//
+//        return response()->json(['success' => true]);
+//    }
 
     public function fetchMessages(Request $request)
     {
