@@ -57,7 +57,7 @@ class MessagesController extends Controller
             $redis = Redis::connection();
             $redis->publish('message', json_encode($data));
 
-            if ($user && $user->player_id != null && isset($user->player_id) && !empty($user->player_id)) {
+            if (isset($user->player_id) && !empty($user->player_id)) {
                 $this->sendToOneSignal($user, $request->message);
             }
 
@@ -185,7 +185,8 @@ class MessagesController extends Controller
                 ->active()
                 ->first();
 
-            if ($user && $user->player_id != null && isset($user->player_id) && !empty($user->player_id)) {
+            if ($user->player_id != null) {
+//            if ($user && $user->player_id != null && isset($user->player_id) && !empty($user->player_id)) {
                 $user = Auth::user();
 
                 dd("in if", $user);
