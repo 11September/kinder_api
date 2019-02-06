@@ -212,7 +212,20 @@ class MessagesController extends Controller
                 ->first();
 
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
-                \OneSignal::sendNotificationToUser($message->message, $user->player_id);
+                $sender = Auth::user();
+
+                $player_ids = array();
+                $player_ids[0] = $user->player_id;
+                $params = [];
+                $params['headings'] = [
+                    "en" =>$sender->parent_name
+                ];
+                $params['contents'] = [
+                    "en" => $message->message
+                ];
+                $params['include_player_ids'] = $player_ids;
+
+                \OneSignal::sendNotificationCustom($params);
             }
 
             $data = [
