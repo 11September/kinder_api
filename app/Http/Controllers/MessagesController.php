@@ -307,7 +307,7 @@ class MessagesController extends Controller
         $player_ids[0] = $user->player_id;
         $params = [];
         $params['headings'] = [
-            "en" => (isset($user->parent_name)) ? $user->parent_name : $user->name
+            "en" => ($user->parent_name && isset($user->parent_name) && !empty($user->parent_name)) ? $user->parent_name : $user->name
         ];
         $params['contents'] = [
             "en" => $message
