@@ -381,7 +381,7 @@
 
                         setTimeout(function () {
                             deleteBorder();
-                        }, 1000);
+                        }, 2000);
                     }
                 }
             });
