@@ -189,6 +189,8 @@ class MessagesController extends Controller
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
                 $user = Auth::user();
 
+                dd($user);
+
                 $this->sendToOneSignal($user, $request->message);
             }
 
@@ -304,6 +306,8 @@ class MessagesController extends Controller
 
     public function sendToOneSignal($user, $message)
     {
+        dd($user);
+
         $player_ids = array();
         $player_ids[0] = $user->player_id;
         $params = [];
