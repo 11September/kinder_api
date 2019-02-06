@@ -186,7 +186,6 @@ class MessagesController extends Controller
                 ->first();
 
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
-                $user = Auth::user();
                 $this->sendToOneSignal($user, $request->message);
             }
 
