@@ -314,7 +314,7 @@ class MessagesController extends Controller
         ];
         $params['include_player_ids'] = $player_ids;
 
-        dd($params);
+        dd($user, $params);
 
         \OneSignal::sendNotificationCustom($params);
     }
