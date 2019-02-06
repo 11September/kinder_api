@@ -180,8 +180,6 @@
             var count = $('.list-group-item.active').find('.badge');
             var user_id = $('.list-group-item.active').find('.user_id').val();
 
-            // alert(count, user_id);
-
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -219,6 +217,14 @@
 
             scrollToEnd();
 
+            var countObject = $('.list-group-item.active').find('.badge');
+            var countUser = parseInt(countObject.text());
+            if (!countUser){
+                countUser = 0;
+            }
+            countUser++;
+            countObject.text(countUser);
+
             var totalCountObject = $('#counter_unread');
             var totalCount = parseInt(totalCountObject.text());
             totalCount++;
@@ -226,7 +232,7 @@
 
             setTimeout(function () {
                 setRead();
-            }, 3000);
+            }, 4000);
         });
 
         $(document).ready(function () {
