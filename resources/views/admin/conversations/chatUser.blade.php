@@ -154,7 +154,6 @@
 
                         </div>
 
-
                         {{--<div id="wrapper-chat" class="wrapper-chat">--}}
                             {{--<div class="panel-body" id="panel-body">--}}
                                 {{--@if(isset($conversation->messages))--}}
@@ -181,19 +180,6 @@
                                 </div>
                             </div>
                         </div>
-
-
-                        {{--<form action="{{ action('MessagesController@adminStore') }}" method="post">--}}
-                        {{--{{ csrf_field() }}--}}
-
-                        {{--<input type="hidden" name="conversation_id" value="{{ $conversation->id }}">--}}
-
-                        {{--<div class="form-group">--}}
-                        {{--<textarea class="form-control" name="message" id="" cols="30" rows="3"></textarea>--}}
-                        {{--</div>--}}
-
-                        {{--<button type="submit" class="btn btn-primary">Отправить</button>--}}
-                        {{--</form>--}}
                     </div>
                 </div>
 
@@ -265,6 +251,10 @@
                             '</div>');
 
                         scrollToEnd();
+
+                        setTimeout(function () {
+                            setRead();
+                        }, 2000);
                     }
                 },
                 error: function (e) {
