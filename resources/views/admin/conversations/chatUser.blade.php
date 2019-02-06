@@ -160,7 +160,7 @@
                             <br/>
                             <div class="row">
                                 <div class="col-md-offset-4 col-md-4">
-                                    <button class="btn btn-primary btn-block" onclick="button_send_msg()">Надіслати</button>
+                                    <button id="sbmbutton" class="btn btn-primary btn-block" onclick="button_send_msg()">Надіслати</button>
                                 </div>
                             </div>
                         </div>
@@ -344,6 +344,9 @@
             send_msg(msg);
         }
 
+        function deleteBorder() {
+            $('#msg').removeAttr("style");
+        }
 
         function send_msg(msg) {
             $.ajax({
@@ -365,13 +368,21 @@
 
                         scrollToEnd();
 
+                        $('#msg').val('').focus();
+
                         setTimeout(function () {
                             setRead();
                         }, 2000);
                     }
                 },
-                error: function (e) {
-                    console.log(e);
+                error: function (xhr, ajaxOptions, thrownError) {
+                    if(xhr.status == 422){
+                        $('#msg').val('').focus().css('border', '1px solid #de2929');
+
+                        setTimeout(function () {
+                            deleteBorder();
+                        }, 1000);
+                    }
                 }
             });
         }
