@@ -214,6 +214,130 @@
     </script>
     <script>
         $(document).ready(function () {
+
+            function setRead() {
+                var count = $('.list-group-item.active').find('.badge');
+                var user_id = $('.list-group-item.active').find('.user_id').val();
+
+                // alert(count, user_id);
+
+                $.ajax({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+
+                    type: 'get',
+                    url: '/admin/messages/setReadMessages/' + user_id + '',
+                    dataType: 'json',
+                    // data: {id: user_id},
+                    success: function (data) {
+
+                        if (data.success) {
+                            count.fadeOut();
+                            $('.unread').removeClass('unread');
+                        }
+
+                    }, error: function () {
+                        console.log(data);
+                    }
+                });
+            }
+
+            setTimeout(function () {
+                setRead();
+            }, 3000);
+
+
+            {{--setInterval(function () {--}}
+            {{--var content = $('.wrapper-chat');--}}
+            {{--var count = $('.list-group-item.active').find('.badge');--}}
+            {{--var user_id = $('.list-group-item.active').find('.user_id').val();--}}
+            {{--var conversation_id = $('.list-group-item.active').find('.conversation_id').val();--}}
+            {{--var message_id = $('.wrapper-chat .chat-container').last().find('.message_id').val();--}}
+
+            {{--if (message_id) {--}}
+            {{--$.ajax({--}}
+            {{--headers: {--}}
+            {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
+            {{--},--}}
+
+            {{--type: 'post',--}}
+            {{--url: '{{ url('admin/messages/fetchMessages') }}',--}}
+            {{--dataType: 'json',--}}
+            {{--data: {message_id: message_id, conversation_id: conversation_id, user_id: user_id},--}}
+            {{--success: function (data) {--}}
+
+            {{--if (data.success) {--}}
+            {{--if (data.data && data.data !== '' && data.data.length != 0) {--}}
+            {{--var new_count = data.data.length;--}}
+            {{--count.css('display', 'flex').text(new_count);--}}
+
+            {{--$.each(data.data, function (index, item) {--}}
+            {{--$('#wrapper-chat').append(--}}
+            {{--'<div class="chat-container normal unread">' +--}}
+            {{--'<p>' + item.message + '</p>' +--}}
+            {{--'<span class="time-right"></span>' +--}}
+            {{--'<input type="hidden" class="message_id" name="message_id" value="' + item.id + '">' +--}}
+            {{--'</div>'--}}
+            {{--);--}}
+            {{--});--}}
+
+            {{--setTimeout(function () {--}}
+            {{--setRead();--}}
+            {{--}, 3000);--}}
+            {{--}--}}
+            {{--}--}}
+            {{--}, error: function () {--}}
+            {{--console.log(data);--}}
+            {{--}--}}
+            {{--});--}}
+            {{--}--}}
+            {{--}, 5000);--}}
+
+
+            $('.choose_school').on('change', function () {
+                var school_id = $(this).val();
+                if (school_id) {
+                    $.ajax({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/groups/getAllGroupsById',
+                        dataType: 'json',
+                        data: {id: school_id},
+                        success: function (data) {
+
+                            if (data.success) {
+                                $('#wrapper-list-groups').empty();
+
+                                if (data.data && data.data !== '') {
+                                    $.each(data.data, function (index, item) {
+                                        console.log(item);
+
+                                        $('#wrapper-list-groups').append(
+                                            '<li class="list-group-item">' +
+                                            '<a class="orange-text" href="/admin/conversations/group/' + item.id + '">' + item.name + '</a>' +
+                                            '</li>'
+                                        );
+                                    });
+                                } else {
+                                    console.log("empty data");
+                                    $('#wrapper-list-groups').empty();
+                                }
+                            }
+
+                        }, error: function () {
+                            console.log(data);
+                        }
+                    });
+                }
+            });
+        });
+
+
+        $(document).ready(function () {
             scrollToEnd();
 
             $(document).keypress(function (e) {
@@ -268,131 +392,5 @@
             d.scrollTop(d.prop("scrollHeight"));
         }
 
-    </script>
-
-
-    <script>
-        $(document).ready(function () {
-
-            function setRead() {
-                var count = $('.list-group-item.active').find('.badge');
-                var user_id = $('.list-group-item.active').find('.user_id').val();
-
-                // alert(count, user_id);
-
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-
-                    type: 'get',
-                    url: '/admin/messages/setReadMessages/' + user_id + '',
-                    dataType: 'json',
-                    // data: {id: user_id},
-                    success: function (data) {
-
-                        if (data.success) {
-                            count.fadeOut();
-                            $('.unread').removeClass('unread');
-                        }
-
-                    }, error: function () {
-                        console.log(data);
-                    }
-                });
-            }
-
-            setTimeout(function () {
-                setRead();
-            }, 3000);
-
-
-            {{--setInterval(function () {--}}
-                {{--var content = $('.wrapper-chat');--}}
-                {{--var count = $('.list-group-item.active').find('.badge');--}}
-                {{--var user_id = $('.list-group-item.active').find('.user_id').val();--}}
-                {{--var conversation_id = $('.list-group-item.active').find('.conversation_id').val();--}}
-                {{--var message_id = $('.wrapper-chat .chat-container').last().find('.message_id').val();--}}
-
-                {{--if (message_id) {--}}
-                    {{--$.ajax({--}}
-                        {{--headers: {--}}
-                            {{--'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')--}}
-                        {{--},--}}
-
-                        {{--type: 'post',--}}
-                        {{--url: '{{ url('admin/messages/fetchMessages') }}',--}}
-                        {{--dataType: 'json',--}}
-                        {{--data: {message_id: message_id, conversation_id: conversation_id, user_id: user_id},--}}
-                        {{--success: function (data) {--}}
-
-                            {{--if (data.success) {--}}
-                                {{--if (data.data && data.data !== '' && data.data.length != 0) {--}}
-                                    {{--var new_count = data.data.length;--}}
-                                    {{--count.css('display', 'flex').text(new_count);--}}
-
-                                    {{--$.each(data.data, function (index, item) {--}}
-                                        {{--$('#wrapper-chat').append(--}}
-                                            {{--'<div class="chat-container normal unread">' +--}}
-                                            {{--'<p>' + item.message + '</p>' +--}}
-                                            {{--'<span class="time-right"></span>' +--}}
-                                            {{--'<input type="hidden" class="message_id" name="message_id" value="' + item.id + '">' +--}}
-                                            {{--'</div>'--}}
-                                        {{--);--}}
-                                    {{--});--}}
-
-                                    {{--setTimeout(function () {--}}
-                                        {{--setRead();--}}
-                                    {{--}, 3000);--}}
-                                {{--}--}}
-                            {{--}--}}
-                        {{--}, error: function () {--}}
-                            {{--console.log(data);--}}
-                        {{--}--}}
-                    {{--});--}}
-                {{--}--}}
-            {{--}, 5000);--}}
-
-
-            $('.choose_school').on('change', function () {
-                var school_id = $(this).val();
-                if (school_id) {
-                    $.ajax({
-                        headers: {
-                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                        },
-
-                        type: 'POST',
-                        url: '/admin/groups/getAllGroupsById',
-                        dataType: 'json',
-                        data: {id: school_id},
-                        success: function (data) {
-
-                            if (data.success) {
-                                $('#wrapper-list-groups').empty();
-
-                                if (data.data && data.data !== '') {
-                                    $.each(data.data, function (index, item) {
-                                        console.log(item);
-
-                                        $('#wrapper-list-groups').append(
-                                            '<li class="list-group-item">' +
-                                            '<a class="orange-text" href="/admin/conversations/group/' + item.id + '">' + item.name + '</a>' +
-                                            '</li>'
-                                        );
-                                    });
-                                } else {
-                                    console.log("empty data");
-                                    $('#wrapper-list-groups').empty();
-                                }
-                            }
-
-                        }, error: function () {
-                            console.log(data);
-                        }
-                    });
-                }
-            });
-        });
     </script>
 @endsection
