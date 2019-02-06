@@ -31,8 +31,6 @@ class MessagesController extends Controller
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-            $user_who_send = $user;
-
             $conversation = Conversation::where('id', $request->conversation_id)->first();
 
             $message = new Message();
@@ -41,17 +39,10 @@ class MessagesController extends Controller
             $message->user_id = $user->id;
             $message->save();
 
-
-            $need_user_id = null;
-            if ($conversation->user1_id == $user->id) {
-                $need_user_id = $conversation->user2_id;
-            }
-            if ($conversation->user2_id == $user->id) {
-                $need_user_id = $conversation->user1_id;
-            }
+            $receiver_id = ($conversation->user1_id == $user->id) ? $conversation->user2_id : $conversation->user1_id;
 
             $user = User::select('id', 'player_id')
-                ->where('id', $need_user_id)
+                ->where('id', $receiver_id)
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
                 ->active()
@@ -61,24 +52,13 @@ class MessagesController extends Controller
             $data = [
                 'conversation_id' => $request->conversation_id,
                 'message' => $request->message,
-                'client_id' => $need_user_id
+                'client_id' => $receiver_id
             ];
             $redis = Redis::connection();
             $redis->publish('message', json_encode($data));
 
             if (isset($user->player_id) && !empty($user->player_id)) {
-                $player_ids = array();
-                $player_ids[0] = $user->player_id;
-                $params = [];
-                $params['headings'] = [
-                    "en" => $user_who_send->parent_name
-                ];
-                $params['contents'] = [
-                    "en" => $message->message
-                ];
-                $params['include_player_ids'] = $player_ids;
-
-                \OneSignal::sendNotificationCustom($params);
+                $this->sendToOneSignal($user);
             }
 
             return ['message' => 'Повідомлення збережено!'];
@@ -136,16 +116,10 @@ class MessagesController extends Controller
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
             $conversation = Conversation::where('id', $request->conversation_id)->first();
 
-            $need_user_id = null;
-            if ($conversation->user1_id == $user->id) {
-                $need_user_id = $conversation->user2_id;
-            }
-            if ($conversation->user2_id == $user->id) {
-                $need_user_id = $conversation->user1_id;
-            }
+            $receiver_id = ($conversation->user1_id == $user->id) ? $conversation->user2_id : $conversation->user1_id;
 
             $messages = Message::where('conversation_id', $conversation->id)
-                ->where('user_id', $need_user_id)
+                ->where('user_id', $receiver_id)
                 ->where('status', 'unread')
                 ->get();
 
@@ -196,7 +170,7 @@ class MessagesController extends Controller
         ]);
 
         $conversation = Conversation::findOrFail($request->conversation_id);
-        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id){
+        if ($conversation->user1_id == Auth::user()->id || $conversation->user2_id == Auth::user()->id) {
             $message = new Message();
             $message->conversation_id = $request->conversation_id;
             $message->message = $request->message;
@@ -212,21 +186,10 @@ class MessagesController extends Controller
                 ->first();
 
             if ($user && isset($user->player_id) && !empty($user->player_id)) {
-                $sender = Auth::user();
-
-                $player_ids = array();
-                $player_ids[0] = $user->player_id;
-                $params = [];
-                $params['headings'] = [
-                    "en" => (isset($sender->parent_name)) ? $sender->parent_name : $sender->name
-                ];
-                $params['contents'] = [
-                    "en" => $message->message
-                ];
-                $params['include_player_ids'] = $player_ids;
-
-                \OneSignal::sendNotificationCustom($params);
+                $this->sendToOneSignal(Auth::user());
             }
+
+//            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
 
             $data = [
                 'conversation_id' => $request->conversation_id,
@@ -334,6 +297,21 @@ class MessagesController extends Controller
             Log::warning('MessagesController@messagesMarkRead Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
             return response()->json(['success' => false, 'message' => 'Упс! Щось пішло не так!'], 500);
         }
+    }
 
+    public function sendToOneSignal($data)
+    {
+        $player_ids = array();
+        $player_ids[0] = $data->player_id;
+        $params = [];
+        $params['headings'] = [
+            "en" => (isset($data->parent_name)) ? $data->parent_name : $data->name
+        ];
+        $params['contents'] = [
+            "en" => $data->message
+        ];
+        $params['include_player_ids'] = $player_ids;
+
+        \OneSignal::sendNotificationCustom($params);
     }
 }
