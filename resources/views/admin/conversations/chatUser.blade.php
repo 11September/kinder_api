@@ -154,29 +154,13 @@
 
                         </div>
 
-                        {{--<div id="wrapper-chat" class="wrapper-chat">--}}
-                        {{--<div class="panel-body" id="panel-body">--}}
-                        {{--@if(isset($conversation->messages))--}}
-                        {{--@foreach($conversation->messages as $message)--}}
-                        {{--<div class="row">--}}
-                        {{--<div--}}
-                        {{--class="message {{ ($message->user_id != Auth::user()->id) ? 'not_owner':'owner'}}">--}}
-                        {{--{{$message->message}}<br/>--}}
-                        {{--<b>{{$message->created_at->diffForHumans()}}</b>--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-                        {{--@endforeach--}}
-                        {{--@endif--}}
-                        {{--</div>--}}
-                        {{--</div>--}}
-
                         <div class="panel-footer">
-                            <textarea id="msg" class="form-control" placeholder="Write your message"></textarea>
+                            <textarea id="msg" class="form-control" placeholder="Напишіть своє повідомлення"></textarea>
                             <input type="hidden" id="csrf_token_input" value="{{csrf_token()}}"/>
                             <br/>
                             <div class="row">
                                 <div class="col-md-offset-4 col-md-4">
-                                    <button class="btn btn-primary btn-block" onclick="button_send_msg()">Send</button>
+                                    <button class="btn btn-primary btn-block" onclick="button_send_msg()">Надіслати</button>
                                 </div>
                             </div>
                         </div>
