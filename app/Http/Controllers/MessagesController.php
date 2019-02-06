@@ -299,13 +299,13 @@ class MessagesController extends Controller
         }
     }
 
-    public function sendToOneSignal($data, $message)
+    public function sendToOneSignal($user, $message)
     {
         $player_ids = array();
-        $player_ids[0] = $data->player_id;
+        $player_ids[0] = $user->player_id;
         $params = [];
         $params['headings'] = [
-            "en" => (isset($data->parent_name)) ? $data->parent_name : $data->name
+            "en" => (isset($user->parent_name)) ? $user->parent_name : $user->name
         ];
         $params['contents'] = [
             "en" => $message
