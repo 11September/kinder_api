@@ -155,19 +155,19 @@
                         </div>
 
                         {{--<div id="wrapper-chat" class="wrapper-chat">--}}
-                            {{--<div class="panel-body" id="panel-body">--}}
-                                {{--@if(isset($conversation->messages))--}}
-                                    {{--@foreach($conversation->messages as $message)--}}
-                                        {{--<div class="row">--}}
-                                            {{--<div--}}
-                                                {{--class="message {{ ($message->user_id != Auth::user()->id) ? 'not_owner':'owner'}}">--}}
-                                                {{--{{$message->message}}<br/>--}}
-                                                {{--<b>{{$message->created_at->diffForHumans()}}</b>--}}
-                                            {{--</div>--}}
-                                        {{--</div>--}}
-                                    {{--@endforeach--}}
-                                {{--@endif--}}
-                            {{--</div>--}}
+                        {{--<div class="panel-body" id="panel-body">--}}
+                        {{--@if(isset($conversation->messages))--}}
+                        {{--@foreach($conversation->messages as $message)--}}
+                        {{--<div class="row">--}}
+                        {{--<div--}}
+                        {{--class="message {{ ($message->user_id != Auth::user()->id) ? 'not_owner':'owner'}}">--}}
+                        {{--{{$message->message}}<br/>--}}
+                        {{--<b>{{$message->created_at->diffForHumans()}}</b>--}}
+                        {{--</div>--}}
+                        {{--</div>--}}
+                        {{--@endforeach--}}
+                        {{--@endif--}}
+                        {{--</div>--}}
                         {{--</div>--}}
 
                         <div class="panel-footer">
@@ -206,6 +206,11 @@
                 '</div>');
 
             scrollToEnd();
+
+            var totalCountObject = $('#counter_unread');
+            var totalCount = parseInt(totalCountObject.text());
+            totalCount++;
+            totalCountObject.text(totalCount);
 
             setTimeout(function () {
                 setRead();
@@ -370,7 +375,7 @@
 
                         $('#wrapper-chat').append(
                             '<div class="chat-container darker">' +
-                            '<p>' + msg + '</p>'+
+                            '<p>' + msg + '</p>' +
                             '<span class="time-right">Зараз</span>' +
                             '</div>');
 
