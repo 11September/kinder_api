@@ -59,7 +59,6 @@
 
                             @foreach($groups as $list_groups)
                                 <li class="list-group-item @if($list_groups->id == $group->id) active @endif">
-
                                     <div>
                                         <a href="{{ action('GroupController@adminEdit', $list_groups->id) }}">
                                             {{ $list_groups->name }}
@@ -105,7 +104,6 @@
                                         <label for="school_id">Садок</label>
 
                                         @foreach($schools as $school)
-
                                             <div class="form-check">
                                                 <label class="container-checkbox">
                                                     {{ $school->name }}
@@ -121,8 +119,8 @@
                                                     <span class="checkmark-radio"></span>
                                                 </label>
                                             </div>
-
                                         @endforeach
+
                                     </div>
                                 </div>
                                 <div class="col-md-6">

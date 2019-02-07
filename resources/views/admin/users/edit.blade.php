@@ -52,8 +52,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">ПІБ дитини</label>
-                                        <input required name="name" value="{{ $user->name }}" type="text"
+                                        <label for="name">ПІБ дитини</label>
+                                        <input required name="name" value="{{ $user->name }}" type="text" id="name"
                                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="ПІБ дитини">
 
                                         @if ($errors->has('name'))
@@ -76,8 +76,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">ПІБ Батька</label>
-                                        <input required name="parent_name" value="{{ $user->parent_name }}" type="text"
+                                        <label for="parent_name">ПІБ Батька</label>
+                                        <input required name="parent_name" value="{{ $user->parent_name }}" type="text" id="parent_name"
                                                class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" placeholder="ПІБ Батька">
 
                                         @if ($errors->has('parent_name'))
@@ -88,8 +88,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Номер Телефону Батьків</label>
-                                        <input required name="parent_phone" value="{{ $user->parent_phone }}"
+                                        <label for="parent_phone">Номер Телефону Батьків</label>
+                                        <input required name="parent_phone" value="{{ $user->parent_phone }}" id="parent_phone"
                                                type="text" class="mask-phone form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефону Батьків">
 
                                         @if ($errors->has('parent_phone'))
@@ -103,7 +103,7 @@
                                 <div class="col-md-4">
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Email</label>
+                                        <label for="email">Email</label>
                                         <input required type="email" value="{{ $user->email }}" name="email"
                                                class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
                                                placeholder="name@example.com">
@@ -116,7 +116,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Адреса</label>
+                                        <label for="address">Адреса</label>
                                         <input type="text" value="{{ $user->address }}" name="address"
                                                class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address"
                                                placeholder="Адреса">
@@ -155,9 +155,9 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect1">Садок</label>
+                                        <label for="school_id">Садок</label>
                                         <select required name="school_id" class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
-                                                id="exampleFormControlSelect1">
+                                                id="school_id">
 
                                             @foreach($schools as $school)
                                                 <option class="choose_school_option"
@@ -175,10 +175,10 @@
                                         @endif
                                     </div>
                                     <div class="form-group">
-                                        <label for="exampleFormControlSelect2">Група</label>
+                                        <label for="group_id">Група</label>
 
                                         @if(!isset($user->group) || empty($user->group->id))
-                                            <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}">
+                                            <select required id="group_id" name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}">
 
                                                 @foreach($groups as $group)
                                                     <option value="{{ $group->id }}">{{ $group->name }}</option>
@@ -187,12 +187,10 @@
                                             </select>
                                         @else
                                             <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
-                                                    id="exampleFormControlSelect2">
+                                                    id="group_id">
                                                 <option selected value="{{ @$user->group->id }}">{{ @$user->group->name }}</option>
                                             </select>
                                         @endif
-
-
 
                                         @if ($errors->has('group_id'))
                                             <span class="invalid-feedback" role="alert">

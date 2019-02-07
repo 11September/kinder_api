@@ -17,12 +17,6 @@ Route::get('/', function () {
 
 Auth::routes();
 
-
-//Route::get('/home', 'HomeController@index')->name('home');
-//Route::resource('conversation','ConversationController');
-//Route::post('message','MessagesController@store')->name('message.store');
-
-
 Route::get('/admin', 'AdminController@admin')->middleware('access_admin')->name('admin');
 
 // Admin Admins

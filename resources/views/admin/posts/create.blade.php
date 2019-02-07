@@ -5,7 +5,6 @@
 @endsection
 
 @section('content')
-
     <div class="container-fluid">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
@@ -16,7 +15,6 @@
             </li>
             <li class="breadcrumb-item">Створення новини</li>
         </ol>
-
 
         <div class="row">
             <div class="col-md-12">
@@ -39,8 +37,8 @@
                                     <div class="form-row">
 
                                         <div class="form-group col-md-8">
-                                            <label for="exampleFormControlInput1">Назва</label>
-                                            <input required name="title" value="{{ old('title') }}" type="text"
+                                            <label for="title">Назва</label>
+                                            <input required name="title" value="{{ old('title') }}" type="text" id="title"
                                                    class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}"
                                                    placeholder="Назва">
 
@@ -52,9 +50,9 @@
                                         </div>
 
                                         <div class="form-group col-md-4">
-                                            <label for="exampleFormControlInput1">Дата До</label>
+                                            <label for="until">Дата До</label>
                                             <input required name="until" value="{{ old('until') }}" type="date" max="2100-01-01"
-                                                   class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
+                                                   class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}" id="until"
                                                    placeholder="Дата До">
 
                                             @if ($errors->has('until'))
@@ -65,8 +63,8 @@
                                         </div>
 
                                         <div class="form-group col-md-12">
-                                            <label for="exampleFormControlInput1">Опис</label>
-                                            <textarea required name="body" type="text" rows="5"
+                                            <label for="body">Опис</label>
+                                            <textarea required name="body" type="text" rows="5" id="body"
                                                       class="form-control {{ $errors->has('body') ? ' is-invalid' : '' }}"
                                                       placeholder="Опис">{{ old('body') }}</textarea>
 
@@ -123,8 +121,8 @@
                                             <label>Садок</label>
 
                                             <div class="wrapper-schools-holder">
-                                                @foreach($schools as $school)
 
+                                                @foreach($schools as $school)
                                                     <div class="form-check">
                                                         <label class="container-checkbox">
                                                             {{ $school->name }}
@@ -134,8 +132,8 @@
                                                             <span class="checkmark-radio"></span>
                                                         </label>
                                                     </div>
-
                                                 @endforeach
+
                                             </div>
 
                                             @if ($errors->has('school_id'))
@@ -173,7 +171,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
 
                                         </div>
                                     </div>

@@ -7,8 +7,6 @@
 @section('content')
 
     <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
@@ -79,8 +77,8 @@
 
 
                             <div class="form-group">
-                                <label for="exampleFormControlSelect2">Назва садка</label>
-                                <input type="text" name="name" class="form-control" required
+                                <label for="name">Назва садка</label>
+                                <input type="text" name="name" class="form-control" required id="name"
                                        value="@if (old('name')) {{old('name')}} @else {{ $school->name }} @endif"
                                        placeholder="Назва садка">
                             </div>
