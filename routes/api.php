@@ -31,6 +31,7 @@ Route::middleware('cors','token')->get('schedules/{school_id}', 'SchedulesContro
 Route::middleware('cors','token')->get('nutritions/{school_id}', 'NutritionsController@index')->name('Get Nutritions');
 
 Route::middleware('cors','token')->get('group_users', 'GroupController@GroupUsers')->name('Get Users Group');
+Route::middleware('cors','token')->get('group_users_counters', 'GroupController@GroupUsersCounters')->name('Get Users Group Counter');
 Route::middleware('cors','token')->post('conversation', 'ConversationController@createOrGetConversation')->name('Get User Conversation Or Create Conversation');
 Route::middleware('cors','token')->post('store_message', 'MessagesController@storeMessage')->name('Store Message');
 Route::middleware('cors','token')->post('messages_mark_read', 'MessagesController@messagesMarkRead')->name('Store Message');

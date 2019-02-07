@@ -84,6 +84,65 @@ class GroupController extends Controller
         }
     }
 
+
+    public function GroupUsersCounters(Request $request)
+    {
+        try {
+            $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
+            $current_user_id = $user->id;
+
+            $users = User::select('id')
+                ->where('id', '!=', $user->id)
+                ->where('group_id', '=', $user->group_id)
+                ->where('type', '!=', 'admin')
+                ->active()
+                ->orderBy('type', 'moderator')
+                ->get();
+
+            $group = Group::select('id', 'user_id')->where('id', $user->group_id)->first();
+
+            $admin_group = User::select('id')
+                ->where('type', '=', 'admin')
+                ->where('id', '=', $group->user_id)
+                ->active()
+                ->get();
+
+            $group_users = $admin_group->merge($users);
+
+            if (!$group_users || count($group_users) < 1) {
+                return response()->json(['message' => 'Користувачів не знайдено!'], 404);
+            }
+
+            foreach ($group_users as $user) {
+                $count = 0;
+
+                $conversations = Conversation::where([
+                    ['user1_id', '=', $user->id],
+                    ['user2_id', '=', $current_user_id]
+                ])->OrWhere([
+                    ['user1_id', '=', $current_user_id],
+                    ['user2_id', '=', $user->id]
+                ])->with('messages')->get();
+
+                foreach ($conversations as $conversation) {
+                    foreach ($conversation->messages as $message) {
+                        if ($message->user_id != $current_user_id && $message->status == "unread") {
+                            $count++;
+                        }
+                    }
+                }
+
+                $user->count = $count;
+            }
+
+            return ['data' => $group_users];
+
+        } catch (\Exception $exception) {
+            Log::warning('GroupController@GroupUsersCounters Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
     public function getAllGroupsById(Request $request)
     {
         $request->validate([
@@ -127,7 +186,7 @@ class GroupController extends Controller
 
         $group->schools()->attach($request->school_id);
 
-        foreach ($request->moderator_id as $value){
+        foreach ($request->moderator_id as $value) {
             $user = User::where('id', $value)
                 ->where('school_id', null)
                 ->where('group_id', null)
@@ -154,7 +213,7 @@ class GroupController extends Controller
 
         $moderators_ids = array();
         foreach ($group->students as $key => $student) {
-            if ($student->type == "moderator"){
+            if ($student->type == "moderator") {
                 $moderators_ids[$key] = $student->id;
             }
         }
@@ -200,7 +259,7 @@ class GroupController extends Controller
         $group->posts()->detach();
 
         $users = User::where('group_id', $group->id)->where('type', 'moderator')->get();
-        foreach ($users as $item){
+        foreach ($users as $item) {
             $user = User::where('id', $item->id)->first();
             $user->school_id = null;
             $user->group_id = null;
