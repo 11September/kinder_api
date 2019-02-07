@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-
     <div class="container-fluid">
-
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
@@ -77,9 +75,9 @@
                                 </div>
                                 <div class="wrapper-check-all">
                                     <div class="form-check">
-                                        <label class="container">
+                                        <label for="all" class="container">
                                             Отправить всем
-                                            <input value="all" class="all-schools" name="all" type="checkbox">
+                                            <input value="all" id="all" class="all-schools" name="all" type="checkbox">
                                             <span class="checkmark"></span>
                                         </label>
 
@@ -136,14 +134,11 @@
 
                             <button type="submit" class="btn btn-primary mb-2">Створити</button>
                         </div>
-
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
-
 @endsection
 
 @section('scripts')

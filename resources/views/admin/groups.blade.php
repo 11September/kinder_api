@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-
     <div class="container-fluid">
-
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
@@ -184,9 +182,10 @@
                                         @endforeach
 
                                         @if(!$moderators || count($moderators) == 0)
-                                            <p>На жаль немає вільних вихователів. Створіть <a class="orange-link"
-                                                                                              href="{{ url('/admin/admins') }}">нового</a>
-                                                вихователя.</p>
+                                            <p>На жаль немає вільних вихователів. Створіть
+                                                <a class="orange-link" href="{{ url('/admin/admins') }}">нового</a>
+                                                вихователя.
+                                            </p>
                                         @endif
 
                                     </div>

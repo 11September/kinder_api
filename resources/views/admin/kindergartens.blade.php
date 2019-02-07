@@ -5,10 +5,7 @@
 @endsection
 
 @section('content')
-
     <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
@@ -47,7 +44,6 @@
                                 <p class="group-count">Кількість груп : {{ $school->groups_count }}</p>
                             </div>
 
-
                             <div class="wrapper-school-delete">
                                 <form class="delete-form" id="delete-form" method="POST"
                                       action="/admin/kindergartens/{{$school->id}}">
@@ -65,16 +61,13 @@
                 </ul>
             </div>
 
-
             <div class="col-md-8">
-
                 <form action="{{ action('SchoolController@adminStore') }}" method="post">
                     {{ csrf_field() }}
 
                     <div class="row">
                         <div class="col-md-6">
                             <h3>Створення садка</h3>
-
 
                             <div class="form-group">
                                 <label for="exampleFormControlSelect2">Назва садка</label>

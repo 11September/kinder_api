@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-
     <div class="container-fluid">
-
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
@@ -120,8 +118,8 @@
 
                                         @if ($errors->has('type'))
                                             <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('type') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('type') }}</strong>
+                                            </span>
                                         @endif
 
                                     </div>

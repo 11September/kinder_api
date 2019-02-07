@@ -5,10 +5,7 @@
 @endsection
 
 @section('content')
-
     <div class="container-fluid">
-
-        <!-- Breadcrumbs-->
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
@@ -33,7 +30,6 @@
 
                     @include('admin.partials.errors')
 
-
                     <div class="col-md-6">
                         <i class="fas fa-table"></i>
                         Список користувачів
@@ -45,7 +41,6 @@
                     </div>
                 </div>
             </div>
-
 
             <div class="card-body">
                 <div class="table-responsive">

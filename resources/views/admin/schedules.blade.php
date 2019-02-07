@@ -5,9 +5,7 @@
 @endsection
 
 @section('content')
-
     <div class="container-fluid">
-
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin') }}">Головна сторінка</a>
