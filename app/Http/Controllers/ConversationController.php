@@ -47,6 +47,7 @@ class ConversationController extends Controller
 
                 $conversation->save();
                 $conversation->messages = [];
+                $conversation->client_id = $user->id;
             } else {
                 if ($conversation->messages){
                     foreach ($conversation->messages as $message) {
@@ -57,6 +58,7 @@ class ConversationController extends Controller
                         }
                     }
                 }else{
+                    $conversation->client_id = $user->id;
                     $conversation->messages = [];
                 }
             }
