@@ -27,6 +27,10 @@ class ConversationController extends Controller
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
+            if ($request->user_id == $user->id){
+                return response()->json(['message' => 'Користувач не може звернутися до листування з собою!'], 409);
+            }
+
             $conversation = Conversation::where([
                 ['user1_id', '=', $user->id],
                 ['user2_id', '=', $request->user_id],
@@ -172,6 +176,10 @@ class ConversationController extends Controller
 
     public function checkConversation($id)
     {
+        if (Auth::id() == $id){
+            return redirect()->back()->with('error', 'Користувач не може звернутися до листування з собою!');
+        }
+
         $conversation = Conversation::where([
             ['user1_id', '=', Auth::id()],
             ['user2_id', '=', $id],
