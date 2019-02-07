@@ -31,6 +31,8 @@ class MessagesController extends Controller
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $sender = $user;
+
             $conversation = Conversation::where('id', $request->conversation_id)->first();
 
             $message = new Message();
@@ -41,13 +43,12 @@ class MessagesController extends Controller
 
             $receiver_id = ($conversation->user1_id == $user->id) ? $conversation->user2_id : $conversation->user1_id;
 
-            $user = User::select('id', 'player_id', 'name', 'parent_name')
+            $receiver = User::select('id', 'player_id', 'name', 'parent_name')
                 ->where('id', $receiver_id)
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
                 ->active()
                 ->first();
-
 
             $data = [
                 'conversation_id' => $request->conversation_id,
@@ -57,8 +58,8 @@ class MessagesController extends Controller
             $redis = Redis::connection();
             $redis->publish('message', json_encode($data));
 
-            if ($user && isset($user->player_id) && !empty($user->player_id)) {
-                $this->sendToOneSignal($user, $request->message);
+            if ($receiver && isset($receiver->player_id) && !empty($receiver->player_id)) {
+                $this->sendToOneSignal($sender, $receiver, $request->message);
             }
 
             return ['message' => 'Повідомлення збережено!'];
@@ -178,15 +179,15 @@ class MessagesController extends Controller
             $message->save();
 
             $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
-            $user = User::select('id', 'player_id', 'name', 'parent_name')
+            $reciver = User::select('id', 'player_id', 'name', 'parent_name')
                 ->where('id', $receiver_id)
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
                 ->active()
                 ->first();
 
-            if ($user && isset($user->player_id) && !empty($user->player_id)) {
-                $this->sendToOneSignal($user, $request->message);
+            if ($reciver && isset($reciver->player_id) && !empty($reciver->player_id)) {
+                $this->sendToOneSignal(Auth::user(), $reciver, $request->message);
             }
 
 //            event(new NewMessage($request->conversation_id, $request->message, $receiver_id));
@@ -299,13 +300,13 @@ class MessagesController extends Controller
         }
     }
 
-    public function sendToOneSignal($user, $message)
+    public function sendToOneSignal($sender, $reciver, $message)
     {
         $player_ids = array();
-        $player_ids[0] = $user->player_id;
+        $player_ids[0] = $reciver->player_id;
         $params = [];
         $params['headings'] = [
-            "en" => ($user->parent_name && isset($user->parent_name) && !empty($user->parent_name)) ? $user->parent_name : $user->name
+            "en" => ($sender->parent_name && isset($sender->parent_name) && !empty($sender->parent_name)) ? $sender->parent_name : $sender->name
         ];
         $params['contents'] = [
             "en" => $message
