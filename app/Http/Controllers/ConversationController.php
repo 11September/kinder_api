@@ -58,11 +58,11 @@ class ConversationController extends Controller
                         }
                     }
 
-                    $conversation->messages = [];
                     $conversation->client_id = $user->id;
+                    $conversation->messages = [];
                 } else {
-                    $conversation->messages = [];
                     $conversation->client_id = $user->id;
+                    $conversation->messages = [];
                 }
             }
 
