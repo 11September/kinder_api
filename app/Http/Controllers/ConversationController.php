@@ -194,7 +194,7 @@ class ConversationController extends Controller
 
     public function user($id)
     {
-        $conversation = Conversation::where('id', $id)->with('messages', 'user2', 'user1')->first();
+        $conversation = Conversation::where('id', $id)->with('messages', 'user1', 'user2')->first();
 
         if (Auth::user()->group_id){
             $group = Group::where('id', Auth::user()->group_id)

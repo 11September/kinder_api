@@ -233,22 +233,22 @@ class MessagesController extends Controller
 //        }
 //        return response()->json("permission error");
 //    }
-//
-//    public function setReadMessages($user_id)
-//    {
-//        if (!$user_id || empty($user_id) || !is_numeric($user_id)) {
-//            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
-//        }
-//
-//        $messages = Message::where('user_id', $user_id)->get();
-//
-//        foreach ($messages as $message) {
-//            $message->status = 'read';
-//            $message->save();
-//        }
-//
-//        return response()->json(['success' => true]);
-//    }
+
+    public function setReadMessages($user_id)
+    {
+        if (!$user_id || empty($user_id) || !is_numeric($user_id)) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        $messages = Message::where('user_id', $user_id)->get();
+
+        foreach ($messages as $message) {
+            $message->status = 'read';
+            $message->save();
+        }
+
+        return response()->json(['success' => true]);
+    }
 
     public function fetchMessages(Request $request)
     {

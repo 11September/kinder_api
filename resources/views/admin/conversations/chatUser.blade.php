@@ -36,7 +36,7 @@
             <li class="breadcrumb-item">
                 <a class="orange-text" href="{{ url('admin/conversations') }}">Листування</a>
             </li>
-            <li class="breadcrumb-item active">{{ $conversation->user2->name }}</li>
+            <li class="breadcrumb-item active">{{ $conversation->user2->name }} - {{ $conversation->user1->name }}</li>
         </ol>
 
         <div class="card mb-3">
@@ -160,7 +160,9 @@
                             <br/>
                             <div class="row">
                                 <div class="col-md-offset-4 col-md-4">
-                                    <button id="sbmbutton" class="btn btn-primary btn-block" onclick="button_send_msg()">Надіслати</button>
+                                    <button id="sbmbutton" class="btn btn-primary btn-block"
+                                            onclick="button_send_msg()">Надіслати
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -192,6 +194,7 @@
                 success: function (data) {
 
                     if (data.success) {
+                        count.text(0);
                         count.fadeOut();
                         $('.unread').removeClass('unread');
                     }
@@ -219,10 +222,12 @@
 
             var countObject = $('.list-group-item.active').find('.badge');
             var countUser = parseInt(countObject.text());
-            if (!countUser){
+            if (!countUser) {
                 countUser = 0;
             }
             countUser++;
+            console.log(countUser);
+            countObject.removeAttr("style");
             countObject.text(countUser);
 
             var totalCountObject = $('#counter_unread');
@@ -239,6 +244,8 @@
             setTimeout(function () {
                 setRead();
             }, 3000);
+
+            scrollToEnd();
 
 
             $('.choose_school').on('change', function () {
@@ -282,17 +289,12 @@
             });
         });
 
-
-        $(document).ready(function () {
-            scrollToEnd();
-
-            $(document).keypress(function (e) {
-                if (e.which == 13) {
-                    var msg = $('#msg').val();
-                    $('#msg').val('');//reset
-                    send_msg(msg);
-                }
-            });
+        $(document).keypress(function (e) {
+            if (e.which == 13) {
+                var msg = $('#msg').val();
+                $('#msg').val('');//reset
+                send_msg(msg);
+            }
         });
 
         function button_send_msg() {
@@ -329,11 +331,11 @@
 
                         setTimeout(function () {
                             setRead();
-                        }, 2000);
+                        }, 3000);
                     }
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                    if(xhr.status == 422){
+                    if (xhr.status == 422) {
                         $('#msg').val('').focus().css('border', '1px solid #de2929');
 
                         setTimeout(function () {
