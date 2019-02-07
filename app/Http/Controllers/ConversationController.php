@@ -47,12 +47,16 @@ class ConversationController extends Controller
 
                 $conversation->save();
             } else {
-                foreach ($conversation->messages as $message) {
-                    if ($message->user_id == $user->id) {
-                        $message->self = true;
-                    } else {
-                        $message->self = false;
+                if ($conversation->messages){
+                    foreach ($conversation->messages as $message) {
+                        if ($message->user_id == $user->id) {
+                            $message->self = true;
+                        } else {
+                            $message->self = false;
+                        }
                     }
+                }else{
+                    $conversation->messages = [];
                 }
             }
 
