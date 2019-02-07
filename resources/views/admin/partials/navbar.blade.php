@@ -6,6 +6,14 @@
 
     <ul class="navbar-nav ml-auto">
         <li class="nav-item dropdown no-arrow mx-1">
+            <a class="nav-link" href="{{ url('admin') }}" role="button">
+                @if(Auth::user()->name)
+                    <p id="nav-user-name" class="no-marg orange-text">{{ Auth::user()->name }}</p>
+                @endif
+            </a>
+        </li>
+
+        <li class="nav-item dropdown no-arrow mx-1">
             <a class="nav-link" href="{{ url('admin/conversations') }}" role="button">
                 <i class="fas fa-envelope fa-fw"></i>
                 <span class="badge badge-danger" id="counter_unread">{{ $counter }}</span>
