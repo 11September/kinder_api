@@ -71,7 +71,7 @@
 
                                         <div class="form-group col-md-12">
                                             <label for="exampleFormControlInput1">Опис</label>
-                                            <textarea required name="body" type="text"
+                                            <textarea required name="body" type="text" rows="5"
                                                       class="form-control {{ $errors->has('body') ? ' is-invalid' : '' }}"
                                                       placeholder="Опис">{{ $post->body }}</textarea>
 

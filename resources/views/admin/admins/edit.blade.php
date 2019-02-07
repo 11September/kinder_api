@@ -52,8 +52,8 @@
                             <div class="row">
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">ПІБ</label>
-                                        <input required name="name" value="{{ $user->name }}" type="text"
+                                        <label for="name">ПІБ</label>
+                                        <input required name="name" value="{{ $user->name }}" type="text" id="name"
                                                class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                placeholder="ПІБ">
 
@@ -65,7 +65,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="exampleFormControlInput1">Email</label>
+                                        <label for="email">Email</label>
                                         <input required type="email" name="email"
                                                class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
                                                id="email" value="{{ $user->email }}" placeholder="name@example.com">
@@ -98,6 +98,12 @@
                                                class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
                                                name="password_confirmation">
                                     </div>
+
+                                    @if ($errors->has('password'))
+                                        <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('password') }}</strong>
+                                            </span>
+                                    @endif
                                 </div>
 
                                 <div class="col-md-4">
@@ -117,8 +123,8 @@
 
 
                                     <div class="form-group">
-                                        <label for="">Роль</label>
-                                        <select name="type"
+                                        <label for="type">Роль</label>
+                                        <select name="type" id="type"
                                                 class="form-control {{ $errors->has('type') ? ' is-invalid' : '' }}">
                                             <option @if($user->type == "admin") selected @endif value="admin">
                                                 Адміністратор
@@ -130,8 +136,8 @@
 
                                         @if ($errors->has('type'))
                                             <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $errors->first('type') }}</strong>
-                                                </span>
+                                                <strong>{{ $errors->first('type') }}</strong>
+                                            </span>
                                         @endif
 
                                     </div>
@@ -181,7 +187,14 @@
                             <tr>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td>{{ $user->type }}</td>
+                                <td>
+                                    @if($user->type == "moderator")
+                                        Вихователь групи
+                                    @endif
+                                    @if($user->type == "admin")
+                                        Адміністратор
+                                    @endif
+                                </td>
 
                                 <td class="action-td">
                                     <a class="btn btn-warning"
@@ -217,16 +230,16 @@
     <script>
         var today = new Date();
         var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
+        var mm = today.getMonth() + 1; //January is 0!
         var yyyy = today.getFullYear();
-        if(dd<10){
-            dd='0'+dd
+        if (dd < 10) {
+            dd = '0' + dd
         }
-        if(mm<10){
-            mm='0'+mm
+        if (mm < 10) {
+            mm = '0' + mm
         }
 
-        today = yyyy+'-'+mm+'-'+dd;
+        today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("birthday").setAttribute("max", today);
 
         $(document).ready(function () {

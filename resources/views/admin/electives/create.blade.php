@@ -40,8 +40,8 @@
 
 
                                         <div class="form-group col-md-12">
-                                            <label for="exampleFormControlInput1">Назва гуртка</label>
-                                            <input required name="name" value="{{ old('name') }}" type="text"
+                                            <label for="name">Назва гуртка</label>
+                                            <input required id="name" name="name" value="{{ old('name') }}" type="text"
                                                    class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                    placeholder="Назва гуртка">
 
@@ -53,13 +53,13 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="exampleFormControlInput1">Час З</label>
+                                            <label for="time_start">Час З</label>
                                             <input required name="time_start" value="{{ old('time_start') }}"
-                                                   type="time"
+                                                   type="time" id="time_start"
                                                    class="form-control {{ $errors->has('time_start') ? ' is-invalid' : '' }}"
                                                    placeholder="Час З">
 
-                                            @if ($errors->has('until'))
+                                            @if ($errors->has('time_start'))
                                                 <span class="invalid-feedback" role="alert">
                                                     <strong>{{ $errors->first('time_start') }}</strong>
                                                 </span>
@@ -67,8 +67,8 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label for="exampleFormControlInput1">Час До</label>
-                                            <input required name="time_end" value="{{ old('time_end') }}" type="time"
+                                            <label for="time_end">Час До</label>
+                                            <input required id="time_end" name="time_end" value="{{ old('time_end') }}" type="time"
                                                    class="form-control {{ $errors->has('time_end') ? ' is-invalid' : '' }}"
                                                    placeholder="Час До">
 
@@ -84,7 +84,7 @@
                                 <div class="col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
-                                            <label>Садок</label>
+                                            <label for="school_id">Садок</label>
 
                                             <div class="wrapper-schools-holder">
                                                 @foreach($schools as $school)
@@ -93,7 +93,7 @@
                                                         <label class="container-checkbox">
                                                             {{ $school->name }}
                                                             <input required value="{{ $school->id }}" type="radio"
-                                                                   checked="checked" name="school_id">
+                                                                   checked="checked" name="school_id" id="school_id">
                                                             <span class="checkmark-radio"></span>
                                                         </label>
                                                     </div>
@@ -109,7 +109,7 @@
                                         </div>
 
                                         <div class="form-group col-md-6">
-                                            <label>Групи</label>
+                                            <label for="group_id">Групи</label>
 
                                             <div class="wrapper-groups-holder">
                                                 @foreach($groups as $group)
@@ -118,7 +118,7 @@
                                                         <label class="container">
                                                             {{ $group->name }}
                                                             <input value="{{ $group->id }}" name="group_id[]"
-                                                                   type="checkbox">
+                                                                  id="group_id" type="checkbox">
                                                             <span class="checkmark"></span>
                                                         </label>
                                                     </div>

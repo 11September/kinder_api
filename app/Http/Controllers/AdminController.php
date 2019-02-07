@@ -53,7 +53,7 @@ class AdminController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.admins')->with('message','Користувач успішно змінений!');
+        return redirect()->route('admin.admins')->with('message','Користувач успішно створений!');
     }
 
     public function adminEdit(Request $request, $id)

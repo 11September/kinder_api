@@ -102,7 +102,7 @@
                                 <div class="col-md-2"></div>
                                 <div class="col-md-4">
                                     <div class="form-group">
-                                        <label>Садок</label>
+                                        <label for="school_id">Садок</label>
 
                                         @foreach($schools as $school)
 
@@ -110,7 +110,7 @@
                                                 <label class="container-checkbox">
                                                     {{ $school->name }}
                                                     <input required value="{{ $school->id }}" type="radio"
-                                                           name="school_id"
+                                                           name="school_id" id="school_id"
 
                                                            @foreach($group->schools as $value)
                                                            @if($school->id == $value->id)
@@ -128,8 +128,8 @@
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="name">Назва групи</label>
-                                        <input required type="text" value="{{ $group->name }}" name="name"
-                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" id="name"
+                                        <input required type="text" value="{{ $group->name }}" name="name" id="name"
+                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
                                                placeholder="Название Группы">
 
                                         @if ($errors->has('name'))
@@ -141,7 +141,9 @@
 
                                     <div class="form-group">
                                         <label for="user_id">Вибрати адміністратора</label>
-                                        <select required name="user_id" class="form-control {{ $errors->has('user_id') ? ' is-invalid' : '' }}" id="user_id">
+                                        <select required name="user_id"
+                                                class="form-control {{ $errors->has('user_id') ? ' is-invalid' : '' }}"
+                                                id="user_id">
 
                                             @foreach($admins as $administrator)
                                                 <option @if($administrator->id == @$group->user_id) selected @endif
@@ -159,9 +161,9 @@
                                                 <label class="container">
                                                     {{ $moderator->name }}
                                                     <input value="{{ $moderator->id }}" class="school_id"
-                                                           name="moderator_id[]"
+                                                           name="moderator_id[]" id="moderator_id"
                                                            @if($moderator->group_id == $group->id)
-                                                                checked="checked"
+                                                           checked="checked"
                                                            @endif
                                                            type="checkbox">
                                                     <span class="checkmark"></span>
@@ -170,9 +172,10 @@
                                         @endforeach
 
                                         @if(!$moderators || count($moderators) == 0)
-                                            <p>На жаль немає вільних вихователів. Створіть <a class="orange-link"
-                                                                                              href="{{ url('/admin/admins') }}">нового</a>
-                                                вихователя.</p>
+                                            <p>На жаль немає вільних вихователів. Створіть
+                                                <a class="orange-link" href="{{ url('/admin/admins') }}">нового</a>
+                                                вихователя.
+                                            </p>
                                         @endif
                                     </div>
 

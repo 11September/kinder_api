@@ -58,10 +58,10 @@
                         <h3>Cписок cадкiв</h3>
 
                         <div class="form-group">
-                            <label for="exampleFormControlSelect1">Садок</label>
+                            <label for="school_id">Садок</label>
                             <select required name="school_id"
                                     class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
-                                    id="exampleFormControlSelect1">
+                                    id="school_id">
 
                                 @foreach($list_schools as $school)
                                     <option class="choose_school_option"
