@@ -36,7 +36,7 @@ io.on('connection', function (socket) {
 
 
     socket.on("add user", function (data) {
-        console.log('add user' + data.client + data.conversation);
+        console.log('add user: client-' + data.client + " conversation-" + data.conversation);
 
         if (!(data.client in users)) {
             users[data.client] = {};
