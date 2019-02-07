@@ -44,8 +44,6 @@ io.on('connection', function (socket) {
         users[data.client][data.conversation] = socket;
         socket.user_id = data.client;
         socket.conversation_id = data.conversation;
-
-        console.log('user_id - ', data.client, " ;conversation - ", data.conversation)
     });
 
 
