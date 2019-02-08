@@ -18,18 +18,24 @@ class NutritionsController extends Controller
         }
 
         try {
-            $schedule = Nutrition::where('school_id', $school_id)
+            $schedules = Nutrition::where('school_id', $school_id)
                 ->with(array('foods' => function ($query) {
                     $query->select('id', 'name', 'type', 'nutrition_id');
                     $query->orderByRaw("FIELD(type, \"breakfast\", \"lunch\", \"afternoon-tea\", \"dinner\")");
                 }))
                 ->get();
 
-            if (!$schedule || count($schedule) < 1) {
+            if (!$schedules || count($schedules) < 1) {
                 return response()->json(['message' => 'Розклад не знайдено!'], 404);
+            }else{
+                foreach ($schedules as $key => $value) {
+                    if (count($value->foods) < 1){
+                        $schedules->forget($key);
+                    }
+                }
             }
 
-            return ['data' => $schedule];
+            return ['data' => $schedules];
 
         } catch (\Exception $exception) {
             Log::warning('GroupController@index Exception: ' . $exception->getMessage());
