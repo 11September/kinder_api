@@ -17,7 +17,6 @@ class CreateGroupsTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->integer('user_id');
-            $table->integer('moderator_id');
             $table->timestamps();
         });
     }
