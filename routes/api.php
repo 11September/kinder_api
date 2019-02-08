@@ -20,6 +20,7 @@ Route::middleware('cors','token')->post('change_password', 'UsersController@Chan
 Route::middleware('cors','token')->post('set_avatar', 'UsersController@SetAvatar')->name('Set Avatar');
 Route::middleware('cors','token')->post('set_player', 'UsersController@SetPlayer')->name('Set User Player ID');
 Route::middleware('cors','token')->post('set_push', 'UsersController@SetPush')->name('Set Push');
+Route::middleware('cors','token')->post('set_push_chat', 'UsersController@SetPushChat')->name('Set Push Chat');
 Route::middleware('cors','token')->post('logout', 'UsersController@logout')->name('Logout');
 Route::middleware('cors','token')->get('profile', 'UsersController@profile')->name('Get All User Data');
 // Users Auth

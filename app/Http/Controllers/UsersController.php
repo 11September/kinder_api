@@ -277,6 +277,33 @@ class UsersController extends Controller
         }
     }
 
+    public function SetPushChat(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'push' => [
+                'required',
+                'string',
+                Rule::in(['true', 'false']),
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        try {
+            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $user->push_chat = $request->push;
+            $user->save();
+
+            return response()->json(['message' => 'Push повiдомлення змiнено!', 'data' => $user->push_chat], 200);
+
+        } catch (\Exception $exception) {
+            Log::warning('UsersController@SetPushChat Exception: ' . $exception->getMessage() . " - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
     public function storeBase64Image($data)
     {
         $folderPath = "images/uploads/avatars/";
