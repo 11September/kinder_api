@@ -44,6 +44,7 @@ class Kernel extends HttpKernel
         'cors' => \App\Http\Middleware\Cors::class,
         'access_admin' => \App\Http\Middleware\AccessAdminPanel::class,
         'is_admin' => \App\Http\Middleware\IsAdmin::class,
+        'emptyGroupId' => \App\Http\Middleware\IsAdmin::class,
     ];
 
     /**
@@ -63,7 +64,7 @@ class Kernel extends HttpKernel
         ],
 
         'api' => [
-            'throttle:500,1',
+            'throttle:120,1',
             'bindings',
         ],
     ];

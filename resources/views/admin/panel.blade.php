@@ -9,7 +9,20 @@
             </li>
         </ol>
 
-        <!-- Icon Cards-->
+
+        <div class="col-md-12">
+            @if (Session::has('error'))
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{Session::get('error')}}
+                </div>
+            @endif
+        </div>
+
+        @include('admin.partials.errors')
+
         <div class="row">
             <div class="col-xl-4 col-sm-6 mb-3">
                 <div class="card text-white bg-primary o-hidden h-100">
