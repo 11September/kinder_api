@@ -33,16 +33,16 @@ class SchedulesController extends Controller
                 return response()->json(['message' => 'В даний момент розклад відсутній!'], 404);
             }else{
 
-                dd($schedules);
+                return ['data' => $schedules];
 
-                if ($schedules->lessons){
-                    foreach ($schedules->lessons as $lesson) {
-
+                foreach ($schedules as $schedule) {
+                    if (!$schedule->lessons){
+                        $schedules->forget($schedule);
                     }
                 }
-
-                return ['data' => $schedules];
             }
+
+            return ['data' => $schedules];
 
         } catch (\Exception $exception) {
             Log::warning('GroupController@index Exception: ' . $exception->getMessage());
