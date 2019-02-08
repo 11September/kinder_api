@@ -233,6 +233,8 @@ class ConversationController extends Controller
 
             $user_for_group = User::where('id', $receiver_id)->first();
 
+            dd($user_for_group);
+
             $group = Group::where('id', $user_for_group->group_id)
                 ->with(array('admin' => function ($query) {
                     $query->select('id', 'name', 'parent_name', 'parent_phone', 'group_id', 'type');
