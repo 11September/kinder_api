@@ -58,6 +58,7 @@ class MessagesController extends Controller
             $redis = Redis::connection();
             $redis->publish('message', json_encode($data));
 
+
             if ($receiver && isset($receiver->player_id) && !empty($receiver->player_id) && $receiver->push_chat == "true") {
                 $this->sendToOneSignal($sender, $receiver, $request->message);
             }
@@ -187,6 +188,9 @@ class MessagesController extends Controller
                 ->first();
 
             if ($reciver && isset($reciver->player_id) && !empty($reciver->player_id) && $reciver->push_chat == "true") {
+
+                dd("push inside if");
+
                 $this->sendToOneSignal(Auth::user(), $reciver, $request->message);
             }
 
