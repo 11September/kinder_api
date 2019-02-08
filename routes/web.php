@@ -83,12 +83,12 @@ Route::post('/admin/notifications/notifyScheduleByGroup', 'NotificationsControll
 Route::post('/admin/notifications/notifyFoodsBySchool', 'NotificationsController@notifyFoodsBySchool')->middleware('is_admin')->name('admin.notifications.notifyFoodsBySchool');
 
 // Admin Conversations
-Route::get('/admin/conversations', 'ConversationController@admin')->middleware('access_admin', 'emptyGroupId')->name('admin.messages');
-Route::get('/admin/conversations/group/{id}', 'ConversationController@adminShowGroupUsers')->middleware('access_admin', 'emptyGroupId')->name('admin.groupUsers');
-Route::get('/admin/conversations/{id}', 'ConversationController@checkConversation')->middleware('access_admin', 'emptyGroupId')->name('admin.conversation.checkConversation');
-Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->middleware('access_admin', 'emptyGroupId')->name('admin.conversation.user');
+Route::get('/admin/conversations', 'ConversationController@admin')->middleware('access_admin')->name('admin.messages');
+Route::get('/admin/conversations/group/{id}', 'ConversationController@adminShowGroupUsers')->middleware('access_admin')->name('admin.groupUsers');
+Route::get('/admin/conversations/{id}', 'ConversationController@checkConversation')->middleware('access_admin')->name('admin.conversation.checkConversation');
+Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->middleware('access_admin')->name('admin.conversation.user');
 
-Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('access_admin', 'emptyGroupId')->name('admin.messages.store');
-Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages', 'emptyGroupId')->middleware('access_admin')->name('admin.messages.setReadMessages');
-//Route::post('/admin/messages/fetchMessages', 'MessagesController@fetchMessages')->middleware('access_admin', 'emptyGroupId')->name('admin.messages.fetchMessages');
+Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('access_admin')->name('admin.messages.store');
+Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->middleware('access_admin')->name('admin.messages.setReadMessages');
+Route::post('/admin/messages/fetchMessages', 'MessagesController@fetchMessages')->middleware('access_admin')->name('admin.messages.fetchMessages');
 Route::get('/admin/messages/unread_messages_counter', 'MessagesController@AdminMessagesCounter')->middleware('access_admin')->name('admin.messages.counter');

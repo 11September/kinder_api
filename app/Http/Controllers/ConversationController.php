@@ -80,6 +80,10 @@ class ConversationController extends Controller
 
     public function admin()
     {
+        if (Auth::user()->type == "moderator" && !Auth::user()->group_id){
+            return redirect('admin')->with('error', 'Користувач не може брати участь в листуванні, так як він не прив\'язаний до жодної групи!');
+        }
+
         $schools = School::all();
 
         if ($schools->first()) {
