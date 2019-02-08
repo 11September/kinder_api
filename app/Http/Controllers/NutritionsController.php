@@ -26,7 +26,7 @@ class NutritionsController extends Controller
                 ->get();
 
             if (!$schedules || count($schedules) < 1) {
-                return response()->json(['message' => 'Розклад не знайдено!'], 404);
+                return response()->json(['message' => 'В даний момент меню харчування відсутнє!'], 404);
             }else{
                 foreach ($schedules as $key => $value) {
                     if (count($value->foods) < 1){

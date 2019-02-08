@@ -38,7 +38,7 @@ class GroupController extends Controller
             $group_users = $admin_group->merge($users);
 
             if (!$group_users || count($group_users) < 1) {
-                return response()->json(['message' => 'Користувачів не знайдено!'], 404);
+                return response()->json(['message' => 'В даний момент користувачів не знайдено!'], 404);
             }
 
             foreach ($group_users as $user) {
