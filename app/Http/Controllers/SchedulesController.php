@@ -34,6 +34,7 @@ class SchedulesController extends Controller
             }else{
                 foreach ($schedules as $key => $value) {
                     if (!isset($value->lessons) && empty($value->lessons) && count($value->lessons) < 1){
+                        return ['in if' => $key, 'data' => $value];
                         $schedules->forget($key);
                     }
                 }
