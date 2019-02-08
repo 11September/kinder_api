@@ -16,25 +16,27 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->enum('type', ['admin', 'moderator', 'default'])->default('default');
+            $table->string('token')->unique();
+
+            $table->integer('school_id')->nullable();
+            $table->integer('group_id')->nullable();
 
             $table->string('parent_name')->nullable();
-            $table->string('parent_phone')->nullable();
+            $table->string('parent_phone')->nullable()->unique();
             $table->enum('parents', ['father', 'mother'])->nullable();
             $table->string('address')->nullable();
             $table->date('birthday')->nullable();
             $table->string('avatar')->nullable();
 
-            $table->integer('school_id')->nullable();
-            $table->integer('group_id')->nullable();
-            $table->enum('status', ['active', 'disable'])->default('active');
-
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->string('token')->unique();
+
             $table->enum('push', ['enabled', 'disabled']);
             $table->string('player_id', 36)->nullable();
-            $table->string('type')->default('default');
+            $table->enum('push_chat', ['true', 'false'])->default('true');
+            $table->enum('status', ['active', 'disable'])->default('active');
 
             $table->rememberToken();
             $table->timestamps();
