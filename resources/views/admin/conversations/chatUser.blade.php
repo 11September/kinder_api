@@ -122,7 +122,7 @@
                                             @if($count != 0)
                                                 <small class="badge badge-primary badge-pill">{{ $count }}</small>
                                             @else
-                                                <small class="badge badge-primary badge-pill hide">{{ $count }}</small>
+                                                <small class="badge badge-primary badge-pill" style="display:none;">{{ $count }}</small>
                                             @endif
 
                                         </div>
