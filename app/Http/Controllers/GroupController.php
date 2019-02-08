@@ -33,6 +33,7 @@ class GroupController extends Controller
             $admin_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
                 ->where('type', '=', 'admin')
                 ->where('id', '=', $group->user_id)
+                ->active()
                 ->get();
 
             $group_users = $admin_group->merge($users);
@@ -171,6 +172,7 @@ class GroupController extends Controller
             ->where('type', 'moderator')
             ->where('school_id', null)
             ->where('group_id', null)
+            ->active()
             ->get();
 
         return view('admin.groups', compact('admins', 'moderators', 'schools', 'groups'));
@@ -190,6 +192,7 @@ class GroupController extends Controller
             $user = User::where('id', $value)
                 ->where('school_id', null)
                 ->where('group_id', null)
+                ->active()
                 ->first();
 
             $user->school_id = $request->school_id;
@@ -221,12 +224,14 @@ class GroupController extends Controller
         $currentModerators = User::select('id', 'name', 'group_id')
             ->where('type', 'moderator')
             ->whereIn('id', $moderators_ids)
+            ->active()
             ->get();
 
         $availableModerators = User::select('id', 'name', 'group_id')
             ->where('type', 'moderator')
             ->where('school_id', null)
             ->where('group_id', null)
+            ->active()
             ->get();
 
         $moderators = $currentModerators->merge($availableModerators);
