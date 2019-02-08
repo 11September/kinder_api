@@ -44,7 +44,7 @@ class Kernel extends HttpKernel
         'cors' => \App\Http\Middleware\Cors::class,
         'access_admin' => \App\Http\Middleware\AccessAdminPanel::class,
         'is_admin' => \App\Http\Middleware\IsAdmin::class,
-        'emptyGroupId' => \App\Http\Middleware\IsAdmin::class,
+        'emptyGroupId' => \App\Http\Middleware\CheckSchoolGroupId::class,
     ];
 
     /**
