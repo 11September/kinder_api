@@ -246,6 +246,8 @@ class ConversationController extends Controller
                 }))
                 ->first();
 
+            dd($group);
+
             $users = User::where('group_id', $group->id)->where('id', '!=', Auth::user()->id)->orderBy('type', 'moderator')->with('messages')->get();
 
             if (isset($group->admin)) {
