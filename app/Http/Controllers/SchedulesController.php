@@ -33,7 +33,7 @@ class SchedulesController extends Controller
                 return response()->json(['message' => 'В даний момент розклад відсутній!'], 404);
             }else{
                 foreach ($schedules as $key => $value) {
-                    if (!isset($value->lessons) && empty($value->lessons)){
+                    if (!isset($value->lessons) && empty($value->lessons) && count($value->lessons) < 1){
                         $schedules->forget($key);
                     }
                 }
