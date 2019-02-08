@@ -34,7 +34,7 @@ class SchedulesController extends Controller
             }else{
                 foreach ($schedules as $key => $value) {
 
-                    return ['data' => $value];
+                    return ['data' => $value, $key];
 
                     if ($value->lessons && empty($value->lessons)){
                         $schedules->forget($key);
