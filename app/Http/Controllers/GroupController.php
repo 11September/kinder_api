@@ -28,7 +28,8 @@ class GroupController extends Controller
                 ->orderBy('type', 'moderator')
                 ->get();
 
-            dd($users);
+
+            return ['data' => $users];
 
             $group = Group::select('id', 'user_id')->where('id', $user->group_id)->first();
 
