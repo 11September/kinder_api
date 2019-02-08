@@ -188,9 +188,6 @@ class MessagesController extends Controller
                 ->first();
 
             if ($reciver && isset($reciver->player_id) && !empty($reciver->player_id) && $reciver->push_chat == "true") {
-
-                dd("push inside if");
-
                 $this->sendToOneSignal(Auth::user(), $reciver, $request->message);
             }
 
