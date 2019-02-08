@@ -17,7 +17,7 @@ class CheckSchoolGroupId
     public function handle($request, Closure $next)
     {
         if (auth()->check()) {
-            if (Auth::user()->type == 'moderator' && (!Auth::user()->school_id && !Auth::user()->group_id)) {
+            if (Auth::user()->type == 'moderator' && (Auth::user()->school_id) && (Auth::user()->group_id)) {
                 return $next($request);
             }
         }
