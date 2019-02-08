@@ -229,14 +229,9 @@ class ConversationController extends Controller
                 $users->prepend($group->admin);
             }
         } else {
-            $current_user_id = null;
-            if ($conversation->user1_id != Auth::user()->id) {
-                $current_user_id = $conversation->user1_id;
-            } else {
-                $current_user_id = $conversation->user2_id;
-            }
+            $receiver_id = ($conversation->user1_id == Auth::id()) ? $conversation->user2_id : $conversation->user1_id;
 
-            $user_for_group = User::where('id', $current_user_id)->first();
+            $user_for_group = User::where('id', $receiver_id)->first();
 
             $group = Group::where('id', $user_for_group->group_id)
                 ->with(array('admin' => function ($query) {
