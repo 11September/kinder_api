@@ -25,7 +25,7 @@ class GroupController extends Controller
                 ->where('group_id', '=', $user->group_id)
                 ->where('type', '!=', 'admin')
                 ->active()
-                ->orderBy('type', 'moderator')
+                ->orderBy('type', 'default')
                 ->get();
 
 
