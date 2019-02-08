@@ -22,18 +22,27 @@ class SchedulesController extends Controller
                 return response()->json(['message' => 'Розклад не знайдено!'], 404);
             }
 
-            $schedule = Schedule::where('school_id', $user->school_id)
+            $schedules = Schedule::where('school_id', $user->school_id)
                 ->where('group_id', $user->group_id)
                 ->with(array('lessons' => function ($query) {
                     $query->select('id', 'name', 'from', 'to', 'schedule_id');
                 }))
                 ->get();
 
-            if (!$schedule || count($schedule) < 1) {
-                return response()->json(['message' => 'Розклад не знайдено!'], 404);
-            }
+            if (!$schedules || count($schedules) < 1) {
+                return response()->json(['message' => 'В даний момент розклад відсутній!'], 404);
+            }else{
 
-            return ['data' => $schedule];
+                dd($schedules->lessons);
+
+                if ($schedules->lessons){
+                    foreach ($schedules->lessons as $lesson) {
+
+                    }
+                }
+
+                return ['data' => $schedules];
+            }
 
         } catch (\Exception $exception) {
             Log::warning('GroupController@index Exception: ' . $exception->getMessage());
