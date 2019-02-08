@@ -43,7 +43,7 @@ class MessagesController extends Controller
 
             $receiver_id = ($conversation->user1_id == $user->id) ? $conversation->user2_id : $conversation->user1_id;
 
-            $receiver = User::select('id', 'player_id', 'name', 'parent_name')
+            $receiver = User::select('id', 'player_id', 'name', 'parent_name', 'push_chat')
                 ->where('id', $receiver_id)
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
@@ -58,7 +58,7 @@ class MessagesController extends Controller
             $redis = Redis::connection();
             $redis->publish('message', json_encode($data));
 
-            if ($receiver && isset($receiver->player_id) && !empty($receiver->player_id)) {
+            if ($receiver && isset($receiver->player_id) && !empty($receiver->player_id) && $receiver->push_chat == "true") {
                 $this->sendToOneSignal($sender, $receiver, $request->message);
             }
 
@@ -179,14 +179,14 @@ class MessagesController extends Controller
             $message->save();
 
             $receiver_id = ($conversation->user1_id == Auth::user()->id) ? $conversation->user2_id : $conversation->user1_id;
-            $reciver = User::select('id', 'player_id', 'name', 'parent_name')
+            $reciver = User::select('id', 'player_id', 'name', 'parent_name', 'push_chat')
                 ->where('id', $receiver_id)
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
                 ->active()
                 ->first();
 
-            if ($reciver && isset($reciver->player_id) && !empty($reciver->player_id)) {
+            if ($reciver && isset($reciver->player_id) && !empty($reciver->player_id) && $reciver->push_chat == "true") {
                 $this->sendToOneSignal(Auth::user(), $reciver, $request->message);
             }
 
