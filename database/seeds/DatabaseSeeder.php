@@ -15,15 +15,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             UserSeeder::class,
-            SchoolSeeder::class,
-            GroupSeeder::class,
+//            SchoolSeeder::class,
+//            GroupSeeder::class,
 //            StudentSeeder::class,
-            PostSeeder::class,
+//            PostSeeder::class,
 //            ElectivesSeeder::class,
-            ScheduleSeeder::class,
-            ClassesSeeder::class,
-            NutritionSeeder::class,
-            FoodsSeeder::class,
+//            ScheduleSeeder::class,
+//            ClassesSeeder::class,
+//            NutritionSeeder::class,
+//            FoodsSeeder::class,
         ]);
     }
 }
