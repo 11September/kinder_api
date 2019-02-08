@@ -1177,6 +1177,10 @@ body.sidebar-toggled footer.sticky-footer {
     background-color: white;
     color: darkorange;
 }
+
+.badge.hide{
+    display: none;
+}
 /* chat end */
 
 
