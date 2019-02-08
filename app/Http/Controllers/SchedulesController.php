@@ -32,9 +32,6 @@ class SchedulesController extends Controller
             if (!$schedules || count($schedules) < 1) {
                 return response()->json(['message' => 'В даний момент розклад відсутній!'], 404);
             }else{
-
-                return ['data' => $schedules];
-
                 foreach ($schedules as $schedule) {
                     if (!$schedule->lessons){
                         $schedules->forget($schedule);
