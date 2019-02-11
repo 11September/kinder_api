@@ -105,8 +105,6 @@ class ConversationController extends Controller
 
         $conversations->load('user1', 'user2');
 
-        dd($conversations);
-
         foreach ($conversations as $conversation) {
 
             $counter_group = 0;
