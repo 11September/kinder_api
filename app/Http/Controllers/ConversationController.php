@@ -171,6 +171,8 @@ class ConversationController extends Controller
             $user->count = $count;
         }
 
+//        dd($user->count);
+
         return view('admin.conversations.adminShowGroupUsers', compact('list_schools', 'group', 'users'));
     }
 

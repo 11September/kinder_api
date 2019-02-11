@@ -63,11 +63,15 @@
                             @foreach($groups as $item)
                                 <li class="list-group-item">
                                     <div>
-                                        <a class="orange-text" href="{{ action('ConversationController@adminShowGroupUsers', $item->id) }}">{{ $item->name }}</a>
+                                        <a class="orange-text"
+                                           href="{{ action('ConversationController@adminShowGroupUsers', $item->id) }}">{{ $item->name }}</a>
                                     </div>
-                                    <div>
-                                        <small class="badge badge-primary badge-pill">{{ $item->counter }}</small>
-                                    </div>
+
+                                    @if($item->counter > 0)
+                                        <div>
+                                            <small class="badge badge-primary badge-pill">{{ $item->counter }}</small>
+                                        </div>
+                                    @endif
                                 </li>
                             @endforeach
                         </ul>
@@ -110,7 +114,7 @@
 
                                         $('#wrapper-list-groups').append(
                                             '<li class="list-group-item">' +
-                                            '<a class="orange-text" href="/admin/conversations/group/'+item.id+'">' + item.name + '</a>' +
+                                            '<a class="orange-text" href="/admin/conversations/group/' + item.id + '">' + item.name + '</a>' +
                                             '</li>'
                                         );
                                     });
