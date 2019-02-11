@@ -105,7 +105,7 @@ class ConversationController extends Controller
 
         $conversations->load('user1', 'user2');
 
-//        dd($conversations);
+        dd($conversations);
 
         foreach ($conversations as $conversation) {
 
