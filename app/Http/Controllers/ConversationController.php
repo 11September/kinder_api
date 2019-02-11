@@ -27,7 +27,7 @@ class ConversationController extends Controller
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
-            if ($request->user_id == $user->id){
+            if ($request->user_id == $user->id) {
                 return response()->json(['message' => 'Користувач не може звернутися до листування з собою!'], 409);
             }
 
@@ -112,13 +112,13 @@ class ConversationController extends Controller
             foreach ($groups as $group) {
 //                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id) {
 
-                    foreach ($conversation->messages as $message) {
-                        if ($message->user_id != $user->id && $message->status == "unread") {
-                            $counter_group++;
-                        }
+                foreach ($conversation->messages as $message) {
+                    if ($message->user_id !== $user->id && $message->status == "unread") {
+                        $counter_group++;
                     }
+                }
 
-                    $group->counter = $counter_group;
+                $group->counter = $counter_group;
 //                }
             }
         }
@@ -178,7 +178,7 @@ class ConversationController extends Controller
 
     public function checkConversation($id)
     {
-        if (Auth::id() == $id){
+        if (Auth::id() == $id) {
             return redirect()->back()->with('error', 'Користувач не може звернутися до листування з собою!');
         }
 
