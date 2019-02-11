@@ -105,10 +105,11 @@ class ConversationController extends Controller
 
         $conversations->load('user1', 'user2');
 
+
+        $counter_group = 0;
+
         foreach ($conversations as $conversation) {
             foreach ($groups as $group) {
-
-                $counter_group = 0;
 
                 if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id == $group->id) {
 
