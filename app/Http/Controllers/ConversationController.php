@@ -110,7 +110,7 @@ class ConversationController extends Controller
             $counter_group = 0;
 
             foreach ($groups as $group) {
-                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id) {
+//                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id) {
 
                     foreach ($conversation->messages as $message) {
                         if ($message->user_id != $user->id && $message->status == "unread") {
@@ -119,7 +119,7 @@ class ConversationController extends Controller
                     }
 
                     $group->counter = $counter_group;
-                }
+//                }
             }
         }
 
