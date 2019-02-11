@@ -241,7 +241,7 @@ class ConversationController extends Controller
                 }))
                 ->first();
 
-            $users = User::where('group_id', $group->id)->where('id', '!=', Auth::user()->id)->orderBy('type', 'moderator')->with('messages')->get();
+            $users = User::where('group_id', $group->id)->where('id', '!=', Auth::user()->id)->orderByRaw("FIELD(type , 'moderator', 'default') ASC")->with('messages')->get();
 
             if (isset($group->admin)) {
                 $users->prepend($group->admin);
