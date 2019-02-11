@@ -110,16 +110,16 @@ class ConversationController extends Controller
             $counter_group = 0;
 
             foreach ($groups as $group) {
-//                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id) {
+                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id) {
 
-                foreach ($conversation->messages as $message) {
-                    if ($message->user_id !== $user->id && $message->status == "unread") {
-                        $counter_group++;
+                    foreach ($conversation->messages as $message) {
+                        if ($message->user_id !== $user->id && $message->status == "unread") {
+                            $counter_group++;
+                        }
                     }
-                }
 
-                $group->counter = $counter_group;
-//                }
+                    $group->counter = $counter_group;
+                }
             }
         }
 
