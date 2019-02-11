@@ -112,10 +112,13 @@ class ConversationController extends Controller
             foreach ($groups as $group) {
                 if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id == $group->id) {
 
-                    print_r("if");
+                    print_r("<hr>");
+                    print_r("1 if");
 
                     foreach ($conversation->messages as $message) {
                         if ($message->user_id !== $user->id && $message->status == "unread") {
+                            print_r("<hr>");
+                            print_r("2 if");
                             $counter_group++;
                         }
                     }
