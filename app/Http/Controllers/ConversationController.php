@@ -105,28 +105,16 @@ class ConversationController extends Controller
 
         $conversations->load('user1', 'user2');
 
-
         $counter_group = 0;
-
         foreach ($conversations as $conversation) {
             foreach ($groups as $group) {
-
                 if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id == $group->id) {
-
-                    print_r("<hr>");
-                    print_r("1 if");
-                    print_r($counter_group);
-
                     foreach ($conversation->messages as $message) {
                         if ($message->user_id !== $user->id && $message->status == "unread") {
-                            print_r("<hr>");
-                            print_r("2 if");
                             $counter_group++;
-                            print_r($counter_group);
                         }
                     }
                 }
-
                 $group->counter = $counter_group;
             }
         }
