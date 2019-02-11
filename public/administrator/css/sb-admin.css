@@ -568,6 +568,14 @@ body.sidebar-toggled footer.sticky-footer {
     width: 100%;
 }
 
+.wrapper-users-for-chat .list-group-item{
+    padding: 7px 10px;
+}
+
+.wrapper-users-for-chat .list-group-item .mb-1{
+    margin: 0 !important;
+}
+
 .list-group-item a {
     color: darkorange;
 }
@@ -578,6 +586,10 @@ body.sidebar-toggled footer.sticky-footer {
 
 .list-group-item .form-group {
     margin: 0;
+}
+
+.list-group-item.active .user-type {
+    color: white;
 }
 
 .list-group-flex .list-group-item {

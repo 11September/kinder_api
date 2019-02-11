@@ -126,7 +126,19 @@
                                             @endif
 
                                         </div>
-                                        <p class="mb-1">{{ $user->parent_name }}</p>
+
+                                        @if($user->type == "moderator")
+                                            <p class="orange-text mb-1 user-type">Вихователь</p>
+                                        @endif
+
+                                        @if($user->type == "admin")
+                                            <p class="orange-text mb-1 user-type">Адмiнiстратор</p>
+                                        @endif
+
+                                        @if($user->type == "default")
+                                            <p class="mb-1 user-type">{{ @$user->parent_name }}</p>
+                                            <small>{{ @$user->parent_phone }}</small>
+                                        @endif
                                     </a>
 
                                 @endforeach

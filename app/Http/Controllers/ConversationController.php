@@ -134,7 +134,6 @@ class ConversationController extends Controller
         $group = Group::where('id', $id)
             ->with(array('students' => function ($query) {
                 $query->select('id', 'name', 'parent_name', 'parent_phone', 'group_id', 'type');
-                $query->orderBy('type', 'moderator');
                 $query->orderByRaw("FIELD(type , 'moderator', 'default') ASC");
                 $query->where('id', '!=', Auth::user()->id);
             }))

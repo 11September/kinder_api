@@ -111,7 +111,7 @@
                                         @endif
 
                                         @if($user->type == "admin")
-                                            <p class="orange-text mb-1">Адмiн</p>
+                                            <p class="orange-text mb-1">Адмiнiстратор</p>
                                         @endif
 
                                         @if($user->type == "default")
