@@ -106,10 +106,10 @@ class ConversationController extends Controller
         $conversations->load('user1', 'user2');
 
         foreach ($conversations as $conversation) {
-
-            $counter_group = 0;
-
             foreach ($groups as $group) {
+
+                $counter_group = 0;
+
                 if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id == $group->id) {
 
                     print_r("<hr>");
@@ -123,8 +123,10 @@ class ConversationController extends Controller
                         }
                     }
 
-                    $group->counter = $counter_group;
+
                 }
+
+                $group->counter = $counter_group;
             }
         }
 
