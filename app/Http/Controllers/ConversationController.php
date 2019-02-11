@@ -105,14 +105,14 @@ class ConversationController extends Controller
 
         $conversations->load('user1', 'user2');
 
-        dd($conversations);
+//        dd($conversations);
 
         foreach ($conversations as $conversation) {
 
             $counter_group = 0;
 
             foreach ($groups as $group) {
-                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id) {
+                if ($conversation->user1->group_id == $group->id || $conversation->user2->group_id == $group->id) {
 
                     foreach ($conversation->messages as $message) {
                         if ($message->user_id !== $user->id && $message->status == "unread") {
