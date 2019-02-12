@@ -265,7 +265,7 @@ class PostsController extends Controller
     {
         dd($request);
 
-        if (isset($request->all) && $request->all == "all") {
+        if (isset($request['all']) && $request['all'] == "all") {
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
@@ -277,8 +277,8 @@ class PostsController extends Controller
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
                 ->active()
-                ->where('school_id', $request->school_id)
-                ->whereIn('group_id', $request->group_id)
+                ->where('school_id', $request['school_id'])
+                ->whereIn('group_id', $request['group_id'])
                 ->get();
         }
 
@@ -290,10 +290,10 @@ class PostsController extends Controller
         if ($player_ids && !empty($player_ids)) {
             $params = [];
             $params['headings'] = [
-                "en" => $request->title
+                "en" => $request['title']
             ];
             $params['contents'] = [
-                "en" => str_limit($request->body, 20)
+                "en" => str_limit($request['body'], 20)
             ];
             $params['include_player_ids'] = $player_ids;
             \OneSignal::sendNotificationCustom($params);
