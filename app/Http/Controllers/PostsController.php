@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Post;
+use OneSignal;
 use App\Group;
 use App\School;
 use Illuminate\Http\Request;
@@ -18,7 +19,7 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class PostsController extends Controller
 {
-    public $sourse =  "http://8.dev-kit.ru";
+    public $sourse = "http://8.dev-kit.ru";
 
     public function index(Request $request, $school_id)
     {
@@ -47,7 +48,7 @@ class PostsController extends Controller
                 }
 
                 if ($item['image']) {
-                    foreach(json_decode($item['image']) as $image){
+                    foreach (json_decode($item['image']) as $image) {
                         $data[] = Config::get('app.url') . $image;
                     }
                 }
@@ -72,26 +73,26 @@ class PostsController extends Controller
         try {
             $post = Post::where('id', $id)->select('id', 'title', 'body', 'image', 'preview')->first();
 
-            if (!$post){
+            if (!$post) {
                 return response()->json(['message' => 'Новина не знайдена'], 400);
             }
 
             if ($post['image']) {
-                foreach(json_decode($post['image']) as $image){
+                foreach (json_decode($post['image']) as $image) {
                     $data[] = Config::get('app.url') . $image;
                 }
             }
 
             $post['image'] = $data;
 
-            if (isset($post->preview) || !empty($post->preview)){
+            if (isset($post->preview) || !empty($post->preview)) {
                 $post->preview = Config::get('app.url') . $post->preview;
             }
 
             return [$post];
 
         } catch (\Exception $exception) {
-            Log::warning('PostsController@show Exception: '. $exception->getMessage());
+            Log::warning('PostsController@show Exception: ' . $exception->getMessage());
             return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
         }
     }
@@ -106,16 +107,16 @@ class PostsController extends Controller
             $query->where('school_id', '=', $request->id);
         })->get();
 
-        return response()->json(['data'=> $groups, 'success'=>true]);
+        return response()->json(['data' => $groups, 'success' => true]);
     }
 
     public function adminIndex()
     {
-        $posts = Post::with(array('school'=>function($query){
-            $query->select('id','name');
+        $posts = Post::with(array('school' => function ($query) {
+            $query->select('id', 'name');
         }))->latest()->get();
 
-        return view('admin.posts',compact('posts'));
+        return view('admin.posts', compact('posts'));
     }
 
     public function adminCreate()
@@ -126,7 +127,7 @@ class PostsController extends Controller
             $query->where('school_id', '=', $schools->first()->id);
         })->get();
 
-        return view('admin.posts.create',compact('schools', 'groups'));
+        return view('admin.posts.create', compact('schools', 'groups'));
     }
 
     public function adminStore(StorePost $request)
@@ -137,10 +138,8 @@ class PostsController extends Controller
         $post->until = $request->until;
         $post->school_id = $request->school_id;
 
-        if(isset($request->image) && $request->hasfile('image'))
-        {
-            foreach($request->file('image') as $image)
-            {
+        if (isset($request->image) && $request->hasfile('image')) {
+            foreach ($request->file('image') as $image) {
                 $name = '/images/uploads/posts/' . time() . "-" . uniqid() . "." . $image->getClientOriginalName();
                 $image->move(public_path('/images/uploads/posts'), $name);
                 $data[] = $name;
@@ -158,7 +157,9 @@ class PostsController extends Controller
 
         $post->groups()->sync($request->group_id, false);
 
-        return redirect()->route('admin.posts')->with('message','Новина успішно додана!');
+        $this->notifyNewPost($request->all());
+
+        return redirect()->route('admin.posts')->with('message', 'Новина успішно додана! Повідомлення користувачам про створення новини відправлено!');
     }
 
     public function adminEdit($id)
@@ -169,24 +170,24 @@ class PostsController extends Controller
 
         $groups = Group::all();
 
-        return view('admin.posts.edit',compact('schools','post', 'groups'));
+        return view('admin.posts.edit', compact('schools', 'post', 'groups'));
     }
 
     public function adminUpdate(UpdatePost $request, $id)
     {
         $post = Post::where('id', $id)->first();
 
-        if (isset($request->old_image) && !empty($request->old_image)){
+        if (isset($request->old_image) && !empty($request->old_image)) {
             $post->image = $request->old_image;
-        }else{
+        } else {
             $this->deletePreviousEncodeImages($post->image);
             $images = $this->storeNewEncodeImages($request->image);
             $post->image = json_encode($images);
         }
 
-        if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(public_path() . $request->old_preview)){
+        if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(public_path() . $request->old_preview)) {
             $post->preview = $request->old_preview;
-        }else{
+        } else {
             $this->deletePreviousPreviewImage($post->preview);
             $newPreview = $this->storeNewPreviewImage($request->preview);
             $post->preview = $newPreview;
@@ -200,14 +201,14 @@ class PostsController extends Controller
 
         $post->groups()->sync($request->group_id, true);
 
-        return redirect()->route('admin.posts')->with('message','Новина успішно оновлена!');
+        return redirect()->route('admin.posts')->with('message', 'Новина успішно оновлена!');
     }
 
     public function adminDelete($id)
     {
         $post = Post::find($id);
 
-        if ($post->image && !is_null($post->image)){
+        if ($post->image && !is_null($post->image)) {
             $this->deletePreviousEncodeImages($post->image);
         }
 
@@ -215,14 +216,14 @@ class PostsController extends Controller
         $post->groups()->detach();
         $post->delete();
 
-        return redirect()->route('admin.posts')->with('message','Новина успішно видалена!');
+        return redirect()->route('admin.posts')->with('message', 'Новина успішно видалена!');
     }
 
     public function deletePreviousEncodeImages($data)
     {
-        foreach(json_decode($data) as $image){
+        foreach (json_decode($data) as $image) {
             $old_image = public_path() . $image;
-            if(file_exists($old_image)) {
+            if (file_exists($old_image)) {
                 unlink($old_image);
             }
         }
@@ -232,8 +233,7 @@ class PostsController extends Controller
 
     public function storeNewEncodeImages($data)
     {
-        foreach($data as $image)
-        {
+        foreach ($data as $image) {
             $name = '/images/uploads/posts/' . time() . "-" . uniqid() . "." . $image->getClientOriginalName();
             $image->move(public_path('/images/uploads/posts'), $name);
             $newImages[] = $name;
@@ -245,7 +245,7 @@ class PostsController extends Controller
     public function deletePreviousPreviewImage($data)
     {
         $preview = public_path() . $data;
-        if(file_exists($preview)) {
+        if (file_exists($preview)) {
             unlink($preview);
         }
 
@@ -258,5 +258,42 @@ class PostsController extends Controller
         $preview->move(public_path('/images/uploads/posts'), $image);
 
         return '/images/uploads/posts/' . $image;
+    }
+
+    public function notifyNewPost($request)
+    {
+        if ($request->all && $request->all == "all") {
+            $users = User::select('id', 'player_id')
+                ->where('player_id', '!=', null)
+                ->where('push', 'enabled')
+                ->active()
+                ->get();
+
+        } else {
+            $users = User::select('id', 'player_id')
+                ->where('player_id', '!=', null)
+                ->where('push', 'enabled')
+                ->active()
+                ->where('school_id', $request->school_id)
+                ->whereIn('group_id', $request->group_id)
+                ->get();
+        }
+
+        $player_ids = array();
+        foreach ($users as $user) {
+            $player_ids[] = $user->player_id;
+        }
+
+        if ($player_ids && !empty($player_ids)) {
+            $params = [];
+            $params['headings'] = [
+                "en" => $request->title
+            ];
+            $params['contents'] = [
+                "en" => str_limit($request->body, 20)
+            ];
+            $params['include_player_ids'] = $player_ids;
+            \OneSignal::sendNotificationCustom($params);
+        }
     }
 }

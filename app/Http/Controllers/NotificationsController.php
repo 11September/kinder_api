@@ -29,23 +29,6 @@ class NotificationsController extends Controller
                 ->where('push', 'enabled')
                 ->active()
                 ->get();
-
-            $player_ids = array();
-            foreach ($users as $user) {
-                $player_ids[] = $user->player_id;
-            }
-
-            if ($player_ids && !empty($player_ids)) {
-                $params = [];
-                $params['headings'] = [
-                    "en" => $request->title
-                ];
-                $params['contents'] = [
-                    "en" => $request->message
-                ];
-                $params['include_player_ids'] = $player_ids;
-                \OneSignal::sendNotificationCustom($params);
-            }
         } else {
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
@@ -54,23 +37,23 @@ class NotificationsController extends Controller
                 ->whereIn('school_id', $request->school_id)
                 ->whereIn('group_id', $request->group_id)
                 ->get();
+        }
 
-            $player_ids = array();
-            foreach ($users as $user) {
-                $player_ids[] = $user->player_id;
-            }
+        $player_ids = array();
+        foreach ($users as $user) {
+            $player_ids[] = $user->player_id;
+        }
 
-            if ($player_ids && !empty($player_ids)) {
-                $params = [];
-                $params['headings'] = [
-                    "en" => $request->title
-                ];
-                $params['contents'] = [
-                    "en" => $request->message
-                ];
-                $params['include_player_ids'] = $player_ids;
-                \OneSignal::sendNotificationCustom($params);
-            }
+        if ($player_ids && !empty($player_ids)) {
+            $params = [];
+            $params['headings'] = [
+                "en" => $request->title
+            ];
+            $params['contents'] = [
+                "en" => $request->message
+            ];
+            $params['include_player_ids'] = $player_ids;
+            \OneSignal::sendNotificationCustom($params);
         }
 
         return redirect()->route('admin.notifications')->with('message', 'Повiдомлення успішно відправлено!');
@@ -111,11 +94,11 @@ class NotificationsController extends Controller
                 \OneSignal::sendNotificationCustom($params);
             }
 
-            return response()->json(['success'=>true]);
+            return response()->json(['success' => true]);
 
         } catch (\Exception $exception) {
             Log::warning('NotificationsController@notifyScheduleByGroup Exception: ' . $exception->getMessage());
-            return response()->json(['error'=> true]);
+            return response()->json(['error' => true]);
         }
     }
 
@@ -154,11 +137,11 @@ class NotificationsController extends Controller
                 \OneSignal::sendNotificationCustom($params);
             }
 
-            return response()->json(['success'=>true]);
+            return response()->json(['success' => true]);
 
         } catch (\Exception $exception) {
             Log::warning('NotificationsController@notifyFoodsBySchool Exception: ' . $exception->getMessage());
-            return response()->json(['error'=> true]);
+            return response()->json(['error' => true]);
         }
     }
 }
