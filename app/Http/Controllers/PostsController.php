@@ -137,7 +137,7 @@ class PostsController extends Controller
         $post->until = $request->until;
         $post->school_id = $request->school_id;
 
-        if($request->hasfile('image'))
+        if(isset($request->image) && $request->hasfile('image'))
         {
             foreach($request->file('image') as $image)
             {
@@ -152,7 +152,7 @@ class PostsController extends Controller
         $preview->move(public_path('/images/uploads/posts'), $input['preview']);
 
         $post->preview = '/images/uploads/posts/' . $input['preview'];
-        $post->image = json_encode($data);
+        $post->image = (isset($data)) ? json_encode($data) : null;
 
         $post->save();
 
@@ -207,7 +207,10 @@ class PostsController extends Controller
     {
         $post = Post::find($id);
 
-        $this->deletePreviousEncodeImages($post->image);
+        if ($post->image && !is_null($post->image)){
+            $this->deletePreviousEncodeImages($post->image);
+        }
+
         $this->deletePreviousPreviewImage($post->preview);
         $post->groups()->detach();
         $post->delete();

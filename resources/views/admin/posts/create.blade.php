@@ -97,7 +97,7 @@
 
                                         <div class="form-group col-md-6">
                                             <h5>Завантажити зображення</h5>
-                                            <input required name="image[]" type='file' onchange="readURL2(this);" multiple/>
+                                            <input name="image[]" type='file' onchange="readURL2(this);" multiple/>
 
                                             @if ($errors->has('preview'))
                                                 <span class="invalid-feedback" role="alert">
