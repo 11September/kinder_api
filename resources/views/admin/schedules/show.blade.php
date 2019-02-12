@@ -42,9 +42,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
-
-
+                    <div class="col-xl-3 col-lg-4 col-md-4">
                         <h3>Cписок cадкiв</h3>
 
                         <div class="form-group">
@@ -58,7 +56,6 @@
 
                             </select>
                         </div>
-
 
                         <h3>Cписок груп</h3>
 
@@ -84,9 +81,9 @@
                         </ul>
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-xl-9 col-lg-8 col-md-8">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-xl-4 col-lg-4 col-md-12">
                                 <h4>Вибрати день тижня</h4>
 
                                 <div class="all-days-checkboxes">
@@ -187,7 +184,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-xl-8 col-lg-8 col-md-12">
 
                                 <div class="wrapper-schedule row">
 
@@ -448,7 +445,7 @@
                                             '<form method="post" class="newLessonForm">' +
                                             '<div class="row append-day-item append-day-item-border">\n' +
                                             '    <div class="col-md-9 padb-20">\n' +
-                                            '         <input required type="text" name="name" class="form-control" placeholder="" value="' + item.name + '">\n' +
+                                            '         <input required tabindex="1" type="text" name="name" class="form-control" placeholder="" value="' + item.name + '">\n' +
                                             '         <input type="text" hidden name="schedule_id" class="form-control" placeholder="" value="' + item.schedule_id + '">\n' +
                                             '         <input type="text" hidden name="lesson_id" class="form-control" placeholder="" value="' + item.id + '">\n' +
                                             '    </div>\n' +
@@ -456,18 +453,18 @@
                                             '         <input type="text" hidden name="day" value="' + global_day + '">' +
                                             '         <input type="text" hidden name="school_id" value="' + global_school_id + '">' +
                                             '         <input type="text" hidden name="group_id" value="' + global_group_id + '">' +
-                                            '         <button class="newLessonFormButton" type="submit">' +
+                                            '         <button tabindex="4" class="newLessonFormButton" type="submit">' +
                                             '              <i class="far fa-save"></i>' +
                                             '         </button>' +
                                             '         <a class="delete-lesson" data-id="' + item.id + '" href="#"><i class="fas fa-trash-alt"></i></a>' +
                                             '    </div>' +
                                             '    <div class="col-md-6">\n' +
                                             '    <span>Время с</span>' +
-                                            '        <input type="time" name="from" class="form-control" placeholder="" value="' + item.from + '">\n' +
+                                            '        <input tabindex="2" type="time" name="from" class="form-control" placeholder="" value="' + item.from + '">\n' +
                                             '    </div>\n' +
                                             '    <div class="col-md-6">\n' +
                                             '    <span>Время до</span>' +
-                                            '        <input type="time" name="to" class="form-control" placeholder="" value="' + item.to + '">\n' +
+                                            '        <input tabindex="3" type="time" name="to" class="form-control" placeholder="" value="' + item.to + '">\n' +
                                             '    </div>\n' +
                                             '</div>' +
                                             '</form>'

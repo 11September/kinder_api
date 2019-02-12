@@ -40,7 +40,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-xl-3 col-lg-4 col-md-4">
                         <h3>Cписок cадкiв</h3>
 
                         <div class="form-group">
@@ -67,7 +67,7 @@
 
                     </div>
 
-                    <div class="col-md-10">
+                    <div class="col-xl-9 col-lg-8 col-md-8">
                         <div class="row">
 
                         </div>

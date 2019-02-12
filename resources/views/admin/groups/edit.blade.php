@@ -51,8 +51,8 @@
             </div>
 
             <div class="card-body">
-                <div class="row">
-                    <div class="col-md-4">
+                <div class="row groups-page-reverse">
+                    <div class="col-xl-4 col-lg-6 col-md-6">
                         <h3>Список груп</h3>
 
                         <ul class="list-group list-group-flex">
@@ -90,7 +90,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-md-8">
+                    <div class="col-xl-8 col-lg-6 col-md-6">
                         <h3 style="text-align: center">Оновити групу</h3>
 
                         <form action="{{ action('GroupController@adminUpdate', $group->id) }}" method="post">
@@ -98,8 +98,7 @@
                             {{ method_field('PUT') }}
 
                             <div class="row">
-                                <div class="col-md-2"></div>
-                                <div class="col-md-4">
+                                <div class="col-xl-6 col-lg-12 col-md-12 ">
                                     <div class="form-group">
                                         <label for="school_id">Садок</label>
 
@@ -123,7 +122,7 @@
 
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-6 col-lg-12 col-md-12">
                                     <div class="form-group">
                                         <label for="name">Назва групи</label>
                                         <input required type="text" value="{{ $group->name }}" name="name" id="name"

@@ -1202,3 +1202,27 @@ body.sidebar-toggled footer.sticky-footer {
         padding: 0 0 10px 0;
     }
 }
+
+@media all and (max-width: 1200px) {
+    .wrapper-schedule .schedule-item-day{
+        left: 0;
+        font-size: 28px;
+    }
+}
+
+@media all and (max-width: 992px) {
+    .wrapper-schedule{
+        margin-top: 30px;
+    }
+}
+
+@media all and (max-width: 768px) {
+    .groups-page-reverse {
+        flex-direction: column-reverse;
+    }
+
+    .groups-page-reverse h3{
+        text-align: center;
+        margin-top: 50px;
+    }
+}

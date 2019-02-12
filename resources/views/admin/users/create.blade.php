@@ -207,7 +207,7 @@
                                     <div class="form-group">
                                         <div class="form-row">
 
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-xl-6 col-lg-12 col-md-12">
                                                 <label>Статус</label>
 
                                                 <div class="form-check">
@@ -233,7 +233,7 @@
                                                 @endif
                                             </div>
 
-                                            <div class="form-group col-md-6">
+                                            <div class="form-group col-xl-6 col-lg-12 col-md-12">
                                                 <label>Батько / Мати</label>
 
                                                 <div class="form-check">

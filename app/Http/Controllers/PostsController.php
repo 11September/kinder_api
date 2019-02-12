@@ -157,8 +157,7 @@ class PostsController extends Controller
 
         $post->groups()->sync($request->group_id, false);
 
-        $data = $request->all();
-        $this->notifyNewPost($data);
+        $this->notifyNewPost($request->all());
 
         return redirect()->route('admin.posts')->with('message', 'Новина успішно додана! Повідомлення користувачам про створення новини відправлено!');
     }
@@ -261,7 +260,7 @@ class PostsController extends Controller
         return '/images/uploads/posts/' . $image;
     }
 
-    public function notifyNewPost(Request $request)
+    public function notifyNewPost($request)
     {
         if (isset($request->all) && $request->all == "all") {
             $users = User::select('id', 'player_id')
