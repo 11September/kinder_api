@@ -157,7 +157,8 @@ class PostsController extends Controller
 
         $post->groups()->sync($request->group_id, false);
 
-        $this->notifyNewPost($request->all());
+        $data = $request->all();
+        $this->notifyNewPost($data);
 
         return redirect()->route('admin.posts')->with('message', 'Новина успішно додана! Повідомлення користувачам про створення новини відправлено!');
     }
