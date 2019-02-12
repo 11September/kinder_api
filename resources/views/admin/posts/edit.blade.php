@@ -54,8 +54,7 @@
 
                                         <div class="form-group col-md-4">
                                             <label for="until">Дата До</label>
-                                            <input required name="until" value="{{ $post->until }}" type="date"
-                                                   max="2100-01-01" id="until"
+                                            <input required name="until" value="{{ $post->until }}" type="date" id="until"
                                                    class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
                                                    placeholder="Дата До">
 
@@ -215,6 +214,21 @@
 
 @section('scripts')
     <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("until").setAttribute("min", today);
+
+
         $(document).ready(function () {
             $(".all-schools[type='checkbox']").change(function () {
                 if ($(this).prop("checked")) {

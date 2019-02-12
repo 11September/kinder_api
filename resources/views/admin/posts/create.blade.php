@@ -192,6 +192,20 @@
 
 @section('scripts')
     <script>
+        var today = new Date();
+        var dd = today.getDate();
+        var mm = today.getMonth()+1; //January is 0!
+        var yyyy = today.getFullYear();
+        if(dd<10){
+            dd='0'+dd
+        }
+        if(mm<10){
+            mm='0'+mm
+        }
+
+        today = yyyy+'-'+mm+'-'+dd;
+        document.getElementById("until").setAttribute("min", today);
+
         $(document).ready(function () {
             $(".all-schools[type='checkbox']").change(function () {
                 if ($(this).prop("checked")) {
@@ -200,7 +214,6 @@
                     $("input[name='group_id[]']").prop('checked', false);
                 }
             });
-
 
             $('input[type=radio][name=school_id]').change(function() {
                 var school_id = $(this).val();
