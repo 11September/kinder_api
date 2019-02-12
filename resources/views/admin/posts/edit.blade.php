@@ -30,16 +30,16 @@
 
                         @include('admin.partials.errors')
 
-                        <form action="{{ action('PostsController@adminUpdate', $post->id) }}"
+                        <form class="post-form" action="{{ action('PostsController@adminUpdate', $post->id) }}"
                               enctype="multipart/form-data" method="post">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
 
-                            <div class="row">
-                                <div class="col-md-6">
+                            <div class="row posts-wrapper-flex">
+                                <div class="col-xl-7 col-md-6">
                                     <div class="form-row">
 
-                                        <div class="form-group col-md-8">
+                                        <div class="form-group col-xl-8 col-lg-7 col-md-12 col-sm-12">
                                             <label for="title">Назва</label>
                                             <input required name="title" value="{{ $post->title }}" type="text" id="title"
                                                    class="form-control {{ $errors->has('title') ? ' is-invalid' : '' }}"
@@ -52,7 +52,7 @@
                                             @endif
                                         </div>
 
-                                        <div class="form-group col-md-4">
+                                        <div class="form-group col-xl-4 col-lg-5 col-md-12 col-sm-12">
                                             <label for="until">Дата До</label>
                                             <input required name="until" value="{{ $post->until }}" type="date" id="until"
                                                    class="form-control {{ $errors->has('until') ? ' is-invalid' : '' }}"
@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-xl-5 col-md-6">
                                     <div class="form-row">
                                         <div class="form-group col-md-6">
                                             <label>Садок</label>

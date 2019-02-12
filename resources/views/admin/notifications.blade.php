@@ -46,7 +46,7 @@
                     {{ csrf_field() }}
 
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <h3>Список садкiв</h3>
 
                             <div class="wrapper-all-schools-and-check-all">
@@ -92,7 +92,7 @@
 
                         </div>
 
-                        <div class="col-md-4">
+                        <div class="col-lg-4 col-md-6">
                             <h3>Список Груп</h3>
 
                             <ul class="list-group list-group-flex">
@@ -108,32 +108,37 @@
                             </ul>
                         </div>
 
-                        <div class="col-md-4">
-                            <h3>Текст повiдомлення</h3>
+                        <div class="col-lg-4 col-md-12">
+                            <div class="notification-content">
+                                <h3>Текст повiдомлення</h3>
 
-                            <div class="form-group">
-                                <input value="{{ old('title') }}" type="text" class="form-control" name="title" placeholder="Заголовок" required>
+                                <div class="form-group">
+                                    <input value="{{ old('title') }}" type="text" class="form-control" name="title"
+                                           placeholder="Заголовок" required>
 
-                                @if ($errors->has('title'))
-                                    <span class="invalid-feedback" role="alert">
+                                    @if ($errors->has('title'))
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('title') }}</strong>
                                     </span>
-                                @endif
-                            </div>
+                                    @endif
+                                </div>
 
-                            <div class="form-group">
+                                <div class="form-group">
                                 <textarea name="message" class="form-control" rows="5" required
                                           placeholder="Текст повiдомлення">{{ old('message') }}</textarea>
 
-                                @if ($errors->has('message'))
-                                    <span class="invalid-feedback" role="alert">
+                                    @if ($errors->has('message'))
+                                        <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('message') }}</strong>
                                     </span>
-                                @endif
+                                    @endif
+                                </div>
                             </div>
 
                             <button type="submit" class="btn btn-primary mb-2">Створити</button>
                         </div>
+
+
                     </div>
                 </form>
             </div>
@@ -148,7 +153,7 @@
             $(".all-schools[type='checkbox']").change(function () {
                 if ($(this).prop("checked")) {
                     $("input[type='checkbox']").prop('checked', true);
-                }else{
+                } else {
                     $("input[type='checkbox']").prop('checked', false);
                 }
             });

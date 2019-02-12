@@ -35,39 +35,45 @@
 
                     @include('admin.partials.errors')
 
+                    <div class="col-md-6">
+                        <i class="fas fa-table"></i>
+                        Розклад харчування
+                    </div>
+
                 </div>
             </div>
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
-                        <h3>Cписок cадкiв</h3>
+                    <div class="col-xl-3 col-lg-4 col-md-4">
+                        <div class="wrapper-schedules-school-group">
+                            <h3>Cписок cадкiв</h3>
+                            <ul class="list-group list-group-flex">
 
-                        <ul class="list-group list-group-flex">
+                                @foreach($list_schools as $school)
+                                    <li class="list-group-item @if($school->id == $current_school->id) active @endif">
+                                        <div>
+                                            <a class="orange-text"
+                                               href="{{ action('NutritionsController@adminShow', $school->id) }}">
+                                                {{ $school->name }}
+                                            </a>
+                                        </div>
 
-                            @foreach($list_schools as $school)
-                                <li class="list-group-item @if($school->id == $current_school->id) active @endif">
-                                    <div>
-                                        <a class="orange-text"
-                                           href="{{ action('NutritionsController@adminShow', $school->id) }}">
-                                            {{ $school->name }}
-                                        </a>
-                                    </div>
+                                        <div class="list-group-flex-wrapper-notification">
+                                            <a class="notification-school" data-id="{{ $school->id }}" href="#">
+                                                <p class="list-group-flex-notification"><i class="fas fa-bell"></i></p>
+                                            </a>
+                                        </div>
+                                    </li>
+                                @endforeach
 
-                                    <div class="list-group-flex-wrapper-notification">
-                                        <a class="notification-school" data-id="{{ $school->id }}" href="#">
-                                            <p class="list-group-flex-notification"><i class="fas fa-bell"></i></p>
-                                        </a>
-                                    </div>
-                                </li>
-                            @endforeach
-
-                        </ul>
+                            </ul>
+                        </div>
                     </div>
 
-                    <div class="col-md-9">
+                    <div class="col-xl-9 col-lg-8 col-md-8">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-xl-4 col-lg-4 col-md-12">
                                 <h4>Вибрати день тижня</h4>
 
                                 <div class="all-days-checkboxes">
@@ -152,7 +158,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-8">
+                            <div class="col-xl-8 col-lg-8 col-md-12">
 
                                 <div class="wrapper-schedule row">
 
@@ -319,28 +325,28 @@
                                     var itemsBreakfast = "";
                                     $.each(item.foods, function (i, food) {
                                         if (food.type == "breakfast") {
-                                            itemsBreakfast += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                            itemsBreakfast += "<p class='schedule-list-day-name'>" + food.name + "</p>";
                                         }
                                     });
 
                                     var itemsLunch = "";
                                     $.each(item.foods, function (i, food) {
                                         if (food.type == "lunch") {
-                                            itemsLunch += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                            itemsLunch += "<p class='schedule-list-day-name'>" + food.name + "</p>";
                                         }
                                     });
 
                                     var itemsAfternoonTea = "";
                                     $.each(item.foods, function (i, food) {
                                         if (food.type == "afternoon-tea") {
-                                            itemsAfternoonTea += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                            itemsAfternoonTea += "<p class='schedule-list-day-name'>" + food.name + "</p>";
                                         }
                                     });
 
                                     var itemsDinner = "";
                                     $.each(item.foods, function (i, food) {
                                         if (food.type == "dinner") {
-                                            itemsDinner += "<p class='schedule-list-day-name'>"+food.name+"</p>";
+                                            itemsDinner += "<p class='schedule-list-day-name'>" + food.name + "</p>";
                                         }
                                     });
 
@@ -672,14 +678,14 @@
                 var notification_school_id = $(this).attr("data-id");
                 clicked.prop('disabled', true);
 
-                toastr.warning("<br/><div class='wrapper-confirmationRevertYes'><button type='button' class='btn clear confirmationRevertYes'>Отправить</button></div>",'Дійсно відправити користувачам повідомлення зі зміною розкладу?',
+                toastr.warning("<br/><div class='wrapper-confirmationRevertYes'><button type='button' class='btn clear confirmationRevertYes'>Отправить</button></div>", 'Дійсно відправити користувачам повідомлення зі зміною розкладу?',
                     {
                         closeButton: true,
-                        timeOut : 3000,
-                        extendedTimeOut : 6000,
+                        timeOut: 3000,
+                        extendedTimeOut: 6000,
                         allowHtml: true,
                         onShown: function (toast) {
-                            $(".confirmationRevertYes").click(function(){
+                            $(".confirmationRevertYes").click(function () {
                                 $.ajax({
                                     headers: {
                                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

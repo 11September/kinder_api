@@ -37,48 +37,52 @@
 
                     @include('admin.partials.errors')
 
+                    <div class="col-md-6">
+                        <i class="fas fa-table"></i>
+                        Редагування розкладу
+                    </div>
+
                 </div>
             </div>
 
             <div class="card-body">
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 col-md-4">
-                        <h3>Cписок cадкiв</h3>
+                        <div class="wrapper-schedules-school-group">
+                            <h3>Cписок cадкiв</h3>
+                            <div class="form-group">
+                                <select required name="school_id"
+                                        class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}">
 
-                        <div class="form-group">
-                            <select required name="school_id"
-                                    class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}">
+                                    @foreach($list_schools as $school)
+                                        <option class="choose_school_option" value="{{ $school->id }}"
+                                                @if($school->id == $current_school->id) selected @endif>{{ $school->name }}</option>
+                                    @endforeach
 
-                                @foreach($list_schools as $school)
-                                    <option class="choose_school_option" value="{{ $school->id }}"
-                                            @if($school->id == $current_school->id) selected @endif>{{ $school->name }}</option>
+                                </select>
+                            </div>
+                            <h3>Cписок груп</h3>
+                            <ul class="list-group list-group-flex" id="wrapper-list-groups">
+
+                                @foreach($groups as $group)
+                                    <li class="list-group-item @if($group->id == $current_group->id) active @endif">
+                                        <div>
+                                            <a class="orange-text"
+                                               href="{{ action('SchedulesController@adminShow', $group->id) }}">
+                                                {{ $group->name }}
+                                            </a>
+                                        </div>
+
+                                        <div class="list-group-flex-wrapper-notification">
+                                            <a class="notification-school" data-id="{{ $group->id }}" href="#">
+                                                <p class="list-group-flex-notification"><i class="fas fa-bell"></i></p>
+                                            </a>
+                                        </div>
+                                    </li>
                                 @endforeach
 
-                            </select>
+                            </ul>
                         </div>
-
-                        <h3>Cписок груп</h3>
-
-                        <ul class="list-group list-group-flex" id="wrapper-list-groups">
-
-                            @foreach($groups as $group)
-                                <li class="list-group-item @if($group->id == $current_group->id) active @endif">
-                                    <div>
-                                        <a class="orange-text"
-                                           href="{{ action('SchedulesController@adminShow', $group->id) }}">
-                                            {{ $group->name }}
-                                        </a>
-                                    </div>
-
-                                    <div class="list-group-flex-wrapper-notification">
-                                        <a class="notification-school" data-id="{{ $group->id }}" href="#">
-                                            <p class="list-group-flex-notification"><i class="fas fa-bell"></i></p>
-                                        </a>
-                                    </div>
-                                </li>
-                            @endforeach
-
-                        </ul>
                     </div>
 
                     <div class="col-xl-9 col-lg-8 col-md-8">

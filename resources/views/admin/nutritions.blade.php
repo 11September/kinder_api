@@ -42,7 +42,7 @@
 
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-xl-3 col-lg-3 col-md-3">
                         <h3>Cписок cадкiв</h3>
 
                         <ul class="list-group list-group-flex">
@@ -61,7 +61,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-md-10">
+                    <div class="col-xl-9 col-lg-9 col-md-9">
                         <div class="row">
 
                             @foreach($schedules as $schools)

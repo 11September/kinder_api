@@ -27,7 +27,7 @@
 
             @include('admin.partials.errors')
 
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
 
                 <h3>Список садкiв</h3>
 
@@ -61,12 +61,12 @@
                 </ul>
             </div>
 
-            <div class="col-md-8">
+            <div class="col-lg-8 col-md-6">
                 <form action="{{ action('SchoolController@adminStore') }}" method="post">
                     {{ csrf_field() }}
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-md-12">
                             <h3>Створення садка</h3>
 
                             <div class="form-group">
@@ -74,12 +74,9 @@
                                 <input type="text" name="name" class="form-control" required
                                        value="{{ old('name') }}" placeholder="Назва садка">
                             </div>
-
-                            <button type="submit" class="btn btn-primary mb-2">Створити</button>
-
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>Групи</label>
 
@@ -118,6 +115,8 @@
                                 @endif
 
                             </div>
+
+                            <button type="submit" class="btn btn-primary mb-2">Створити</button>
                         </div>
                     </div>
                 </form>

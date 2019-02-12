@@ -31,7 +31,7 @@
 
             @include('admin.partials.errors')
 
-            <div class="col-md-4">
+            <div class="col-lg-4 col-md-6">
                 <h3>Список садкiв</h3>
                 <ul class="list-group list-group-flex">
 
@@ -64,7 +64,7 @@
             </div>
 
 
-            <div class="col-md-8">
+            <div class="col-lg-8 col-md-6">
 
                 <form action="{{ action('SchoolController@adminUpdate', $school->id) }}" method="post">
                     {{ csrf_field() }}
@@ -72,7 +72,7 @@
 
 
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-md-12">
                             <h3>Редагування садка</h3>
 
 
@@ -84,7 +84,7 @@
                             </div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-lg-6 col-md-12">
                             <div class="form-group">
                                 <label>Групи</label>
 
@@ -128,9 +128,7 @@
                                 @endif
 
                             </div>
-                        </div>
 
-                        <div class="col-md-12">
                             <button type="submit" class="btn btn-primary mb-2">Оновити</button>
                         </div>
                     </div>
