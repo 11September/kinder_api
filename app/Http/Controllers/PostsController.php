@@ -263,9 +263,6 @@ class PostsController extends Controller
 
     public function notifyNewPost($data)
     {
-        dd($data);
-
-
         if (isset($data->all) && $data->all == "all") {
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
