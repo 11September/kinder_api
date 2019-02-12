@@ -78,7 +78,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <label for="parent_name">ПІБ Батька</label>
+                                        <label for="parent_name">ПІБ Батька/Матері</label>
                                         <input required name="parent_name" value="{{ old('parent_name') }}" type="text" id="parent_name"
                                                class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}"
                                                placeholder="ПІБ Батька">
