@@ -262,7 +262,7 @@ class PostsController extends Controller
 
     public function notifyNewPost($request)
     {
-        if ($request->all && $request->all == "all") {
+        if (isset($request->all) && $request->all == "all") {
             $users = User::select('id', 'player_id')
                 ->where('player_id', '!=', null)
                 ->where('push', 'enabled')
