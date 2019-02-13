@@ -57,12 +57,10 @@ class StudentsController extends Controller
     {
         $schools = School::all();
 
-        if (isset($schools->first()->id)){
-            $groups = Group::whereHas('schools', function ($query) use ($schools) {
-                $query->where('school_id', '=', $schools->first()->id);
-            })->get();
+        if ($schools->first()){
+            $groups = Group::where('school_id', $schools->first()->id)->get();
         }else{
-            $groups = null;
+            $groups = [];
         }
 
         return view('admin.users.create', compact('schools', 'groups'));
@@ -99,15 +97,11 @@ class StudentsController extends Controller
 
     public function adminEdit($id)
     {
-        $user = User::where('id', $id)->with('group')->first();
+        $user = User::where('id', $id)->with('group', 'school')->first();
 
         $schools = School::all();
 
-        if (count($schools) <= 1){
-            $groups = Group::whereHas('schools', function ($query) use ($schools) {
-                $query->where('school_id', '=', $schools->first()->id);
-            })->get();
-        }
+        $groups = Group::where('school_id', $user->school->id)->get();
 
         return view('admin.users.edit', compact('user', 'groups', 'schools'));
     }
@@ -149,9 +143,9 @@ class StudentsController extends Controller
         $user = User::find($id);
         $mailTo = $user->email;
 
-        if ($user->avatar && !empty($user->avatar)){
+        if ($user->avatar && !empty($user->avatar)) {
             $image = public_path() . $user->avatar;
-            if(file_exists($image)) {
+            if (file_exists($image)) {
                 unlink($image);
             }
         }

@@ -25,7 +25,7 @@ class UpdateSchool extends FormRequest
     {
         return [
             'name' => 'required',
-            'group_id' => 'required',
+//            'group_id' => 'required',
         ];
     }
 

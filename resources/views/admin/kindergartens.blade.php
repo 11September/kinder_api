@@ -42,6 +42,15 @@
                                 </a>
 
                                 <p class="group-count">Кількість груп : {{ $school->groups_count }}</p>
+
+                                @foreach($school->groups as $group)
+                                    <p class="group-count">
+                                        Групи:
+                                        <span class="orange-text moderator_group">
+                                            <i class="fas fa-layer-group"></i>{{ $group->name }}
+                                        </span>
+                                    </p>
+                                @endforeach
                             </div>
 
                             <div class="wrapper-school-delete">
@@ -74,50 +83,52 @@
                                 <input type="text" name="name" class="form-control" required
                                        value="{{ old('name') }}" placeholder="Назва садка">
                             </div>
-                        </div>
-
-                        <div class="col-lg-6 col-md-12">
-                            <div class="form-group">
-                                <label>Групи</label>
-
-                                @foreach($groups as $group)
-
-                                    @if(@$group->schools && count($group->schools ) > 0)
-
-                                        <p class="no-marg"><span class="orange">Садки:</span></p>
-
-                                        @foreach(@$group->schools as $school)
-
-                                            @if ($loop->last)
-                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $school->name }}</small>
-                                            @else
-                                                <i class="fas fa-hotel"></i><small class="small-school">{{ $school->name . ", " }}</small>
-                                            @endif
-
-                                        @endforeach
-                                    @endif
-
-                                    <div class="form-check">
-                                        <label class="container">
-                                            {{ $group->name }}
-                                            <input value="{{ $group->id }}" name="group_id[]" type="checkbox"
-                                                   class="{{ $errors->has('group_id') ? ' is-invalid' : '' }}">
-                                            <span class="checkmark"></span>
-                                        </label>
-                                    </div>
-
-                                @endforeach
-
-                                @if ($errors->has('group_id'))
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $errors->first('group_id') }}</strong>
-                                    </span>
-                                @endif
-
-                            </div>
 
                             <button type="submit" class="btn btn-primary mb-2">Створити</button>
                         </div>
+
+                        {{--<div class="col-lg-6 col-md-12">--}}
+                        {{--<div class="form-group">--}}
+                        {{--<label>Групи</label>--}}
+
+                        {{--@foreach($groups as $group)--}}
+
+                        {{--@if(@$group->schools && count($group->schools ) > 0)--}}
+
+                        {{--<p class="no-marg"><span class="orange">Садки:</span></p>--}}
+
+                        {{--@foreach(@$group->schools as $school)--}}
+
+                        {{--@if ($loop->last)--}}
+                        {{--<i class="fas fa-hotel"></i><small class="small-school">{{ $school->name }}</small>--}}
+                        {{--@else--}}
+                        {{--<i class="fas fa-hotel"></i><small class="small-school">{{ $school->name . ", " }}</small>--}}
+                        {{--@endif--}}
+
+                        {{--@endforeach--}}
+                        {{--@endif--}}
+
+                        {{--<div class="form-check">--}}
+                        {{--<label class="container">--}}
+                        {{--{{ $group->name }}--}}
+                        {{--<input value="{{ $group->id }}" name="group_id[]" type="checkbox"--}}
+                        {{--class="{{ $errors->has('group_id') ? ' is-invalid' : '' }}">--}}
+                        {{--<span class="checkmark"></span>--}}
+                        {{--</label>--}}
+                        {{--</div>--}}
+
+                        {{--@endforeach--}}
+
+                        {{--@if ($errors->has('group_id'))--}}
+                        {{--<span class="invalid-feedback" role="alert">--}}
+                        {{--<strong>{{ $errors->first('group_id') }}</strong>--}}
+                        {{--</span>--}}
+                        {{--@endif--}}
+
+                        {{--</div>--}}
+
+
+                        {{--</div>--}}
                     </div>
                 </form>
 

@@ -123,9 +123,11 @@ class PostsController extends Controller
     {
         $schools = School::all();
 
-        $groups = Group::whereHas('schools', function ($query) use ($schools) {
-            $query->where('school_id', '=', $schools->first()->id);
-        })->get();
+        if ($schools->first()){
+            $groups = Group::where('school_id', $schools->first()->id)->get();
+        }else{
+            $groups = [];
+        }
 
         return view('admin.posts.create', compact('schools', 'groups'));
     }
@@ -145,6 +147,7 @@ class PostsController extends Controller
                 $data[] = $name;
             }
         }
+
 
         $preview = $request->file('preview');
         $input['preview'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
@@ -181,9 +184,11 @@ class PostsController extends Controller
         if (isset($request->old_image) && !empty($request->old_image)) {
             $post->image = $request->old_image;
         } else {
-            $this->deletePreviousEncodeImages($post->image);
-            $images = $this->storeNewEncodeImages($request->image);
-            $post->image = json_encode($images);
+            if ($post->image){
+                $this->deletePreviousEncodeImages($post->image);
+                $images = $this->storeNewEncodeImages($request->image);
+                $post->image = json_encode($images);
+            }
         }
 
         if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(public_path() . $request->old_preview)) {

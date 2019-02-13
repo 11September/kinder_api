@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Post;
 use App\Group;
 use App\School;
+use App\Conversation;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreSchool;
 use App\Http\Requests\UpdateSchool;
@@ -14,9 +16,9 @@ class SchoolController extends Controller
 {
     public function adminIndex()
     {
-        $schools = School::withCount(['groups'])->get();
+        $schools = School::with('groups')->withCount(['groups'])->get();
 
-        $groups = Group::with('schools')->get();
+        $groups = Group::with('school')->get();
 
         return view('admin.kindergartens', compact('schools', 'groups'));
     }
@@ -27,9 +29,6 @@ class SchoolController extends Controller
         $school->name = $request->name;
         $school->save();
 
-        $school->groups()->sync($request->group_id);
-
-
         return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно доданий!');
     }
 
@@ -37,11 +36,9 @@ class SchoolController extends Controller
     {
         $school = School::where('id', $id)->with('groups')->first();
 
-        $groups = Group::with('schools')->get();
+        $schools = School::with('groups')->withCount('groups')->get();
 
-        $schools = School::withCount('groups')->get();
-
-        return view('admin.kindergartens.edit', compact('schools', 'groups', 'school'));
+        return view('admin.kindergartens.edit', compact('schools', 'school'));
     }
 
     public function adminUpdate(UpdateSchool $request, $id)
@@ -51,8 +48,6 @@ class SchoolController extends Controller
         $school->name = $request->name;
         $school->save();
 
-        $school->groups()->sync($request->group_id, true);
-
         return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно оновлено!');
     }
 
@@ -60,21 +55,49 @@ class SchoolController extends Controller
     {
         $school = School::find($id);
 
-        $school->groups()->detach();
-        $school->nutritions()->delete();
-
-        $school->schedules()->delete();
-        $school->students()->delete();
-
         $posts = Post::where('school_id', $id)->get();
-
         foreach ($posts as $post){
             $post->groups()->detach();
+
+            $this->deletePreviousPreviewImage($post->preview);
+            if ($post->image && !is_null($post->image)) {
+                $this->deletePreviousEncodeImages($post->image);
+            }
             $post->delete();
         }
+
+        $groups = Group::where('school_id', $school->id)->delete();
+
+        $school->nutritions()->delete();
+        $school->schedules()->delete();
+
+        User::where('type', 'moderator')->where('school_id', $school->id)->update(['group_id' => null, 'school_id' => null]);
+        User::where('type', 'default')->delete();
 
         $school->delete();
 
         return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно видалено!');
+    }
+
+    public function deletePreviousPreviewImage($data)
+    {
+        $preview = public_path() . $data;
+        if (file_exists($preview)) {
+            unlink($preview);
+        }
+
+        return true;
+    }
+
+    public function deletePreviousEncodeImages($data)
+    {
+        foreach (json_decode($data) as $image) {
+            $old_image = public_path() . $image;
+            if (file_exists($old_image)) {
+                unlink($old_image);
+            }
+        }
+
+        return true;
     }
 }

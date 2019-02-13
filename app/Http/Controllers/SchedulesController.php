@@ -52,9 +52,7 @@ class SchedulesController extends Controller
         $schools = School::all();
 
         if ($schools->first()){
-            $groups = Group::whereHas('schools', function ($query) use ($schools) {
-                $query->where('school_id', '=', $schools->first()->id);
-            })->get();
+            $groups = Group::where('school_id', $schools->first()->id)->get();
         }else{
             $groups = [];
         }
@@ -68,13 +66,9 @@ class SchedulesController extends Controller
 
         $current_group = Group::where('id', $id)->first();
 
-        $current_school = School::whereHas('groups', function ($query) use ($current_group) {
-            $query->where('group_id', '=', $current_group->id);
-        })->first();
+        $current_school = School::where('id', $current_group->school_id)->first();
 
-        $groups = Group::whereHas('schools', function ($query) use ($current_school) {
-            $query->where('school_id', '=', $current_school->id);
-        })->get();
+        $groups = Group::where('school_id', $current_school->id)->get();
 
         $schedules = Schedule::where('school_id', $current_school->id)
             ->where('group_id', $current_group->id)

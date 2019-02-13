@@ -15,7 +15,7 @@ class CreateNutritionsTable extends Migration
     {
         Schema::create('nutritions', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('school_id');
+            $table->integer('school_id')->unsigned()->references('id')->on('schools')->onDelete('cascade');
             $table->enum('day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
             $table->timestamps();
         });

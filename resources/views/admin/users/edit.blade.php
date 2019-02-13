@@ -54,7 +54,8 @@
                                     <div class="form-group">
                                         <label for="name">ПІБ дитини</label>
                                         <input required name="name" value="{{ $user->name }}" type="text" id="name"
-                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}" placeholder="ПІБ дитини">
+                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                               placeholder="ПІБ дитини">
 
                                         @if ($errors->has('name'))
                                             <span class="invalid-feedback" role="alert">
@@ -65,8 +66,10 @@
 
                                     <div class="form-group">
                                         <label for="birthday">Дата народження дитини</label>
-                                        <input required name="birthday" value="{{ $user->birthday }}" type="date" id="birthday"
-                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}" placeholder="Дата народження дитини">
+                                        <input required name="birthday" value="{{ $user->birthday }}" type="date"
+                                               id="birthday"
+                                               class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}"
+                                               placeholder="Дата народження дитини">
 
                                         @if ($errors->has('birthday'))
                                             <span class="invalid-feedback" role="alert">
@@ -77,8 +80,10 @@
 
                                     <div class="form-group">
                                         <label for="parent_name">ПІБ Батька/Матері</label>
-                                        <input required name="parent_name" value="{{ $user->parent_name }}" type="text" id="parent_name"
-                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}" placeholder="ПІБ Батька">
+                                        <input required name="parent_name" value="{{ $user->parent_name }}" type="text"
+                                               id="parent_name"
+                                               class="form-control {{ $errors->has('parent_name') ? ' is-invalid' : '' }}"
+                                               placeholder="ПІБ Батька">
 
                                         @if ($errors->has('parent_name'))
                                             <span class="invalid-feedback" role="alert">
@@ -89,8 +94,11 @@
 
                                     <div class="form-group">
                                         <label for="parent_phone">Номер Телефону Батьків</label>
-                                        <input required name="parent_phone" value="{{ $user->parent_phone }}" id="parent_phone"
-                                               type="text" class="mask-phone form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}" placeholder="Номер Телефону Батьків">
+                                        <input required name="parent_phone" value="{{ $user->parent_phone }}"
+                                               id="parent_phone"
+                                               type="text"
+                                               class="mask-phone form-control {{ $errors->has('parent_phone') ? ' is-invalid' : '' }}"
+                                               placeholder="Номер Телефону Батьків">
 
                                         @if ($errors->has('parent_phone'))
                                             <span class="invalid-feedback" role="alert">
@@ -105,7 +113,8 @@
                                     <div class="form-group">
                                         <label for="email">Email</label>
                                         <input required type="email" value="{{ $user->email }}" name="email"
-                                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}" id="email"
+                                               class="form-control {{ $errors->has('email') ? ' is-invalid' : '' }}"
+                                               id="email"
                                                placeholder="name@example.com">
 
                                         @if ($errors->has('email'))
@@ -118,7 +127,8 @@
                                     <div class="form-group">
                                         <label for="address">Адреса</label>
                                         <input type="text" value="{{ $user->address }}" name="address"
-                                               class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}" id="address"
+                                               class="form-control {{ $errors->has('address') ? ' is-invalid' : '' }}"
+                                               id="address"
                                                placeholder="Адреса">
 
                                         @if ($errors->has('address'))
@@ -143,7 +153,8 @@
 
                                     <div class="form-group">
                                         <label for="password-confirm">Підтвердження паролю</label>
-                                        <input id="password-confirm" type="password" class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
+                                        <input id="password-confirm" type="password"
+                                               class="form-control {{ $errors->has('password_confirmation') ? ' is-invalid' : '' }}"
                                                minlength=6 name="password_confirmation">
 
                                         @if ($errors->has('password_confirmation'))
@@ -156,12 +167,13 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="school_id">Садок</label>
-                                        <select required name="school_id" class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
+                                        <select required name="school_id"
+                                                class="form-control choose_school {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
                                                 id="school_id">
 
                                             @foreach($schools as $school)
                                                 <option class="choose_school_option"
-                                                        @if($school->id == @$user->school_id) selected @endif
+                                                        @if($school->id == $user->school->id) selected @endif
                                                         value="{{ $school->id }}">{{ $school->name }}
                                                 </option>
                                             @endforeach
@@ -177,20 +189,19 @@
                                     <div class="form-group">
                                         <label for="group_id">Група</label>
 
-                                        @if(!isset($user->group) || empty($user->group->id))
-                                            <select required id="group_id" name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}">
+                                        <select required name="group_id"
+                                                class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
+                                                id="group_id">
 
-                                                @foreach($groups as $group)
-                                                    <option value="{{ $group->id }}">{{ $group->name }}</option>
-                                                @endforeach
+                                            @foreach($groups as $group)
+                                                <option
+                                                    @if($group->id == $user->group->id)
+                                                    selected
+                                                    @endif
 
-                                            </select>
-                                        @else
-                                            <select required name="group_id" class="form-control choose_group_option {{ $errors->has('group_id') ? ' is-invalid' : '' }}"
-                                                    id="group_id">
-                                                <option selected value="{{ @$user->group->id }}">{{ @$user->group->name }}</option>
-                                            </select>
-                                        @endif
+                                                    value="{{ $group->id }}">{{ $group->name }}</option>
+                                            @endforeach
+                                        </select>
 
                                         @if ($errors->has('group_id'))
                                             <span class="invalid-feedback" role="alert">
@@ -283,16 +294,16 @@
     <script>
         var today = new Date();
         var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
+        var mm = today.getMonth() + 1; //January is 0!
         var yyyy = today.getFullYear();
-        if(dd<10){
-            dd='0'+dd
+        if (dd < 10) {
+            dd = '0' + dd
         }
-        if(mm<10){
-            mm='0'+mm
+        if (mm < 10) {
+            mm = '0' + mm
         }
 
-        today = yyyy+'-'+mm+'-'+dd;
+        today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("birthday").setAttribute("max", today);
 
 

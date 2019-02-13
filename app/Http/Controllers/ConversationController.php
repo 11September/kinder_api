@@ -82,14 +82,11 @@ class ConversationController extends Controller
     {
         $schools = School::all();
 
-        if ($schools->first()) {
-            $groups = Group::whereHas('schools', function ($query) use ($schools) {
-                $query->where('school_id', '=', $schools->first()->id);
-            })->get();
-        } else {
+        if ($schools->first()){
+            $groups = Group::where('school_id', $schools->first()->id)->get();
+        }else{
             $groups = [];
         }
-
 
         $user = Auth::user();
         $conversations = Conversation::where([
@@ -166,8 +163,6 @@ class ConversationController extends Controller
 
             $user->count = $count;
         }
-
-//        dd($user->count);
 
         return view('admin.conversations.adminShowGroupUsers', compact('list_schools', 'group', 'users'));
     }
@@ -248,9 +243,11 @@ class ConversationController extends Controller
 
         $list_schools = School::with('groups')->get();
 
-        $groups = Group::whereHas('schools', function ($query) use ($list_schools) {
-            $query->where('school_id', '=', $list_schools->first()->id);
-        })->get();
+        if ($list_schools->first()){
+            $groups = Group::where('school_id', $list_schools->first()->id)->get();
+        }else{
+            $groups = [];
+        }
 
         return view('admin.conversations.chatUser', compact('list_schools', 'groups', 'users', 'conversation'));
     }

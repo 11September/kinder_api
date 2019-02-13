@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Schedule;
 use App\User;
 use App\Group;
 use App\School;
@@ -150,9 +151,7 @@ class GroupController extends Controller
             'id' => 'required',
         ]);
 
-        $groups = Group::whereHas('schools', function ($query) use ($request) {
-            $query->where('school_id', '=', $request->id);
-        })->get();
+        $groups = Group::where('school_id', $request->id)->get();
 
         return response()->json(['data' => $groups, 'success' => true]);
     }
@@ -164,7 +163,7 @@ class GroupController extends Controller
         $schools = School::all();
 
         $groups = Group::with('admin')
-            ->with('schools')
+            ->with('school')
             ->with('students')
             ->get();
 
@@ -183,10 +182,9 @@ class GroupController extends Controller
         $group = new Group();
         $group->name = $request->name;
         $group->user_id = $request->user_id;
+        $group->school_id = $request->school_id;
 
         $group->save();
-
-        $group->schools()->attach($request->school_id);
 
         foreach ($request->moderator_id as $value) {
             $user = User::where('id', $value)
@@ -210,9 +208,9 @@ class GroupController extends Controller
 
         $schools = School::all();
 
-        $groups = Group::with('students')->get();
+        $groups = Group::with('students', 'school')->get();
 
-        $group = Group::where('id', $id)->with('students')->with('schools')->first();
+        $group = Group::where('id', $id)->with('students')->with('school')->first();
 
         $moderators_ids = array();
         foreach ($group->students as $key => $student) {
@@ -243,10 +241,9 @@ class GroupController extends Controller
     {
         $group = Group::where('id', $id)->first();
 
-        $group->schools()->sync($request->school_id);
-
         $group->name = $request->name;
         $group->user_id = $request->user_id;
+        $group->school_id = $request->school_id;
 
         $group->save();
 
@@ -259,18 +256,12 @@ class GroupController extends Controller
     public function adminDelete($id)
     {
         $group = Group::where('id', $id)->first();
-
-        $group->schools()->detach();
         $group->posts()->detach();
 
-        $users = User::where('group_id', $group->id)->where('type', 'moderator')->get();
-        foreach ($users as $item) {
-            $user = User::where('id', $item->id)->first();
-            $user->school_id = null;
-            $user->group_id = null;
-            $user->type = "moderator";
-            $user->save();
-        }
+        Schedule::where('group_id', $group->id)->delete();
+
+        User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null]);
+        User::where('type', 'default')->delete();
 
         $group->delete();
 

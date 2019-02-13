@@ -15,8 +15,8 @@ class CreateSchedulesTable extends Migration
     {
         Schema::create('schedules', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('school_id');
-            $table->integer('group_id');
+            $table->integer('school_id')->unsigned()->references('id')->on('schools')->onDelete('cascade');
+            $table->integer('group_id')->unsigned()->references('id')->on('groups')->onDelete('cascade');
             $table->enum('day', ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']);
             $table->timestamps();
         });

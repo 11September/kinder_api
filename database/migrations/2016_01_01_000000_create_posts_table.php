@@ -18,7 +18,7 @@ class CreatePostsTable extends Migration
             $table->string('title');
             $table->text('body');
             $table->date('until');
-            $table->integer('school_id');
+            $table->integer('school_id')->unsigned()->references('id')->on('schools')->onDelete('cascade');
             $table->string('preview')->nullable();
             $table->text('image', 1000)->nullable();
             $table->timestamps();

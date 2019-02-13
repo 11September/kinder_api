@@ -9,9 +9,9 @@ class Group extends Model
     protected $table = "groups";
     protected $fillable = ['name', 'user_id', 'school_id'];
 
-    public function schools()
+    public function school()
     {
-        return $this->belongsToMany(School::class)->withTimestamps();
+        return $this->belongsTo(School::class);
     }
 
     public function students()

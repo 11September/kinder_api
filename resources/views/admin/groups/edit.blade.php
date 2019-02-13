@@ -60,7 +60,8 @@
                             @foreach($groups as $list_groups)
                                 <li class="list-group-item @if($list_groups->id == $group->id) active @endif">
                                     <div>
-                                        <a href="{{ action('GroupController@adminEdit', $list_groups->id) }}">
+                                        <a class="orange-text"
+                                           href="{{ action('GroupController@adminEdit', $list_groups->id) }}">
                                             {{ $list_groups->name }}
                                         </a>
 
@@ -71,6 +72,12 @@
                                             @endif
                                         @endforeach
 
+                                        <p class="group-count">
+                                            <i class="fas fa-hotel"></i>
+                                            <span class="orange-text moderator_group">
+                                            {{ $list_groups->school->name }}
+                                            </span>
+                                        </p>
                                         <p class="group-count">{{ $count }} чоловiк</p>
                                     </div>
 
@@ -90,7 +97,7 @@
                         </ul>
                     </div>
 
-                    <div class="col-xl-8 col-lg-6 col-md-6">
+                    <div class="offset-xl-1 col-xl-6 col-lg-6 col-md-6">
                         <h3 style="text-align: center">Оновити групу</h3>
 
                         <form action="{{ action('GroupController@adminUpdate', $group->id) }}" method="post">
@@ -98,31 +105,28 @@
                             {{ method_field('PUT') }}
 
                             <div class="row">
-                                <div class="col-xl-6 col-lg-12 col-md-12 ">
+                                <div class="col-xl-12 col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label for="school_id">Садок</label>
+                                        <label for="user_id">Вибрати садок</label>
 
-                                        @foreach($schools as $school)
-                                            <div class="form-check">
-                                                <label class="container-checkbox">
+                                        <select required name="school_id"
+                                                class="form-control {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
+                                                id="school_id">
+
+                                            @foreach($schools as $school)
+                                                <option value="{{ $school->id }}"
+                                                        @if($school->id == $group->school_id)
+                                                        selected
+                                                    @endif
+                                                    {{ old("school_id") == $school->id ? "selected":"" }}>
                                                     {{ $school->name }}
-                                                    <input required value="{{ $school->id }}" type="radio"
-                                                           name="school_id" id="school_id"
+                                                </option>
+                                            @endforeach
 
-                                                           @foreach($group->schools as $value)
-                                                           @if($school->id == $value->id)
-                                                           checked
-                                                        @endif
-                                                        @endforeach>
-
-                                                    <span class="checkmark-radio"></span>
-                                                </label>
-                                            </div>
-                                        @endforeach
-
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-12 col-md-12">
+
+
                                     <div class="form-group">
                                         <label for="name">Назва групи</label>
                                         <input required type="text" value="{{ $group->name }}" name="name" id="name"

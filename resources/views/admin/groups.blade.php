@@ -55,10 +55,12 @@
 
                                         <div>
                                             <ul class="fa-ul">
-                                                @foreach(@$group->schools as $school)
-                                                    <li><span class="fa-li"><i
-                                                                class="fas fa-hotel"></i></span>{{ $school->name }}</li>
-                                                @endforeach
+                                                <li>
+                                                    <span class="fa-li">
+                                                        <i class="fas fa-hotel"></i>
+                                                    </span>
+                                                    {{ $group->school->name }}
+                                                </li>
                                             </ul>
                                         </div>
 
@@ -107,33 +109,31 @@
                         </ul>
                     </div>
 
-                    <div class="col-xl-8 col-lg-6 col-md-6">
+                    <div class="offset-xl-1 col-xl-6 col-lg-6 col-md-6">
                         <h3 style="text-align: center">Створити групу</h3>
 
                         <form action="{{ action('GroupController@adminStore') }}" method="post">
                             {{ csrf_field() }}
 
                             <div class="row">
-                                <div class="col-xl-6 col-lg-12 col-md-12">
+                                <div class="col-xl-12 col-lg-12 col-md-12">
                                     <div class="form-group">
-                                        <label>Садок</label>
+                                        <label for="user_id">Вибрати садок</label>
 
-                                        @foreach($schools as $school)
+                                        <select required name="school_id"
+                                                class="form-control {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
+                                                id="school_id">
 
-                                            <div class="form-check">
-                                                <label class="container-checkbox">
+                                            @foreach($schools as $school)
+                                                <option value="{{ $school->id }}"
+                                                    {{ old("school_id") == $school->id ? "selected":"" }}>
                                                     {{ $school->name }}
-                                                    <input required value="{{ $school->id }}" type="radio"
-                                                           name="school_id" {{ old("school_id") == $school->id ? "checked":"" }}>
-                                                    <span class="checkmark-radio"></span>
-                                                </label>
-                                            </div>
+                                                </option>
+                                            @endforeach
 
-                                        @endforeach
-
+                                        </select>
                                     </div>
-                                </div>
-                                <div class="col-xl-6 col-lg-12 col-md-12">
+
                                     <div class="form-group">
                                         <label for="name">Назва групи</label>
                                         <input required type="text" name="name"
@@ -180,6 +180,12 @@
                                             </div>
                                         @endforeach
 
+                                        @if ($errors->has('moderator_id'))
+                                            <span class="invalid-feedback" role="alert">
+                                                <strong>{{ $errors->first('moderator_id') }}</strong>
+                                            </span>
+                                        @endif
+
                                         @if(!$moderators || count($moderators) == 0)
                                             <p>На жаль немає вільних вихователів. Створіть
                                                 <a class="orange-link" href="{{ url('/admin/admins') }}">нового</a>
@@ -195,7 +201,6 @@
                         </form>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
