@@ -293,7 +293,7 @@
         }
 
         today = yyyy+'-'+mm+'-'+dd;
-        document.getElementById("until").setAttribute("min", today);
+        document.getElementById("birthday").setAttribute("min", today);
 
 
         $('.mask-phone').inputmask({"mask": "+38(099)-99-99-999"});
