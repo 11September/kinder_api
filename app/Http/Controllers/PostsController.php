@@ -158,7 +158,7 @@ class PostsController extends Controller
         $post->groups()->sync($request->group_id, false);
 
         $data = $request->all();
-        $this->notifyNewPost($data);
+        $this->notifyNewPost($data, $post->id);
 
         return redirect()->route('admin.posts')->with('message', 'Новина успішно додана! Повідомлення користувачам про створення новини відправлено!');
     }
@@ -261,7 +261,7 @@ class PostsController extends Controller
         return '/images/uploads/posts/' . $image;
     }
 
-    public function notifyNewPost($request)
+    public function notifyNewPost($request, $id)
     {
         if (isset($request['all']) && $request['all'] == "all") {
             $users = User::select('id', 'player_id')
@@ -294,6 +294,7 @@ class PostsController extends Controller
                 "en" => str_limit($request['body'], 20)
             ];
             $params['include_player_ids'] = $player_ids;
+            $params['data'] = ["post_id" => $id, "type" => "post"];
             \OneSignal::sendNotificationCustom($params);
         }
     }

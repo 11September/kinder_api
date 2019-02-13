@@ -96,7 +96,7 @@ class ConversationController extends Controller
             ['user1_id', '=', $user->id],
         ])->OrWhere([
             ['user2_id', '=', $user->id],
-        ])->with('messages')
+        ])
             ->with(array
             ('messages' => function ($query) {
                     $query->select('id', 'user_id', 'conversation_id', 'status');

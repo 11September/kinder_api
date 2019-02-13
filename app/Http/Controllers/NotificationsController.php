@@ -91,6 +91,7 @@ class NotificationsController extends Controller
                     "en" => "Розклад занять в садку змінено. Перевірте новий розклад будь ласка!"
                 ];
                 $params['include_player_ids'] = $player_ids;
+                $params['data'] = ["type" => "schedule"];
                 \OneSignal::sendNotificationCustom($params);
             }
 
@@ -134,6 +135,7 @@ class NotificationsController extends Controller
                     "en" => "Розклад харчування в садку змінено. Перевірте новий розклад будь ласка!"
                 ];
                 $params['include_player_ids'] = $player_ids;
+                $params['data'] = ["type" => "foods"];
                 \OneSignal::sendNotificationCustom($params);
             }
 
