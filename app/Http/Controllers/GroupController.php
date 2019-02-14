@@ -171,7 +171,6 @@ class GroupController extends Controller
             ->where('type', 'moderator')
             ->where('school_id', null)
             ->where('group_id', null)
-            ->active()
             ->get();
 
         return view('admin.groups', compact('admins', 'moderators', 'schools', 'groups'));
@@ -229,7 +228,6 @@ class GroupController extends Controller
             ->where('type', 'moderator')
             ->where('school_id', null)
             ->where('group_id', null)
-            ->active()
             ->get();
 
         $moderators = $currentModerators->merge($availableModerators);
