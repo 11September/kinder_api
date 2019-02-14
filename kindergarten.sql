@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 08 2019 г., 15:12
+-- Время создания: Фев 14 2019 г., 11:11
 -- Версия сервера: 5.7.20
 -- Версия PHP: 7.2.0
 
@@ -77,21 +77,7 @@ CREATE TABLE `groups` (
   `id` int(10) UNSIGNED NOT NULL,
   `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `user_id` int(11) NOT NULL,
-  `moderator_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
--- --------------------------------------------------------
-
---
--- Структура таблицы `group_school`
---
-
-CREATE TABLE `group_school` (
-  `id` int(10) UNSIGNED NOT NULL,
   `school_id` int(10) UNSIGNED NOT NULL,
-  `group_id` int(10) UNSIGNED NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -136,12 +122,11 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (5, '2018_11_27_140055_create_groups_table', 1),
 (6, '2018_11_27_140409_create_schedules_table', 1),
 (7, '2019_01_02_124851_create_post_groups_table', 1),
-(8, '2019_01_02_133703_create_schools_groups_table', 1),
-(9, '2019_01_03_092037_create_classes_table', 1),
-(10, '2019_01_16_124620_create_nutritions_table', 1),
-(11, '2019_01_16_124705_create_foods_table', 1),
-(12, '2019_01_23_142400_create_conversations_table', 1),
-(13, '2019_01_25_092738_create_messages_table', 1);
+(8, '2019_01_03_092037_create_classes_table', 1),
+(9, '2019_01_16_124620_create_nutritions_table', 1),
+(10, '2019_01_16_124705_create_foods_table', 1),
+(11, '2019_01_23_142400_create_conversations_table', 1),
+(12, '2019_01_25_092738_create_messages_table', 1);
 
 -- --------------------------------------------------------
 
@@ -151,7 +136,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 
 CREATE TABLE `nutritions` (
   `id` int(10) UNSIGNED NOT NULL,
-  `school_id` int(11) NOT NULL,
+  `school_id` int(10) UNSIGNED NOT NULL,
   `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -180,7 +165,7 @@ CREATE TABLE `posts` (
   `title` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
   `body` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `until` date NOT NULL,
-  `school_id` int(11) NOT NULL,
+  `school_id` int(10) UNSIGNED NOT NULL,
   `preview` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `image` text COLLATE utf8mb4_unicode_ci,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -209,8 +194,8 @@ CREATE TABLE `post_groups` (
 
 CREATE TABLE `schedules` (
   `id` int(10) UNSIGNED NOT NULL,
-  `school_id` int(11) NOT NULL,
-  `group_id` int(11) NOT NULL,
+  `school_id` int(10) UNSIGNED NOT NULL,
+  `group_id` int(10) UNSIGNED NOT NULL,
   `day` enum('Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday') COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
@@ -265,9 +250,8 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `type`, `token`, `school_id`, `group_id`, `parent_name`, `parent_phone`, `parents`, `address`, `birthday`, `avatar`, `email`, `email_verified_at`, `password`, `push`, `player_id`, `push_chat`, `status`, `remember_token`, `created_at`, `updated_at`) VALUES
-(1, 'Станислав', 'admin', 'mNPxN', NULL, NULL, 'Forest McCullough', '(642) 962-4696 x049', 'father', '5567 Annabelle Brooks\nEast Dejah, AR 36878', '2002-09-21', NULL, 'admin@admin.com', '2019-02-08 12:11:48', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'disabled', NULL, 'true', 'active', 'bIb8JjDBmK', NULL, NULL),
-(2, 'Вихователь', 'moderator', 'bsdXu', NULL, NULL, 'Penelope Sawayn', '1-889-903-1901 x1508', 'mother', '9270 Friesen Circle\nPort Jimmyborough, IN 84998-1524', '1984-12-14', NULL, 'moderator@admin.com', '2019-02-08 12:11:48', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'enabled', NULL, 'true', 'active', 'dLE4FTOBNb', NULL, NULL),
-(3, 'Mrs. Eleanora Swift', 'default', 'KBJo6', 1, 1, 'Shanon Baumbach', '(450) 399-2862', 'mother', '1818 Cole Mountain Suite 823\nCelestinetown, DC 03104', '2001-09-12', NULL, 'flatley.tomasa@example.com', '2019-02-08 12:11:48', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'enabled', NULL, 'true', 'active', 'KGkDGdaGEp', '2019-02-08 12:11:48', '2019-02-08 12:11:48');
+(1, 'Станислав', 'admin', 'up5CS', NULL, NULL, 'Richard Graham', '350-818-0311 x522', 'father', '11150 Deckow Harbor Apt. 657\nNicolastad, AZ 92854', '1996-11-12', NULL, 'admin@admin.com', '2019-02-14 08:10:37', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'enabled', NULL, 'true', 'active', 'tkFI0tznJ9', NULL, NULL),
+(2, 'Вихователь', 'moderator', 'SOIRD', NULL, NULL, 'Reed Herzog', '330.434.2270 x74424', 'mother', '227 Itzel Ports Apt. 695\nLeolafort, IL 59458', '2006-03-04', NULL, 'moderator@admin.com', '2019-02-14 08:10:37', '$2y$10$GlmMdEEq9DXG3lGnj2PrU.TeRy88/TXl7ZQFUcaF0hYpgJJwxwiS2', 'enabled', NULL, 'true', 'active', 'LHl1EeWLE9', NULL, NULL);
 
 --
 -- Индексы сохранённых таблиц
@@ -300,14 +284,6 @@ ALTER TABLE `foods`
 --
 ALTER TABLE `groups`
   ADD PRIMARY KEY (`id`);
-
---
--- Индексы таблицы `group_school`
---
-ALTER TABLE `group_school`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `group_school_school_id_foreign` (`school_id`),
-  ADD KEY `group_school_group_id_foreign` (`group_id`);
 
 --
 -- Индексы таблицы `messages`
@@ -398,12 +374,6 @@ ALTER TABLE `groups`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT для таблицы `group_school`
---
-ALTER TABLE `group_school`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT для таблицы `messages`
 --
 ALTER TABLE `messages`
@@ -413,7 +383,7 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT для таблицы `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `nutritions`
@@ -449,7 +419,7 @@ ALTER TABLE `schools`
 -- AUTO_INCREMENT для таблицы `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -473,13 +443,6 @@ ALTER TABLE `conversations`
 --
 ALTER TABLE `foods`
   ADD CONSTRAINT `foods_nutrition_id_foreign` FOREIGN KEY (`nutrition_id`) REFERENCES `nutritions` (`id`) ON DELETE CASCADE;
-
---
--- Ограничения внешнего ключа таблицы `group_school`
---
-ALTER TABLE `group_school`
-  ADD CONSTRAINT `group_school_group_id_foreign` FOREIGN KEY (`group_id`) REFERENCES `groups` (`id`),
-  ADD CONSTRAINT `group_school_school_id_foreign` FOREIGN KEY (`school_id`) REFERENCES `schools` (`id`);
 
 --
 -- Ограничения внешнего ключа таблицы `messages`
