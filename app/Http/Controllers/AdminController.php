@@ -50,6 +50,7 @@ class AdminController extends Controller
         $user->group_id = null;
         $user->token = Hash::make($request->email);
         $user->password = Hash::make($request->password);
+        $user->status = "disable";
 
         $user->save();
 

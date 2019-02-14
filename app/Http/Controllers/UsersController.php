@@ -29,7 +29,7 @@ class UsersController extends Controller
             $user = User::where('email', $request->email)->first();
             if ($user) {
 
-                if ($user->status == "disable" || $user->type == "admin") {
+                if ($user->status == "disable" || $user->type == "admin" || $user->status == "disable") {
                     return response()->json(['message' => 'Користувач неактивний!'], 403);
                 }
 

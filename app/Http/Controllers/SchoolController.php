@@ -71,8 +71,7 @@ class SchoolController extends Controller
         $school->nutritions()->delete();
         $school->schedules()->delete();
 
-        User::where('type', 'moderator')->where('school_id', $school->id)->update(['group_id' => null, 'school_id' => null]);
-//        User::where('type', 'default')->delete();
+        User::where('type', 'moderator')->where('school_id', $school->id)->update(['group_id' => null, 'school_id' => null, 'status' => 'disable']);
         User::where('type', 'default')->each(function($user) {
             if (isset($user->avatar) && !is_null($user->avatar)){
                 $image = public_path() . $user->avatar;

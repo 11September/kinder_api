@@ -190,12 +190,12 @@ class GroupController extends Controller
             $user = User::where('id', $value)
                 ->where('school_id', null)
                 ->where('group_id', null)
-                ->active()
                 ->first();
 
             $user->school_id = $request->school_id;
             $user->group_id = $group->id;
             $user->type = "moderator";
+            $user->status = "active";
             $user->save();
         }
 
@@ -247,8 +247,8 @@ class GroupController extends Controller
 
         $group->save();
 
-        User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null]);
-        User::where('type', 'moderator')->whereIn('id', $request->moderator_id)->update(['group_id' => $group->id, 'school_id' => $request->school_id]);
+        User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null, 'status' => 'disable']);
+        User::where('type', 'moderator')->whereIn('id', $request->moderator_id)->update(['group_id' => $group->id, 'school_id' => $request->school_id, 'status' => 'active']);
 
         return redirect()->route('admin.groups')->with('message', 'Група успішно оновлена!');
     }
@@ -260,8 +260,7 @@ class GroupController extends Controller
 
         Schedule::where('group_id', $group->id)->delete();
 
-        User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null]);
-        //        User::where('type', 'default')->delete();
+        User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null, 'status' => 'disable']);
         User::where('type', 'default')->each(function($user) {
             if (isset($user->avatar) && !is_null($user->avatar)){
                 $image = public_path() . $user->avatar;
