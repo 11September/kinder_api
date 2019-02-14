@@ -32,7 +32,9 @@ class PostsController extends Controller
             $posts = Post::select('id', 'title', 'body', 'preview', 'image')
                 ->where('until', '>=', date('Y-m-d'))
                 ->where('school_id', $school_id)
-                ->where('group_id', $group->id)
+                ->whereHas('groups', function ($query) use ($group) {
+                    $query->where('group_id', '=', $group->id);
+                })
                 ->latest()
                 ->get();
 
