@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Schedule;
 use App\User;
 use App\Group;
 use App\School;
+use App\Schedule;
 use App\Conversation;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreGroup;

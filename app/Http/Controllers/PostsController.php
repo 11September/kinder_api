@@ -19,8 +19,6 @@ use Symfony\Component\HttpFoundation\File\File;
 
 class PostsController extends Controller
 {
-    public $sourse = "http://8.dev-kit.ru";
-
     public function index(Request $request, $school_id)
     {
         if (!$school_id || empty($school_id) || !is_numeric($school_id)) {

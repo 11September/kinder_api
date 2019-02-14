@@ -10,7 +10,7 @@ $factory->define(App\Post::class, function (Faker $faker) {
         'school_id' => 1,
 //        'image' => "/images/uploads/posts/3c5e87306fbd0455-640x485.png",
 //        'preview' => "/images/uploads/posts/images.jpg",
-        'image' => "null",
-        'preview' => "null"
+        'image' => null,
+        'preview' => null
     ];
 });
