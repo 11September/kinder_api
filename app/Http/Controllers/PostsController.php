@@ -76,7 +76,7 @@ class PostsController extends Controller
             }
 
 
-            if ($post->preview) {
+            if (isset($post->preview) || !empty($post->preview)) {
                 $post->preview = Config::get('app.url') . $post->preview;
             }
 
@@ -84,13 +84,11 @@ class PostsController extends Controller
                 foreach (json_decode($post['image']) as $image) {
                     $data[] = Config::get('app.url') . $image;
                 }
+            }else{
+                $data = [];
             }
 
-            $post->image = ($data) ? $data : $data = [];
-
-            if (isset($post->preview) || !empty($post->preview)) {
-                $post->preview = Config::get('app.url') . $post->preview;
-            }
+            $post->image = $data;
 
             return [$post];
 
