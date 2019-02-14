@@ -34,9 +34,7 @@ class PostsController extends Controller
             $posts = Post::select('id', 'title', 'body', 'preview', 'image')
                 ->where('until', '>=', date('Y-m-d'))
                 ->where('school_id', $school_id)
-                ->whereHas('groups', function ($query) use ($group) {
-                    $query->where('group_id', '=', $group->id);
-                })
+                ->where('group_id', $group->id)
                 ->latest()
                 ->get();
 
@@ -77,13 +75,18 @@ class PostsController extends Controller
                 return response()->json(['message' => 'Новина не знайдена'], 400);
             }
 
-            if ($post['image']) {
+
+            if ($post->preview) {
+                $post->preview = Config::get('app.url') . $post->preview;
+            }
+
+            if ($post->image) {
                 foreach (json_decode($post['image']) as $image) {
                     $data[] = Config::get('app.url') . $image;
                 }
             }
 
-            $post['image'] = $data;
+            $post->image = $data;
 
             if (isset($post->preview) || !empty($post->preview)) {
                 $post->preview = Config::get('app.url') . $post->preview;

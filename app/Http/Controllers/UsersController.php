@@ -171,26 +171,6 @@ class UsersController extends Controller
         }
     }
 
-    public function profile(Request $request)
-    {
-        try {
-
-            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-
-            $result = array();
-            $result = array_add($result, 'name', $user->name);
-            $result = array_add($result, 'email', $user->email);
-            $result = array_add($result, 'avatar', $user->avatar);
-            $result = array_add($result, 'push', $user->push);
-            $result = array_add($result, 'token', $user->token);
-
-            return response($result);
-        } catch (\Exception $exception) {
-            Log::warning('UsersController@resetPassword Exception: ' . $exception->getMessage());
-            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
-        }
-    }
-
     public function SetAvatar(Request $request)
     {
         $validator = Validator::make($request->all(), [
