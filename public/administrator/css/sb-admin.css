@@ -439,6 +439,31 @@ input[type="color"]:focus,
     color: darkorange;
 }
 
+.reference_link_wrapper{
+    padding: 5px 0 5px 15px;
+}
+
+.reference_link_wrapper .reference_link{
+    color: #343a40;
+}
+
+.list-group-item .reference_link{
+    color: #343a40;
+}
+
+.list-group-item .reference_link:hover{
+    color: darkorange;
+}
+
+.list-group-item.active .reference_link:hover{
+    color: white;
+}
+
+.admin-type-text{
+    color: #dc3545;
+    font-weight: bold;
+}
+
 .card-register {
     max-width: 40rem;
 }

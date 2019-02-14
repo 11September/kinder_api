@@ -54,14 +54,11 @@
                                         </a>
 
                                         <div>
-                                            <ul class="fa-ul">
-                                                <li>
-                                                    <span class="fa-li">
-                                                        <i class="fas fa-hotel"></i>
-                                                    </span>
-                                                    {{ $group->school->name }}
-                                                </li>
-                                            </ul>
+                                            <p class="reference_link_wrapper moderator_group">
+                                                <a class="reference_link"
+                                                   href="{{ action('SchoolController@adminEdit', $group->school->id) }}"><i
+                                                        class="fas fa-hotel"></i>{{ $group->school->name }}</a>
+                                            </p>
                                         </div>
 
                                         <p class="group-count">

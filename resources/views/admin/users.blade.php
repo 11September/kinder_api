@@ -76,9 +76,9 @@
                                 <td>{{ $loop->iteration }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->parent_phone }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>{{ @$user->school->name }}</td>
-                                <td>{{ @$user->group->name }}</td>
+                                <td><a class="orange-text" href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
+                                <td><a class="orange-text" href="{{ action('SchoolController@adminEdit', @$user->school->id) }}">{{ @$user->school->name }}</a></td>
+                                <td><a class="orange-text" href="{{ action('GroupController@adminEdit', @$user->group->id) }}">{{ @$user->group->name }}</a></td>
                                 <td>@if($user->status == "active") Активний @else Неактивний @endif</td>
                                 <td class="action-td">
                                     <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редагувати</a>

@@ -168,8 +168,8 @@
                         @foreach($users as $user)
                             <tr>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
+                                <td><a class="orange-text" href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
+                                <td class="admin-type-text">
                                     @if($user->type == "moderator")
                                         Вихователь групи
                                     @endif

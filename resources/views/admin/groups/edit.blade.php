@@ -72,11 +72,13 @@
                                             @endif
                                         @endforeach
 
-                                        <p class="group-count">
-                                            <i class="fas fa-hotel"></i>
-                                            <span class="orange-text moderator_group">
-                                            {{ $list_groups->school->name }}
-                                            </span>
+                                        <p class="group-count reference_link_wrapper">
+                                            <a class="reference_link"
+                                               href="{{ action('SchoolController@adminEdit', $group->school->id) }}">
+                                                <i class="fas fa-hotel"></i>
+                                                {{ $list_groups->school->name }}
+                                            </a>
+
                                         </p>
                                         <p class="group-count">{{ $count }} чоловiк</p>
                                     </div>

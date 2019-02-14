@@ -49,7 +49,10 @@
                                     Групи:
                                     @foreach($school->groups as $group)
                                         <span class="orange-text moderator_group">
-                                            <i class="fas fa-layer-group"></i>{{ $group->name }}
+                                             <a class="reference_link"
+                                                href="{{ action('GroupController@adminEdit', $group->id) }}">
+                                                 <i class="fas fa-layer-group"></i>{{ $group->name }}
+                                             </a>
                                         </span>
                                     @endforeach
                                 </p>
