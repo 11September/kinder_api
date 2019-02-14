@@ -86,7 +86,7 @@ class PostsController extends Controller
                 }
             }
 
-            $post->image = $data;
+            $post->image = ($data) ? $data : $data = [];
 
             if (isset($post->preview) || !empty($post->preview)) {
                 $post->preview = Config::get('app.url') . $post->preview;
