@@ -152,6 +152,7 @@
                             <th>Iм'я</th>
                             <th>Email</th>
                             <th>Тип</th>
+                            <th>Статус</th>
                             <th>Дії</th>
                         </tr>
                         </thead>
@@ -160,6 +161,7 @@
                             <th>Iм'я</th>
                             <th>Email</th>
                             <th>Тип</th>
+                            <th>Статус</th>
                             <th>Дії</th>
                         </tr>
                         </tfoot>
@@ -175,6 +177,15 @@
                                     @endif
                                     @if($user->type == "admin")
                                         Адміністратор
+                                    @endif
+                                </td>
+                                <td>
+                                    @if($user->status == "active" && ($user->type == "admin" || $user->type == "moderator"))
+                                        Активний
+                                    @elseif($user->status == "disable" && $user->type == "moderator")
+                                        НЕ прив'язаний до групи
+                                    @else
+                                        Не активний
                                     @endif
                                 </td>
 

@@ -73,7 +73,12 @@
                                         </p>
 
                                         <p class="group-count">
-                                            Адміністратор - <span class="orange-text">{{ @$group->admin->name }}</span>
+                                            Адміністратор -
+
+                                            <a class="orange-text"
+                                               href="{{ action('AdminController@adminEdit', @$group->admin->id) }}">
+                                                {{ @$group->admin->name }}
+                                            </a>
                                         </p>
 
 
@@ -82,9 +87,12 @@
 
                                             @foreach(@$group->students as $user)
                                                 @if($user->type == "moderator")
-                                                    <span class="orange-text moderator_group">
-                                                        <i class="fas fa-user"></i>{{ $user->name }}
-                                                    </span>
+                                                    <a class="orange-text"
+                                                       href="{{ action('AdminController@adminEdit', $user->id) }}">
+                                                        <span class="orange-text moderator_group">
+                                                            <i class="fas fa-user"></i>{{ $user->name }}
+                                                        </span>
+                                                    </a>
                                                 @endif
                                             @endforeach
                                         </p>
