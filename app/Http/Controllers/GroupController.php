@@ -261,7 +261,17 @@ class GroupController extends Controller
         Schedule::where('group_id', $group->id)->delete();
 
         User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null]);
-        User::where('type', 'default')->delete();
+        //        User::where('type', 'default')->delete();
+        User::where('type', 'default')->each(function($user) {
+            if (isset($user->avatar) && !is_null($user->avatar)){
+                $image = public_path() . $user->avatar;
+                if (file_exists($image)) {
+                    unlink($image);
+                }
+            }
+
+            $user->delete();
+        });
 
         $group->delete();
 

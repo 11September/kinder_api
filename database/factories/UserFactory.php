@@ -24,6 +24,7 @@ $factory->define(App\User::class, function (Faker $faker) {
         'remember_token' => str_random(10),
         'push' => $faker->randomElement(['enabled', 'disabled']),
 
+        'avatar' => "/images/uploads/avatars/testAvatar.png",
         'parent_name' => $faker->name,
         'parent_phone' => $faker->phoneNumber,
         'parents' => $faker->randomElement(['father', 'mother']),
