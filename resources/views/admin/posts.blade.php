@@ -69,7 +69,7 @@
                         @foreach($posts as $post)
                             <tr>
                                 <td>{{ $post->title }}</td>
-                                <td><img class="post-image" src="{{ asset($post->preview) }}" alt=""></td>
+                                <td><img class="post-image" src="{{ asset("storage/" . $post->preview) }}" alt=""></td>
                                 <td>{{ $post->until }}</td>
                                 <td><a class="orange-text" href="{{ action('SchoolController@adminEdit', @$post->school->id) }}">{{ @$post->school->name }}</a></td>
                                 <td class="action-td">

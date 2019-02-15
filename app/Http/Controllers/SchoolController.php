@@ -90,7 +90,7 @@ class SchoolController extends Controller
 
     public function deletePreviousPreviewImage($data)
     {
-        $preview = public_path() . $data;
+        $preview = storage_path('app/public') . $data;
         if (file_exists($preview)) {
             unlink($preview);
         }
@@ -101,7 +101,7 @@ class SchoolController extends Controller
     public function deletePreviousEncodeImages($data)
     {
         foreach (json_decode($data) as $image) {
-            $old_image = public_path() . $image;
+            $old_image = storage_path('app/public') . $image;
             if (file_exists($old_image)) {
                 unlink($old_image);
             }

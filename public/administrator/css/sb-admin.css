@@ -484,6 +484,22 @@ input[type="color"]:focus,
     color: darkgrey;
 }
 
+.one-image{
+    position: relative;
+}
+
+.wrapper-one-image-delete{
+    position: absolute;
+    top: 30px;
+    right: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.wrapper-one-image-delete i{
+    color: red;
+}
+
 .card-register {
     max-width: 40rem;
 }
@@ -641,6 +657,7 @@ body.sidebar-toggled footer.sticky-footer {
     max-width: 300px;
     width: 100%;
     height: auto;
+    max-height: 250px;
 }
 
 .action-td {

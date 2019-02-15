@@ -42,12 +42,12 @@ class PostsController extends Controller
                 $data = null;
 
                 if ($item['preview']) {
-                    $item['preview'] = Config::get('app.url') . $item['preview'];
+                    $item['preview'] = Config::get('app.storageurl') . $item['preview'];
                 }
 
                 if ($item['image']) {
                     foreach (json_decode($item['image']) as $image) {
-                        $data[] = Config::get('app.url') . $image;
+                        $data[] = Config::get('app.image.url') . $image;
                     }
                 }
 
@@ -144,7 +144,7 @@ class PostsController extends Controller
         if (isset($request->image) && $request->hasfile('image')) {
             foreach ($request->file('image') as $image) {
                 $name = '/images/uploads/posts/' . time() . "-" . uniqid() . "." . $image->getClientOriginalName();
-                $image->move(public_path('/images/uploads/posts'), $name);
+                $image->move(storage_path('app/public/images/uploads/posts'), $name);
                 $data[] = $name;
             }
         }
@@ -152,7 +152,7 @@ class PostsController extends Controller
 
         $preview = $request->file('preview');
         $input['preview'] = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
-        $preview->move(public_path('/images/uploads/posts'), $input['preview']);
+        $preview->move(storage_path('app/public/images/uploads/posts'), $input['preview']);
 
         $post->preview = '/images/uploads/posts/' . $input['preview'];
         $post->image = (isset($data)) ? json_encode($data) : null;
@@ -182,22 +182,29 @@ class PostsController extends Controller
     {
         $post = Post::where('id', $id)->first();
 
-        if (isset($request->old_image) && !empty($request->old_image)) {
-            $post->image = $request->old_image;
-        } else {
-            if ($post->image){
-                $this->deletePreviousEncodeImages($post->image);
-                $images = $this->storeNewEncodeImages($request->image);
-                $post->image = json_encode($images);
-            }
-        }
-
-        if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(public_path() . $request->old_preview)) {
+        if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(storage_path("app/public") . $request->old_preview)) {
             $post->preview = $request->old_preview;
         } else {
             $this->deletePreviousPreviewImage($post->preview);
             $newPreview = $this->storeNewPreviewImage($request->preview);
             $post->preview = $newPreview;
+        }
+
+        if (isset($request->old_image) && !empty($request->old_image) && !isset($request->image)) {
+            $post->image = $request->old_image;
+        }
+        elseif(isset($request->old_image) && !empty($request->old_image) && $request->image){
+            $images = $this->storeNewEncodeImages($request->image);
+            $newImages = array_merge($images, json_decode($post->image));
+            $post->image = json_encode($newImages);
+        }
+        else {
+            if ($post->image){
+                $this->deletePreviousEncodeImages($post->image);
+            }else{
+                $images = $this->storeNewEncodeImages($request->image);
+                $post->image = json_encode($images);
+            }
         }
 
         $post->title = $request->title;
@@ -229,7 +236,7 @@ class PostsController extends Controller
     public function deletePreviousEncodeImages($data)
     {
         foreach (json_decode($data) as $image) {
-            $old_image = public_path() . $image;
+            $old_image = storage_path('app/public') . $image;
             if (file_exists($old_image)) {
                 unlink($old_image);
             }
@@ -242,7 +249,7 @@ class PostsController extends Controller
     {
         foreach ($data as $image) {
             $name = '/images/uploads/posts/' . time() . "-" . uniqid() . "." . $image->getClientOriginalName();
-            $image->move(public_path('/images/uploads/posts'), $name);
+            $image->move(storage_path('app/public/images/uploads/posts'), $name);
             $newImages[] = $name;
         }
 
@@ -251,7 +258,7 @@ class PostsController extends Controller
 
     public function deletePreviousPreviewImage($data)
     {
-        $preview = public_path() . $data;
+        $preview = storage_path('app/public') . $data;
         if (file_exists($preview)) {
             unlink($preview);
         }
@@ -262,9 +269,44 @@ class PostsController extends Controller
     public function storeNewPreviewImage($preview)
     {
         $image = time() . "-" . uniqid() . "." . $preview->getClientOriginalExtension();
-        $preview->move(public_path('/images/uploads/posts'), $image);
+        $preview->move(storage_path('app/public/images/uploads/posts'), $image);
 
         return '/images/uploads/posts/' . $image;
+    }
+
+    public function deleteOneEncodeImage(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+            'path' => 'required|string|max:255',
+        ]);
+
+        $post = Post::where('id', $request->id)->first();
+
+        $newImages = array();
+        foreach (json_decode($post->image) as $image) {
+            if ($image == $request->path){
+                $old_image = storage_path('app/public') . $image;
+
+                if (file_exists($old_image)) {
+                    unlink($old_image);
+                }
+            }else{
+                $newImages[] = $image;
+            }
+        }
+
+        if ( count( $newImages ) == 0 ){
+            $post->image = null;
+            $count = 0;
+        }else{
+            $post->image = json_encode($newImages);
+            $count = count( $newImages );
+        }
+
+        $post->save();
+
+        return response()->json(['success' => true, 'count' => $count, 'images' => $post->image]);
     }
 
     public function notifyNewPost($request, $id)
