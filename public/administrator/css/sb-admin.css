@@ -464,6 +464,22 @@ input[type="color"]:focus,
     font-weight: bold;
 }
 
+.font-weght-6{
+    font-weight: 600;
+}
+
+.attention{
+    color: #f13d3d;
+}
+
+.success{
+    color: green;
+}
+
+.not-active{
+    color: darkgrey;
+}
+
 .card-register {
     max-width: 40rem;
 }

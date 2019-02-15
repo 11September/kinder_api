@@ -181,11 +181,11 @@
                                 </td>
                                 <td>
                                     @if($user->status == "active" && ($user->type == "admin" || $user->type == "moderator"))
-                                        Активний
+                                        <span class="success font-weght-6">Активний</span>
                                     @elseif($user->status == "disable" && $user->type == "moderator")
-                                        НЕ прив'язаний до групи
+                                        <span class="attention font-weght-6">НЕ прив'язаний до групи</span>
                                     @else
-                                        Не активний
+                                        <span class="not-active font-weght-6">Не активний</span>
                                     @endif
                                 </td>
 
