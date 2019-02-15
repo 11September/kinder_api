@@ -99,93 +99,110 @@
                         </ul>
                     </div>
 
-                    <div class="offset-xl-1 col-xl-6 col-lg-6 col-md-6">
-                        <h3 style="text-align: center">Оновити групу</h3>
+                    <div class="col-xl-8 col-lg-6 col-md-6">
+                        <div class="row">
+                            <div class="col-xl-6">
+                                <h3 style="text-align: center">Оновити групу</h3>
 
-                        <form action="{{ action('GroupController@adminUpdate', $group->id) }}" method="post">
-                            {{ csrf_field() }}
-                            {{ method_field('PUT') }}
+                                <form action="{{ action('GroupController@adminUpdate', $group->id) }}" method="post">
+                                    {{ csrf_field() }}
+                                    {{ method_field('PUT') }}
 
-                            <div class="row">
-                                <div class="col-xl-12 col-lg-12 col-md-12">
-                                    <div class="form-group">
-                                        <label for="user_id">Вибрати садок</label>
+                                    <div class="row">
+                                        <div class="col-xl-12 col-lg-12 col-md-12">
+                                            <div class="form-group">
+                                                <label for="user_id">Вибрати садок</label>
 
-                                        <select required name="school_id"
-                                                class="form-control {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
-                                                id="school_id">
+                                                <select required name="school_id"
+                                                        class="form-control {{ $errors->has('school_id') ? ' is-invalid' : '' }}"
+                                                        id="school_id">
 
-                                            @foreach($schools as $school)
-                                                <option value="{{ $school->id }}"
-                                                        @if($school->id == $group->school_id)
-                                                        selected
-                                                    @endif
-                                                    {{ old("school_id") == $school->id ? "selected":"" }}>
-                                                    {{ $school->name }}
-                                                </option>
-                                            @endforeach
+                                                    @foreach($schools as $school)
+                                                        <option value="{{ $school->id }}"
+                                                                @if($school->id == $group->school_id)
+                                                                selected
+                                                            @endif
+                                                            {{ old("school_id") == $school->id ? "selected":"" }}>
+                                                            {{ $school->name }}
+                                                        </option>
+                                                    @endforeach
 
-                                        </select>
-                                    </div>
+                                                </select>
+                                            </div>
 
 
-                                    <div class="form-group">
-                                        <label for="name">Назва групи</label>
-                                        <input required type="text" value="{{ $group->name }}" name="name" id="name"
-                                               class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
-                                               placeholder="Название Группы">
+                                            <div class="form-group">
+                                                <label for="name">Назва групи</label>
+                                                <input required type="text" value="{{ $group->name }}" name="name" id="name"
+                                                       class="form-control {{ $errors->has('name') ? ' is-invalid' : '' }}"
+                                                       placeholder="Название Группы">
 
-                                        @if ($errors->has('name'))
-                                            <span class="invalid-feedback" role="alert">
+                                                @if ($errors->has('name'))
+                                                    <span class="invalid-feedback" role="alert">
                                                 <strong>{{ $errors->first('name') }}</strong>
                                             </span>
-                                        @endif
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="user_id">Вибрати адміністратора</label>
-                                        <select required name="user_id"
-                                                class="form-control {{ $errors->has('user_id') ? ' is-invalid' : '' }}"
-                                                id="user_id">
-
-                                            @foreach($admins as $administrator)
-                                                <option @if($administrator->id == @$group->user_id) selected @endif
-                                                value="{{ $administrator->id }}">{{ $administrator->name }}</option>
-                                            @endforeach
-
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group">
-                                        <label for="moderator_id">Вибрати вихователя</label>
-
-                                        @foreach($moderators as $moderator)
-                                            <div class="form-check">
-                                                <label class="container">
-                                                    {{ $moderator->name }}
-                                                    <input value="{{ $moderator->id }}" class="school_id"
-                                                           name="moderator_id[]" id="moderator_id"
-                                                           @if($moderator->group_id == $group->id)
-                                                           checked="checked"
-                                                           @endif
-                                                           type="checkbox">
-                                                    <span class="checkmark"></span>
-                                                </label>
+                                                @endif
                                             </div>
-                                        @endforeach
 
-                                        @if(!$moderators || count($moderators) == 0)
-                                            <p>На жаль немає вільних вихователів. Створіть
-                                                <a class="orange-link" href="{{ url('/admin/admins') }}">нового</a>
-                                                вихователя.
-                                            </p>
-                                        @endif
+                                            <div class="form-group">
+                                                <label for="user_id">Вибрати адміністратора</label>
+                                                <select required name="user_id"
+                                                        class="form-control {{ $errors->has('user_id') ? ' is-invalid' : '' }}"
+                                                        id="user_id">
+
+                                                    @foreach($admins as $administrator)
+                                                        <option @if($administrator->id == @$group->user_id) selected @endif
+                                                        value="{{ $administrator->id }}">{{ $administrator->name }}</option>
+                                                    @endforeach
+
+                                                </select>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="moderator_id">Вибрати вихователя</label>
+
+                                                @foreach($moderators as $moderator)
+                                                    <div class="form-check">
+                                                        <label class="container">
+                                                            {{ $moderator->name }}
+                                                            <input value="{{ $moderator->id }}" class="school_id"
+                                                                   name="moderator_id[]" id="moderator_id"
+                                                                   @if($moderator->group_id == $group->id)
+                                                                   checked="checked"
+                                                                   @endif
+                                                                   type="checkbox">
+                                                            <span class="checkmark"></span>
+                                                        </label>
+                                                    </div>
+                                                @endforeach
+
+                                                @if(!$moderators || count($moderators) == 0)
+                                                    <p>На жаль немає вільних вихователів. Створіть
+                                                        <a class="orange-link" href="{{ url('/admin/admins') }}">нового</a>
+                                                        вихователя.
+                                                    </p>
+                                                @endif
+                                            </div>
+
+                                            <button type="submit" class="btn btn-primary mb-2">Оновити</button>
+                                        </div>
                                     </div>
-
-                                    <button type="submit" class="btn btn-primary mb-2">Оновити</button>
+                                </form>
+                            </div>
+                            <div class="col-xl-6">
+                                <h3 style="text-align: center">Список учнiв</h3>
+                                <div class="list-group wrapper-group-users">
+                                    @foreach($group->students as $student)
+                                        @if($student->type != "moderator" && $student->status == "active")
+                                            <a href="{{ action('StudentsController@adminEdit', $student->id) }}" class="list-group-item list-group-item-action">
+                                                <p class="orange-text">{{ $student->name }}</p>
+                                                <p>{{ $student->parent_name }}</p>
+                                            </a>
+                                        @endif
+                                    @endforeach
                                 </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
 

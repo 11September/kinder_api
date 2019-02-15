@@ -468,6 +468,10 @@ input[type="color"]:focus,
     font-weight: 600;
 }
 
+.wrapper-group-users p{
+    margin: 0;
+}
+
 .attention{
     color: #f13d3d;
 }
