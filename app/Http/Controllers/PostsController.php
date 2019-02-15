@@ -47,7 +47,7 @@ class PostsController extends Controller
 
                 if ($item['image']) {
                     foreach (json_decode($item['image']) as $image) {
-                        $data[] = Config::get('app.image.url') . $image;
+                        $data[] = Config::get('app.storageurl') . $image;
                     }
                 }
 
