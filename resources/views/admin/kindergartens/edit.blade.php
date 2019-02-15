@@ -97,54 +97,6 @@
 
                             <button type="submit" class="btn btn-primary mb-2">Оновити</button>
                         </div>
-
-                        {{--<div class="col-lg-6 col-md-12">--}}
-                        {{--<div class="form-group">--}}
-                        {{--<label>Групи</label>--}}
-
-                        {{--@foreach($groups as $group)--}}
-                        {{--@if(@$group->schools && count($group->schools ) > 0)--}}
-                        {{--<p class="no-marg"><span class="orange">Садки:</span></p>--}}
-
-                        {{--@foreach(@$group->schools as $group_school)--}}
-                        {{--@if ($loop->last)--}}
-                        {{--<i class="fas fa-hotel"></i><small class="small-school">{{ $group_school->name }}</small>--}}
-                        {{--@else--}}
-                        {{--<i class="fas fa-hotel"></i><small class="small-school">{{ $group_school->name . ", " }}</small>--}}
-                        {{--@endif--}}
-                        {{--@endforeach--}}
-                        {{--@endif--}}
-
-                        {{--<div class="form-check">--}}
-                        {{--<label class="container">--}}
-                        {{--{{ $group->name }}--}}
-                        {{--<input--}}
-
-                        {{--@foreach($school->groups as $item)--}}
-                        {{--@if($group->id == $item->id)--}}
-                        {{--checked="checked"--}}
-                        {{--@endif--}}
-                        {{--@endforeach--}}
-
-                        {{--value="{{ $group->id }}" name="group_id[]"--}}
-                        {{--class="{{ $errors->has('group_id') ? ' is-invalid' : '' }}"--}}
-                        {{--type="checkbox">--}}
-                        {{--<span class="checkmark"></span>--}}
-                        {{--</label>--}}
-
-                        {{--</div>--}}
-                        {{--@endforeach--}}
-
-                        {{--@if ($errors->has('group_id'))--}}
-                        {{--<span class="invalid-feedback" role="alert">--}}
-                        {{--<strong>{{ $errors->first('group_id') }}</strong>--}}
-                        {{--</span>--}}
-                        {{--@endif--}}
-
-                        {{--</div>--}}
-
-
-                        {{--</div>--}}
                     </div>
                 </form>
 
@@ -179,7 +131,7 @@
                             action: function () {
                                 $.confirm({
                                     title: 'Підтвердіть видалення садка',
-                                    content: 'Попередження: при видаленні садка видаляться всі учні, розклад занять, розклад харчування, новини що належать даному садочку.',
+                                    content: 'Попередження: при видаленні садка видаляться всі учні, розклад занять, розклад харчування, групи, новини що належать даному садочку. Всі вихователі будуть неактивні і відв\'язані від груп!',
                                     icon: 'fa fa-warning',
                                     animation: 'scale',
                                     closeAnimation: 'zoom',
