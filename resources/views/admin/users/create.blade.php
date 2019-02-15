@@ -315,11 +315,9 @@
 
                                 if (data.data && data.data !== '') {
                                     $.each(data.data, function (index, item) {
-                                        console.log(item);
                                         $('.choose_group_option').append('<option  value="' + item.id + '">' + item.name + '</option>');
                                     });
                                 } else {
-                                    console.log("empty data");
                                     $('.choose_group_option').empty();
                                 }
                             }

@@ -158,11 +158,8 @@
                 }
             });
 
-
             $("input.school_id[type='checkbox']").change(function () {
-                console.log('change');
                 var school_id = $(this).val();
-
                 if ($(this).prop("checked")) {
                     if (school_id) {
                         $.ajax({
@@ -180,8 +177,6 @@
                                 if (data.success) {
                                     if (data.data && data.data !== '') {
                                         $.each(data.data, function (index, item) {
-                                            console.log(item);
-
                                             content.append(
                                                 '<div class="form-check" data-school-id="' + school_id + '">' +
                                                 '<label class="container">' + item.name +
@@ -200,10 +195,7 @@
                         });
                     }
                 } else {
-                    console.log('not checked');
-
                     $('div[data-school-id="' + school_id + '"]').each(function (i, el) {
-                        console.log('find item');
                         $(this).remove();
                     });
                 }

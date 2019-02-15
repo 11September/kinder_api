@@ -280,8 +280,6 @@
 
                                 if (data.data && data.data !== '') {
                                     $.each(data.data, function (index, item) {
-                                        console.log(item);
-
                                         $('#wrapper-list-groups').append(
                                             '<li class="list-group-item">' +
                                             '<a class="orange-text" href="/admin/schedules/' + item.id + '">' + item.name + '</a>' +
@@ -289,7 +287,6 @@
                                         );
                                     });
                                 } else {
-                                    console.log("empty data");
                                     $('#wrapper-list-groups').empty();
                                 }
                             }
@@ -357,9 +354,6 @@
                                     var itemContentLoop = "";
 
                                     $.each(item.lessons, function (i, item) {
-
-                                        console.log(item);
-
                                         itemContentLoop += '<div class="schedule-list-day">' +
                                             '<p class="schedule-list-day-time">' +
                                             item.from + " - " + item.to +
@@ -442,8 +436,6 @@
 
 
                                 $.each(data, function (index, item) {
-                                    console.log(item);
-
                                     $.each(item.lessons, function (i, item) {
                                         content.append('' +
                                             '<form method="post" class="newLessonForm">' +
@@ -473,9 +465,6 @@
                                             '</div>' +
                                             '</form>'
                                         );
-
-                                        console.log("sub each");
-                                        console.log(item);
                                     });
                                 });
 
@@ -534,9 +523,6 @@
                                     '</div>'
                                 );
                             }
-
-
-                            console.log(data);
                         }, error: function () {
                             console.log(data);
                         }
@@ -566,8 +552,6 @@
                                 });
                                 toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                             }
-
-                            console.log(data);
                         }, error: function () {
                             console.log(data);
                         }
@@ -587,8 +571,6 @@
 
                 var clicked = $(e.target);
                 clicked.prop('disabled', true);
-                console.log("click more-lesson");
-
                 clicked.closest('div.append-day-item').addClass('lol').before('' +
                     '<form method="post" class="newLessonForm">' +
                     '<div class="row append-day-item append-day-item-border">\n' +
@@ -625,8 +607,6 @@
             $(".wrapper-schedule").on("submit", '.newLessonForm', function (e) {
                 e.preventDefault();
 
-                console.log("click save-lesson");
-
                 var clicked = $(e.target);
                 clicked.prop('disabled', true);
 
@@ -643,15 +623,12 @@
                     dataType: 'json',
                     data: serializeData,
                     success: function (data) {
-
                         if (data.success) {
                             $(e.target).find('.lesson_id').attr('value', data.id);
                             $(e.target).find('.delete-lesson').attr("data-id", data.id);
                             $(e.target).find('.append-day-item').css('border', '2px solid #de6a1c');
                             toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                         }
-
-                        console.log(data);
                     }, error: function () {
                         console.log(data);
                     }

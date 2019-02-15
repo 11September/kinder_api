@@ -440,8 +440,6 @@
 
 
                                 $.each(data, function (index, item) {
-                                    console.log(item);
-
                                     $.each(item.foods, function (i, item) {
                                         var selected_breakfast;
                                         var selected_lunch;
@@ -547,7 +545,6 @@
                                     '</div>'
                                 );
                             }
-                            console.log(data);
                         }, error: function () {
                             console.log(data);
                         }
@@ -570,15 +567,12 @@
                         dataType: 'json',
                         data: {id: delete_lesson_id},
                         success: function (data) {
-
                             if (data.success) {
                                 clicked.closest('div.append-day-item').fadeOut(300, function () {
                                     $(this).remove();
                                 });
                                 toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                             }
-
-                            console.log(data);
                         }, error: function () {
                             console.log(data);
                         }
@@ -598,8 +592,6 @@
 
                 var clicked = $(e.target);
                 clicked.prop('disabled', true);
-                console.log("click more-lesson");
-
                 clicked.closest('div.append-day-item').addClass('lol').before('' +
                     '<form method="post" class="newLessonForm">' +
                     '<div class="row append-day-item append-day-item-border">\n' +
@@ -636,8 +628,6 @@
             $(".wrapper-schedule").on("submit", '.newLessonForm', function (e) {
                 e.preventDefault();
 
-                console.log("click save-lesson");
-
                 var clicked = $(e.target);
                 clicked.prop('disabled', true);
 
@@ -661,8 +651,6 @@
                             $(e.target).find('.append-day-item').css('border', '2px solid #de6a1c');
                             toastr.success('Розклад успішно оновлено!', {timeOut: 3000});
                         }
-
-                        console.log(data);
                     }, error: function () {
                         console.log(data);
                     }

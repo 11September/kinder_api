@@ -221,9 +221,6 @@
         socket.emit('add user', {'client':{{Auth::user()->id}}, 'conversation':{{$conversation->id}}});
 
         socket.on('message', function (data) {
-
-            console.log(data);
-
             $('#wrapper-chat').append(
                 '<div class="chat-container normal unread">' +
                 '<p>' + data.message + '</p>' +
@@ -238,7 +235,6 @@
                 countUser = 0;
             }
             countUser++;
-            console.log(countUser);
             countObject.removeAttr("style");
             countObject.text(countUser);
 
@@ -279,8 +275,6 @@
 
                                 if (data.data && data.data !== '') {
                                     $.each(data.data, function (index, item) {
-                                        console.log(item);
-
                                         $('#wrapper-list-groups').append(
                                             '<li class="list-group-item">' +
                                             '<a class="orange-text" href="/admin/conversations/group/' + item.id + '">' + item.name + '</a>' +
@@ -288,7 +282,6 @@
                                         );
                                     });
                                 } else {
-                                    console.log("empty data");
                                     $('#wrapper-list-groups').empty();
                                 }
                             }

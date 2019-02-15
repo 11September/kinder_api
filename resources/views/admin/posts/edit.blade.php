@@ -259,8 +259,6 @@
                                 content.empty();
                                 if (data.data && data.data !== '') {
                                     $.each(data.data, function (index, item) {
-                                        console.log(item);
-
                                         content.append(
                                             '<div class="form-check">' +
                                             '<label class="container">' + item.name +

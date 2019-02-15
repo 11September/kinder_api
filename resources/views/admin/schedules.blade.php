@@ -99,11 +99,8 @@
 
                             if (data.success) {
                                 $('#wrapper-list-groups').empty();
-
                                 if (data.data && data.data !== '') {
                                     $.each(data.data, function (index, item) {
-                                        console.log(item);
-
                                         $('#wrapper-list-groups').append(
                                             '<li class="list-group-item">' +
                                             '<a class="orange-text" href="/admin/schedules/'+item.id+'">' + item.name + '</a>' +
@@ -111,7 +108,6 @@
                                         );
                                     });
                                 } else {
-                                    console.log("empty data");
                                     $('#wrapper-list-groups').empty();
                                 }
                             }
