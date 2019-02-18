@@ -77,12 +77,12 @@ class PostsController extends Controller
 
 
             if (isset($post->preview) || !empty($post->preview)) {
-                $post->preview = Config::get('app.url') . $post->preview;
+                $post->preview = Config::get('app.storageurl') . $post->preview;
             }
 
             if ($post->image) {
                 foreach (json_decode($post['image']) as $image) {
-                    $data[] = Config::get('app.url') . $image;
+                    $data[] = Config::get('app.storageurl') . $image;
                 }
             }else{
                 $data = [];

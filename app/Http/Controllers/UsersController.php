@@ -287,7 +287,6 @@ class UsersController extends Controller
     public function storeBase64Image($data)
     {
         $folderPath = "images/uploads/avatars/";
-        $folderPathSave = "/images/uploads/avatars/";
         $image_parts = explode(";base64,", $data);
 
         if (!$image_parts || !isset($image_parts[1]) || $image_parts[1] == null || $image_parts[1] == "") {
