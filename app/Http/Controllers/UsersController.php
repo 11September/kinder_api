@@ -59,7 +59,7 @@ class UsersController extends Controller
                         $result = array_add($result, 'avatar', $avatar);
                         $result = array_add($result, 'push', $user->push);
                         $result = array_add($result, 'school_id', (isset($user->school_id)) ? $user->school_id : null);
-                        $result = array_add($result, 'school_name', (isset($school->name) ? $school->name : null) );
+                        $result = array_add($result, 'school_name', (isset($school->name) ? $school->name : null));
 
                         return response($result);
                     } else {
@@ -273,6 +273,37 @@ class UsersController extends Controller
 
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
+            $user->push_chat = $request->push;
+            $user->save();
+
+            return response()->json(['message' => 'Push повiдомлення змiнено!', 'data' => $user->push_chat], 200);
+
+        } catch (\Exception $exception) {
+            Log::warning('UsersController@SetPushChat Exception: ' . $exception->getMessage() . " - " . $exception->getLine());
+            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
+        }
+    }
+
+    public function SetPushEnable(Request $request)
+    {
+//        return response()->json(['message' => 'Push повiдомлення змiнено!'], 200);
+
+
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required',
+            'push' => [
+                'required',
+                'string',
+                Rule::in(['true']),
+            ]
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Дані в запиті не заповнені або не вірні!'], 400);
+        }
+
+        try {
+            $user = User::where('id', $request->user_id)->first();
             $user->push_chat = $request->push;
             $user->save();
 

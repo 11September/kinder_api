@@ -2,6 +2,7 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var redis = require('redis');
+var axios = require('axios');
 server.listen(8890);
 users = {};
 
@@ -28,7 +29,6 @@ redisClient.on("message", function (channel, data) {
         }
     }
 });
-
 
 
 io.on('connection', function (socket) {
@@ -58,15 +58,32 @@ io.on('connection', function (socket) {
 
     socket.on('disconnect', function () {
         console.log('disconnect');
+        io.emit("disconnect", {"status": "disconnect"});
 
-        io.emit("disconnect", {"status" : "disconnect"});
+
 
         if (!(socket.user_id in users)) return;
         if (!(socket.conversation_id in users[socket.user_id])) return;
 
+        axios.get('http://localhost:8000/set_push_enable', {
+            params: {
+                push: true,
+                user_id: socket.user_id
+            }
+        })
+            .then(response => {
+                console.log(response.data.message);
+            })
+            .catch(error => {
+                console.log(error);
+            });
+
+
         delete users[socket.user_id][socket.conversation_id];
         if (Object.keys(users[socket.user_id]).length === 0) {
             delete users[socket.user_id];
+
+
         }
     });
 
