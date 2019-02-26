@@ -21,6 +21,7 @@ class ApiToken
         if($token && $request->header('x-auth-token')){
             return $next ($request);
         }else{
+            User::where('token', '=', $request->header('x-auth-token'))->update(['player_id' => null]);
             return response()->json(['message' => 'Невідповідність токена або користувач не авторизований!'], 403);
         }
     }
