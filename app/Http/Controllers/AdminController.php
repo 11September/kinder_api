@@ -7,7 +7,6 @@ use App\User;
 use App\Group;
 use App\School;
 use App\Message;
-use App\Conversation;
 use Illuminate\Http\Request;
 use App\Http\Requests\StoreAdmin;
 use App\Http\Requests\UpdateAdmin;
@@ -15,11 +14,6 @@ use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function admin()
     {
         $schools = School::count();
@@ -54,7 +48,7 @@ class AdminController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.admins')->with('message','Користувач успішно створений!');
+        return redirect()->route('admins')->with('message','Користувач успішно створений!');
     }
 
     public function adminEdit(Request $request, $id)
@@ -87,7 +81,7 @@ class AdminController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.admins.edit', $user->id)->with('message','Користувач успішно змінений!');
+        return redirect()->route('admins.edit', $user->id)->with('message','Користувач успішно змінений!');
     }
 
     public function adminDelete($id)
@@ -95,11 +89,6 @@ class AdminController extends Controller
         $user = User::find($id);
         $user->delete();
 
-        return redirect()->route('admin.admins', $user->id)->with('message','Користувач успішно видалений!');
-    }
-
-    public function kindergartens()
-    {
-        return view('admin.kindergartens');
+        return redirect()->route('admins', $user->id)->with('message','Користувач успішно видалений!');
     }
 }

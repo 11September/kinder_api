@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use OneSignal;
-use App\Group;
 use App\School;
-use App\Notification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreNotification;
@@ -56,7 +54,7 @@ class NotificationsController extends Controller
             \OneSignal::sendNotificationCustom($params);
         }
 
-        return redirect()->route('admin.notifications')->with('message', 'Повiдомлення успішно відправлено!');
+        return redirect()->route('notifications')->with('message', 'Повiдомлення успішно відправлено!');
     }
 
     public function notifyScheduleByGroup(Request $request)

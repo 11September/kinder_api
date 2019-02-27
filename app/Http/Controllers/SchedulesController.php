@@ -2,51 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\User;
 use App\Clas;
 use App\Group;
 use App\School;
 use App\Schedule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Validator;
 
 class SchedulesController extends Controller
 {
-    public function index(Request $request)
-    {
-        try {
-            $user = User::where('token', '=', $request->header('x-auth-token'))->first();
-
-            if (!$user->school_id || !$user->group_id){
-                return response()->json(['message' => 'Розклад не знайдено!'], 404);
-            }
-
-            $schedules = Schedule::where('school_id', $user->school_id)
-                ->where('group_id', $user->group_id)
-                ->with(array('lessons' => function ($query) {
-                    $query->select('id', 'name', 'from', 'to', 'schedule_id');
-                }))
-                ->get();
-
-            if (!$schedules || count($schedules) < 1) {
-                return response()->json(['message' => 'В даний момент розклад відсутній!'], 404);
-            }else{
-                foreach ($schedules as $key => $value) {
-                    if (count($value->lessons) < 1){
-                        $schedules->forget($key);
-                    }
-                }
-            }
-
-            return ['data' => $schedules];
-
-        } catch (\Exception $exception) {
-            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
-            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
-        }
-    }
-
     public function adminIndex()
     {
         $schools = School::all();
@@ -78,21 +41,6 @@ class SchedulesController extends Controller
         return view('admin.schedules.show', compact('list_schools', 'schedules', 'current_school', 'current_group' ,'groups'));
     }
 
-    public function adminGetLessonsByDay(Request $request)
-    {
-        $request->validate([
-            'school_id' => 'required',
-            'group_id' => 'required',
-            'day' => 'required',
-        ]);
-
-        $schedules = Schedule::where('school_id', $request->school_id)
-            ->where('group_id', $request->group_id)
-            ->where('day', $request->day)->with('lessons')->first();
-
-        return response()->json(['data' => $schedules, 'success' => true]);
-    }
-
     public function adminGetLessonsAll(Request $request)
     {
         $request->validate([
@@ -108,16 +56,19 @@ class SchedulesController extends Controller
         return response()->json(['data' => $schedules, 'success' => true]);
     }
 
-    public function adminDeleteLessonsByDay(Request $request)
+    public function adminGetLessonsByDay(Request $request)
     {
         $request->validate([
-            'id' => 'required',
+            'school_id' => 'required',
+            'group_id' => 'required',
+            'day' => 'required',
         ]);
 
-        $lesson = Clas::where('id', $request->id)->first();
-        $lesson->delete();
+        $schedules = Schedule::where('school_id', $request->school_id)
+            ->where('group_id', $request->group_id)
+            ->where('day', $request->day)->with('lessons')->first();
 
-        return response()->json(['success' => true]);
+        return response()->json(['data' => $schedules, 'success' => true]);
     }
 
     public function adminSaveLessonsByDay(Request $request)
@@ -178,5 +129,17 @@ class SchedulesController extends Controller
         }
 
         return response()->json(['success' => true, 'id' => $lesson->id]);
+    }
+
+    public function adminDeleteLessonsByDay(Request $request)
+    {
+        $request->validate([
+            'id' => 'required',
+        ]);
+
+        $lesson = Clas::where('id', $request->id)->first();
+        $lesson->delete();
+
+        return response()->json(['success' => true]);
     }
 }

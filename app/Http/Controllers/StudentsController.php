@@ -5,38 +5,14 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Group;
 use App\School;
-use App\Student;
 use App\Mail\LoginMail;
 use App\Mail\DeleteProfile;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Http\Requests\StoreStudent;
 use App\Http\Requests\UpdateStudent;
 use Illuminate\Support\Facades\Hash;
 
 class StudentsController extends Controller
 {
-    public function index(Request $request)
-    {
-        try {
-            $students = Student::select('id', 'FIO', 'birthday', 'user_id')
-                ->active()
-                ->with(array('users' => function ($query) {
-                    $query->select('id', 'name', 'email');
-                }))
-                ->published()
-                ->filter($request->all())
-                ->get();
-
-            return ['data' => $students];
-
-        } catch (\Exception $exception) {
-            Log::warning('GroupController@index Exception: ' . $exception->getMessage());
-            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
-        }
-    }
-
-
     public function adminIndex()
     {
         $users = User::where('type', 'default')
@@ -92,7 +68,7 @@ class StudentsController extends Controller
 
         \Mail::to($request->email)->send(new LoginMail($user, $password));
 
-        return redirect()->route('admin.users')->with('message', 'Користувач успішно доданий! Перевiрте пошту!');
+        return redirect()->route('users')->with('message', 'Користувач успішно доданий! Перевiрте пошту!');
     }
 
     public function adminEdit($id)
@@ -135,7 +111,7 @@ class StudentsController extends Controller
 
         $user->save();
 
-        return redirect()->route('admin.users')->with('message', 'Користувач успішно оновлений!');
+        return redirect()->route('users')->with('message', 'Користувач успішно оновлений!');
     }
 
     public function adminDelete($id)
@@ -154,7 +130,7 @@ class StudentsController extends Controller
 
         \Mail::to($mailTo)->send(new DeleteProfile($user));
 
-        return redirect()->route('admin.users')->with('message', 'Користувач успішно видалений!');
+        return redirect()->route('users')->with('message', 'Користувач успішно видалений!');
     }
 
 }

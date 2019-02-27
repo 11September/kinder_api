@@ -13,7 +13,7 @@
                 <a class="orange-text" href="{{ url('admin') }}">Главная Страница</a>
             </li>
             <li class="breadcrumb-item active">
-                <a class="orange-text" href="{{ url('admin/users') }}">Пользователи</a>
+                <a class="orange-text" href="{{ url('admin/users') }}">Користувачі</a>
             </li>
             <li class="breadcrumb-item ">
                 {{ $user->name }}
@@ -25,7 +25,7 @@
                 <div class="card mb-3">
 
                     <div class="card-header">
-                        <h2>Создать Пользователя</h2>
+                        <h2>Редагувати Користувача</h2>
                     </div>
 
                     <div class="card-body">

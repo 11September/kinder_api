@@ -314,15 +314,19 @@
 
         function send_msg(msg) {
             $.ajax({
-                headers: {'X-CSRF-Token': $('#csrf_token_input').val()},
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+
                 type: "POST",
-                url: "{{route('admin.messages.store')}}",
+                url: '/admin/messages/store',
+                dataType: 'json',
                 data: {
                     'message': msg,
                     'conversation_id':{{$conversation->id}},
                 },
                 success: function (data) {
-                    if (data == true) {
+                    if (data.success == true) {
 
                         $('#wrapper-chat').append(
                             '<div class="chat-container darker">' +

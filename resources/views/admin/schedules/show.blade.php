@@ -314,10 +314,16 @@
 
                 // if all
                 if (day == "all") {
+
+
                     $.ajax({
-                        type: 'GET',
-                        url: '/admin/adminGetLessonsAll',
-                        dataType: 'json',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/schedules/adminGetLessonsAll',
+                        // dataType: 'json',
                         data: {school_id: school_id, group_id: global_group_id},
                         success: function (data) {
 
@@ -392,8 +398,12 @@
                     });
                 } else {
                     $.ajax({
-                        type: 'GET',
-                        url: '/admin/adminGetLessonsByDay',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/schedules/adminGetLessonsByDay',
                         dataType: 'json',
                         data: {school_id: school_id, day: day, group_id: group_id},
                         success: function (data) {
@@ -540,8 +550,12 @@
 
                 if (delete_lesson_id) {
                     $.ajax({
-                        type: 'GET',
-                        url: '/admin/adminDeleteLessonsByDay',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/schedules/adminDeleteLessonsByDay',
                         dataType: 'json',
                         data: {id: delete_lesson_id},
                         success: function (data) {
@@ -619,7 +633,7 @@
                     },
 
                     type: 'POST',
-                    url: '/admin/adminSaveLessonsByDay',
+                    url: '/admin/schedules/adminSaveLessonsByDay',
                     dataType: 'json',
                     data: serializeData,
                     success: function (data) {

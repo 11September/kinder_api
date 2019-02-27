@@ -11,88 +11,110 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'WelcomeController@welcome')->name('welcome');
 
 Auth::routes();
 
+Route::get('/set_push_enable', 'UsersController@SetPushEnable')->name('Set Push');
 Route::get('/admin', 'AdminController@admin')->middleware('access_admin')->name('admin');
 
-// Admin Admins
-Route::get('/admin/admins', 'AdminController@admins')->middleware('is_admin')->name('admin.admins');
-Route::post('/admin/admins/store', 'AdminController@store')->middleware('is_admin')->name('admin');
-Route::get('/admin/admins/{id}/edit', 'AdminController@adminEdit')->middleware('is_admin')->name('admin.admins.edit');
-Route::put('/admin/admins/{user}', 'AdminController@adminUpdate')->middleware('is_admin')->name('admin.admins.update');
-Route::delete('/admin/admins/delete/{user}', 'AdminController@adminDelete')->middleware('is_admin')->name('admin.admins.delete');
+Route::group(['prefix' => 'admin'], function () {
+    Route::middleware(['is_admin', 'auth'])->group(function () {
+
+        Route::group(['prefix' => 'admins'], function () {
+            Route::get('/', 'AdminController@admins')->name('admins');
+            Route::post('/store', 'AdminController@store')->name('store');
+            Route::get('/{id}/edit', 'AdminController@adminEdit')->name('admins.edit');
+            Route::put('/{user}', 'AdminController@adminUpdate')->name('update');
+            Route::delete('/{user}', 'AdminController@adminDelete')->name('delete');
+        });
+
+        Route::group(['prefix' => 'users'], function () {
+            Route::get('/', 'StudentsController@adminIndex')->name('users');
+            Route::get('/create', 'StudentsController@adminCreate')->name('create');
+            Route::post('/', 'StudentsController@adminStore')->name('store');
+            Route::get('/{id}/edit', 'StudentsController@adminEdit')->name('edit');
+            Route::put('/{user}', 'StudentsController@adminUpdate')->name('update');
+            Route::delete('/{id}', 'StudentsController@adminDelete')->name('delete');
+        });
+
+        Route::group(['prefix' => 'kindergartens'], function () {
+            Route::get('/', 'SchoolController@adminIndex')->name('kindergartens');
+            Route::post('/', 'SchoolController@adminStore')->name('store');
+            Route::get('/{id}/edit', 'SchoolController@adminEdit')->name('edit');
+            Route::put('/{id}', 'SchoolController@adminUpdate')->name('update');
+            Route::delete('/{id}', 'SchoolController@adminDelete')->name('delete');
+        });
+
+        Route::group(['prefix' => 'groups'], function () {
+            Route::get('/', 'GroupController@adminIndex')->name('groups');
+            Route::get('/create', 'GroupController@adminCreate')->name('create');
+            Route::post('/', 'GroupController@adminStore')->name('store');
+            Route::get('/{id}/edit', 'GroupController@adminEdit')->name('edit');
+            Route::put('/{id}', 'GroupController@adminUpdate')->name('update');
+            Route::delete('/{id}', 'GroupController@adminDelete')->name('delete');
+        });
+
+        Route::group(['prefix' => 'posts'], function () {
+            Route::get('/', 'PostsController@adminIndex')->name('posts');
+            Route::get('/create', 'PostsController@adminCreate')->name('create');
+            Route::post('/', 'PostsController@adminStore')->name('store');
+            Route::get('/{id}/edit', 'PostsController@adminEdit')->name('edit');
+            Route::put('/{id}', 'PostsController@adminUpdate')->name('update');
+            Route::delete('/{id}', 'PostsController@adminDelete')->name('delete');
+            Route::post('/deleteOneImage', 'PostsController@deleteOneEncodeImage')->name('deleteOneImage');
+        });
+
+        Route::group(['prefix' => 'schedules'], function () {
+            Route::get('/', 'SchedulesController@adminIndex')->name('schedules');
+            Route::get('/{id}', 'SchedulesController@adminShow')->name('show');
+            Route::post('/adminGetLessonsAll', 'SchedulesController@adminGetLessonsAll')->name('adminGetLessonsAll');
+            Route::post('/adminGetLessonsByDay', 'SchedulesController@adminGetLessonsByDay')->name('adminGetLessonsByDay');
+            Route::post('/adminSaveLessonsByDay', 'SchedulesController@adminSaveLessonsByDay')->name('adminSaveLessonsByDay');
+            Route::post('/adminDeleteLessonsByDay', 'SchedulesController@adminDeleteLessonsByDay')->name('adminDeleteLessonsByDay');
+        });
+
+        Route::group(['prefix' => 'nutritions'], function () {
+            Route::get('/', 'NutritionsController@adminIndex')->name('nutritions');
+            Route::get('/{id}', 'NutritionsController@adminShow')->name('show');
+            Route::post('/adminGetFoodsAll', 'NutritionsController@adminGetFoodsAll')->name('adminGetFoodsAll');
+            Route::post('/adminGetFoodsByDay', 'NutritionsController@adminGetFoodsByDay')->name('adminGetFoodsByDay');
+            Route::post('/adminSaveFoodByDay', 'NutritionsController@adminSaveFoodByDay')->name('adminSaveFoodByDay');
+            Route::post('/adminDeleteFoodByDay', 'NutritionsController@adminDeleteFoodByDay')->name('adminDeleteFoodByDay');
+        });
+
+        Route::group(['prefix' => 'notifications'], function () {
+            Route::get('/', 'NotificationsController@adminIndex')->name('notifications');
+            Route::post('/', 'NotificationsController@adminStore')->name('store');
+            Route::post('/notifyScheduleByGroup', 'NotificationsController@notifyScheduleByGroup')->name('notifyScheduleByGroup');
+            Route::post('/notifyFoodsBySchool', 'NotificationsController@notifyFoodsBySchool')->name('notifyFoodsBySchool');
+        });
+    });
+
+    Route::middleware(['auth', 'access_admin', 'emptyGroupId'])->group(function () {
+        Route::group(['prefix' => 'conversations'], function () {
+            Route::get('/', 'ConversationController@admin')->name('conversations');
+            Route::get('/group/{id}', 'ConversationController@adminShowGroupUsers')->name('adminShowGroupUsers');
+            Route::get('/{id}', 'ConversationController@checkConversation')->name('checkConversation');
+            Route::get('/user/{id}', 'ConversationController@user')->name('chat.user');
+        });
+
+        Route::group(['prefix' => 'messages'], function () {
+            Route::post('/store', 'MessagesController@adminStore')->name('messages.store');
+            Route::get('/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->name('setReadMessages');
+        });
+    });
+
+    Route::middleware(['auth', 'access_admin'])->group(function () {
+        Route::post('/groups/getAllGroupsById', 'GroupController@getAllGroupsById')->name('admin.users.getAllGroupsById');
+        Route::get('/messages/unread_messages_counter', 'MessagesController@AdminMessagesCounter')->name('messages.main.counter');
+    });
+});
 
 
-// Admin Users
-Route::get('/admin/users', 'StudentsController@adminIndex')->middleware('is_admin')->name('admin.users');
-Route::get('/admin/users/create', 'StudentsController@adminCreate')->middleware('is_admin')->name('admin.users.create');
-Route::post('/admin/users', 'StudentsController@adminStore')->middleware('is_admin')->name('admin.users.store');
-Route::get('/admin/users/{id}/edit', 'StudentsController@adminEdit')->middleware('is_admin')->name('admin.users.edit');
-Route::put('/admin/users/{user}', 'StudentsController@adminUpdate')->middleware('is_admin')->name('admin.users.update');
-Route::delete('/admin/users/{id}', 'StudentsController@adminDelete')->middleware('is_admin')->name('admin.users.delete');
-
-// Admin Schools
-Route::get('/admin/kindergartens', 'SchoolController@adminIndex')->middleware('is_admin')->name('admin.kindergartens');
-Route::get('/admin/kindergartens/create', 'SchoolController@adminCreate')->middleware('is_admin')->name('admin.kindergartens.create');
-Route::post('/admin/kindergartens', 'SchoolController@adminStore')->middleware('is_admin')->name('admin.kindergartens.store');
-Route::get('/admin/kindergartens/{id}/edit', 'SchoolController@adminEdit')->middleware('is_admin')->name('admin.kindergartens.edit');
-Route::put('/admin/kindergartens/{id}', 'SchoolController@adminUpdate')->middleware('is_admin')->name('admin.kindergartens.update');
-Route::delete('/admin/kindergartens/{id}', 'SchoolController@adminDelete')->middleware('is_admin')->name('admin.kindergartens.delete');
-
-// Admin Groups
-Route::get('/admin/groups', 'GroupController@adminIndex')->middleware('is_admin')->name('admin.groups');
-Route::get('/admin/groups/create', 'GroupController@adminCreate')->middleware('is_admin')->name('admin.groups.create');
-Route::post('/admin/groups', 'GroupController@adminStore')->middleware('is_admin')->name('admin.groups.store');
-Route::get('/admin/groups/{id}/edit', 'GroupController@adminEdit')->middleware('is_admin')->name('admin.groups.edit');
-Route::put('/admin/groups/{id}', 'GroupController@adminUpdate')->middleware('is_admin')->name('admin.groups.update');
-Route::delete('/admin/groups/{id}', 'GroupController@adminDelete')->middleware('is_admin')->name('admin.groups.delete');
-Route::post('/admin/groups/getAllGroupsById', 'GroupController@getAllGroupsById')->middleware('access_admin')->name('admin.users.getAllGroupsById');
-
-// Admin News
-Route::get('/admin/posts', 'PostsController@adminIndex')->middleware('is_admin')->name('admin.posts');
-Route::get('/admin/posts/create', 'PostsController@adminCreate')->middleware('is_admin')->name('admin.posts.create');
-Route::post('/admin/posts', 'PostsController@adminStore')->middleware('is_admin')->name('admin.posts.store');
-Route::get('/admin/posts/{id}/edit', 'PostsController@adminEdit')->middleware('is_admin')->name('admin.posts.edit');
-Route::put('/admin/posts/{id}', 'PostsController@adminUpdate')->middleware('is_admin')->name('admin.posts.update');
-Route::delete('/admin/posts/{id}', 'PostsController@adminDelete')->middleware('is_admin')->name('admin.posts.delete');
-Route::post('/admin/posts/deleteOneImage', 'PostsController@deleteOneEncodeImage')->middleware('access_admin')->name('admin.posts.deleteOneImage');
-
-// Admin Schedules
-Route::get('/admin/schedules', 'SchedulesController@adminIndex')->middleware('is_admin')->name('admin.schedules');
-Route::get('/admin/schedules/{id}', 'SchedulesController@adminShow')->middleware('is_admin')->name('admin.electives.show');
-Route::get('/admin/adminGetLessonsByDay', 'SchedulesController@adminGetLessonsByDay')->middleware('is_admin')->name('admin.schedules.adminGetLessonsByDay');
-Route::post('/admin/adminSaveLessonsByDay', 'SchedulesController@adminSaveLessonsByDay')->middleware('is_admin')->name('admin.schedules.adminSaveLessonsByDay');
-Route::get('/admin/adminGetLessonsAll', 'SchedulesController@adminGetLessonsAll')->middleware('is_admin')->name('admin.schedules.adminGetLessonsAll');
-Route::get('/admin/adminDeleteLessonsByDay', 'SchedulesController@adminDeleteLessonsByDay')->middleware('is_admin')->name('admin.schedules.adminDeleteLessonsByDay');
-
-// Admin nutrition
-Route::get('/admin/nutritions', 'NutritionsController@adminIndex')->middleware('is_admin')->name('admin.nutritions');
-Route::get('/admin/nutritions/{id}', 'NutritionsController@adminShow')->middleware('is_admin')->name('admin.nutritions.show');
-Route::get('/admin/adminGetFoodsByDay', 'NutritionsController@adminGetFoodsByDay')->middleware('is_admin')->name('admin.nutritions.adminGetFoodsByDay');
-Route::post('/admin/adminSaveFoodByDay', 'NutritionsController@adminSaveFoodByDay')->middleware('is_admin')->name('admin.nutritions.adminSaveFoodByDay');
-Route::get('/admin/adminGetFoodsAll', 'NutritionsController@adminGetFoodsAll')->middleware('is_admin')->name('admin.nutritions.adminGetFoodsAll');
-Route::get('/admin/adminDeleteFoodByDay', 'NutritionsController@adminDeleteFoodByDay')->middleware('is_admin')->name('admin.nutritions.adminDeleteFoodByDay');
-
-// Admin Notifications
-Route::get('/admin/notifications', 'NotificationsController@adminIndex')->middleware('is_admin')->name('admin.notifications');
-Route::post('/admin/notifications', 'NotificationsController@adminStore')->middleware('is_admin')->name('admin.notifications.store');
-Route::post('/admin/notifications/notifyScheduleByGroup', 'NotificationsController@notifyScheduleByGroup')->middleware('is_admin')->name('admin.notifications.notifyScheduleByGroup');
-Route::post('/admin/notifications/notifyFoodsBySchool', 'NotificationsController@notifyFoodsBySchool')->middleware('is_admin')->name('admin.notifications.notifyFoodsBySchool');
-
-// Admin Conversations
-Route::get('/admin/conversations', 'ConversationController@admin')->middleware('access_admin', 'emptyGroupId')->name('admin.messages');
-Route::get('/admin/conversations/group/{id}', 'ConversationController@adminShowGroupUsers')->middleware('access_admin', 'emptyGroupId')->name('admin.groupUsers');
-Route::get('/admin/conversations/{id}', 'ConversationController@checkConversation')->middleware('access_admin', 'emptyGroupId')->name('admin.conversation.checkConversation');
-Route::get('/admin/conversations/user/{id}', 'ConversationController@user')->middleware('access_admin', 'emptyGroupId')->name('admin.conversation.user');
-
-Route::post('/admin/messages', 'MessagesController@adminStore')->middleware('access_admin', 'emptyGroupId')->name('admin.messages.store');
-Route::get('/admin/messages/setReadMessages/{user_id}', 'MessagesController@setReadMessages')->middleware('access_admin', 'emptyGroupId')->name('admin.messages.setReadMessages');
-//Route::post('/admin/messages/fetchMessages', 'MessagesController@fetchMessages')->middleware('access_admin', 'emptyGroupId')->name('admin.messages.fetchMessages');
-Route::get('/admin/messages/unread_messages_counter', 'MessagesController@AdminMessagesCounter')->middleware('access_admin')->name('admin.messages.counter');
 
 
-Route::get('/set_push_enable', 'UsersController@SetPushEnable')->name('Set Push');
+
+
+
+

@@ -190,7 +190,7 @@
 
                                             @if($groups)
                                                 @foreach($groups as $group)
-                                                    <option {{ old("school_id") == $group->id ? "selected":"" }} value="{{ $group->id }}">{{ $group->name }}</option>
+                                                    <option {{ old("school_id") == $group->id ? "selected":"" }} value="@if(old("group_id")) {{ old("group_id") }} @else {{ $group->id }} @endif">{{ $group->name }}</option>
                                                 @endforeach
                                             @endif
 

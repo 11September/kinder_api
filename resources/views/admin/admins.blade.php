@@ -193,7 +193,7 @@
                                     <a class="btn btn-warning"
                                        href="{{ action('AdminController@adminEdit', $user->id) }}">Редагувати</a>
 
-                                    <form method="POST" action="/admin/admins/delete/{{$user->id}}">
+                                    <form method="POST" action="/admin/admins/{{$user->id}}">
                                         {{ csrf_field() }}
                                         {{ method_field('DELETE') }}
 

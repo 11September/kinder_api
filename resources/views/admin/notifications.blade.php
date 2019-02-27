@@ -149,11 +149,12 @@
 @section('scripts')
     <script>
         $(document).ready(function () {
-
             $(".all-schools[type='checkbox']").change(function () {
                 if ($(this).prop("checked")) {
+
                     $("input[type='checkbox']").prop('checked', true);
                 } else {
+                    $('.wrapper-groups-holder div.form-check').remove();
                     $("input[type='checkbox']").prop('checked', false);
                 }
             });
@@ -176,11 +177,19 @@
 
                                 if (data.success) {
                                     if (data.data && data.data !== '') {
+                                        var checked = "";
+
+                                        if ($(".all-schools[type='checkbox']").prop("checked")) {
+                                            checked = "checked";
+                                        }else{
+                                            checked = "";
+                                        }
+
                                         $.each(data.data, function (index, item) {
                                             content.append(
                                                 '<div class="form-check" data-school-id="' + school_id + '">' +
                                                 '<label class="container">' + item.name +
-                                                '<input class="input_group_id" value="' + item.id + '" name="group_id[]" type="checkbox">' +
+                                                '<input class="input_group_id" value="' + item.id + '" name="group_id[]" type="checkbox" checked="'+checked+'">' +
                                                 '<span class="checkmark"></span>' +
                                                 '</label>' +
                                                 '</div>'

@@ -6,11 +6,8 @@ use App\User;
 use App\Post;
 use App\Group;
 use App\School;
-use App\Conversation;
-use Illuminate\Http\Request;
 use App\Http\Requests\StoreSchool;
 use App\Http\Requests\UpdateSchool;
-use Illuminate\Support\Facades\Log;
 
 class SchoolController extends Controller
 {
@@ -29,7 +26,7 @@ class SchoolController extends Controller
         $school->name = $request->name;
         $school->save();
 
-        return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно доданий!');
+        return redirect()->route('kindergartens')->with('message', 'Садок успішно доданий!');
     }
 
     public function adminEdit($id)
@@ -48,7 +45,7 @@ class SchoolController extends Controller
         $school->name = $request->name;
         $school->save();
 
-        return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно оновлено!');
+        return redirect()->route('kindergartens')->with('message', 'Садок успішно оновлено!');
     }
 
     public function adminDelete($id)
@@ -66,7 +63,7 @@ class SchoolController extends Controller
             $post->delete();
         }
 
-        $groups = Group::where('school_id', $school->id)->delete();
+        Group::where('school_id', $school->id)->delete();
 
         $school->nutritions()->delete();
         $school->schedules()->delete();
@@ -85,7 +82,7 @@ class SchoolController extends Controller
 
         $school->delete();
 
-        return redirect()->route('admin.kindergartens')->with('message', 'Садок успішно видалено!');
+        return redirect()->route('kindergartens')->with('message', 'Садок успішно видалено!');
     }
 
     public function deletePreviousPreviewImage($data)

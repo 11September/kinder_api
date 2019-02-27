@@ -283,8 +283,12 @@
                 // if all
                 if (day == "all") {
                     $.ajax({
-                        type: 'GET',
-                        url: '/admin/adminGetFoodsAll',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/nutritions/adminGetFoodsAll',
                         dataType: 'json',
                         data: {school_id: school_id},
                         success: function (data) {
@@ -396,8 +400,12 @@
                     });
                 } else {
                     $.ajax({
-                        type: 'GET',
-                        url: '/admin/adminGetFoodsByDay',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/nutritions/adminGetFoodsByDay',
                         dataType: 'json',
                         data: {school_id: school_id, day: day},
                         success: function (data) {
@@ -562,8 +570,12 @@
 
                 if (delete_lesson_id) {
                     $.ajax({
-                        type: 'GET',
-                        url: '/admin/adminDeleteFoodByDay',
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+
+                        type: 'POST',
+                        url: '/admin/nutritions/adminDeleteFoodByDay',
                         dataType: 'json',
                         data: {id: delete_lesson_id},
                         success: function (data) {
@@ -640,7 +652,7 @@
                     },
 
                     type: 'POST',
-                    url: '/admin/adminSaveFoodByDay',
+                    url: '/admin/nutritions/adminSaveFoodByDay',
                     dataType: 'json',
                     data: serializeData,
                     success: function (data) {

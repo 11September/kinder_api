@@ -15,136 +15,6 @@ use Illuminate\Support\Facades\Config;
 
 class GroupController extends Controller
 {
-    public function GroupUsers(Request $request)
-    {
-        try {
-            $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
-            $current_user_id = $user->id;
-
-            $users = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
-                ->where('id', '!=', $user->id)
-                ->where('group_id', '=', $user->group_id)
-                ->where('type', '!=', 'admin')
-                ->active()
-                ->orderByRaw("FIELD(type , 'moderator', 'default') ASC")
-                ->get();
-
-            $group = Group::select('id', 'user_id')->where('id', $user->group_id)->first();
-
-            $admin_group = User::select('id', 'name', 'parent_name', 'birthday', 'avatar', 'type', 'parents')
-                ->where('type', '=', 'admin')
-                ->where('id', '=', $group->user_id)
-                ->active()
-                ->get();
-
-            $group_users = $admin_group->merge($users);
-
-            if (!$group_users || count($group_users) < 1) {
-                return response()->json(['message' => 'В даний момент користувачів не знайдено!'], 404);
-            }
-
-            foreach ($group_users as $user) {
-                if (!$user->avatar || empty($user->avatar)) {
-                    $user->avatar;
-                } else {
-                    $user->avatar = Config::get('app.url') . $user->avatar;
-                }
-
-                if ($user->parents == 'father') {
-                    $user->parents = "Батько";
-                }
-                if ($user->parents == 'mother') {
-                    $user->parents = "Мати";
-                }
-
-                $count = 0;
-
-                $conversations = Conversation::where([
-                    ['user1_id', '=', $user->id],
-                    ['user2_id', '=', $current_user_id]
-                ])->OrWhere([
-                    ['user1_id', '=', $current_user_id],
-                    ['user2_id', '=', $user->id]
-                ])->with('messages')->get();
-
-                foreach ($conversations as $conversation) {
-                    foreach ($conversation->messages as $message) {
-                        if ($message->user_id != $current_user_id && $message->status == "unread") {
-                            $count++;
-                        }
-                    }
-                }
-
-                $user->count = $count;
-            }
-
-            return ['data' => $group_users];
-
-        } catch (\Exception $exception) {
-            Log::warning('GroupController@GroupUsers Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
-            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
-        }
-    }
-
-
-    public function GroupUsersCounters(Request $request)
-    {
-        try {
-            $user = User::select('id', 'group_id')->where('token', '=', $request->header('x-auth-token'))->with('group')->first();
-            $current_user_id = $user->id;
-
-            $users = User::select('id')
-                ->where('id', '!=', $user->id)
-                ->where('group_id', '=', $user->group_id)
-                ->where('type', '!=', 'admin')
-                ->active()
-                ->orderByRaw("FIELD(type , 'moderator', 'default') ASC")
-                ->get();
-
-            $group = Group::select('id', 'user_id')->where('id', $user->group_id)->first();
-
-            $admin_group = User::select('id')
-                ->where('type', '=', 'admin')
-                ->where('id', '=', $group->user_id)
-                ->active()
-                ->get();
-
-            $group_users = $admin_group->merge($users);
-
-            if (!$group_users || count($group_users) < 1) {
-                return response()->json(['message' => 'Користувачів не знайдено!'], 404);
-            }
-
-            foreach ($group_users as $user) {
-                $count = 0;
-
-                $conversations = Conversation::where([
-                    ['user1_id', '=', $user->id],
-                    ['user2_id', '=', $current_user_id]
-                ])->OrWhere([
-                    ['user1_id', '=', $current_user_id],
-                    ['user2_id', '=', $user->id]
-                ])->with('messages')->get();
-
-                foreach ($conversations as $conversation) {
-                    foreach ($conversation->messages as $message) {
-                        if ($message->user_id != $current_user_id && $message->status == "unread") {
-                            $count++;
-                        }
-                    }
-                }
-
-                $user->count = $count;
-            }
-
-            return ['data' => $group_users];
-
-        } catch (\Exception $exception) {
-            Log::warning('GroupController@GroupUsersCounters Exception: ' . $exception->getMessage() . "line - " . $exception->getLine());
-            return response()->json(['message' => 'Упс! Щось пішло не так!'], 500);
-        }
-    }
-
     public function getAllGroupsById(Request $request)
     {
         $request->validate([
@@ -198,7 +68,7 @@ class GroupController extends Controller
             $user->save();
         }
 
-        return redirect()->route('admin.groups')->with('message', 'Група успішно додана!');
+        return redirect()->route('groups')->with('message', 'Група успішно додана!');
     }
 
     public function adminEdit($id)
@@ -248,7 +118,7 @@ class GroupController extends Controller
         User::where('type', 'moderator')->where('group_id', $group->id)->update(['group_id' => null, 'school_id' => null, 'status' => 'disable']);
         User::where('type', 'moderator')->whereIn('id', $request->moderator_id)->update(['group_id' => $group->id, 'school_id' => $request->school_id, 'status' => 'active']);
 
-        return redirect()->route('admin.groups')->with('message', 'Група успішно оновлена!');
+        return redirect()->route('groups')->with('message', 'Група успішно оновлена!');
     }
 
     public function adminDelete($id)
@@ -272,6 +142,6 @@ class GroupController extends Controller
 
         $group->delete();
 
-        return redirect()->route('admin.groups')->with('message', 'Група успішно видалена!');
+        return redirect()->route('groups')->with('message', 'Група успішно видалена!');
     }
 }
