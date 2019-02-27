@@ -13,26 +13,47 @@ use Illuminate\Http\Request;
 |
 */
 
-// Users Auth
-Route::middleware('cors')->post('login', 'UsersController@login')->name('Login');
-Route::middleware('cors')->post('restore_password', 'UsersController@ResetPassword')->name('Restore Password');
-Route::middleware('cors','token')->post('change_password', 'UsersController@ChangePassword')->name('Change Password');
-Route::middleware('cors','token')->post('set_avatar', 'UsersController@SetAvatar')->name('Set Avatar');
-Route::middleware('cors','token')->post('set_player', 'UsersController@SetPlayer')->name('Set User Player ID');
-Route::middleware('cors','token')->post('set_push', 'UsersController@SetPush')->name('Set Push');
-Route::middleware('cors','token')->post('set_push_chat', 'UsersController@SetPushChat')->name('Set Push Chat');
-Route::middleware('cors','token')->post('logout', 'UsersController@logout')->name('Logout');
-// Users Auth
+Route::namespace('App')->group(function () {
+    Route::middleware(['cors'])->group(function () {
+        Route::name('user.')->group(function () {
+            Route::post('login', 'UsersController@login')->name('login');
+            Route::post('restore_password', 'UsersController@ResetPassword')->name('reset_password');
+        });
+    });
 
-Route::middleware('cors','token')->get('posts/{school_id}', 'PostsController@index')->name('Get Posts');
-Route::middleware('cors','token')->get('post/{id}', 'PostsController@show')->name('Get Post');
+    Route::middleware(['cors', 'token'])->group(function () {
+        Route::name('users.')->group(function () {
+            Route::post('change_password', 'UsersController@ChangePassword')->name('change_pass');
+            Route::post('set_avatar', 'UsersController@SetAvatar')->name('set_avatar');
+            Route::post('set_player', 'UsersController@SetPlayer')->name('set_user_player_id');
+            Route::post('set_push', 'UsersController@SetPush')->name('set_push');
+            Route::post('set_push_chat', 'UsersController@SetPushChat')->name('set_push_chat');
+            Route::post('logout', 'UsersController@logout')->name('logout');
+        });
 
-Route::middleware('cors','token')->get('schedules/{school_id}', 'SchedulesController@index')->name('Get Schedules');
-Route::middleware('cors','token')->get('nutritions/{school_id}', 'NutritionsController@index')->name('Get Nutritions');
+        Route::name('posts.')->group(function () {
+            Route::get('posts/{school_id}', 'PostsController@index')->name('get_posts');
+            Route::get('post/{id}', 'PostsController@show')->name('get_post');
+        });
 
-Route::middleware('cors','token')->get('group_users', 'GroupController@GroupUsers')->name('Get Users Group');
-Route::middleware('cors','token')->get('group_users_counters', 'GroupController@GroupUsersCounters')->name('Get Users Group Counter');
-Route::middleware('cors','token')->post('conversation', 'ConversationController@createOrGetConversation')->name('Get User Conversation Or Create Conversation');
-Route::middleware('cors','token')->post('store_message', 'MessagesController@storeMessage')->name('Store Message');
-Route::middleware('cors','token')->post('messages_mark_read', 'MessagesController@messagesMarkRead')->name('Store Message');
-Route::middleware('cors','token')->get('unread_messages_counter', 'MessagesController@unreadMessagesCounter')->name('Unread Messages Counter');
+        Route::name('schedules.')->group(function () {
+            Route::get('schedules/{school_id}', 'SchedulesController@index')->name('get_schedules');
+            Route::get('nutritions/{school_id}', 'NutritionsController@index')->name('get_nutritions');
+        });
+
+        Route::name('groups.')->group(function () {
+            Route::get('group_users', 'GroupController@GroupUsers')->name('get_users_group');
+            Route::get('group_users_counters', 'GroupController@GroupUsersCounters')->name('get_users_group');
+        });
+
+        Route::name('conversations.')->group(function () {
+            Route::post('conversation', 'ConversationController@createOrGetConversation')->name('get_or_create_conversation');
+        });
+
+        Route::name('messages.')->group(function () {
+            Route::post('store_message', 'MessagesController@storeMessage')->name('store');
+            Route::post('messages_mark_read', 'MessagesController@messagesMarkRead')->name('mark_read');
+//            Route::get('unread_messages_counter', 'MessagesController@unreadMessagesCounter')->name('unread_messages_counter');
+        });
+    });
+});
