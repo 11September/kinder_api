@@ -77,8 +77,20 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->parent_phone }}</td>
                                 <td><a class="orange-text" href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
-                                <td><a class="orange-text" href="{{ action('SchoolController@adminEdit', @$user->school->id) }}">{{ @$user->school->name }}</a></td>
-                                <td><a class="orange-text" href="{{ action('GroupController@adminEdit', @$user->group->id) }}">{{ @$user->group->name }}</a></td>
+                                <td>
+                                    @if(isset($user->school->id))
+                                        <a class="orange-text" href="{{ action('SchoolController@adminEdit', @$user->school->id) }}">{{ @$user->school->name }}</a>
+                                    @else
+                                        <span class="attention font-weght-6">Не прив'язаний до садка</span>
+                                    @endif
+                                </td>
+                                <td>
+                                    @if(isset($user->group->id))
+                                    <a class="orange-text" href="{{ action('GroupController@adminEdit', @$user->group->id) }}">{{ @$user->group->name }}</a>
+                                    @else
+                                        <span class="attention font-weght-6">Не прив'язаний до групи</span>
+                                    @endif
+                                </td>
                                 <td>@if($user->status == "active") Активний @else Неактивний @endif</td>
                                 <td class="action-td">
                                     <a class="btn btn-warning" href="{{ action('StudentsController@adminEdit', $user->id) }}">Редагувати</a>

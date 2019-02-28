@@ -183,7 +183,7 @@
                                     @if($user->status == "active" && ($user->type == "admin" || $user->type == "moderator"))
                                         <span class="success font-weght-6">Активний</span>
                                     @elseif($user->status == "disable" && $user->type == "moderator")
-                                        <span class="attention font-weght-6">НЕ прив'язаний до групи</span>
+                                        <span class="attention font-weght-6">Не прив'язаний до групи</span>
                                     @else
                                         <span class="not-active font-weght-6">Не активний</span>
                                     @endif
