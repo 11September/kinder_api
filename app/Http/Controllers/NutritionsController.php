@@ -126,7 +126,14 @@ class NutritionsController extends Controller
         ]);
 
         $food = Food::where('id', $request->id)->first();
+        $nutrition_id = $food->nutrition_id;
+
         $food->delete();
+
+        $foods = Food::where('nutrition_id', $nutrition_id)->get();
+        if (count($foods) < 1){
+            Nutrition::where('id', $nutrition_id)->delete();
+        }
 
         return response()->json(['success' => true]);
     }

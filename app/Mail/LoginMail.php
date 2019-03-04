@@ -33,7 +33,7 @@ class LoginMail extends Mailable
     public function build()
     {
         return $this
-            ->from(['address' => 'reply@admin.com', 'name' => 'Kinder'])
+            ->from(['address' => 'noreply@admin.mysadok.com', 'name' => 'СадОк Медікавер'])
             ->subject('Успішна реєстрація в садку')
             ->view('mail.login-welcome');
     }

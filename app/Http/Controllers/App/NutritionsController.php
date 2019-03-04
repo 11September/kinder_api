@@ -21,14 +21,14 @@ class NutritionsController
                 }))
                 ->get();
 
+            foreach ($schedules as $key => $value) {
+                if (count($value->foods) < 1){
+                    $schedules->forget($key);
+                }
+            }
+
             if (!$schedules || count($schedules) < 1) {
                 return response()->json(['message' => 'В даний момент меню харчування відсутнє!'], 404);
-            }else{
-                foreach ($schedules as $key => $value) {
-                    if (count($value->foods) < 1){
-                        $schedules->forget($key);
-                    }
-                }
             }
 
             return ['data' => $schedules];

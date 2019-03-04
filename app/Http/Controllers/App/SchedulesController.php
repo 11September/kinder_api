@@ -14,7 +14,7 @@ class SchedulesController
         try {
             $user = User::where('token', '=', $request->header('x-auth-token'))->first();
 
-            if (!$user->school_id || !$user->group_id){
+            if (!$user->school_id || !$user->group_id) {
                 return response()->json(['message' => 'Розклад не знайдено!'], 404);
             }
 
@@ -25,14 +25,14 @@ class SchedulesController
                 }))
                 ->get();
 
+            foreach ($schedules as $key => $value) {
+                if (count($value->lessons) < 1) {
+                    $schedules->forget($key);
+                }
+            }
+
             if (!$schedules || count($schedules) < 1) {
                 return response()->json(['message' => 'В даний момент розклад відсутній!'], 404);
-            }else{
-                foreach ($schedules as $key => $value) {
-                    if (count($value->lessons) < 1){
-                        $schedules->forget($key);
-                    }
-                }
             }
 
             return ['data' => $schedules];

@@ -138,7 +138,14 @@ class SchedulesController extends Controller
         ]);
 
         $lesson = Clas::where('id', $request->id)->first();
+        $schedule_id = $lesson->schedule_id;
+
         $lesson->delete();
+
+        $classes = Clas::where('schedule_id', $schedule_id)->get();
+        if (count($classes) < 1){
+            Schedule::where('id', $schedule_id)->delete();
+        }
 
         return response()->json(['success' => true]);
     }
