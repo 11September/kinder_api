@@ -25,6 +25,10 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'push', 'type', 'parent_name', 'parent_phone', 'parents', 'address', 'birthday', 'school_id', 'group_id', 'status', 'password', 'token'
     ];
+	
+	protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
     /**
      * The attributes that should be hidden for arrays.

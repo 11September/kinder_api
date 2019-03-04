@@ -16,7 +16,6 @@ class StudentsController extends Controller
     public function adminIndex()
     {
         $users = User::where('type', 'default')
-            ->active()
             ->with(array('school' => function ($query) {
                 $query->select('id', 'name');
             }))

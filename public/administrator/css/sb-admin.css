@@ -1258,6 +1258,11 @@ body.sidebar-toggled footer.sticky-footer {
 }
 /* chat end */
 
+.bg-dark .card-body form .form-group input{
+    position: unset;
+    opacity: 1;
+}
+
 
 @media all and (max-width: 1400px) {
     .form-check .container{
@@ -1327,8 +1332,4 @@ body.sidebar-toggled footer.sticky-footer {
     .posts-wrapper-flex{
         flex-direction: column-reverse;
     }
-}
-
-@media all and (max-width: 576px) {
-    h1{}
 }

@@ -149,21 +149,8 @@
                             </td>
                         </tr>
                     </table>
-
                 </td>
             </tr>
-            {{--<tr>--}}
-                {{--<td class="container">--}}
-                    {{--<table>--}}
-                        {{--<tr>--}}
-                            {{--<td class="content footer" align="center">--}}
-                                {{--<p>Sent by <a href="http://google.com">Kinder</a></p>--}}
-                                {{--<p><a href="mailto:">Kinder@gmail.com</a></p>--}}
-                            {{--</td>--}}
-                        {{--</tr>--}}
-                    {{--</table>--}}
-                {{--</td>--}}
-            {{--</tr>--}}
         </table>
     </div>
 </div>
