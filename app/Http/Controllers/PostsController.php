@@ -26,9 +26,9 @@ class PostsController extends Controller
     {
         $schools = School::all();
 
-        if ($schools->first()){
+        if ($schools->first()) {
             $groups = Group::where('school_id', $schools->first()->id)->get();
-        }else{
+        } else {
             $groups = [];
         }
 
@@ -81,6 +81,8 @@ class PostsController extends Controller
 
     public function adminUpdate(UpdatePost $request, $id)
     {
+//        dd($request->all());
+
         $post = Post::where('id', $id)->first();
 
         if (isset($request->old_preview) && !empty($request->old_preview) && file_exists(storage_path("app/public") . $request->old_preview)) {
@@ -93,19 +95,15 @@ class PostsController extends Controller
 
         if (isset($request->old_image) && !empty($request->old_image) && !isset($request->image)) {
             $post->image = $request->old_image;
-        }
-        elseif(isset($request->old_image) && !empty($request->old_image) && $request->image){
+        } elseif (isset($request->old_image) && !empty($request->old_image) && $request->image) {
             $images = $this->storeNewEncodeImages($request->image);
             $newImages = array_merge($images, json_decode($post->image));
             $post->image = json_encode($newImages);
-        }
-        else {
-            if ($post->image){
-                $this->deletePreviousEncodeImages($post->image);
-            }else{
-                $images = $this->storeNewEncodeImages($request->image);
-                $post->image = json_encode($images);
-            }
+        } elseif ($request->old_image == null && $request->image) {
+            $images = $this->storeNewEncodeImages($request->image);
+            $post->image = json_encode($images);
+        } else {
+            $post->image = null;
         }
 
         $post->title = $request->title;
@@ -145,23 +143,23 @@ class PostsController extends Controller
 
         $newImages = array();
         foreach (json_decode($post->image) as $image) {
-            if ($image == $request->path){
+            if ($image == $request->path) {
                 $old_image = storage_path('app/public') . $image;
 
                 if (file_exists($old_image)) {
                     unlink($old_image);
                 }
-            }else{
+            } else {
                 $newImages[] = $image;
             }
         }
 
-        if ( count( $newImages ) == 0 ){
+        if (count($newImages) == 0) {
             $post->image = null;
             $count = 0;
-        }else{
+        } else {
             $post->image = json_encode($newImages);
-            $count = count( $newImages );
+            $count = count($newImages);
         }
 
         $post->save();
