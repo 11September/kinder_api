@@ -12,6 +12,7 @@
 */
 
 Route::get('/', 'WelcomeController@welcome')->name('welcome');
+Route::get('/redirect', 'WelcomeController@redirect')->name('redirect');
 
 Auth::routes();
 
