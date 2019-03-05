@@ -1,9 +1,3 @@
-{{--@component('mail::message')--}}
-
-    {{----}}
-
-{{--@endcomponent--}}
-
 <!doctype html>
 <html lang="en">
 <head>
@@ -150,22 +144,13 @@
                                 <h2>Ваші дані:</h2>
 
                                 <ul>
-                                    <li>Ваше ім'я - <span class="value">{{ $user->parent_name }}</span></li>
-                                    <li>Ваш телефон - <span class="value">{{ $user->parent_phone }}</span></li>
-                                    <li>Ваша адреса - <span class="value">{{ $user->address }}</span></li>
+                                    <li>Ваше ім'я - <span class="value">{{ $user->name }}</span></li>
+                                    <li>День народження - <span class="value">{{ $user->birthday }}</span></li>
                                     <li>Ваш email - <span class="value">{{ $user->email }}</span></li>
                                     <li>Ваш пароль - <span class="value">{{ $password }}</span></li>
                                 </ul>
 
                                 <h5>Використовуйте email і створений пароль для авторизації в додатку!</h5>
-
-                                <h4>Дані дитини:</h4>
-                                <ul>
-                                    <li>Iм'я дитини - <span class="value">{{ $user->name }}</span></li>
-                                    <li>День народження дитини - <span class="value">{{ $user->birthday }}</span></li>
-                                    <li>Ваш садок - <span class="value">{{ @$user->school->name }}</span></li>
-                                    <li>Ваша група - <span class="value">{{ @$user->group->name }}</span></li>
-                                </ul>
 
                                 <p>Це лист, ви отримали з мобільному додатку СадОк Медікавер.</p>
                             </td>

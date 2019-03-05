@@ -8,6 +8,7 @@ use App\Group;
 use App\School;
 use App\Message;
 use Illuminate\Http\Request;
+use App\Mail\LoginMailModerator;
 use App\Http\Requests\StoreAdmin;
 use App\Http\Requests\UpdateAdmin;
 use Illuminate\Support\Facades\Hash;
@@ -40,6 +41,8 @@ class AdminController extends Controller
 
     public function store(StoreAdmin $request)
     {
+        $password = $request->password;
+
         $user = new User();
         $user->name = $request->name;
         $user->birthday = $request->birthday;
@@ -52,6 +55,8 @@ class AdminController extends Controller
         $user->status = "active";
 
         $user->save();
+
+        \Mail::to($request->email)->send(new LoginMailModerator($user, $password));
 
         return redirect()->route('admins')->with('message','Користувач успішно створений!');
     }
