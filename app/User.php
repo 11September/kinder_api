@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Notifications\Notifiable;
+use App\Notifications\AuthPasswordReset;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
@@ -25,7 +26,7 @@ class User extends Authenticatable
     protected $fillable = [
         'name', 'email', 'push', 'type', 'parent_name', 'parent_phone', 'parents', 'address', 'birthday', 'school_id', 'group_id', 'status', 'password', 'token'
     ];
-	
+
 	protected $casts = [
         'email_verified_at' => 'datetime',
     ];
@@ -39,6 +40,11 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token', 'role_id', 'token'
     ];
+
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new AuthPasswordReset($token));
+    }
 
     public function scopeActive($query)
     {
