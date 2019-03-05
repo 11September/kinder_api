@@ -50,7 +50,7 @@
 {{--@endsection--}}
 
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -61,7 +61,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Адміністративна панель "СадОк Медікавер"</title>
+    <title>СадОк Медікавер</title>
 
     <link href="{{ asset('administrator/css/bootstrap.min.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
