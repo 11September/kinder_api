@@ -18,7 +18,7 @@ class MessagesController
     {
         $validator = Validator::make($request->all(), [
             'conversation_id' => 'required|exists:conversations,id',
-            'message' => 'required|string',
+            'message' => 'required|string|max:300',
         ]);
 
         if ($validator->fails()) {
