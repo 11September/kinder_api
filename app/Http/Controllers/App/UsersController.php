@@ -5,6 +5,7 @@ namespace App\Http\Controllers\App;
 use App\User;
 use App\Mail\ResetPassword;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
@@ -314,8 +315,10 @@ class UsersController
         $image = str_replace(' ', '+', $image);
         $imageName = time() . "-" . uniqid() . '.png';
 
-        Storage::put(storage_path('app/public/images/uploads/avatars/') . $imageName, base64_decode($image));
+        File::put(storage_path('app/public/images/uploads/avatars/') . $imageName, base64_decode($image));
 //        base64_decode($image)->move(storage_path('app/public/images/uploads/avatars/'), $imageName);
+
+//        Storage::disk('local')->put("test.png", $data);
 
         $path = "/" . $folderPath . $imageName;
 
