@@ -193,14 +193,21 @@
                                     <a class="btn btn-warning"
                                        href="{{ action('AdminController@adminEdit', $user->id) }}">Редагувати</a>
 
-                                    <form method="POST" action="/admin/admins/{{$user->id}}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-
+                                    @if($user->type == "admin" && $user->id == \Illuminate\Support\Facades\Auth::id())
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-danger" value="Вилучити">
+                                            <input disabled="disabled" type="submit" class="btn btn-danger" value="Вилучити">
                                         </div>
-                                    </form>
+                                    @else
+                                        <form method="POST" action="/admin/admins/{{$user->id}}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-danger" value="Вилучити">
+                                            </div>
+                                        </form>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
@@ -223,16 +230,16 @@
     <script>
         var today = new Date();
         var dd = today.getDate();
-        var mm = today.getMonth()+1; //January is 0!
+        var mm = today.getMonth() + 1; //January is 0!
         var yyyy = today.getFullYear();
-        if(dd<10){
-            dd='0'+dd
+        if (dd < 10) {
+            dd = '0' + dd
         }
-        if(mm<10){
-            mm='0'+mm
+        if (mm < 10) {
+            mm = '0' + mm
         }
 
-        today = yyyy+'-'+mm+'-'+dd;
+        today = yyyy + '-' + mm + '-' + dd;
         document.getElementById("birthday").setAttribute("max", today);
 
         $(document).ready(function () {
