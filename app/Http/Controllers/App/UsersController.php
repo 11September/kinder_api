@@ -199,6 +199,8 @@ class UsersController
             $user->avatar = $image;
             $user->save();
 
+            Log::warning('UsersController@SetAvatar path: ' . Config::get('app.storageurl') . $image);
+
             return response()->json(['message' => 'Аватар змінено!', 'avatar' => Config::get('app.storageurl') . $image], 200);
 
         } catch (\Exception $exception) {
