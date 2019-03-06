@@ -100,12 +100,12 @@ class AdminController extends Controller
 
         if ($user->group_id){
             $group = Group::where('id', $user->group_id)->first();
-            return redirect()->back()->with('message','Неможливо видалити користувача, так як він модератор групи - '  . $group->name . '!');
+            return redirect()->back()->with('message','Неможливо видалити користувача, так як він модератор групи - '  . $group->name . '! Відв\'яжіть користувача від групи!');
         }
 
         $group = Group::where('user_id', $user->id)->first();
         if ($group){
-            return redirect()->back()->with('message','Неможливо видалити користувача, так як він адмiнiстратор групи - '  . $group->name . '!');
+            return redirect()->back()->with('message','Неможливо видалити користувача, так як він адмiнiстратор групи - '  . $group->name . '! Відв\'яжіть користувача від групи!');
         }
 
         if ($user->avatar && !empty($user->avatar)) {
