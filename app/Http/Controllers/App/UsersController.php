@@ -314,8 +314,8 @@ class UsersController
         $image = str_replace(' ', '+', $image);
         $imageName = time() . "-" . uniqid() . '.png';
 
-//        Storage::put('app/public/images/uploads/avatars/' . $imageName, base64_decode($image));
-        base64_decode($image)->move(storage_path('app/public/images/uploads/avatars/'), $imageName);
+        Storage::put(storage_path('app/public/images/uploads/avatars/') . $imageName, base64_decode($image));
+//        base64_decode($image)->move(storage_path('app/public/images/uploads/avatars/'), $imageName);
 
         $path = "/" . $folderPath . $imageName;
 
