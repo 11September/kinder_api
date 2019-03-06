@@ -297,53 +297,23 @@ class UsersController
             return null;
         }
 
-        //        OLD
-
-//        $image_type_aux = explode("image/", $image_parts[0]);
-//        $image_type = $image_type_aux[1];
-//        $image_base64 = base64_decode($image_parts[1]);
-//        $file = $folderPath . time() . "-" . uniqid() . '.png';
-//        $image = "/" . $file;
-//
-//        Log::warning('SetAvatar: ' .  $image);
-
-//        if (file_put_contents($file, $image_base64) !== false) {
-//            return $image;
-//        } else {
-//            return null;
-//        }
-
-//        OLD
-
-
-//        $image = $data; // your base64 encoded
-//        $image = str_replace('data:image/png;base64,', '', $image);
-//        $image = str_replace(' ', '+', $image);
-//        $imageName = time() . "-" . uniqid() . '.png';
-
-        $image_type_aux = explode("image/", $image_parts[0]);
+        explode("image/", $image_parts[0]);
         $image_base64 = base64_decode($image_parts[1]);
         $imageName = time() . "-" . uniqid() . '.png';
 
         File::put(storage_path('app/public/images/uploads/avatars/') . $imageName, $image_base64);
-//        file_put_contents('\'storage/app/public/images/uploads/avatars/\'', $image_base64);
-
         $path = "/" . $folderPath . $imageName;
 
-        Log::warning('SetAvatar: ' . $path);
-
         return $path;
-
     }
 
     public function deletePreviousImage($data)
     {
-        $preview = public_path() . $data;
+        $preview = storage_path('app/public') . $data;
         if (file_exists($preview)) {
             unlink($preview);
         }
 
         return true;
     }
-
 }
