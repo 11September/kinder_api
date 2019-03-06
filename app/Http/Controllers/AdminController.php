@@ -115,8 +115,6 @@ class AdminController extends Controller
             }
         }
 
-        dd("delete");
-
         $user->delete();
 
         return redirect()->route('admins', $user->id)->with('message','Користувач успішно видалений!');
