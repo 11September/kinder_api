@@ -97,6 +97,24 @@ class AdminController extends Controller
     public function adminDelete($id)
     {
         $user = User::find($id);
+
+        if ($user->group_id){
+            $group = Group::where('id', $user->group_id)->first();
+            return redirect()->back()->with('message','Неможливо видалити користувача, так як він модератор групи - '  . $group->name . '!');
+        }
+
+        $group = Group::where('user_id', $user->group_id)->first();
+        if ($group){
+            return redirect()->back()->with('message','Неможливо видалити користувача, так як він адмiнiстратор групи - '  . $group->name . '!');
+        }
+
+        if ($user->avatar && !empty($user->avatar)) {
+            $image = public_path() . $user->avatar;
+            if (file_exists($image)) {
+                unlink($image);
+            }
+        }
+
         $user->delete();
 
         return redirect()->route('admins', $user->id)->with('message','Користувач успішно видалений!');
