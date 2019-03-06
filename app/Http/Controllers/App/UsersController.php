@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController
@@ -293,17 +294,29 @@ class UsersController
             return null;
         }
 
-        $image_type_aux = explode("image/", $image_parts[0]);
-        $image_type = $image_type_aux[1];
-        $image_base64 = base64_decode($image_parts[1]);
-        $file = $folderPath . time() . "-" . uniqid() . '.png';
-        $image = "/" . $file;
+//        $image_type_aux = explode("image/", $image_parts[0]);
+//        $image_type = $image_type_aux[1];
+//        $image_base64 = base64_decode($image_parts[1]);
+//        $file = $folderPath . time() . "-" . uniqid() . '.png';
+//        $image = "/" . $file;
+//
+//        if (file_put_contents($file, $image_base64) !== false) {
+//            return $image;
+//        } else {
+//            return null;
+//        }
 
-        if (file_put_contents($file, $image_base64) !== false) {
-            return $image;
-        } else {
-            return null;
-        }
+
+        $image = $data; // your base64 encoded
+        $image = str_replace('data:image/png;base64,', '', $image);
+        $image = str_replace(' ', '+', $image);
+        $imageName = time() . "-" . uniqid() . '.png';
+        Storage::put('app/public/images/uploads/avatars/' . $imageName, base64_decode($image));
+
+        $path = $folderPath . $imageName;
+
+        return $path;
+
     }
 
     public function deletePreviousImage($data)
