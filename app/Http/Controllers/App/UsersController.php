@@ -315,10 +315,7 @@ class UsersController
         $image = str_replace(' ', '+', $image);
         $imageName = time() . "-" . uniqid() . '.png';
 
-//        File::put(storage_path('app/public/images/uploads/avatars/') . $imageName, base64_decode($image));
-
-        $myimage = base64_decode($data);
-        $myimage->move(storage_path('app/public/images/uploads/avatars/'), $imageName);
+        File::put(storage_path('images/uploads/avatars') . $imageName, base64_decode($image));
 
 //        Storage::disk('local')->put("test.png", $data);
 
