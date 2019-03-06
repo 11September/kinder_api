@@ -296,7 +296,9 @@ class UsersController
         if (!$image_parts || !isset($image_parts[1]) || $image_parts[1] == null || $image_parts[1] == "") {
             return null;
         }
-//
+
+        //        OLD
+
 //        $image_type_aux = explode("image/", $image_parts[0]);
 //        $image_type = $image_type_aux[1];
 //        $image_base64 = base64_decode($image_parts[1]);
@@ -311,19 +313,23 @@ class UsersController
 //            return null;
 //        }
 
+//        OLD
 
-        $image = $data; // your base64 encoded
-        $image = str_replace('data:image/png;base64,', '', $image);
-        $image = str_replace(' ', '+', $image);
+
+//        $image = $data; // your base64 encoded
+//        $image = str_replace('data:image/png;base64,', '', $image);
+//        $image = str_replace(' ', '+', $image);
+//        $imageName = time() . "-" . uniqid() . '.png';
+
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_base64 = base64_decode($image_parts[1]);
         $imageName = time() . "-" . uniqid() . '.png';
 
-        File::put(storage_path('app/public/images/uploads/avatars/') . $imageName, base64_decode($image));
-
-//        Storage::disk('local')->put("test.png", $data);
+        File::put(storage_path('app/public/images/uploads/avatars/') . $imageName, $image_base64);
 
         $path = "/" . $folderPath . $imageName;
 
-        Log::warning('SetAvatar: ' .  $path);
+        Log::warning('SetAvatar: ' . $path);
 
         return $path;
 
