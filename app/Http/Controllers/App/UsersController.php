@@ -315,7 +315,7 @@ class UsersController
         $imageName = time() . "-" . uniqid() . '.png';
         Storage::put('app/public/images/uploads/avatars/' . $imageName, base64_decode($image));
 
-        $path = $folderPath . $imageName;
+        $path = "/" . $folderPath . $imageName;
 
         Log::warning('SetAvatar: ' .  $path);
 
