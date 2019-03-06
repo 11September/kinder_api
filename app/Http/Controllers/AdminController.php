@@ -65,7 +65,7 @@ class AdminController extends Controller
     {
         $user = User::select('id', 'name', 'email', 'type', 'birthday')->where('id', $id)->first();
 
-        $users = User::select('id', 'name', 'email', 'type')->where('type', '!=', 'default')->get();
+        $users = User::select('id', 'name', 'email', 'type', 'status')->where('type', '!=', 'default')->get();
 
         return view('admin.admins.edit', compact('user', 'users'));
     }

@@ -170,6 +170,7 @@
                             <th>Iм'я</th>
                             <th>Email</th>
                             <th>Тип</th>
+                            <th>Статус</th>
                             <th>Дії</th>
                         </tr>
                         </thead>
@@ -178,6 +179,7 @@
                             <th>Iм'я</th>
                             <th>Email</th>
                             <th>Тип</th>
+                            <th>Статус</th>
                             <th>Дії</th>
                         </tr>
                         </tfoot>
@@ -186,8 +188,8 @@
                         @foreach($users as $user)
                             <tr>
                                 <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
-                                <td>
+                                <td><a class="orange-text" href="mailto:{{ $user->email }}">{{ $user->email }}</a></td>
+                                <td class="admin-type-text">
                                     @if($user->type == "moderator")
                                         Вихователь групи
                                     @endif
@@ -195,19 +197,35 @@
                                         Адміністратор
                                     @endif
                                 </td>
+                                <td>
+                                    @if($user->status == "active" && ($user->type == "admin" || $user->type == "moderator"))
+                                        <span class="success font-weght-6">Активний</span>
+                                    @elseif($user->status == "disable" && $user->type == "moderator")
+                                        <span class="attention font-weght-6">Не прив'язаний до групи</span>
+                                    @else
+                                        <span class="not-active font-weght-6">Не активний</span>
+                                    @endif
+                                </td>
 
                                 <td class="action-td">
                                     <a class="btn btn-warning"
                                        href="{{ action('AdminController@adminEdit', $user->id) }}">Редагувати</a>
 
-                                    <form id="delete-form" method="POST" action="/admin/admins/delete/{{$user->id}}">
-                                        {{ csrf_field() }}
-                                        {{ method_field('DELETE') }}
-
+                                    @if($user->type == "admin" && $user->id == \Illuminate\Support\Facades\Auth::id())
                                         <div class="form-group">
-                                            <input type="submit" class="btn btn-danger" value="Вилучити">
+                                            <input disabled="disabled" type="submit" class="btn btn-danger" value="Вилучити">
                                         </div>
-                                    </form>
+                                    @else
+                                        <form method="POST" action="/admin/admins/{{$user->id}}">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+
+                                            <div class="form-group">
+                                                <input type="submit" class="btn btn-danger" value="Вилучити">
+                                            </div>
+                                        </form>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach
