@@ -315,7 +315,7 @@ class UsersController
         $image = str_replace(' ', '+', $image);
         $imageName = time() . "-" . uniqid() . '.png';
 
-        File::put(storage_path('images/uploads/avatars/') . $imageName, base64_decode($image));
+        File::put(storage_path('app/public/images/uploads/avatars/') . $imageName, base64_decode($image));
 
 //        Storage::disk('local')->put("test.png", $data);
 
