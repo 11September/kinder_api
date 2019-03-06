@@ -294,12 +294,14 @@ class UsersController
             return null;
         }
 
-//        $image_type_aux = explode("image/", $image_parts[0]);
-//        $image_type = $image_type_aux[1];
-//        $image_base64 = base64_decode($image_parts[1]);
-//        $file = $folderPath . time() . "-" . uniqid() . '.png';
-//        $image = "/" . $file;
-//
+        $image_type_aux = explode("image/", $image_parts[0]);
+        $image_type = $image_type_aux[1];
+        $image_base64 = base64_decode($image_parts[1]);
+        $file = $folderPath . time() . "-" . uniqid() . '.png';
+        $image = "/" . $file;
+
+        Log::warning('SetAvatar: ' .  $image);
+
 //        if (file_put_contents($file, $image_base64) !== false) {
 //            return $image;
 //        } else {
@@ -314,6 +316,8 @@ class UsersController
         Storage::put('app/public/images/uploads/avatars/' . $imageName, base64_decode($image));
 
         $path = $folderPath . $imageName;
+
+        Log::warning('SetAvatar: ' .  $path);
 
         return $path;
 
