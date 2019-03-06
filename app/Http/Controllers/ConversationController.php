@@ -110,26 +110,26 @@ class ConversationController extends Controller
         $recipient->load('group');
 
         if ($recipient->group->user_id == Auth::id()){
+            $conversation = Conversation::where([
+                ['user1_id', '=', Auth::id()],
+                ['user2_id', '=', $id],
+            ])->OrWhere([
+                ['user2_id', '=', Auth::id()],
+                ['user1_id', '=', $id],
+            ])->with('messages')->first();
+
+            if (!$conversation) {
+                $conversation = new Conversation();
+                $conversation->user1_id = Auth::id();
+                $conversation->user2_id = $id;
+
+                $conversation->save();
+            }
+
+            return redirect()->route('chat.user', $conversation->id);
+        }else{
             return redirect()->back()->with('error', 'Користувач не може звернутися до листування з групою до якої не належить!');
         }
-
-        $conversation = Conversation::where([
-            ['user1_id', '=', Auth::id()],
-            ['user2_id', '=', $id],
-        ])->OrWhere([
-            ['user2_id', '=', Auth::id()],
-            ['user1_id', '=', $id],
-        ])->with('messages')->first();
-
-        if (!$conversation) {
-            $conversation = new Conversation();
-            $conversation->user1_id = Auth::id();
-            $conversation->user2_id = $id;
-
-            $conversation->save();
-        }
-
-        return redirect()->route('chat.user', $conversation->id);
     }
 
     public function groupUsers($id)
