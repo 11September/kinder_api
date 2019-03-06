@@ -98,14 +98,15 @@ class AdminController extends Controller
     {
         $user = User::find($id);
 
-        dd($user);
-
         if ($user->group_id){
             $group = Group::where('id', $user->group_id)->first();
             return redirect()->back()->with('message','Неможливо видалити користувача, так як він модератор групи - '  . $group->name . '!');
         }
 
-        $group = Group::where('user_id', $user->group_id)->first();
+        $group = Group::where('user_id', $user->id)->first();
+
+        dd($group);
+
         if ($group){
             return redirect()->back()->with('message','Неможливо видалити користувача, так як він адмiнiстратор групи - '  . $group->name . '!');
         }
