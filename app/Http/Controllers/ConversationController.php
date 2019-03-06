@@ -158,7 +158,7 @@ class ConversationController extends Controller
 
             $users = User::where('group_id', Auth::user()->group_id)->where('id', '!=', Auth::user()->id)->with('messages')->get();
 
-            if ($group->admin) {
+            if ($group->admin && $group->admin->id == Auth::id()) {
                 $users->prepend($group->admin);
             }
         } else {
@@ -177,6 +177,10 @@ class ConversationController extends Controller
             $users = User::where('group_id', $group->id)->where('id', '!=', Auth::user()->id)->orderByRaw("FIELD(type , 'moderator', 'default') ASC")->with('messages')->get();
 
             if (isset($group->admin)) {
+                $users->prepend($group->admin);
+            }
+
+            if (isset($group->admin) && $group->admin->id == Auth::id()) {
                 $users->prepend($group->admin);
             }
         }
