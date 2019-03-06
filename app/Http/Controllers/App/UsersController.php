@@ -326,7 +326,7 @@ class UsersController
         $imageName = time() . "-" . uniqid() . '.png';
 
 //        File::put(storage_path('app/public/images/uploads/avatars/') . $imageName, $image_base64);
-        file_put_contents('\'storage/app/public/images/uploads/avatars/\'', $image_base64);
+        file_put_contents('\'public/images/uploads/avatars/\'', $image_base64);
 
         $path = "/" . $folderPath . $imageName;
 
