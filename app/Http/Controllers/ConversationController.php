@@ -106,6 +106,13 @@ class ConversationController extends Controller
             return redirect()->back()->with('error', 'Користувач не може звернутися до листування з собою!');
         }
 
+        $recipient = User::where('id', $id)->first();
+        $recipient->load('group');
+
+        if ($recipient->group->user_id == Auth::id()){
+            return redirect()->back()->with('error', 'Користувач не може звернутися до листування з групою до якої не належить!');
+        }
+
         $conversation = Conversation::where([
             ['user1_id', '=', Auth::id()],
             ['user2_id', '=', $id],
