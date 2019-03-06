@@ -104,9 +104,6 @@ class AdminController extends Controller
         }
 
         $group = Group::where('user_id', $user->id)->first();
-
-        dd($group);
-
         if ($group){
             return redirect()->back()->with('message','Неможливо видалити користувача, так як він адмiнiстратор групи - '  . $group->name . '!');
         }
