@@ -71,7 +71,7 @@ class ConversationController extends Controller
 
         $users = $group->students;
 
-        if ($group->admin) {
+        if ($group->admin && $group->admin->id == Auth::id()) {
             $users->prepend($group->admin);
         }
 
