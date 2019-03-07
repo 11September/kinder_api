@@ -365,7 +365,7 @@
                                         '</div>';
 
                                     itemContentLoop += '<div class="schedule-list-day">' +
-                                        '<p class="schedule-list-day-time">Полудень</p>' +
+                                        '<p class="schedule-list-day-time">Підвечірок</p>' +
                                         itemsAfternoonTea +
                                         '</div>';
 
