@@ -50,7 +50,7 @@ class UsersController
                         if (!$user->avatar || empty($user->avatar)) {
                             $avatar = null;
                         } else {
-                            $avatar = Config::get('app.url') . $user->avatar;
+                            $avatar = Config::get('app.storageurl') . $user->avatar;
                         }
 
                         $result = array();
@@ -58,7 +58,8 @@ class UsersController
                         $result = array_add($result, 'email', $user->email);
                         $result = array_add($result, 'parent_name', (isset($user->parent_name) ? $user->parent_name : null));
                         $result = array_add($result, 'group', (isset($group->name)) ? $group->name : null);
-                        $result = array_add($result, 'avatar', Config::get('app.storageurl') . $avatar);
+                        $result = array_add($result, 'avatar', $avatar);
+
                         $result = array_add($result, 'push', $user->push);
                         $result = array_add($result, 'school_id', (isset($user->school_id)) ? $user->school_id : null);
                         $result = array_add($result, 'school_name', (isset($school->name) ? $school->name : null));
