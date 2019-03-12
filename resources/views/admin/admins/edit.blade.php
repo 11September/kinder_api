@@ -109,7 +109,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="birthday">Дата народження</label>
-                                        <input required name="birthday" value="{{ $user->birthday }}" type="date"
+                                        <input name="birthday" value="{{ $user->birthday }}" type="date"
                                                max="2100-01-01" id="birthday"
                                                class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}"
                                                placeholder="Дата народження дитини">

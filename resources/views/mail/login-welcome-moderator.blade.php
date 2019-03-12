@@ -145,7 +145,7 @@
 
                                 <ul>
                                     <li>Ваше ім'я - <span class="value">{{ $user->name }}</span></li>
-                                    <li>День народження - <span class="value">{{ $user->birthday }}</span></li>
+                                    <li>День народження - <span class="value">@if($user->birthday){{ $user->birthday }}@elseНе вказано @endif</span></li>
                                     <li>Ваш email - <span class="value">{{ $user->email }}</span></li>
                                     <li>Ваш пароль - <span class="value">{{ $password }}</span></li>
                                 </ul>
@@ -159,18 +159,6 @@
 
                 </td>
             </tr>
-            {{--<tr>--}}
-                {{--<td class="container">--}}
-                    {{--<table>--}}
-                        {{--<tr>--}}
-                            {{--<td class="content footer" align="center">--}}
-                                {{--<p>Sent by <a href="http://google.com">Kinder</a></p>--}}
-                                {{--<p><a href="mailto:">Kinder@gmail.com</a></p>--}}
-                            {{--</td>--}}
-                        {{--</tr>--}}
-                    {{--</table>--}}
-                {{--</td>--}}
-            {{--</tr>--}}
         </table>
     </div>
 </div>

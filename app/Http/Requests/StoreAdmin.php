@@ -27,7 +27,7 @@ class StoreAdmin extends FormRequest
             'name' => 'required|string',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:6|max:255|confirmed',
-            'birthday' => 'required|date',
+            'birthday' => 'date|nullable',
             'type' => 'required|string',
         ];
     }

@@ -22,7 +22,6 @@
                     </div>
 
                     <div class="card-body">
-
                         <div class="row">
                             <div class="col-md-12">
                                 @if (Session::has('message'))
@@ -96,7 +95,7 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label for="birthday">Дата народження</label>
-                                        <input required name="birthday" value="{{ old('birthday') }}" type="date"
+                                        <input name="birthday" value="{{ old('birthday') }}" type="date"
                                                max="2100-01-01" id="birthday"
                                                class="form-control {{ $errors->has('birthday') ? ' is-invalid' : '' }}"
                                                placeholder="Дата народження дитини">

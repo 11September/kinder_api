@@ -34,7 +34,7 @@ class UpdateAdmin extends FormRequest
                 Rule::unique('users')->ignore($this->user->id, 'id')
             ],
             'type' => 'required|string',
-            'birthday' => 'required|date',
+            'birthday' => 'nullable|date',
         ];
     }
 
