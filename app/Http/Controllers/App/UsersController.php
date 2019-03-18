@@ -32,7 +32,6 @@ class UsersController
             if ($user) {
 
                 if ($user->status == "disable" || $user->type == "admin" || !$user->school_id || !$user->group_id) {
-                    Log::warning('UsersController@login not active user status: ' . $user->status . "User type - " .$user->type . " User school_id, group_id: " . $user->school_id . $user->group_id);
                     return response()->json(['message' => 'Користувач неактивний!'], 403);
                 }
 
