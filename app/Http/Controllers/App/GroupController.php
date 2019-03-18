@@ -43,7 +43,7 @@ class GroupController
                 if (!$user->avatar || empty($user->avatar)) {
                     $user->avatar;
                 } else {
-                    $user->avatar = Config::get('app.url') . $user->avatar;
+                    $user->avatar = Config::get('app.storageurl') . $user->avatar;
                 }
 
                 if ($user->parents == 'father') {
