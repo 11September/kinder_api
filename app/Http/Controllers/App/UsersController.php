@@ -35,6 +35,10 @@ class UsersController
                     return response()->json(['message' => 'Користувач неактивний!'], 403);
                 }
 
+                if (!$user->school_id || !$user->group_id) {
+                    return response()->json(['message' => 'Користувач не прив\'язаний до групи!'], 403);
+                }
+
                 if (Hash::check($request->password, $user->password)) {
                     if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
 
