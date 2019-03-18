@@ -53,6 +53,9 @@ class UsersController
                             $avatar = Config::get('app.storageurl') . $user->avatar;
                         }
 
+
+                        Log::warning('UsersController@login Avatar: ' . $avatar);
+
                         $result = array();
                         $result = array_add($result, 'token', $user->token);
                         $result = array_add($result, 'email', $user->email);
