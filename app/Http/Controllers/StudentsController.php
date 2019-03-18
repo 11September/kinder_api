@@ -119,7 +119,7 @@ class StudentsController extends Controller
         $mailTo = $user->email;
 
         if ($user->avatar && !empty($user->avatar)) {
-            $image = public_path() . $user->avatar;
+            $image = storage_path('app/public') . $user->avatar;
             if (file_exists($image)) {
                 unlink($image);
             }
