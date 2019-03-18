@@ -31,12 +31,8 @@ class UsersController
             $user = User::where('email', $request->email)->first();
             if ($user) {
 
-                if ($user->status == "disable" || $user->type == "admin" || $user->status == "disable") {
+                if ($user->status == "disable" || $user->type == "admin" || !$user->school_id || !$user->group_id) {
                     return response()->json(['message' => 'Користувач неактивний!'], 403);
-                }
-
-                if (!$user->school_id || !$user->group_id) {
-                    return response()->json(['message' => 'Користувач не прив\'язаний до групи!'], 403);
                 }
 
                 if (Hash::check($request->password, $user->password)) {
